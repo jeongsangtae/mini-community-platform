@@ -4,9 +4,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import CreatePostPage from "./pages/CreatePostPage";
 import HomePage from "./pages/Homepage";
+import LoginPage from "./pages/LoginPage";
 import PostsPage from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
+import SignupPage from "./pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +21,8 @@ const router = createBrowserRouter([
         element: <PostsPage />,
       },
       { path: "posts/create-post", element: <CreatePostPage /> },
-      // { path: "signup", element },
-      // { path: "login" },
+      { path: "signup", element: <SignupPage /> },
+      { path: "login", element: <LoginPage /> },
       { path: "profile", element: <ProfilePage /> },
     ],
   },
