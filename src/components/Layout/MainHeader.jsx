@@ -7,13 +7,13 @@ const MainHeader = () => {
         <nav>
           <ul>
             <li>
-              <NavLink>홈</NavLink>
+              <NavLink to="/">홈</NavLink>
             </li>
             <li>
-              <NavLink>게시판</NavLink>
+              <NavLink to="/posts">게시판</NavLink>
             </li>
             <li>
-              <NavLink>프로필</NavLink>
+              <NavLink to="/profile">프로필</NavLink>
             </li>
           </ul>
         </nav>
