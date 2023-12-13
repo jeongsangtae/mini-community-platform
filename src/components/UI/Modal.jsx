@@ -11,7 +11,9 @@ const Modal = ({ children }) => {
   return (
     <>
       <div className={classes.backdrop} onClick={closeHandler} />
-      <div className={classes.modal}>{children}</div>
+      <dialog open className={classes.modal}>
+        {children}
+      </dialog>
     </>
   );
 };
