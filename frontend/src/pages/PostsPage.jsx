@@ -11,3 +11,9 @@ const PostsPage = () => {
 };
 
 export default PostsPage;
+
+export const loader = async () => {
+  const response = await fetch("http://localhost:5173/posts");
+  const resData = await response.json();
+  return resData.posts;
+};

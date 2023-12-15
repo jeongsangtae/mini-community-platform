@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect, Form } from "react-router-dom";
 
 const CreatePost = ({ onAddPost }) => {
   const [title, setTitle] = useState("");
@@ -8,30 +8,30 @@ const CreatePost = ({ onAddPost }) => {
 
   const navigate = useNavigate();
 
-  const changeTitleHandler = (event) => {
-    setTitle(event.target.value);
-  };
+  // const changeTitleHandler = (event) => {
+  //   setTitle(event.target.value);
+  // };
 
-  const changeNameHandler = (event) => {
-    setName(event.target.value);
-  };
+  // const changeNameHandler = (event) => {
+  //   setName(event.target.value);
+  // };
 
-  const changeContentHandler = (event) => {
-    setContent(event.target.value);
-  };
+  // const changeContentHandler = (event) => {
+  //   setContent(event.target.value);
+  // };
 
-  const submitHandler = (event) => {
-    event.preventDefault();
+  // const submitHandler = (event) => {
+  //   event.preventDefault();
 
-    const postData = {
-      id: Math.random(),
-      title: title,
-      name: name,
-      content: content,
-    };
+  //   const postData = {
+  //     id: Math.random(),
+  //     title: title,
+  //     name: name,
+  //     content: content,
+  //   };
 
-    onAddPost(postData);
-  };
+  //   onAddPost(postData);
+  // };
 
   const closeHandler = () => {
     navigate(-1);
@@ -40,7 +40,7 @@ const CreatePost = ({ onAddPost }) => {
   return (
     <>
       <p>게시글 추가 페이지</p>
-      <form onSubmit={submitHandler}>
+      <Form method="post" onSubmit={submitHandler}>
         <div>
           <label htmlFor="title">제목</label>
           <input
@@ -75,9 +75,22 @@ const CreatePost = ({ onAddPost }) => {
           </button>
           <button>Submit</button>
         </div>
-      </form>
+      </Form>
     </>
   );
 };
 
 export default CreatePost;
+
+// export const action = async ({ request }) => {
+//   const formData = await request.formData();
+//   const postData = Object.fromEntries(formData);
+//   // formData.get("body");
+//   await fetch("http://localhost:3000/posts", {
+//     method: "POST",
+//     body: JSON.stringify(postData),
+//     headers: { "Content-Type": "application/json" },
+//   });
+
+//   return redirect("/posts");
+// };

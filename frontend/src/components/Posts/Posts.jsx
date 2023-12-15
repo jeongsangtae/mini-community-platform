@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import CreatePost from "./CreatePost";
 
 const Posts = () => {
@@ -11,11 +11,26 @@ const Posts = () => {
     });
   };
 
+  const postss = useLoaderData();
+
   return (
     <>
       <p>게시글~</p>
+      {postss.length > 0 && (
+        <ul>
+          {postss.map((post) => {
+            return (
+              <li>
+                <p>{post.title}</p>
+                <p>{post.name}</p>
+                <p>{post.content}</p>
+              </li>
+            );
+          })}
+        </ul>
+      )}
       <Link to="create-post">게시글 추가</Link>
-      <ul>
+      {/* <ul>
         {posts.map((post) => {
           return (
             <li>
@@ -25,10 +40,16 @@ const Posts = () => {
             </li>
           );
         })}
-      </ul>
-      <CreatePost onAddPost={addPostHandler} />
+      </ul> */}
+      {/* <CreatePost onAddPost={addPostHandler} /> */}
     </>
   );
 };
 
 export default Posts;
+
+// export const loader = async () => {
+//   const response = await fetch("http://localhost:3000/posts");
+//   const resData = await response.json();
+//   return resData.posts;
+// };

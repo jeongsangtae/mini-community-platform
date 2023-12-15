@@ -1,4 +1,4 @@
-const path = require("path");
+// const path = require("path");
 
 const express = require("express");
 
@@ -45,3 +45,5 @@ db.connectToDatabase()
     console.log("데이터베이스에 연결하지 못했습니다.");
     console.log(error);
   });
+
+console.log("run server");

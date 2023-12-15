@@ -2,10 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
-import CreatePostPage from "./pages/CreatePostPage";
+import CreatePostPage, {
+  action as createPostAction,
+} from "./pages/CreatePostPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
-import PostsPage from "./pages/PostsPage";
+import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
 import SignupPage from "./pages/SignUpPage";
@@ -19,8 +21,13 @@ const router = createBrowserRouter([
       {
         path: "posts",
         element: <PostsPage />,
+        loader: postsLoader,
       },
-      { path: "posts/create-post", element: <CreatePostPage /> },
+      {
+        path: "posts/create-post",
+        element: <CreatePostPage />,
+        action: createPostAction,
+      },
       { path: "signup", element: <SignupPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "profile", element: <ProfilePage /> },
