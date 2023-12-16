@@ -40,34 +40,17 @@ const CreatePost = ({ onAddPost }) => {
   return (
     <>
       <p>게시글 추가 페이지</p>
-      <Form method="post" onSubmit={submitHandler}>
+      <Form method="post">
         <div>
           <label htmlFor="title">제목</label>
-          <input
-            required
-            type="text"
-            id="title"
-            name="title"
-            onChange={changeTitleHandler}
-          />
+          <input required type="text" id="title" name="title" />
         </div>
         <div>
           <label htmlFor="name">작성자</label>
-          <input
-            required
-            type="text"
-            id="name"
-            name="name"
-            onChange={changeNameHandler}
-          />
+          <input required type="text" id="name" name="name" />
         </div>
         <div>
-          <textarea
-            required
-            name="content"
-            placeholder="내용 입력"
-            onChange={changeContentHandler}
-          />
+          <textarea required name="content" placeholder="내용 입력" />
         </div>
         <div>
           <button type="button" onClick={closeHandler}>

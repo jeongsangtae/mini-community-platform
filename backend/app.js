@@ -1,4 +1,4 @@
-// const path = require("path");
+const path = require("path");
 
 const express = require("express");
 
@@ -6,8 +6,14 @@ const boardRoutes = require("./routes/board-routes");
 const db = require("./data/database");
 
 const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-app.use(express.static("public"));
+// app.use(express.static(path.join(__dirname, "/frontend/public")));
+
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "frontend", "public", "index.html"));
+// });
 
 // CORS 헤더 연결
 // 분리된 백엔드(다른 도메인에서 실행됨)를 사용할 때 필요
@@ -25,6 +31,10 @@ app.use(express.static("public"));
 //   res.setHeader("Expires", "0");
 //   next();
 // });
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
 
 app.use(boardRoutes);
 
