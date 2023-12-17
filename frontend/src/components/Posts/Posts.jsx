@@ -3,24 +3,16 @@ import { Link, useLoaderData } from "react-router-dom";
 import CreatePost from "./CreatePost";
 
 const Posts = () => {
-  const [posts, setPosts] = useState([]);
-
-  const addPostHandler = (postData) => {
-    setPosts((prevPosts) => {
-      return [postData, ...prevPosts];
-    });
-  };
-
-  const postss = useLoaderData();
+  const posts = useLoaderData();
 
   return (
     <>
       <p>게시글~</p>
-      {postss.length > 0 && (
+      {posts.length > 0 && (
         <ul>
-          {postss.map((post) => {
+          {posts.map((post) => {
             return (
-              <li>
+              <li key={post.id}>
                 <p>{post.title}</p>
                 <p>{post.name}</p>
                 <p>{post.content}</p>
