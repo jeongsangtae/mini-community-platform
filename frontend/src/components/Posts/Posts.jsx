@@ -19,13 +19,6 @@ const Posts = () => {
                 content={post.content}
                 date={post.date}
               />
-              // <li key={post.id}>
-              //   {/* <p>{post.id}</p> */}
-              //   <p>{post.title}</p>
-              //   <p>{post.name}</p>
-              //   <p>{post.content}</p>
-              //   <p>{post.date}</p>
-              // </li>
             );
           })}
         </ul>

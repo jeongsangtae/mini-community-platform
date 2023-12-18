@@ -7,6 +7,7 @@ import CreatePostPage, {
 } from "./pages/CreatePostPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
+// import { loader as postsLoader } from "./components/Posts/Posts";
 import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";

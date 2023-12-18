@@ -25,9 +25,9 @@ router.post("/posts", async (req, res) => {
   const lastPost = await db
     .getDb()
     .collection("posts")
-    .findOne({}, { sort: { num: -1 } });
+    .findOne({}, { sort: { id: -1 } });
 
-  let num = lastPost ? lastPost.num + 1 : 1;
+  let num = lastPost ? lastPost.id + 1 : 1;
   let date = new Date();
   const postData = req.body;
 
