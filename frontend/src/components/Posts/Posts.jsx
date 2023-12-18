@@ -1,4 +1,5 @@
 import { Link, useLoaderData } from "react-router-dom";
+import Post from "./Post";
 
 const Posts = () => {
   const posts = useLoaderData();
@@ -10,13 +11,21 @@ const Posts = () => {
         <ul>
           {posts.map((post) => {
             return (
-              <li key={post.id}>
-                {/* <p>{post.id}</p> */}
-                <p>{post.title}</p>
-                <p>{post.name}</p>
-                <p>{post.content}</p>
-                <p>{post.date}</p>
-              </li>
+              <Post
+                key={post.id}
+                num={post.id}
+                title={post.title}
+                name={post.name}
+                content={post.content}
+                date={post.date}
+              />
+              // <li key={post.id}>
+              //   {/* <p>{post.id}</p> */}
+              //   <p>{post.title}</p>
+              //   <p>{post.name}</p>
+              //   <p>{post.content}</p>
+              //   <p>{post.date}</p>
+              // </li>
             );
           })}
         </ul>
