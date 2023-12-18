@@ -16,16 +16,25 @@ router.get("/posts", async (req, res) => {
     .getDb()
     .collection("posts")
     .find({})
-    .project({ title: 1, name: 1, content: 1 })
+    .project({ id: 1, title: 1, name: 1, content: 1, date: 1 })
     .toArray();
   res.json(posts);
 });
 
 router.post("/posts", async (req, res) => {
+  const lastPost = await db
+    .getDb()
+    .collection("posts")
+    .findOne({}, { sort: { num: -1 } });
+
+  let num = lastPost ? lastPost.num + 1 : 1;
+  let date = new Date();
   const postData = req.body;
+
   const newPost = {
     ...postData,
-    id: Math.random().toString(),
+    id: num,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
   };
 
   const result = await db.getDb().collection("posts").insertOne(newPost);

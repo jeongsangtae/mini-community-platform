@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import CreatePost from "./CreatePost";
 
 const Posts = () => {
   const posts = useLoaderData();
@@ -13,27 +11,17 @@ const Posts = () => {
           {posts.map((post) => {
             return (
               <li key={post.id}>
+                {/* <p>{post.id}</p> */}
                 <p>{post.title}</p>
                 <p>{post.name}</p>
                 <p>{post.content}</p>
+                <p>{post.date}</p>
               </li>
             );
           })}
         </ul>
       )}
       <Link to="create-post">게시글 추가</Link>
-      {/* <ul>
-        {posts.map((post) => {
-          return (
-            <li>
-              <p>{post.title}</p>
-              <p>{post.name}</p>
-              <p>{post.content}</p>
-            </li>
-          );
-        })}
-      </ul> */}
-      {/* <CreatePost onAddPost={addPostHandler} /> */}
     </>
   );
 };

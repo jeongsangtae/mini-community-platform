@@ -1,37 +1,7 @@
-import { useState } from "react";
-import { useNavigate, redirect, Form } from "react-router-dom";
+import { useNavigate, Form } from "react-router-dom";
 
-const CreatePost = ({ onAddPost }) => {
-  const [title, setTitle] = useState("");
-  const [name, setName] = useState("");
-  const [content, setContent] = useState("");
-
+const CreatePost = () => {
   const navigate = useNavigate();
-
-  // const changeTitleHandler = (event) => {
-  //   setTitle(event.target.value);
-  // };
-
-  // const changeNameHandler = (event) => {
-  //   setName(event.target.value);
-  // };
-
-  // const changeContentHandler = (event) => {
-  //   setContent(event.target.value);
-  // };
-
-  // const submitHandler = (event) => {
-  //   event.preventDefault();
-
-  //   const postData = {
-  //     id: Math.random(),
-  //     title: title,
-  //     name: name,
-  //     content: content,
-  //   };
-
-  //   onAddPost(postData);
-  // };
 
   const closeHandler = () => {
     navigate(-1);
