@@ -5,3 +5,9 @@ const PostDetailsPage = () => {
 };
 
 export default PostDetailsPage;
+
+export const loader = async ({ params }) => {
+  const response = await fetch("http://localhost:3000/posts/" + params.id);
+  const resData = await response.json();
+  return resData;
+};

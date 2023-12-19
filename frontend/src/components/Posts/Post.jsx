@@ -1,11 +1,15 @@
-const Post = ({ num, title, name, content, date }) => {
+import { Link } from "react-router-dom";
+
+const Post = ({ id, title, name, content, date }) => {
   return (
     <li>
-      <p>{num}</p>
-      <p>{title}</p>
-      <p>{name}</p>
-      <p>{content}</p>
-      <p>{date}</p>
+      <Link to={id}>
+        <p>{id}</p>
+        <p>{title}</p>
+        <p>{name}</p>
+        <p>{content}</p>
+        <p>{date}</p>
+      </Link>
     </li>
   );
 };

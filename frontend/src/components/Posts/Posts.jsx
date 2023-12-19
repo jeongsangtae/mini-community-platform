@@ -12,8 +12,8 @@ const Posts = () => {
           {posts.map((post) => {
             return (
               <Post
-                key={post.id}
-                num={post.id}
+                key={post._id}
+                id={post.id}
                 title={post.title}
                 name={post.name}
                 content={post.content}
