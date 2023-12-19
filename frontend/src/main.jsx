@@ -7,6 +7,7 @@ import CreatePostPage, {
 } from "./pages/CreatePostPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
+import PostDetailsPage from "./pages/PostDetailsPage";
 // import { loader as postsLoader } from "./components/Posts/Posts";
 import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
         element: <CreatePostPage />,
         action: createPostAction,
       },
+      { path: "posts/:id", element: <PostDetailsPage /> },
       { path: "signup", element: <SignupPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "profile", element: <ProfilePage /> },
