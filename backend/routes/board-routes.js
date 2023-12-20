@@ -18,7 +18,7 @@ router.get("/posts", async (req, res) => {
     .find({})
     .project({ id: 1, title: 1, name: 1, content: 1, date: 1 })
     .toArray();
-  res.send(posts);
+  res.json(posts);
 });
 
 router.post("/posts", async (req, res) => {
@@ -38,7 +38,7 @@ router.post("/posts", async (req, res) => {
   };
 
   const result = await db.getDb().collection("posts").insertOne(newPost);
-  console.log(result);
+  // console.log(result);
   res.status(201).json({ message: "Success" });
   // res.redirect("/posts");
 });
@@ -46,9 +46,12 @@ router.post("/posts", async (req, res) => {
 router.get("/posts/:id", async (req, res) => {
   let postId = req.params.id;
 
-  const post = await db.getDb().collection("posts").findOne({ id: postId });
+  postId = new ObjectId(postId);
 
-  console.log(post);
+  const post = await db.getDb().collection("posts").findOne({ _id: postId });
+
+  // console.log(post);
+  // console.log(postId);
 
   res.json(post);
 });

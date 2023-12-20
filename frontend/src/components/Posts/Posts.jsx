@@ -13,7 +13,7 @@ const Posts = () => {
             return (
               <Post
                 key={post._id}
-                id={post.id}
+                id={post._id}
                 title={post.title}
                 name={post.name}
                 content={post.content}
