@@ -12,11 +12,10 @@ const Posts = () => {
           {posts.map((post) => {
             return (
               <Post
-                key={post._id}
-                id={post._id}
+                key={post.postId}
+                num={post.postId.toString()}
                 title={post.title}
                 name={post.name}
-                content={post.content}
                 date={post.date}
               />
             );
