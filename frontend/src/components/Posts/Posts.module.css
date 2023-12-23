@@ -3,7 +3,7 @@
   font-size: 2rem;
 }
 
-.posts-top {
+.posts-item {
   display: flex;
   flex-direction: row;
   /* width: 60rem; */
@@ -11,7 +11,7 @@
   /* justify-content: center; */
 }
 
-.posts-top p {
+.posts-item p {
   margin-left: 5rem;
 }
 

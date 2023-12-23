@@ -1,5 +1,7 @@
 import { useNavigate, Form } from "react-router-dom";
 
+import classes from "./CreatePost.module.css";
+
 const CreatePost = () => {
   const navigate = useNavigate();
 
@@ -9,8 +11,8 @@ const CreatePost = () => {
 
   return (
     <>
-      <p>게시글 추가 페이지</p>
-      <Form method="post">
+      <p className={classes.title}>게시글 추가 페이지</p>
+      <Form method="post" className={classes.form}>
         <div>
           <label htmlFor="title">제목</label>
           <input required type="text" id="title" name="title" />
@@ -22,11 +24,11 @@ const CreatePost = () => {
         <div>
           <textarea required name="content" placeholder="내용 입력" />
         </div>
-        <div>
+        <div className={classes.actions}>
           <button type="button" onClick={closeHandler}>
-            Cancel
+            취소
           </button>
-          <button>Submit</button>
+          <button>등록</button>
         </div>
       </Form>
     </>
