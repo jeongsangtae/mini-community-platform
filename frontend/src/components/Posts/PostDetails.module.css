@@ -1,0 +1,19 @@
+.heading {
+  margin: 5rem;
+  font-size: 2rem;
+}
+
+.post-detail {
+  max-width: 40rem;
+  margin: 2rem auto;
+}
+
+.post-detail p {
+  display: block;
+  width: 100%;
+}
+
+.post-detail .contents {
+  font: inherit;
+  padding: 0.25rem;
+}

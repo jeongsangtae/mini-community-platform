@@ -1,5 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 
+import classes from "./PostDetails.module.css";
+
 const PostDetails = () => {
   const post = useLoaderData();
 
@@ -10,7 +12,21 @@ const PostDetails = () => {
 
   return (
     <>
-      <li>{post.content}</li>
+      <h1 className={classes.heading}>게시글 세부 페이지</h1>
+      <div className={classes["post-detail"]}>
+        <div>
+          <p>제목</p>
+          <p className={classes.contents}>{post.title}</p>
+        </div>
+        <div>
+          <p>이름</p>
+          <p className={classes.contents}>{post.name}</p>
+        </div>
+        <div>
+          <p>내용</p>
+          <p className={classes.contents}>{post.content}</p>
+        </div>
+      </div>
     </>
   );
 };

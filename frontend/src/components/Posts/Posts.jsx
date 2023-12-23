@@ -8,7 +8,7 @@ const Posts = () => {
 
   return (
     <>
-      <p className={classes.title}>게시글</p>
+      <h1 className={classes.heading}>게시글</h1>
       <div className={classes["posts-item"]}>
         <p>번호</p>
         <p>제목</p>

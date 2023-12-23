@@ -11,7 +11,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <p className={classes.title}>게시글 추가 페이지</p>
+      <h1 className={classes.heading}>게시글 추가 페이지</h1>
       <Form method="post" className={classes.form}>
         <div>
           <label htmlFor="title">제목</label>
