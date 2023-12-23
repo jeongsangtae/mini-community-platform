@@ -1,14 +1,22 @@
 import { Link, useLoaderData } from "react-router-dom";
+
 import Post from "./Post";
+import classes from "./Posts.module.css";
 
 const Posts = () => {
   const posts = useLoaderData();
 
   return (
     <>
-      <p>게시글~</p>
+      <p className={classes.title}>게시글</p>
+      <div className={classes["posts-top"]}>
+        <p>번호</p>
+        <p>제목</p>
+        <p>글쓴이</p>
+        <p>날짜</p>
+      </div>
       {posts.length > 0 && (
-        <ul>
+        <ul className={classes.posts}>
           {posts.map((post) => {
             return (
               <Post
@@ -22,7 +30,9 @@ const Posts = () => {
           })}
         </ul>
       )}
-      <Link to="create-post">게시글 추가</Link>
+      <Link to="create-post" className={classes.add}>
+        <p>게시글 추가</p>
+      </Link>
     </>
   );
 };

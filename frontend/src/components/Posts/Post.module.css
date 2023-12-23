@@ -1,0 +1,17 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 14rem; */
+  margin-top: 0.5rem;
+}
+
+.post a {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: bisque;
+}
+
+.post p {
+  margin-left: 5rem;
+}
