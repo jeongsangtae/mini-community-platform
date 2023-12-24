@@ -50,7 +50,7 @@
   background-color: #23014a;
 }
 
-.actions a {
+/* .actions a {
   background-color: transparent;
   text-decoration: none;
   color: #e5d5f7;
@@ -59,7 +59,7 @@
 
 .actions a:hover {
   color: #d1bee6;
-}
+} */
 
 .login {
   text-decoration: none;
