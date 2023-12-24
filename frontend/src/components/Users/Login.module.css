@@ -1,3 +1,8 @@
+/* .heading {
+  text-align: center;
+  background-color: #6233b9;
+} */
+
 .form {
   background-color: #6233b9;
   padding: 1rem;
@@ -27,6 +32,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
+  margin: 1rem;
 }
 
 .actions button {
@@ -47,8 +53,18 @@
   background-color: transparent;
   text-decoration: none;
   color: #e5d5f7;
+  margin-left: 1rem;
 }
 
 .actions a:hover {
+  color: #d1bee6;
+}
+
+.signup {
+  text-decoration: none;
+  color: #eadbfb;
+}
+
+.signup:hover {
   color: #d1bee6;
 }

@@ -15,4 +15,11 @@
   padding: 0;
   overflow: hidden;
   z-index: 1;
+  color: white;
+  background-color: #6233b9;
+}
+
+.modal p {
+  text-align: center;
+  margin: 1rem 0 0 0;
 }

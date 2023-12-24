@@ -6,7 +6,7 @@ import classes from "./Login.module.css";
 const Login = () => {
   return (
     <Modal>
-      <p>로그인 페이지</p>
+      <p className={classes.heading}>로그인 페이지</p>
       <form className={classes.form}>
         <div>
           <label htmlFor="email">이메일</label>
@@ -22,7 +22,9 @@ const Login = () => {
           <button>가입</button>
           <Link to="..">취소</Link>
         </div>
-        <Link to="/signup">회원가입 하러가기</Link>
+        <Link to="/signup" className={classes.signup}>
+          회원가입 하러가기
+        </Link>
       </form>
     </Modal>
   );
