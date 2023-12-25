@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 
 import Post from "./Post";
@@ -5,6 +6,8 @@ import classes from "./Posts.module.css";
 
 const Posts = () => {
   const posts = useLoaderData();
+
+  const reversedPosts = posts.slice().reverse();
 
   return (
     <>
@@ -15,9 +18,9 @@ const Posts = () => {
         <p>글쓴이</p>
         <p>날짜</p>
       </div>
-      {posts.length > 0 && (
+      {reversedPosts.length > 0 && (
         <ul className={classes.posts}>
-          {posts.map((post) => {
+          {reversedPosts.map((post) => {
             return (
               <Post
                 key={post.postId}
