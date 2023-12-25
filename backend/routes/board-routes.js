@@ -12,12 +12,20 @@ router.get("/", (req, res) => {
 });
 
 router.get("/posts", async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 5;
+  const pageButtonSize = 5;
+
   const posts = await db
     .getDb()
     .collection("posts")
     .find({})
+    .sort({ postId: -1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
     .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
     .toArray();
+
   res.json(posts);
 });
 

@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import PagiNation from "./PagiNation";
 
 import Post from "./Post";
 import classes from "./Posts.module.css";
@@ -7,7 +7,7 @@ import classes from "./Posts.module.css";
 const Posts = () => {
   const posts = useLoaderData();
 
-  const reversedPosts = posts.slice().reverse();
+  // const reversedPosts = posts.slice().reverse();
 
   return (
     <>
@@ -18,9 +18,9 @@ const Posts = () => {
         <p>글쓴이</p>
         <p>날짜</p>
       </div>
-      {reversedPosts.length > 0 && (
+      {posts.length > 0 && (
         <ul className={classes.posts}>
-          {reversedPosts.map((post) => {
+          {posts.map((post) => {
             return (
               <Post
                 key={post.postId}
@@ -33,6 +33,7 @@ const Posts = () => {
           })}
         </ul>
       )}
+      <PagiNation />
       <Link to="create-post" className={classes.add}>
         <p>게시글 추가</p>
       </Link>

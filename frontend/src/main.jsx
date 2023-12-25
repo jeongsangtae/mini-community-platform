@@ -7,6 +7,7 @@ import CreatePostPage, {
 } from "./pages/CreatePostPage";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
+import PaginationPage from "./pages/PaginationPage";
 import PostDetailsPage, {
   loader as postDetailsLoader,
 } from "./pages/PostDetailsPage";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
         path: "posts",
         element: <PostsPage />,
         loader: postsLoader,
+        children: [{ path: "posts?page=pageNum", element: <PaginationPage /> }],
       },
       {
         path: "posts/create-post",
