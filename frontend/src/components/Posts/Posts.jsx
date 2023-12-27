@@ -5,7 +5,9 @@ import Post from "./Post";
 import classes from "./Posts.module.css";
 
 const Posts = () => {
-  const posts = useLoaderData();
+  const resData = useLoaderData();
+
+  const posts = resData.posts;
 
   // const reversedPosts = posts.slice().reverse();
 
