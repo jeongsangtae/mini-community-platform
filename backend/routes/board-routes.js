@@ -26,7 +26,16 @@ router.get("/posts", async (req, res) => {
     .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
     .toArray();
 
-  res.json(posts);
+  const countPosts = await db.getDb().collection("posts").countDocuments({});
+  const totalPages = Math.ceil(countPosts / pageSize);
+
+  const firstPageGroup =
+    Math.ceil(page / pageButtonSize) * pageButtonSize - pageButtonSize + 1;
+  const lastPageGroup = Math.min(
+    firstPageGroup + pageButtonSize - 1,
+    totalPages
+  );
+  res.json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
 });
 
 router.post("/posts", async (req, res) => {
