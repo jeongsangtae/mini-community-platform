@@ -3,24 +3,30 @@ import { Link, useLoaderData } from "react-router-dom";
 const Pagination = () => {
   const resData = useLoaderData();
 
-  const posts = resData.posts;
+  const page = resData.page;
+  const totalPages = resData.totalPages;
+  const firstPageGroup = resData.firstPageGroup;
+  const lastPageGroup = resData.lastPageGroup;
+
+  const leftDoubleArrow = "<<";
+  const rightDoubleArrow = ">>";
+
+  let firstPageButton = totalPages > 1 && page > 1;
+  let lastPageButton = page < totalPages;
 
   return (
     <>
-      {posts.length > 0 && (
-        <ul>
-          {posts.map((post) => {
-            return (
-              <li>
-                key={post.postId}
-                num={post.postId}
-                title={post.title}
-                name={post.name}
-                date={post.date}
-              </li>
-            );
-          })}
-        </ul>
+      {firstPageButton && (
+        <>
+          <Link>{leftDoubleArrow}</Link>
+          <Link>이전</Link>
+        </>
+      )}
+      {lastPageButton && (
+        <>
+          <Link>{rightDoubleArrow}</Link>
+          <Link>다음</Link>
+        </>
       )}
     </>
   );

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import classes from "./Post.module.css";
 
-const Post = ({ num, title, name, content, date }) => {
+const Post = ({ num, title, name, date }) => {
   return (
     <>
       <li className={classes.post}>
