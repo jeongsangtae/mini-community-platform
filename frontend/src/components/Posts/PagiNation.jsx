@@ -14,6 +14,27 @@ const Pagination = () => {
   let firstPageButton = totalPages > 1 && page > 1;
   let lastPageButton = page < totalPages;
 
+  const pageButtons = [];
+
+  for (let i = firstPageGroup; i <= lastPageGroup; i++) {
+    pageButtons.push(
+      <Link key={i} to={`/posts?page=${i}`}>
+        {i}
+      </Link>
+    );
+  }
+
+  // const pageButtons = Array.from({
+  //   length: lastPageGroup - firstPageGroup + 1,
+  // }).map((_, index) => {
+  //   const i = index + firstPageGroup;
+  //   return (
+  //     <Link key={i} to={`/posts?page=${i}`}>
+  //       {i}
+  //     </Link>
+  //   );
+  // });
+
   return (
     <>
       {firstPageButton && (
@@ -22,10 +43,11 @@ const Pagination = () => {
           <Link>이전</Link>
         </>
       )}
+      {pageButtons}
       {lastPageButton && (
         <>
-          <Link>{rightDoubleArrow}</Link>
           <Link>다음</Link>
+          <Link>{rightDoubleArrow}</Link>
         </>
       )}
     </>
