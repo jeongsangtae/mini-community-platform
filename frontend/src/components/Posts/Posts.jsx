@@ -11,6 +11,8 @@ const Posts = () => {
 
   // const reversedPosts = posts.slice().reverse();
 
+  // const pageChangeHandler = (anotherPage) => {};
+
   return (
     <>
       <h1 className={classes.heading}>게시글</h1>
@@ -35,6 +37,7 @@ const Posts = () => {
           })}
         </ul>
       )}
+      {/* <PagiNation onPageChange={pageChangeHandler} /> */}
       <PagiNation />
       <Link to="create-post" className={classes.add}>
         <p>게시글 추가</p>

@@ -1,6 +1,6 @@
 import { Link, useLoaderData } from "react-router-dom";
 
-const Pagination = () => {
+const Pagination = ({ onPageChange }) => {
   const resData = useLoaderData();
 
   const page = resData.page;
@@ -13,6 +13,10 @@ const Pagination = () => {
 
   let firstPageButton = totalPages > 1 && page > 1;
   let lastPageButton = page < totalPages;
+
+  // const pageClickHandler = (anotherPage) => {
+  //   onPageChange(anotherPage);
+  // };
 
   const pageButtons = [];
 
