@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import PagiNation from "./PagiNation";
+// import Pagination from "./Pagination";
+import Pagination from "react-js-pagination";
 
 import Post from "./Post";
 import classes from "./Posts.module.css";
@@ -8,6 +10,13 @@ const Posts = () => {
   const resData = useLoaderData();
 
   const posts = resData.posts;
+
+  const [page, setPage] = useState(1);
+
+  const pageChangeHandler = (page) => {
+    setPage(page);
+    console.log(page);
+  };
 
   // const reversedPosts = posts.slice().reverse();
 
@@ -38,7 +47,19 @@ const Posts = () => {
         </ul>
       )}
       {/* <PagiNation onPageChange={pageChangeHandler} /> */}
-      <PagiNation />
+      {/* <PagiNation /> */}
+      <Pagination
+        activePage={page}
+        itemsCountPerPage={10}
+        totalItemsCount={20}
+        pageRangeDisplayed={5}
+        prevPageText={"<"}
+        nextPageText={">"}
+        onChange={pageChangeHandler}
+        innerClass={classes.pagination}
+        // itemClass={classes.paginationItem}
+        // activeClass={classes.activeItem}
+      />
       <Link to="create-post" className={classes.add}>
         <p>게시글 추가</p>
       </Link>
