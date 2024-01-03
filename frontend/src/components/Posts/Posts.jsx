@@ -10,6 +10,7 @@ const Posts = () => {
   const resData = useLoaderData();
 
   const posts = resData.posts;
+  const totalPages = resData.totalPages;
 
   const [page, setPage] = useState(1);
 
@@ -49,14 +50,14 @@ const Posts = () => {
       {/* <PagiNation onPageChange={pageChangeHandler} /> */}
       {/* <PagiNation /> */}
       <Pagination
-        activePage={page}
-        itemsCountPerPage={10}
-        totalItemsCount={20}
-        pageRangeDisplayed={5}
-        prevPageText={"<"}
-        nextPageText={">"}
-        onChange={pageChangeHandler}
-        innerClass={classes.pagination}
+        activePage={page} // 현재 페이지
+        itemsCountPerPage={5} // 한 페이지당 보여줄 아이템 갯수
+        totalItemsCount={posts} // 총 아이템 갯수
+        pageRangeDisplayed={totalPages} // paginator의 페이지 범위
+        prevPageText={"<"} // "이전"을 나타낼 텍스트
+        nextPageText={">"} // "다음"을 나타낼 텍스트
+        onChange={pageChangeHandler} // 페이지 변경을 핸들링하는 함수
+        innerClass={classes.pagination} // 페이지네이션 CSS
         // itemClass={classes.paginationItem}
         // activeClass={classes.activeItem}
       />
