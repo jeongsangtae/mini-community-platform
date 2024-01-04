@@ -1,27 +1,45 @@
-import { useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 // import Pagination from "./Pagination";
-import Pagination from "react-js-pagination";
 
 import Post from "./Post";
 import classes from "./Posts.module.css";
 
 const Posts = () => {
-  const resData = useLoaderData();
+  // const resData = useLoaderData();
+  const navigate = useNavigate();
 
-  const posts = resData.posts;
-  const totalPages = resData.totalPages;
-
+  const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [firstPageGroup, setFirstPageGroup] = useState(1);
+  const [lastPageGroup, setLastPageGroup] = useState(1);
 
-  const pageChangeHandler = (page) => {
-    setPage(page);
-    console.log(page);
-  };
+  const firstPageButton = "<<";
+  const lastPageButton = ">>";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`http://localhost:3000/posts?page=${page}`);
+      console.log(response);
+      const resData = await response.json();
+      setPosts(resData.posts);
+      setTotalPages(resData.totalPages);
+      setFirstPageGroup(resData.firstPageGroup);
+      setLastPageGroup(resData.lastPageGroup);
+    };
+    fetchData();
+  }, [page]);
 
   // const reversedPosts = posts.slice().reverse();
 
   // const pageChangeHandler = (anotherPage) => {};
+
+  const handlePageChange = (newPage) => {
+    navigate(`/posts?page=${newPage}`);
+
+    setPage(newPage);
+  };
 
   return (
     <>
@@ -47,20 +65,55 @@ const Posts = () => {
           })}
         </ul>
       )}
-      {/* <PagiNation onPageChange={pageChangeHandler} /> */}
-      {/* <PagiNation /> */}
-      <Pagination
-        activePage={page} // 현재 페이지
-        itemsCountPerPage={5} // 한 페이지당 보여줄 아이템 갯수
-        totalItemsCount={posts} // 총 아이템 갯수
-        pageRangeDisplayed={totalPages} // paginator의 페이지 범위
-        prevPageText={"<"} // "이전"을 나타낼 텍스트
-        nextPageText={">"} // "다음"을 나타낼 텍스트
-        onChange={pageChangeHandler} // 페이지 변경을 핸들링하는 함수
-        innerClass={classes.pagination} // 페이지네이션 CSS
-        // itemClass={classes.paginationItem}
-        // activeClass={classes.activeItem}
-      />
+      <div>
+        {totalPages > 1 && (
+          <>
+            {page > 1 ? (
+              <>
+                <button onClick={() => handlePageChange(1)}>
+                  {firstPageButton}
+                </button>
+                <button onClick={() => handlePageChange(page - 1)}>이전</button>
+              </>
+            ) : (
+              <>
+                <span className="disabled">{firstPageButton}</span>
+                <span className="disabled">이전</span>
+              </>
+            )}
+
+            {Array.from(
+              { length: lastPageGroup - firstPageGroup + 1 },
+              (_, index) => {
+                const pageNumber = firstPageGroup + index;
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={pageNumber === page ? "on" : ""}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              }
+            )}
+
+            {page < totalPages ? (
+              <>
+                <button onClick={() => handlePageChange(page + 1)}>다음</button>
+                <button onClick={() => handlePageChange(totalPages)}>
+                  {lastPageButton}
+                </button>
+              </>
+            ) : (
+              <>
+                <span className="disabled">다음</span>
+                <span className="disabled">{lastPageButton}</span>
+              </>
+            )}
+          </>
+        )}
+      </div>
       <Link to="create-post" className={classes.add}>
         <p>게시글 추가</p>
       </Link>
