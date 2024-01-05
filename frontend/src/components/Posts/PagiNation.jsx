@@ -1,32 +1,29 @@
-import { Link, useLoaderData } from "react-router-dom";
+const Pagination = ({
+  page,
+  totalPages,
+  firstPageGroup,
+  lastPageGroup,
+  onPageChange,
+}) => {
+  const firstPageButton = "<<";
+  const lastPageButton = ">>";
 
-const Pagination = ({}) => {
-  const resData = useLoaderData();
+  const pageChangeHandler = (pageNum) => {
+    onPageChange(pageNum);
+  };
 
-  const page = resData.page;
-  const totalPages = resData.totalPages;
-  const firstPageGroup = resData.firstPageGroup;
-  const lastPageGroup = resData.lastPageGroup;
+  // let firstPageButton = totalPages > 1 && page > 1;
+  // let lastPageButton = page < totalPages;
 
-  const leftDoubleArrow = "<<";
-  const rightDoubleArrow = ">>";
+  // const pageButtons = [];
 
-  let firstPageButton = totalPages > 1 && page > 1;
-  let lastPageButton = page < totalPages;
-
-  // const pageClickHandler = (anotherPage) => {
-  //   onPageChange(anotherPage);
-  // };
-
-  const pageButtons = [];
-
-  for (let i = firstPageGroup; i <= lastPageGroup; i++) {
-    pageButtons.push(
-      <Link key={i} to={`/posts?page=${i}`}>
-        {i}
-      </Link>
-    );
-  }
+  // for (let i = firstPageGroup; i <= lastPageGroup; i++) {
+  //   pageButtons.push(
+  //     <Link key={i} to={`/posts?page=${i}`}>
+  //       {i}
+  //     </Link>
+  //   );
+  // }
 
   // const pageButtons = Array.from({
   //   length: lastPageGroup - firstPageGroup + 1,
@@ -41,7 +38,7 @@ const Pagination = ({}) => {
 
   return (
     <>
-      {firstPageButton && (
+      {/* {firstPageButton && (
         <>
           <Link>{leftDoubleArrow}</Link>
           <Link>이전</Link>
@@ -52,6 +49,53 @@ const Pagination = ({}) => {
         <>
           <Link>다음</Link>
           <Link>{rightDoubleArrow}</Link>
+        </>
+      )} */}
+      {totalPages > 1 && (
+        <>
+          {page > 1 ? (
+            <>
+              <button onClick={() => pageChangeHandler(1)}>
+                {firstPageButton}
+              </button>
+              <button onClick={() => pageChangeHandler(page - 1)}>이전</button>
+            </>
+          ) : (
+            <>
+              <span className="disabled">{firstPageButton}</span>
+              <span className="disabled">이전</span>
+            </>
+          )}
+
+          {Array.from(
+            { length: lastPageGroup - firstPageGroup + 1 },
+            (_, index) => {
+              const pageNumber = firstPageGroup + index;
+              return (
+                <button
+                  key={pageNumber}
+                  onClick={() => pageChangeHandler(pageNumber)}
+                  className={pageNumber === page ? "on" : ""}
+                >
+                  {pageNumber}
+                </button>
+              );
+            }
+          )}
+
+          {page < totalPages ? (
+            <>
+              <button onClick={() => pageChangeHandler(page + 1)}>다음</button>
+              <button onClick={() => pageChangeHandler(totalPages)}>
+                {lastPageButton}
+              </button>
+            </>
+          ) : (
+            <>
+              <span className="disabled">다음</span>
+              <span className="disabled">{lastPageButton}</span>
+            </>
+          )}
         </>
       )}
     </>
