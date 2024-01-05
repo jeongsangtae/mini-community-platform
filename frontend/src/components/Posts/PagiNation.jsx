@@ -1,6 +1,6 @@
 import { Link, useLoaderData } from "react-router-dom";
 
-const Pagination = ({ onPageChange }) => {
+const Pagination = ({}) => {
   const resData = useLoaderData();
 
   const page = resData.page;

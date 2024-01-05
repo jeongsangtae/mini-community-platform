@@ -18,24 +18,45 @@ const Posts = () => {
   const firstPageButton = "<<";
   const lastPageButton = ">>";
 
+  const fetchData = async (pageNumber) => {
+    const response = await fetch(
+      `http://localhost:3000/posts?page=${pageNumber}`
+    );
+    console.log(response);
+    const resData = await response.json();
+    return resData;
+  };
+
+  const fetchDataAndSetState = async (pageNumber) => {
+    const resData = await fetchData(pageNumber);
+    setPosts(resData.posts);
+    setTotalPages(resData.totalPages);
+    setFirstPageGroup(resData.firstPageGroup);
+    setLastPageGroup(resData.lastPageGroup);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/posts?page=${page}`);
-      console.log(response);
-      const resData = await response.json();
-      setPosts(resData.posts);
-      setTotalPages(resData.totalPages);
-      setFirstPageGroup(resData.firstPageGroup);
-      setLastPageGroup(resData.lastPageGroup);
-    };
-    fetchData();
+    fetchDataAndSetState(page);
   }, [page]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch(`http://localhost:3000/posts?page=${page}`);
+  //     console.log(response);
+  //     const resData = await response.json();
+  //     setPosts(resData.posts);
+  //     setTotalPages(resData.totalPages);
+  //     setFirstPageGroup(resData.firstPageGroup);
+  //     setLastPageGroup(resData.lastPageGroup);
+  //   };
+  //   fetchData();
+  // }, [page]);
 
   // const reversedPosts = posts.slice().reverse();
 
   // const pageChangeHandler = (anotherPage) => {};
 
-  const handlePageChange = (newPage) => {
+  const pageChangeHandler = (newPage) => {
     navigate(`/posts?page=${newPage}`);
 
     setPage(newPage);
@@ -70,10 +91,12 @@ const Posts = () => {
           <>
             {page > 1 ? (
               <>
-                <button onClick={() => handlePageChange(1)}>
+                <button onClick={() => pageChangeHandler(1)}>
                   {firstPageButton}
                 </button>
-                <button onClick={() => handlePageChange(page - 1)}>이전</button>
+                <button onClick={() => pageChangeHandler(page - 1)}>
+                  이전
+                </button>
               </>
             ) : (
               <>
@@ -89,7 +112,7 @@ const Posts = () => {
                 return (
                   <button
                     key={pageNumber}
-                    onClick={() => handlePageChange(pageNumber)}
+                    onClick={() => pageChangeHandler(pageNumber)}
                     className={pageNumber === page ? "on" : ""}
                   >
                     {pageNumber}
@@ -100,8 +123,10 @@ const Posts = () => {
 
             {page < totalPages ? (
               <>
-                <button onClick={() => handlePageChange(page + 1)}>다음</button>
-                <button onClick={() => handlePageChange(totalPages)}>
+                <button onClick={() => pageChangeHandler(page + 1)}>
+                  다음
+                </button>
+                <button onClick={() => pageChangeHandler(totalPages)}>
                   {lastPageButton}
                 </button>
               </>
