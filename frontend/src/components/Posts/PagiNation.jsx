@@ -1,3 +1,5 @@
+import classes from "./Pagination.module.css";
+
 const Pagination = ({
   page,
   totalPages,
@@ -52,7 +54,7 @@ const Pagination = ({
         </>
       )} */}
       {totalPages > 1 && (
-        <>
+        <div className={classes.pagination}>
           {page > 1 ? (
             <>
               <button onClick={() => pageChangeHandler(1)}>
@@ -62,8 +64,8 @@ const Pagination = ({
             </>
           ) : (
             <>
-              <span className="disabled">{firstPageButton}</span>
-              <span className="disabled">이전</span>
+              <span className={classes.disabled}>{firstPageButton}</span>
+              <span className={classes.disabled}>이전</span>
             </>
           )}
 
@@ -75,7 +77,7 @@ const Pagination = ({
                 <button
                   key={pageNumber}
                   onClick={() => pageChangeHandler(pageNumber)}
-                  className={pageNumber === page ? "on" : ""}
+                  className={pageNumber === page ? classes.on : ""}
                 >
                   {pageNumber}
                 </button>
@@ -92,11 +94,11 @@ const Pagination = ({
             </>
           ) : (
             <>
-              <span className="disabled">다음</span>
-              <span className="disabled">{lastPageButton}</span>
+              <span className={classes.disabled}>다음</span>
+              <span className={classes.disabled}>{lastPageButton}</span>
             </>
           )}
-        </>
+        </div>
       )}
     </>
   );
