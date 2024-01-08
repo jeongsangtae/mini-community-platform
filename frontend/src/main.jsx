@@ -14,7 +14,7 @@ import PostDetailsPage, {
 import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
-import SignupPage from "./pages/SignUpPage";
+import SignupPage, { action as signupAction } from "./pages/SignUpPage";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <PostDetailsPage />,
         loader: postDetailsLoader,
       },
-      { path: "signup", element: <SignupPage /> },
+      { path: "signup", element: <SignupPage />, action: signupAction },
       { path: "login", element: <LoginPage /> },
       { path: "profile", element: <ProfilePage /> },
     ],
