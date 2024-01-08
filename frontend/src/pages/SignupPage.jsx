@@ -15,13 +15,13 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const signupData = Object.fromEntries(formData);
 
-  await fetch("http://localhost:3000/singup", {
+  await fetch("http://localhost:3000/signup", {
     method: "POST",
     body: JSON.stringify(signupData),
     headers: { "Content-Type": "application/json" },
   });
 
-  console.log(formData);
+  console.log(signupData);
 
-  return redirect("/singup");
+  return redirect("/signup");
 };

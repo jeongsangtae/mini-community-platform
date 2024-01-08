@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Form } from "react-router-dom";
 
 import Modal from "../UI/Modal";
 import classes from "./Signup.module.css";
@@ -7,13 +7,13 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const closeHandler = () => {
-    navigate(-1);
+    navigate("/posts");
   };
 
   return (
     <Modal>
       <p className={classes.heading}>회원가입 페이지</p>
-      <form className={classes.form}>
+      <Form method="post" className={classes.form}>
         <div>
           <label htmlFor="email">이메일</label>
           <input required type="text" id="email" name="email" />
@@ -41,7 +41,7 @@ const Signup = () => {
         <Link to="/login" className={classes.login}>
           로그인 하러가기
         </Link>
-      </form>
+      </Form>
     </Modal>
   );
 };

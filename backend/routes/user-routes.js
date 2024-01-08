@@ -20,11 +20,12 @@ router.post("/signup", async function (req, res) {
     password: hashPassword,
   };
 
-  await db.getDb().collection("users").insertOne(user);
+  const result = await db.getDb().collection("users").insertOne(user);
 
-  console.log(user);
+  console.log(result);
 
   res.status(201).json({ message: "Success" });
+  // res.status(500).send("Internal Server Error");
 });
 
 module.exports = router;
