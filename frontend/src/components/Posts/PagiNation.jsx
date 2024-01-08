@@ -10,93 +10,45 @@ const Pagination = ({
   const firstPageButton = "<<";
   const lastPageButton = ">>";
 
+  let firstPage = page > 1;
+  let lastPage = page < totalPages;
+
   const pageChangeHandler = (pageNum) => {
     onPageChange(pageNum);
   };
 
-  // let firstPageButton = totalPages > 1 && page > 1;
-  // let lastPageButton = page < totalPages;
+  const pageMove = (condition, label, clickEvent) => {
+    return condition && <button onClick={clickEvent}>{label}</button>;
+  };
 
-  // const pageButtons = [];
-
-  // for (let i = firstPageGroup; i <= lastPageGroup; i++) {
-  //   pageButtons.push(
-  //     <Link key={i} to={`/posts?page=${i}`}>
-  //       {i}
-  //     </Link>
-  //   );
-  // }
-
-  // const pageButtons = Array.from({
-  //   length: lastPageGroup - firstPageGroup + 1,
-  // }).map((_, index) => {
-  //   const i = index + firstPageGroup;
-  //   return (
-  //     <Link key={i} to={`/posts?page=${i}`}>
-  //       {i}
-  //     </Link>
-  //   );
-  // });
+  const pageNumber = Array.from(
+    { length: lastPageGroup - firstPageGroup + 1 },
+    (_, index) => {
+      const pageNumber = firstPageGroup + index;
+      return (
+        <button
+          key={pageNumber}
+          onClick={() => pageChangeHandler(pageNumber)}
+          className={pageNumber === page ? classes.on : ""}
+        >
+          {pageNumber}
+        </button>
+      );
+    }
+  );
 
   return (
     <>
-      {/* {firstPageButton && (
-        <>
-          <Link>{leftDoubleArrow}</Link>
-          <Link>이전</Link>
-        </>
-      )}
-      {pageButtons}
-      {lastPageButton && (
-        <>
-          <Link>다음</Link>
-          <Link>{rightDoubleArrow}</Link>
-        </>
-      )} */}
       {totalPages > 1 && (
         <div className={classes.pagination}>
-          {page > 1 ? (
-            <>
-              <button onClick={() => pageChangeHandler(1)}>
-                {firstPageButton}
-              </button>
-              <button onClick={() => pageChangeHandler(page - 1)}>이전</button>
-            </>
-          ) : (
-            <>
-              <span className={classes.disabled}>{firstPageButton}</span>
-              <span className={classes.disabled}>이전</span>
-            </>
-          )}
+          {pageMove(firstPage, firstPageButton, () => pageChangeHandler(1))}
+          {pageMove(firstPage, "이전", () => pageChangeHandler(page - 1))}
 
-          {Array.from(
-            { length: lastPageGroup - firstPageGroup + 1 },
-            (_, index) => {
-              const pageNumber = firstPageGroup + index;
-              return (
-                <button
-                  key={pageNumber}
-                  onClick={() => pageChangeHandler(pageNumber)}
-                  className={pageNumber === page ? classes.on : ""}
-                >
-                  {pageNumber}
-                </button>
-              );
-            }
-          )}
+          {pageNumber}
 
-          {page < totalPages ? (
-            <>
-              <button onClick={() => pageChangeHandler(page + 1)}>다음</button>
-              <button onClick={() => pageChangeHandler(totalPages)}>
-                {lastPageButton}
-              </button>
-            </>
-          ) : (
-            <>
-              <span className={classes.disabled}>다음</span>
-              <span className={classes.disabled}>{lastPageButton}</span>
-            </>
+          {pageMove(lastPage, "다음", () => pageChangeHandler(page + 1))}
+          {pageMove(lastPage, lastPageButton, () =>
+            pageChangeHandler(totalPages)
           )}
         </div>
       )}
