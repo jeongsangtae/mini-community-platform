@@ -16,12 +16,17 @@ const Signup = () => {
       <Form method="post" className={classes.form}>
         <div>
           <label htmlFor="email">이메일</label>
-          <input required type="text" id="email" name="email" />
+          <input required type="email" id="email" name="email" />
         </div>
 
         <div>
           <label htmlFor="email-confirm">이메일 확인</label>
-          <input required type="text" id="email-confirm" name="email-confirm" />
+          <input
+            required
+            type="email"
+            id="email-confirm"
+            name="email-confirm"
+          />
         </div>
 
         <div>

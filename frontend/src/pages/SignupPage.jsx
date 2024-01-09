@@ -23,5 +23,5 @@ export const action = async ({ request }) => {
 
   console.log(signupData);
 
-  return redirect("/signup");
+  return redirect("/login");
 };
