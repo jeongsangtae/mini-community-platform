@@ -1,10 +1,11 @@
-import { Link, useNavigate, Form } from "react-router-dom";
+import { Link, useNavigate, Form, useLoaderData } from "react-router-dom";
 
 import Modal from "../UI/Modal";
 import classes from "./Signup.module.css";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const inputData = useLoaderData();
 
   const closeHandler = () => {
     navigate(-1);
@@ -13,6 +14,7 @@ const Signup = () => {
   return (
     <Modal>
       <p className={classes.heading}>회원가입 페이지</p>
+      {inputData.hasError && <p>{inputData.hasError.message}</p>}
       <Form method="post" className={classes.form}>
         <div>
           <label htmlFor="email">이메일</label>

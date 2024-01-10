@@ -14,7 +14,10 @@ import PostDetailsPage, {
 import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
-import SignupPage, { action as signupAction } from "./pages/SignUpPage";
+import SignupPage, {
+  action as signupAction,
+  loader as signupLoader,
+} from "./pages/SignUpPage";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
 
 const router = createBrowserRouter([
@@ -38,7 +41,12 @@ const router = createBrowserRouter([
         element: <PostDetailsPage />,
         loader: postDetailsLoader,
       },
-      { path: "signup", element: <SignupPage />, action: signupAction },
+      {
+        path: "signup",
+        element: <SignupPage />,
+        action: signupAction,
+        loader: signupLoader,
+      },
       { path: "signup-success", element: <SignupSuccessPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "profile", element: <ProfilePage /> },

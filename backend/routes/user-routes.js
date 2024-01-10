@@ -5,12 +5,70 @@ const db = require("../data/database");
 
 const router = express.Router();
 
+router.get("/signup", function (req, res) {
+  let sessionSignUpInputData = req.session.inputData;
+
+  if (!sessionSignUpInputData) {
+    sessionSignUpInputData = {
+      hasError: false,
+      email: "",
+      confirmEmail: "",
+      name: "",
+      password: "",
+    };
+  }
+
+  req.session.inputData = null;
+
+  res.json({ inputData: sessionSignUpInputData });
+});
+
+// 가입한 이메일, 패스워드를 mongodb에 저장
+// 패스워드는 bcrypt를 통해서 hash되며, 안전하게 저장
 router.post("/signup", async function (req, res) {
   const userData = req.body;
   const signUpEmail = userData.email;
   const signUpConfirmEmail = userData["email-confirm"];
   const signUpName = userData.name;
   const signUpPassword = userData.password;
+
+  // 이메일, 이메일확인, 이름, 패스워드 등 잘못된 입력을 확인하는 코드
+  if (
+    !signUpEmail ||
+    !signUpConfirmEmail ||
+    !signUpName ||
+    !signUpPassword ||
+    signUpEmail !== signUpConfirmEmail ||
+    !signUpEmail.includes("@")
+  ) {
+    req.session.inputData = {
+      hasError: true,
+      message: "잘못된 입력입니다. 다시 입력해주세요.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      name: signUpName,
+      password: signUpPassword,
+    };
+
+    req.session.save(() => {
+      res.redirect("/signup");
+    });
+    return;
+  } else if (signUpName.trim().length > 6) {
+    req.session.inputData = {
+      hasError: true,
+      message: "이름은 6자리까지 입력할 수 있습니다.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      name: signUpName,
+      password: signUpPassword,
+    };
+
+    req.session.save(() => {
+      res.redirect("/signup");
+    });
+    return;
+  }
 
   const hashPassword = await bcrypt.hash(signUpPassword, 12);
 

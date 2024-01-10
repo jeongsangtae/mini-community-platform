@@ -25,3 +25,9 @@ export const action = async ({ request }) => {
 
   return redirect("/signup-success");
 };
+
+export const loader = async () => {
+  const response = await fetch("http://localhost:3000/posts");
+  const resData = await response.json();
+  return resData;
+};
