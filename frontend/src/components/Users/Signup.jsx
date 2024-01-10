@@ -7,7 +7,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const closeHandler = () => {
-    navigate("/posts");
+    navigate(-1);
   };
 
   return (
