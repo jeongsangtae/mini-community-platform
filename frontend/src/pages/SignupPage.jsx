@@ -27,7 +27,7 @@ export const action = async ({ request }) => {
 };
 
 export const loader = async () => {
-  const response = await fetch("http://localhost:3000/posts");
+  const response = await fetch("http://localhost:3000/signup");
   const resData = await response.json();
   return resData;
 };

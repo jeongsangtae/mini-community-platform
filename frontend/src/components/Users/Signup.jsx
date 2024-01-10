@@ -14,7 +14,7 @@ const Signup = () => {
   return (
     <Modal>
       <p className={classes.heading}>회원가입 페이지</p>
-      {inputData.hasError && <p>{inputData.hasError.message}</p>}
+      {inputData.hasError && <p>{inputData.message}</p>}
       <Form method="post" className={classes.form}>
         <div>
           <label htmlFor="email">이메일</label>

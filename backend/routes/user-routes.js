@@ -5,7 +5,7 @@ const db = require("../data/database");
 
 const router = express.Router();
 
-router.get("/signup", function (req, res) {
+router.get("/signup", (req, res) => {
   let sessionSignUpInputData = req.session.inputData;
 
   if (!sessionSignUpInputData) {
@@ -25,7 +25,7 @@ router.get("/signup", function (req, res) {
 
 // 가입한 이메일, 패스워드를 mongodb에 저장
 // 패스워드는 bcrypt를 통해서 hash되며, 안전하게 저장
-router.post("/signup", async function (req, res) {
+router.post("/signup", async (req, res) => {
   const userData = req.body;
   const signUpEmail = userData.email;
   const signUpConfirmEmail = userData["email-confirm"];

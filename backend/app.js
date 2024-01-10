@@ -1,7 +1,9 @@
 const path = require("path");
 
 const express = require("express");
+const expressSession = require("express-session");
 
+const createSessionConfig = require("./config/session");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
 const db = require("./data/database");
@@ -40,6 +42,10 @@ app.use(bodyParser.json());
 
 // CORS 미들웨어를 사용해서 연결
 app.use(cors());
+
+const sessionConfig = createSessionConfig();
+
+app.use(expressSession(sessionConfig));
 
 app.use(boardRoutes);
 app.use(userRoutes);
