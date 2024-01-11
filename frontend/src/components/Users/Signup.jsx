@@ -18,7 +18,7 @@ const Signup = () => {
   return (
     <Modal>
       {inputData.message}
-      {inputData.hasError}
+      {inputData.hasError && <p>{inputData.message}</p>}
       {inputData.name}
       {inputData.email}
       {inputData.confirmEmail}

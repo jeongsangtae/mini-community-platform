@@ -22,15 +22,17 @@ export const action = async ({ request }) => {
       headers: { "Content-Type": "application/json" },
     });
 
-    if (response.ok) {
+    if (response.status === 201) {
       console.log("회원가입 성공");
       return redirect("/signup");
     } else {
       const errorData = await response.json();
-      console.log("회원가입 실패", errorData.message);
+      console.log(errorData.message);
+      return null;
     }
   } catch (error) {
     console.error("회원가입 중 오류 발생:", error);
+    return null;
   }
 };
 
