@@ -20,7 +20,6 @@ const createSessionStore = () => {
     databaseName: "mini-community-platform",
     collection: "sessions",
   });
-
   return sessionStore;
 };
 

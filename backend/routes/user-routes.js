@@ -51,8 +51,9 @@ router.post("/signup", async (req, res) => {
     };
 
     req.session.save(() => {
-      res.redirect("/signup");
+      res.json({ message: "잘못된 입력입니다. 다시 입력해주세요." });
     });
+
     return;
   } else if (signUpName.trim().length > 6) {
     req.session.inputData = {
@@ -65,8 +66,9 @@ router.post("/signup", async (req, res) => {
     };
 
     req.session.save(() => {
-      res.redirect("/signup");
+      res.json({ message: "이름은 6자리까지 입력할 수 있습니다." });
     });
+
     return;
   }
 

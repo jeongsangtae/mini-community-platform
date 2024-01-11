@@ -11,10 +11,19 @@ const Signup = () => {
     navigate(-1);
   };
 
+  if (!inputData) {
+    return <p>입력 데이터 없음</p>;
+  }
+
   return (
     <Modal>
+      {inputData.message}
+      {inputData.hasError}
+      {inputData.name}
+      {inputData.email}
+      {inputData.confirmEmail}
+      {inputData.password}
       <p className={classes.heading}>회원가입 페이지</p>
-      {inputData.hasError && <p>{inputData.message}</p>}
       <Form method="post" className={classes.form}>
         <div>
           <label htmlFor="email">이메일</label>

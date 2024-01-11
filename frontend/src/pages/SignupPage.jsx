@@ -15,15 +15,23 @@ export const action = async ({ request }) => {
   const formData = await request.formData();
   const signupData = Object.fromEntries(formData);
 
-  await fetch("http://localhost:3000/signup", {
-    method: "POST",
-    body: JSON.stringify(signupData),
-    headers: { "Content-Type": "application/json" },
-  });
+  try {
+    const response = await fetch("http://localhost:3000/signup", {
+      method: "POST",
+      body: JSON.stringify(signupData),
+      headers: { "Content-Type": "application/json" },
+    });
 
-  console.log(signupData);
-
-  return redirect("/signup-success");
+    if (response.ok) {
+      console.log("회원가입 성공");
+      return redirect("/signup");
+    } else {
+      const errorData = await response.json();
+      console.log("회원가입 실패", errorData.message);
+    }
+  } catch (error) {
+    console.error("회원가입 중 오류 발생:", error);
+  }
 };
 
 export const loader = async () => {
