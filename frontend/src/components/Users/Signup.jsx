@@ -22,12 +22,12 @@ const Signup = () => {
         </div>
 
         <div>
-          <label htmlFor="email-confirm">이메일 확인</label>
+          <label htmlFor="confirm-email">이메일 확인</label>
           <input
             required
             type="email"
-            id="email-confirm"
-            name="email-confirm"
+            id="confirm-email"
+            name="confirm-email"
           />
         </div>
 

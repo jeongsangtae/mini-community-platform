@@ -1,7 +1,10 @@
 const expressSession = require("express-session");
 const mongoDbStore = require("connect-mongodb-session");
+const dotenv = require("dotenv");
 
-const secretKey = process.env.S_K;
+dotenv.config();
+
+const secretKey = process.env.SECRET_KEY;
 
 let mongodbUrl = "mongodb://127.0.0.1:27017";
 
@@ -14,7 +17,7 @@ const createSessionStore = () => {
 
   const sessionStore = new MongoDBStore({
     uri: mongodbUrl,
-    databaseName: "bulletin-board",
+    databaseName: "mini-community-platform",
     collection: "sessions",
   });
 

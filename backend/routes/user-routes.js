@@ -28,7 +28,7 @@ router.get("/signup", (req, res) => {
 router.post("/signup", async (req, res) => {
   const userData = req.body;
   const signUpEmail = userData.email;
-  const signUpConfirmEmail = userData["email-confirm"];
+  const signUpConfirmEmail = userData["confirm-email"];
   const signUpName = userData.name;
   const signUpPassword = userData.password;
 
