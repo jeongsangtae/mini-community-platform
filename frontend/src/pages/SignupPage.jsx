@@ -24,7 +24,7 @@ export const action = async ({ request }) => {
 
     if (response.status === 201) {
       console.log("회원가입 성공");
-      return redirect("/signup");
+      return redirect("/signup-success");
     } else {
       const errorData = await response.json();
       console.log(errorData.message);

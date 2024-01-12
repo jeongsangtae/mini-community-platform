@@ -66,7 +66,7 @@ router.post("/signup", async (req, res) => {
     };
 
     req.session.save(() => {
-      res.status(400).json({ message: "이름은 6자리까지 입력할 수 있습니다." });
+      res.json({ message: "이름은 6자리까지 입력할 수 있습니다." });
     });
 
     return;
