@@ -1,30 +1,11 @@
-import { Link, useNavigate, Form, useLoaderData } from "react-router-dom";
-
 import Modal from "../UI/Modal";
 import classes from "./Signup.module.css";
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const inputData = useLoaderData();
-
-  const closeHandler = () => {
-    navigate(-1);
-  };
-
-  if (!inputData) {
-    return <p>입력 데이터 없음</p>;
-  }
-
   return (
     <Modal>
-      {inputData.message}
-      {inputData.hasError && <p>{inputData.message}</p>}
-      {inputData.name}
-      {inputData.email}
-      {inputData.confirmEmail}
-      {inputData.password}
       <p className={classes.heading}>회원가입 페이지</p>
-      <Form method="post" className={classes.form}>
+      <form method="post" className={classes.form}>
         <div>
           <label htmlFor="email">이메일</label>
           <input required type="email" id="email" name="email" />
@@ -54,10 +35,10 @@ const Signup = () => {
           <button>가입</button>
           <button onClick={closeHandler}>취소</button>
         </div>
-        <Link to="/login" className={classes.login}>
+        <a href="/login" className={classes.login}>
           로그인 하러가기
-        </Link>
-      </Form>
+        </a>
+      </form>
     </Modal>
   );
 };

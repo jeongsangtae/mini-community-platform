@@ -19,14 +19,14 @@ const MainHeader = () => {
             </NavLink>
           </p>
           <p>
-            <NavLink to="/signup" className={classes.button}>
+            <a href="/signup" className={classes.button}>
               회원가입
-            </NavLink>
+            </a>
           </p>
           <p>
-            <NavLink to="/login" className={classes.button}>
+            <a href="/login" className={classes.button}>
               로그인
-            </NavLink>
+            </a>
           </p>
           <p>
             <NavLink to="/profile" className={classes.button}>
