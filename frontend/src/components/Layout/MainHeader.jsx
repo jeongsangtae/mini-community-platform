@@ -1,8 +1,23 @@
+import { useState } from "react";
+
 import { NavLink } from "react-router-dom";
+import Login from "../Users/Login";
+import Signup from "../Users/Signup";
 
 import classes from "./MainHeader.module.css";
 
 const MainHeader = () => {
+  const [onSignup, setOnSignup] = useState(false);
+  const [onLogin, setOnLogin] = useState(false);
+
+  const signupToggleHandler = () => {
+    setOnSignup(!onSignup);
+  };
+
+  const loginToggleHandler = () => {
+    setOnLogin(!onLogin);
+  };
+
   return (
     <>
       <header className={classes.header}>
@@ -19,10 +34,14 @@ const MainHeader = () => {
             </NavLink>
           </p>
           <p>
-            <button className={classes.button}>회원가입</button>
+            <button className={classes.button} onClick={signupToggleHandler}>
+              회원가입
+            </button>
           </p>
           <p>
-            <button className={classes.button}>로그인</button>
+            <button className={classes.button} onClick={loginToggleHandler}>
+              로그인
+            </button>
           </p>
           <p>
             <NavLink to="/profile" className={classes.button}>
@@ -31,6 +50,8 @@ const MainHeader = () => {
           </p>
         </nav>
       </header>
+      {onSignup && <Signup toggle={signupToggleHandler} />}
+      {onLogin && <Login toggle={loginToggleHandler} />}
     </>
   );
 };

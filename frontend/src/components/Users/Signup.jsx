@@ -1,9 +1,9 @@
 import Modal from "../UI/Modal";
 import classes from "./Signup.module.css";
 
-const Signup = () => {
+const Signup = ({ toggle }) => {
   return (
-    <Modal>
+    <Modal onClose={toggle}>
       <p className={classes.heading}>회원가입 페이지</p>
       <form method="post" className={classes.form}>
         <div>
@@ -33,7 +33,7 @@ const Signup = () => {
 
         <div className={classes.actions}>
           <button>가입</button>
-          <button onClick={closeHandler}>취소</button>
+          <button onClick={toggle}>취소</button>
         </div>
         <a href="/login" className={classes.login}>
           로그인 하러가기
