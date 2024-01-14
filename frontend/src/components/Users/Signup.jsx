@@ -5,7 +5,7 @@ import classes from "./Signup.module.css";
 
 const Signup = ({ toggle }) => {
   const [signupData, setSignupData] = useState({
-    name: "",
+    username: "",
     email: "",
     confirmEmail: "",
     password: "",
@@ -16,23 +16,30 @@ const Signup = ({ toggle }) => {
     setSignupData({ ...signupData, [name]: value });
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
 
     console.log(signupData);
 
-    setSignupData({
-      name: "",
-      email: "",
-      confirmEmail: "",
-      password: "",
+    const response = await fetch("http://localhost:3000/signup", {
+      method: "POST",
+      body: JSON.stringify(signupData),
+      headers: { "Content-Type": "application/json" },
     });
 
-    // const response = fetch("http://localhost:3000/signup", {
-    //   method: "POST",
-    //   body: JSON.stringify(signData),
-    //   headers: {"Content-Type": "application/json"}
-    // })
+    if (response.status === 201) {
+      console.log("회원가입 성공");
+      return setSignupData({
+        username: "",
+        email: "",
+        confirmEmail: "",
+        password: "",
+      });
+    } else {
+      const errorData = await response.json();
+      console.log(errorData.message);
+      return null;
+    }
   };
 
   return (
@@ -64,13 +71,13 @@ const Signup = ({ toggle }) => {
         </div>
 
         <div>
-          <label htmlFor="name">이름</label>
+          <label htmlFor="username">이름</label>
           <input
             required
             type="text"
-            id="name"
-            name="name"
-            value={signupData.name}
+            id="username"
+            name="username"
+            value={signupData.username}
             onChange={inputChangeHandler}
           />
         </div>

@@ -28,15 +28,15 @@ router.get("/signup", (req, res) => {
 router.post("/signup", async (req, res) => {
   const userData = req.body;
   const signUpEmail = userData.email;
-  const signUpConfirmEmail = userData["confirm-email"];
-  const signUpName = userData.name;
+  const signUpConfirmEmail = userData.confirmEmail;
+  const signUpUsername = userData.username;
   const signUpPassword = userData.password;
 
   // 이메일, 이메일확인, 이름, 패스워드 등 잘못된 입력을 확인하는 코드
   if (
     !signUpEmail ||
     !signUpConfirmEmail ||
-    !signUpName ||
+    !signUpUsername ||
     !signUpPassword ||
     signUpEmail !== signUpConfirmEmail ||
     !signUpEmail.includes("@")
@@ -46,27 +46,29 @@ router.post("/signup", async (req, res) => {
       message: "잘못된 입력입니다. 다시 입력해주세요.",
       email: signUpEmail,
       confirmEmail: signUpConfirmEmail,
-      name: signUpName,
+      name: signUpUsername,
       password: signUpPassword,
     };
 
     req.session.save(() => {
-      res.json({ message: "잘못된 입력입니다. 다시 입력해주세요." });
+      res
+        .status(400)
+        .json({ message: "잘못된 입력입니다. 다시 입력해주세요." });
     });
 
     return;
-  } else if (signUpName.trim().length > 6) {
+  } else if (signUpUsername.trim().length > 6) {
     req.session.inputData = {
       hasError: true,
       message: "이름은 6자리까지 입력할 수 있습니다.",
       email: signUpEmail,
       confirmEmail: signUpConfirmEmail,
-      name: signUpName,
+      name: signUpUsername,
       password: signUpPassword,
     };
 
     req.session.save(() => {
-      res.json({ message: "이름은 6자리까지 입력할 수 있습니다." });
+      res.status(400).json({ message: "이름은 6자리까지 입력할 수 있습니다." });
     });
 
     return;
@@ -76,7 +78,7 @@ router.post("/signup", async (req, res) => {
 
   const user = {
     email: signUpEmail,
-    name: signUpName,
+    name: signUpUsername,
     password: hashPassword,
   };
 
