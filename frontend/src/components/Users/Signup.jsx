@@ -11,6 +11,9 @@ const Signup = ({ toggle }) => {
     password: "",
   });
 
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
     setSignupData({ ...signupData, [name]: value });
@@ -37,7 +40,8 @@ const Signup = ({ toggle }) => {
       });
     } else {
       const errorData = await response.json();
-      console.log(errorData.message);
+      setError(true);
+      setErrorMessage(errorData.message);
       return null;
     }
   };
@@ -45,7 +49,8 @@ const Signup = ({ toggle }) => {
   return (
     <Modal onClose={toggle}>
       <p className={classes.heading}>회원가입 페이지</p>
-      <form method="post" className={classes.form} onSubmit={submitHandler}>
+      {error && <p>{errorMessage}</p>}
+      <form className={classes.form} onSubmit={submitHandler}>
         <div>
           <label htmlFor="email">이메일</label>
           <input
