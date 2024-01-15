@@ -19,6 +19,8 @@ const createSessionStore = () => {
     uri: mongodbUrl,
     databaseName: "mini-community-platform",
     collection: "sessions",
+    clearExpired: true,
+    checkExpirationInterval: 60 * 60 * 1000,
   });
   return sessionStore;
 };
@@ -29,6 +31,9 @@ const createSessionConfig = () => {
     resave: false,
     saveUninitialized: false,
     store: createSessionStore(),
+    cookie: {
+      maxAge: 2 * 60 * 60 * 1000,
+    },
   };
 };
 

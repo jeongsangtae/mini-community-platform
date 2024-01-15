@@ -30,7 +30,12 @@ const Signup = ({ toggle }) => {
       headers: { "Content-Type": "application/json" },
     });
 
-    if (response.status === 201) {
+    if (!response.ok) {
+      const errorData = await response.json();
+      setError(true);
+      setErrorMessage(errorData.message);
+      return null;
+    } else {
       console.log("회원가입 성공");
       return setSignupData({
         username: "",
@@ -38,11 +43,6 @@ const Signup = ({ toggle }) => {
         confirmEmail: "",
         password: "",
       });
-    } else {
-      const errorData = await response.json();
-      setError(true);
-      setErrorMessage(errorData.message);
-      return null;
     }
   };
 
