@@ -18,7 +18,7 @@ router.get("/signup", (req, res) => {
     };
   }
 
-  req.session.inputData = null;
+  req.session.inputData = {};
 
   res.json({ inputData: sessionSignUpInputData });
 });
@@ -69,6 +69,41 @@ router.post("/signup", async (req, res) => {
       res.status(400).json(req.session.inputData);
     });
 
+    return;
+  } else if (signUpPassword.trim().length < 6) {
+    req.session.inputData = {
+      hasError: true,
+      message: "비밀번호를 6자리 이상 입력해주세요.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      name: signUpUsername,
+      password: signUpPassword,
+    };
+
+    req.session.save(function () {
+      res.status(400).json(req.session.inputData);
+    });
+    return;
+  }
+
+  const existingSignUpUser = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: signUpEmail });
+
+  // 이메일이 이미 존재하는지 확인해 다른 이메일을 입력하도록 한다.
+  if (existingSignUpUser) {
+    req.session.inputData = {
+      hasError: true,
+      message: "해당 이메일은 이미 사용중입니다.",
+      email: signUpEmail,
+      confirmEmail: signUpConfirmEmail,
+      name: signUpUsername,
+      password: signUpPassword,
+    };
+    req.session.save(function () {
+      res.status(400).json(req.session.inputData);
+    });
     return;
   }
 
