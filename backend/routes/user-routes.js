@@ -80,7 +80,7 @@ router.post("/signup", async (req, res) => {
       password: signUpPassword,
     };
 
-    req.session.save(function () {
+    req.session.save(() => {
       res.status(400).json(req.session.inputData);
     });
     return;
@@ -101,7 +101,7 @@ router.post("/signup", async (req, res) => {
       name: signUpUsername,
       password: signUpPassword,
     };
-    req.session.save(function () {
+    req.session.save(() => {
       res.status(400).json(req.session.inputData);
     });
     return;
@@ -121,6 +121,80 @@ router.post("/signup", async (req, res) => {
 
   res.status(201).json({ message: "Success" });
   // res.status(500).send("Internal Server Error");
+});
+
+router.get("/login", (req, res) => {
+  let sessionLoginInputData = req.session.inputData;
+
+  // 로그인 페이지 내용을 빈 내용으로 초기화
+  if (!sessionLoginInputData) {
+    sessionLoginInputData = {
+      hasError: false,
+      email: "",
+      name: "",
+      password: "",
+    };
+  }
+
+  req.session.inputData = {};
+
+  res.json({ inputData: sessionLoginInputData });
+});
+
+router.post("/login", async (req, res) => {
+  const userData = req.body;
+  const loginEmail = userData.email;
+  const loginPassword = userData.password;
+
+  const existingLoginUser = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginEmail });
+
+  // 이메일이 존재하는지 확인
+  if (!existingLoginUser) {
+    req.session.inputData = {
+      hasError: true,
+      message: "로그인할 수 없습니다. 존재하지 않는 이메일입니다.",
+      email: loginEmail,
+      password: loginPassword,
+    };
+    req.session.save(() => {
+      res.status(400).json(req.session.inputData);
+    });
+    return;
+  }
+
+  const passwordEqual = await bcrypt.compare(
+    loginPassword,
+    existingLoginUser.password
+  );
+
+  // 해싱되기전 비밀번호와 해싱된 후 비밀번호를 비교해 일치하는지 확인
+  if (!passwordEqual) {
+    req.session.inputData = {
+      hasError: true,
+      message: "로그인할 수 없습니다. 패스워드가 틀렸습니다.",
+      email: loginEmail,
+      password: loginPassword,
+    };
+    req.session.save(() => {
+      res.status(400).json(req.session.inputData);
+    });
+    return;
+  }
+
+  req.session.user = {
+    id: existingLoginUser._id,
+    name: existingLoginUser.name,
+    email: existingLoginUser.email,
+  };
+
+  req.session.isAuthenticated = true;
+
+  req.session.save(() => {
+    res.status(201).json({ message: "Success" });
+  });
 });
 
 module.exports = router;

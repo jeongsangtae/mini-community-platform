@@ -4,9 +4,10 @@ const express = require("express");
 const expressSession = require("express-session");
 
 const createSessionConfig = require("./config/session");
+const db = require("./data/database");
+const userAuthMiddleware = require("./middlewares/user");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
-const db = require("./data/database");
 
 const app = express();
 const cors = require("cors");
@@ -46,6 +47,8 @@ app.use(cors());
 const sessionConfig = createSessionConfig();
 
 app.use(expressSession(sessionConfig));
+
+app.use(userAuthMiddleware);
 
 app.use(boardRoutes);
 app.use(userRoutes);
