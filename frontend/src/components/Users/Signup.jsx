@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import Modal from "../UI/Modal";
@@ -13,6 +14,8 @@ const Signup = ({ toggle }) => {
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -37,12 +40,8 @@ const Signup = ({ toggle }) => {
       return null;
     } else {
       console.log("회원가입 성공");
-      return setSignupData({
-        username: "",
-        email: "",
-        confirmEmail: "",
-        password: "",
-      });
+      toggle();
+      return navigate("signup-success");
     }
   };
 
