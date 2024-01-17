@@ -8,20 +8,40 @@ const Login = ({ toggle }) => {
     password: "",
   });
 
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
     setLoginData({ ...loginData, [name]: value });
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
 
     console.log(loginData);
+
+    const response = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      body: JSON.stringify(loginData),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      setError(true);
+      setErrorMessage(errorData.message);
+      return null;
+    } else {
+      console.log("로그인 성공");
+      return toggle();
+    }
   };
 
   return (
     <Modal onClose={toggle}>
       <p className={classes.heading}>로그인 페이지</p>
+      {error && <p>{errorMessage}</p>}
       <form className={classes.form} onSubmit={submitHandler}>
         <div>
           <label htmlFor="email">이메일</label>
