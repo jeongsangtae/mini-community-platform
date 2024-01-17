@@ -193,7 +193,10 @@ router.post("/login", async (req, res) => {
   req.session.isAuthenticated = true;
 
   req.session.save(() => {
-    res.status(201).json({ message: "Success" });
+    res.status(201).json({
+      message: "Success",
+      isAuthenticated: req.session.isAuthenticated,
+    });
   });
 });
 
