@@ -15,7 +15,7 @@ const MainHeader = () => {
     setOnSignup(!onSignup);
   };
 
-  const loginToggleHandler = async () => {
+  const loginToggleHandler = async (loginData) => {
     setOnLogin(!onLogin);
 
     const response = await fetch("http://localhost:3000/login", {
@@ -27,7 +27,6 @@ const MainHeader = () => {
     if (response.ok) {
       const authenticatedData = await response.json();
       setIsAuthenticated(authenticatedData.isAuthenticated);
-      toggle(authenticatedData.isAuthenticated);
     }
   };
 
