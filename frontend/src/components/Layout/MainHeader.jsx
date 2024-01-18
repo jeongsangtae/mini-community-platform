@@ -24,9 +24,14 @@ const MainHeader = () => {
       headers: { "Content-Type": "application/json" },
     });
 
+    // console.log("Login Data:", loginData);
+    // console.log("Login Data's prototype:", Object.getPrototypeOf(loginData));
+
     if (response.ok) {
       const authenticatedData = await response.json();
       setIsAuthenticated(authenticatedData.isAuthenticated);
+      // console.log("Login Data:", loginData);
+      // console.log("Login Data's prototype:", Object.getPrototypeOf(loginData));
     }
   };
 

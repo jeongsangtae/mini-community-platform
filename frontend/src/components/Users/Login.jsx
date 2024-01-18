@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import Modal from "../UI/Modal";
 import classes from "./Login.module.css";
 
@@ -19,13 +20,15 @@ const Login = ({ toggle }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    console.log(loginData);
+    // console.log("Login Data before fetch:", loginData);
 
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       body: JSON.stringify(loginData),
       headers: { "Content-Type": "application/json" },
     });
+
+    // console.log("Login Data after fetch:", loginData);
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -34,7 +37,7 @@ const Login = ({ toggle }) => {
       return null;
     } else {
       console.log("로그인 성공");
-      console.log(loginData);
+      // console.log(loginData);
       return toggle(loginData);
     }
   };
