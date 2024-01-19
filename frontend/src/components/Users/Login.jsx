@@ -37,8 +37,9 @@ const Login = ({ toggle }) => {
       return null;
     } else {
       console.log("로그인 성공");
+      const sessionData = await response.json();
       // console.log(loginData);
-      return toggle(loginData);
+      toggle(sessionData);
     }
   };
 
