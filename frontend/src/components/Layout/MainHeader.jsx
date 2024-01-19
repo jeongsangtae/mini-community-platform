@@ -11,17 +11,6 @@ const MainHeader = () => {
   const [onLogin, setOnLogin] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
-  const fetchData = async () => {
-    const response = await fetch("http://localhost:3000/login");
-    const resData = await response.json();
-    console.log(resData);
-    setAuthenticated(resData.isAuthenticated);
-  };
-
-  useEffect(() => {
-    fetchData(authenticated);
-  }, []);
-
   const signupToggleHandler = () => {
     setOnSignup(!onSignup);
   };
@@ -44,6 +33,11 @@ const MainHeader = () => {
     //   // console.log("Login Data:", loginData);
     //   // console.log("Login Data's prototype:", Object.getPrototypeOf(loginData));
     // }
+  };
+
+  const authenticatedHandler = (isAuthenticated) => {
+    console.log(isAuthenticated);
+    setAuthenticated(isAuthenticated);
   };
 
   return (
@@ -125,7 +119,9 @@ const MainHeader = () => {
       {!authenticated && (
         <>
           {onSignup && <Signup toggle={signupToggleHandler} />}
-          {onLogin && <Login toggle={loginToggleHandler} />}
+          {onLogin && (
+            <Login toggle={loginToggleHandler} login={authenticatedHandler} />
+          )}
         </>
       )}
       {/* {onSignup && <Signup toggle={signupToggleHandler} />}

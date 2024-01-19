@@ -3,7 +3,7 @@ import { useState } from "react";
 import Modal from "../UI/Modal";
 import classes from "./Login.module.css";
 
-const Login = ({ toggle }) => {
+const Login = ({ toggle, login }) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -39,7 +39,8 @@ const Login = ({ toggle }) => {
       console.log("로그인 성공");
       const sessionData = await response.json();
       // console.log(loginData);
-      toggle(sessionData);
+      login(sessionData.isAuthenticated);
+      toggle();
     }
   };
 
