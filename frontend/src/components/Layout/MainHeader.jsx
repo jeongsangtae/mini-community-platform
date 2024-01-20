@@ -7,16 +7,16 @@ import Signup from "../Users/Signup";
 import classes from "./MainHeader.module.css";
 
 const MainHeader = () => {
-  const [onSignup, setOnSignup] = useState(false);
-  const [onLogin, setOnLogin] = useState(false);
+  const [openSignupModal, setOpenSignupModal] = useState(false);
+  const [openLoginModal, setOnLoginModal] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
   const signupToggleHandler = () => {
-    setOnSignup(!onSignup);
+    setOpenSignupModal(!openSignupModal);
   };
 
   const loginToggleHandler = () => {
-    setOnLogin(!onLogin);
+    setOnLoginModal(!openLoginModal);
 
     // const response = await fetch("http://localhost:3000/login", {
     //   method: "POST",
@@ -118,9 +118,12 @@ const MainHeader = () => {
       </header>
       {!authenticated && (
         <>
-          {onSignup && <Signup toggle={signupToggleHandler} />}
-          {onLogin && (
-            <Login toggle={loginToggleHandler} login={authenticatedHandler} />
+          {openSignupModal && <Signup onToggle={signupToggleHandler} />}
+          {openLoginModal && (
+            <Login
+              onToggle={loginToggleHandler}
+              onLogin={authenticatedHandler}
+            />
           )}
         </>
       )}

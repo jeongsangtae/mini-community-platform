@@ -125,7 +125,6 @@ router.post("/signup", async (req, res) => {
 
 router.get("/login", (req, res) => {
   let sessionLoginInputData = req.session.inputData;
-  let isAuthenticated = req.session.isAuthenticated;
 
   // 로그인 페이지 내용을 빈 내용으로 초기화
   if (!sessionLoginInputData) {
@@ -139,7 +138,7 @@ router.get("/login", (req, res) => {
 
   req.session.inputData = {};
 
-  res.json({ inputData: sessionLoginInputData, isAuthenticated });
+  res.json({ inputData: sessionLoginInputData });
 });
 
 router.post("/login", async (req, res) => {
