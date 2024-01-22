@@ -5,6 +5,8 @@ dotenv.config();
 
 const jwtAuth = (req, res, next) => {
   const token = req.header("Authorization");
+  console.log(req.header);
+  console.log(token);
   const tokenKey = process.env.TOKEN_KEY;
 
   if (!token) {

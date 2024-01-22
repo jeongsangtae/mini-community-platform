@@ -1,9 +1,16 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const db = require("../data/database");
+const jwtAuth = require("../middlewares/jwt-auth");
 
 const router = express.Router();
+
+router.use("/login", jwtAuth);
 
 router.get("/signup", (req, res) => {
   let sessionSignUpInputData = req.session.inputData;
@@ -184,6 +191,19 @@ router.post("/login", async (req, res) => {
     return;
   }
 
+  // token-key 환경변수로 가져오기
+  const tokenKey = process.env.TOKEN_KEY;
+
+  // jwt.sign을 사용하여 토큰 생성
+  const token = jwt.sign(
+    {
+      userId: existingLoginUser._id,
+      userEmail: existingLoginUser.email,
+    },
+    tokenKey,
+    { expiresIn: "1h" }
+  );
+
   req.session.user = {
     id: existingLoginUser._id,
     name: existingLoginUser.name,
@@ -196,6 +216,7 @@ router.post("/login", async (req, res) => {
     res.status(201).json({
       message: "Success",
       isAuthenticated: req.session.isAuthenticated,
+      token,
     });
   });
 });
