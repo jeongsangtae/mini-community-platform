@@ -37,9 +37,11 @@ const Login = ({ onToggle, onLogin }) => {
       return null;
     } else {
       console.log("로그인 성공");
-      const sessionData = await response.json();
+      const authData = await response.json();
       // console.log(loginData);
-      onLogin(sessionData.isAuthenticated);
+      // sessionStorage.setItem("token", authData.token);
+      sessionStorage.setItem("isAuthenticated", authData.isAuthenticated);
+      onLogin(authData.isAuthenticated);
       onToggle();
     }
   };

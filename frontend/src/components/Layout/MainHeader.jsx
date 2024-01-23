@@ -11,28 +11,18 @@ const MainHeader = () => {
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
+  useEffect(() => {
+    const isAuthenticated =
+      sessionStorage.getItem("isAuthenticated") === "true";
+    setAuthenticated(isAuthenticated);
+  }, []);
+
   const signupToggleHandler = () => {
     setOpenSignupModal(!openSignupModal);
   };
 
   const loginToggleHandler = () => {
     setOnLoginModal(!openLoginModal);
-
-    // const response = await fetch("http://localhost:3000/login", {
-    //   method: "POST",
-    //   body: JSON.stringify(loginData),
-    //   headers: { "Content-Type": "application/json" },
-    // });
-
-    // console.log("Login Data:", loginData);
-    // console.log("Login Data's prototype:", Object.getPrototypeOf(loginData));
-
-    // if (response.ok) {
-    //   const authenticatedData = await response.json();
-    //   setIsAuthenticated(authenticatedData.isAuthenticated);
-    //   // console.log("Login Data:", loginData);
-    //   // console.log("Login Data's prototype:", Object.getPrototypeOf(loginData));
-    // }
   };
 
   const authenticatedHandler = (isAuthenticated) => {
