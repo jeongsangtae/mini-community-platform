@@ -11,6 +11,8 @@ const MainHeader = () => {
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
+  console.log(authenticated);
+
   useEffect(() => {
     const isAuthenticated =
       sessionStorage.getItem("isAuthenticated") === "true";
@@ -23,6 +25,18 @@ const MainHeader = () => {
 
   const loginToggleHandler = () => {
     setOnLoginModal(!openLoginModal);
+  };
+
+  const logoutHandler = async () => {
+    const response = await fetch("http://localhost:3000/logout", {
+      method: "POST",
+      body: JSON.stringify(),
+      headers: { "Content-Type": "application/json" },
+    });
+    const authData = await response.json();
+    sessionStorage.removeItem("isAuthenticated");
+    console.log(authData.isAuthenticated);
+    setAuthenticated(authData.isAuthenticated);
   };
 
   const authenticatedHandler = (isAuthenticated) => {
@@ -51,6 +65,11 @@ const MainHeader = () => {
                 <NavLink to="/profile" className={classes.button}>
                   프로필
                 </NavLink>
+              </p>
+              <p>
+                <button className={classes.button} onClick={logoutHandler}>
+                  로그아웃
+                </button>
               </p>
             </nav>
           </>
