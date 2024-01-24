@@ -221,12 +221,12 @@ router.post("/login", async (req, res) => {
   });
 });
 
-router.post("/logout", (req, res) => {
-  req.session.user = null;
-  req.session.isAuthenticated = false;
-  res
-    .status(201)
-    .json({ message: "Success", isAuthenticated: req.session.isAuthenticated });
-});
+// router.post("/logout", (req, res) => {
+//   req.session.user = null;
+//   req.session.isAuthenticated = false;
+//   res
+//     .status(201)
+//     .json({ message: "Success", isAuthenticated: req.session.isAuthenticated });
+// });
 
 module.exports = router;

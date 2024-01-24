@@ -28,15 +28,8 @@ const MainHeader = () => {
   };
 
   const logoutHandler = async () => {
-    const response = await fetch("http://localhost:3000/logout", {
-      method: "POST",
-      body: JSON.stringify(),
-      headers: { "Content-Type": "application/json" },
-    });
-    const authData = await response.json();
     sessionStorage.removeItem("isAuthenticated");
-    console.log(authData.isAuthenticated);
-    setAuthenticated(authData.isAuthenticated);
+    setAuthenticated(!authenticated);
   };
 
   const authenticatedHandler = (isAuthenticated) => {
