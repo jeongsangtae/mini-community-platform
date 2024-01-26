@@ -33,6 +33,7 @@ const MainHeader = () => {
 
   const authenticatedHandler = (isAuthenticated) => {
     console.log(isAuthenticated);
+    // sessionStorage.setItem("token", authData.token);
     setAuthenticated(isAuthenticated);
   };
 

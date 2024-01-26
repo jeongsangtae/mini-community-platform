@@ -38,8 +38,8 @@ const Login = ({ onToggle, onLogin }) => {
     } else {
       console.log("로그인 성공");
       const authData = await response.json();
-      console.log(authData.token);
       sessionStorage.setItem("token", authData.token);
+      console.log(authData.token);
       onLogin(authData.isAuthenticated);
       onToggle();
     }

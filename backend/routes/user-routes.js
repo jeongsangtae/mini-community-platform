@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
-// dotenv.config();
+dotenv.config();
 
 const db = require("../data/database");
 const jwtAuth = require("../middlewares/jwt-auth");
@@ -126,7 +126,7 @@ router.post("/signup", async (req, res) => {
 
   console.log(result);
 
-  res.status(201).json({ message: "Success" });
+  res.status(200).json({ message: "Success" });
   // res.status(500).send("Internal Server Error");
 });
 
@@ -212,8 +212,10 @@ router.post("/login", async (req, res) => {
 
   req.session.isAuthenticated = true;
 
+  console.log(token);
+
   req.session.save(() => {
-    res.status(201).json({
+    res.status(200).json({
       message: "Success",
       isAuthenticated: req.session.isAuthenticated,
       token,
@@ -225,7 +227,7 @@ router.post("/login", async (req, res) => {
 //   req.session.user = null;
 //   req.session.isAuthenticated = false;
 //   res
-//     .status(201)
+//     .status(200)
 //     .json({ message: "Success", isAuthenticated: req.session.isAuthenticated });
 // });
 
