@@ -14,8 +14,7 @@ const MainHeader = () => {
   console.log(authenticated);
 
   useEffect(() => {
-    const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true";
+    const isAuthenticated = !!sessionStorage.getItem("token");
     setAuthenticated(isAuthenticated);
   }, []);
 
@@ -28,7 +27,7 @@ const MainHeader = () => {
   };
 
   const logoutHandler = async () => {
-    sessionStorage.removeItem("isAuthenticated");
+    sessionStorage.removeItem("token");
     setAuthenticated(!authenticated);
   };
 
