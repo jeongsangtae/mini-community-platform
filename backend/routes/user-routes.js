@@ -1,9 +1,9 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 
-dotenv.config();
+// dotenv.config();
 
 const db = require("../data/database");
 const jwtAuth = require("../middlewares/jwt-auth");
@@ -203,22 +203,33 @@ router.post("/login", async (req, res) => {
     req.session.isAuthenticated = true;
 
     try {
-      // 토큰 발급
-      const tokenKey = process.env.TOKEN_KEY;
-      const token = jwt.sign(
+      const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+      // access Token 발급
+      const accessToken = jwt.sign(
         {
           userId: existingLoginUser._id,
           userName: existingLoginUser.name,
           userEmail: existingLoginUser.email,
         },
-        tokenKey,
-        { expiresIn: "1h" }
+        accessTokenKey,
+        { expiresIn: "1m", issuer: "About Tech" }
       );
+      // refresh Token 발급
+      // const refreshTokenKey = process.env.REFRESH_TOKEN_KEY;
+      // const refreshToken = jwt.sign(
+      //   {
+      //     userId: existingLoginUser._id,
+      //     userName: existingLoginUser.name,
+      //     userEmail: existingLoginUser.email,
+      //   },
+      //   refreshTokenKey,
+      //   { expiresIn: "1h", issuer: "About Tech" }
+      // );
 
       res.status(200).json({
         message: "Success",
         isAuthenticated: req.session.isAuthenticated,
-        token,
+        accessToken,
       });
     } catch (error) {
       res.status(500).json(error);

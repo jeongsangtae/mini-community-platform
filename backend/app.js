@@ -1,6 +1,7 @@
 const path = require("path");
 
 const express = require("express");
+const dotenv = require("dotenv");
 const expressSession = require("express-session");
 
 const createSessionConfig = require("./config/session");
@@ -12,6 +13,8 @@ const userRoutes = require("./routes/user-routes");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+
+dotenv.config();
 
 // app.use(express.static(path.join(__dirname, "/frontend/public")));
 
