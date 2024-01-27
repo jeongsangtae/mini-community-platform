@@ -13,10 +13,10 @@ const MainHeader = () => {
 
   console.log(authenticated);
 
-  useEffect(() => {
-    const isAuthenticated = !!sessionStorage.getItem("token");
-    setAuthenticated(isAuthenticated);
-  }, []);
+  // useEffect(() => {
+  //   const isAuthenticated = !!sessionStorage.getItem("token");
+  //   setAuthenticated(isAuthenticated);
+  // }, []);
 
   const signupToggleHandler = () => {
     setOpenSignupModal(!openSignupModal);

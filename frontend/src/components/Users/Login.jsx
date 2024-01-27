@@ -34,12 +34,13 @@ const Login = ({ onToggle, onLogin }) => {
       const errorData = await response.json();
       setError(true);
       setErrorMessage(errorData.message);
+      console.log(errorData);
       return null;
     } else {
       console.log("로그인 성공");
       const authData = await response.json();
       sessionStorage.setItem("token", authData.token);
-      console.log(authData.token);
+      // console.log(authData.token);
       onLogin(authData.isAuthenticated);
       onToggle();
     }

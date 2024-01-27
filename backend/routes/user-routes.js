@@ -10,7 +10,7 @@ const jwtAuth = require("../middlewares/jwt-auth");
 
 const router = express.Router();
 
-router.use("/login", jwtAuth);
+// router.use("/login", jwtAuth);
 
 router.get("/signup", (req, res) => {
   let sessionSignUpInputData = req.session.inputData;
@@ -191,36 +191,53 @@ router.post("/login", async (req, res) => {
     return;
   }
 
+  console.log(existingLoginUser);
+
+  if (existingLoginUser) {
+    req.session.user = {
+      id: existingLoginUser._id,
+      name: existingLoginUser.name,
+      email: existingLoginUser.email,
+    };
+
+    req.session.isAuthenticated = true;
+
+    try {
+      // 토큰 발급
+      const tokenKey = process.env.TOKEN_KEY;
+      const token = jwt.sign(
+        {
+          userId: existingLoginUser._id,
+          userName: existingLoginUser.name,
+          userEmail: existingLoginUser.email,
+        },
+        tokenKey,
+        { expiresIn: "1h" }
+      );
+
+      res.status(200).json({
+        message: "Success",
+        isAuthenticated: req.session.isAuthenticated,
+        token,
+      });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+
   // token-key 환경변수로 가져오기
-  const tokenKey = process.env.TOKEN_KEY;
 
   // jwt.sign을 사용하여 토큰 생성
-  const token = jwt.sign(
-    {
-      userId: existingLoginUser._id,
-      userEmail: existingLoginUser.email,
-    },
-    tokenKey,
-    { expiresIn: "1h" }
-  );
 
-  req.session.user = {
-    id: existingLoginUser._id,
-    name: existingLoginUser.name,
-    email: existingLoginUser.email,
-  };
+  // console.log(token);
 
-  req.session.isAuthenticated = true;
-
-  console.log(token);
-
-  req.session.save(() => {
-    res.status(200).json({
-      message: "Success",
-      isAuthenticated: req.session.isAuthenticated,
-      token,
-    });
-  });
+  // req.session.save(() => {
+  //   res.status(200).json({
+  //     message: "Success",
+  //     isAuthenticated: req.session.isAuthenticated,
+  //     token,
+  //   });
+  // });
 });
 
 // router.post("/logout", (req, res) => {
