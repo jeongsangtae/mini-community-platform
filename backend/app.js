@@ -13,6 +13,7 @@ const userRoutes = require("./routes/user-routes");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ dotenv.config();
 // });
 
 app.use(express.json());
+app.use(cookieParser());
 
 // CORS 헤더 연결
 // 분리된 백엔드(다른 도메인에서 실행됨)를 사용할 때 필요
@@ -42,7 +44,12 @@ app.use(express.json());
 // });
 
 // CORS 미들웨어를 사용해서 연결
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 const sessionConfig = createSessionConfig();
 

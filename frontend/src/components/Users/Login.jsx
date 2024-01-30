@@ -26,7 +26,7 @@ const Login = ({ onToggle, onLogin }) => {
       method: "POST",
       body: JSON.stringify(loginData),
       headers: { "Content-Type": "application/json" },
-      // credentials: "include",
+      credentials: "include",
     });
 
     // console.log("Login Data after fetch:", loginData);
