@@ -203,8 +203,8 @@ router.post("/login", async (req, res) => {
     req.session.isAuthenticated = true;
 
     try {
-      const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
       // access Token 발급
+      const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
       const accessToken = jwt.sign(
         {
           userId: existingLoginUser._id,
@@ -212,24 +212,37 @@ router.post("/login", async (req, res) => {
           userEmail: existingLoginUser.email,
         },
         accessTokenKey,
-        { expiresIn: "1m", issuer: "About Tech" }
+        { expiresIn: "1m", issuer: "GGPAN" }
       );
+
       // refresh Token 발급
-      // const refreshTokenKey = process.env.REFRESH_TOKEN_KEY;
-      // const refreshToken = jwt.sign(
-      //   {
-      //     userId: existingLoginUser._id,
-      //     userName: existingLoginUser.name,
-      //     userEmail: existingLoginUser.email,
-      //   },
-      //   refreshTokenKey,
-      //   { expiresIn: "1h", issuer: "About Tech" }
-      // );
+      const refreshTokenKey = process.env.REFRESH_TOKEN_KEY;
+      const refreshToken = jwt.sign(
+        {
+          userId: existingLoginUser._id,
+          userName: existingLoginUser.name,
+          userEmail: existingLoginUser.email,
+        },
+        refreshTokenKey,
+        { expiresIn: "1h", issuer: "GGPAN" }
+      );
+
+      // token 전송
+      res.cookie("accessToken", accessToken, {
+        secure: false,
+        httpOnly: true,
+      });
+
+      res.cookie("refreshToken", refreshToken, {
+        secure: false,
+        httpOnly: true,
+      });
 
       res.status(200).json({
         message: "Success",
         isAuthenticated: req.session.isAuthenticated,
         accessToken,
+        refreshToken,
       });
     } catch (error) {
       res.status(500).json(error);

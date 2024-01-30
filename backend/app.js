@@ -30,9 +30,6 @@ dotenv.config();
 //   next();
 // });
 
-// 클라이언트로부터 오는 HTTP 요청의 body를 해석
-// req.body에 form 데이터가 제대로 파싱되어 들어오도록 해줌
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 // CORS 헤더 연결

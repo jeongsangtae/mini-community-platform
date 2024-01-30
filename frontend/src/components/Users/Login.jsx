@@ -26,6 +26,7 @@ const Login = ({ onToggle, onLogin }) => {
       method: "POST",
       body: JSON.stringify(loginData),
       headers: { "Content-Type": "application/json" },
+      // credentials: "include",
     });
 
     // console.log("Login Data after fetch:", loginData);
@@ -39,7 +40,8 @@ const Login = ({ onToggle, onLogin }) => {
     } else {
       console.log("로그인 성공");
       const authData = await response.json();
-      sessionStorage.setItem("accessToken", authData.accessToken);
+      // sessionStorage.setItem("accessToken", authData.accessToken);
+      // sessionStorage.setItem("accessToken", authData.refreshToken);
       // console.log(authData.token);
       onLogin(authData.isAuthenticated);
       onToggle();
