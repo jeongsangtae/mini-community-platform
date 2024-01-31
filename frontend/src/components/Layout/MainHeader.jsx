@@ -37,6 +37,12 @@ const MainHeader = () => {
     setAuthenticated(isAuthenticated);
   };
 
+  const accessTokenTestHandler = async () => {
+    await fetch("http://localhost:3000/accessToken", {
+      credentials: "include",
+    });
+  };
+
   return (
     <>
       <header className={classes.header}>
@@ -62,6 +68,14 @@ const MainHeader = () => {
               <p>
                 <button className={classes.button} onClick={logoutHandler}>
                   로그아웃
+                </button>
+              </p>
+              <p>
+                <button
+                  className={classes.button}
+                  onClick={accessTokenTestHandler}
+                >
+                  액세스토큰
                 </button>
               </p>
             </nav>

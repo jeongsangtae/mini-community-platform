@@ -12,7 +12,6 @@ const userRoutes = require("./routes/user-routes");
 
 const app = express();
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 dotenv.config();
