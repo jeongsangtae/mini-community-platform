@@ -5,26 +5,66 @@ const db = require("../data/database");
 // dotenv.config();
 
 const accessToken = async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const userData = jwt.verify(token, accessTokenKey);
+  try {
+    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+    const token = req.cookies.accessToken;
+    const loginUserTokenData = jwt.verify(token, accessTokenKey);
 
-  console.log(token);
+    // console.log(token);
 
-  if (!token) {
-    return res.status(401).json({ message: "토큰이 없습니다." });
+    // if (!token) {
+    //   return res.status(401).json({ message: "토큰이 없습니다." });
+    // }
+
+    // console.log(userData.userEmail);
+
+    const loginUserDbData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ email: loginUserTokenData.userEmail });
+
+    // 디스트럭처링을 통해서 password를 제외한 다른 데이터만 가져옴
+    const { password, ...othersData } = loginUserDbData;
+
+    res.status(200).json(othersData);
+  } catch (error) {
+    res.status(500).json(error);
   }
-
-  console.log(userData.userEmail);
-
-  const existingLoginUser = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: userData.userEmail });
-
-  res.status(200).json(existingLoginUser);
 };
 
-const refreshToken = (req, res, next) => {};
+// access token을 갱신하는 용도로 사용
+const refreshToken = async (req, res, next) => {
+  try {
+    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+    const refreshTokenKey = process.env.REFRESH_TOKEN_KEY;
+    const token = req.cookies.refreshToken;
+    const loginUserTokenData = jwt.verify(token, refreshTokenKey);
 
-module.exports = { accessToken };
+    const loginUserDbData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ email: loginUserTokenData.userEmail });
+
+    // access token 새로 발급
+    const accessToken = jwt.sign(
+      {
+        userId: loginUserDbData._id,
+        userName: loginUserDbData.name,
+        userEmail: loginUserDbData.email,
+      },
+      accessTokenKey,
+      { expiresIn: "1m", issuer: "GGPAN" }
+    );
+
+    res.cookie("accessToken", accessToken, {
+      secure: false,
+      httpOnly: true,
+    });
+
+    res.status(200).json("Access Token 재생성");
+  } catch (error) {
+    res.status(200).json(error);
+  }
+};
+
+module.exports = { accessToken, refreshToken };

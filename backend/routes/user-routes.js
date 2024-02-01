@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 // dotenv.config();
 
 const db = require("../data/database");
-const { accessToken } = require("../middlewares/jwt-auth");
+const { accessToken, refreshToken } = require("../middlewares/jwt-auth");
 
 const router = express.Router();
 
@@ -265,6 +265,8 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/accessToken", accessToken);
+
+router.get("/refreshToken", refreshToken);
 
 // router.post("/logout", (req, res) => {
 //   req.session.user = null;

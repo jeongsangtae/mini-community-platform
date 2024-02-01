@@ -43,6 +43,12 @@ const MainHeader = () => {
     });
   };
 
+  const refreshTokenTestHandler = async () => {
+    await fetch("http://localhost:3000/refreshToken", {
+      credentials: "include",
+    });
+  };
+
   return (
     <>
       <header className={classes.header}>
@@ -76,6 +82,14 @@ const MainHeader = () => {
                   onClick={accessTokenTestHandler}
                 >
                   액세스토큰
+                </button>
+              </p>
+              <p>
+                <button
+                  className={classes.button}
+                  onClick={refreshTokenTestHandler}
+                >
+                  리프레쉬토큰
                 </button>
               </p>
             </nav>
