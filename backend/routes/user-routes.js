@@ -268,6 +268,15 @@ router.get("/accessToken", accessToken);
 
 router.get("/refreshToken", refreshToken);
 
+router.post("/logout", async (req, res) => {
+  try {
+    res.cookie("accessToken", "");
+    res.status(200).json("로그아웃 성공");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // router.post("/logout", (req, res) => {
 //   req.session.user = null;
 //   req.session.isAuthenticated = false;

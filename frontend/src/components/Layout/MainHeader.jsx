@@ -27,8 +27,16 @@ const MainHeader = () => {
   };
 
   const logoutHandler = async () => {
-    sessionStorage.removeItem("token");
-    setAuthenticated(!authenticated);
+    const response = await fetch("http://localhost:3000/logout", {
+      method: "POST",
+      body: JSON.stringify(),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      setAuthenticated(!authenticated);
+    }
   };
 
   const authenticatedHandler = (isAuthenticated) => {
