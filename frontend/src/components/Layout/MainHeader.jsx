@@ -10,12 +10,55 @@ const MainHeader = () => {
   const [openSignupModal, setOpenSignupModal] = useState(false);
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
 
   console.log(authenticated);
 
   // useEffect(() => {
   //   const isAuthenticated = !!sessionStorage.getItem("token");
   //   setAuthenticated(isAuthenticated);
+  // }, []);
+
+  console.log(user);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/login/success", {
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("네트워크 오류");
+        }
+        const resData = await response.json();
+        console.log(resData);
+        setAuthenticated((prevAuthenticated) => !prevAuthenticated);
+        setUser(resData.loginUserDbData);
+      } catch (error) {
+        console.error("로그인 유지 불가능", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/login/success", {
+  //     credentials: "include",
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((resData) => {
+  //       setAuthenticated(!authenticated);
+  //       setUser(resData.loginUserDbData);
+  //     })
+  //     .catch((error) => {
+  //       console.error("로그인 유지 불가능", error);
+  //     });
   // }, []);
 
   const signupToggleHandler = () => {

@@ -268,6 +268,25 @@ router.get("/accessToken", accessToken);
 
 router.get("/refreshToken", refreshToken);
 
+router.get("/login/success", async (req, res) => {
+  try {
+    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+    const token = req.cookies.accessToken;
+    const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+    const loginUserDbData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ email: loginUserTokenData.userEmail });
+
+    const { password, ...othersData } = loginUserDbData;
+
+    res.status(200).json(othersData);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 router.post("/logout", async (req, res) => {
   try {
     res.cookie("accessToken", "");
