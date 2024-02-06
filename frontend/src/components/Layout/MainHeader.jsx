@@ -92,11 +92,7 @@ const MainHeader = () => {
                 </NavLink>
               </p>
               <p>
-                <NavLink
-                  to="/profile"
-                  className={classes.button}
-                  // userName={user.name}
-                >
+                <NavLink to="/profile" className={classes.button}>
                   프로필
                 </NavLink>
               </p>

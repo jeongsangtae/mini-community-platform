@@ -10,14 +10,6 @@ const accessToken = async (req, res) => {
     const token = req.cookies.accessToken;
     const loginUserTokenData = jwt.verify(token, accessTokenKey);
 
-    // console.log(token);
-
-    // if (!token) {
-    //   return res.status(401).json({ message: "토큰이 없습니다." });
-    // }
-
-    // console.log(userData.userEmail);
-
     const loginUserDbData = await db
       .getDb()
       .collection("users")
