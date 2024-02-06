@@ -12,14 +12,8 @@ const MainHeader = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
 
-  console.log(authenticated);
-
-  // useEffect(() => {
-  //   const isAuthenticated = !!sessionStorage.getItem("token");
-  //   setAuthenticated(isAuthenticated);
-  // }, []);
-
   console.log(user);
+  console.log(user.name);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,9 +25,9 @@ const MainHeader = () => {
           throw new Error("네트워크 오류");
         }
         const resData = await response.json();
-        console.log(resData);
         setAuthenticated((prevAuthenticated) => !prevAuthenticated);
-        setUser(resData.loginUserDbData);
+        setUser(resData);
+        console.log(resData);
       } catch (error) {
         console.error("로그인 유지 불가능", error);
       }
@@ -41,25 +35,6 @@ const MainHeader = () => {
 
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/login/success", {
-  //     credentials: "include",
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((resData) => {
-  //       setAuthenticated(!authenticated);
-  //       setUser(resData.loginUserDbData);
-  //     })
-  //     .catch((error) => {
-  //       console.error("로그인 유지 불가능", error);
-  //     });
-  // }, []);
 
   const signupToggleHandler = () => {
     setOpenSignupModal(!openSignupModal);
@@ -84,7 +59,6 @@ const MainHeader = () => {
 
   const authenticatedHandler = (isAuthenticated) => {
     console.log(isAuthenticated);
-    // sessionStorage.setItem("token", authData.token);
     setAuthenticated(isAuthenticated);
   };
 
@@ -118,7 +92,11 @@ const MainHeader = () => {
                 </NavLink>
               </p>
               <p>
-                <NavLink to="/profile" className={classes.button}>
+                <NavLink
+                  to="/profile"
+                  className={classes.button}
+                  // userName={user.name}
+                >
                   프로필
                 </NavLink>
               </p>
@@ -174,28 +152,6 @@ const MainHeader = () => {
             </nav>
           </>
         )}
-        {/* <nav className={classes.navbutton}>
-          <p>
-            <NavLink to="/" className={classes.button}>
-              홈
-            </NavLink>
-          </p>
-          <p>
-            <NavLink to="/posts" className={classes.button}>
-              게시판
-            </NavLink>
-          </p>
-          <p>
-            <button className={classes.button} onClick={signupToggleHandler}>
-              회원가입
-            </button>
-          </p>
-          <p>
-            <button className={classes.button} onClick={loginToggleHandler}>
-              로그인
-            </button>
-          </p>
-        </nav> */}
       </header>
       {!authenticated && (
         <>
@@ -208,8 +164,6 @@ const MainHeader = () => {
           )}
         </>
       )}
-      {/* {onSignup && <Signup toggle={signupToggleHandler} />}
-      {onLogin && <Login toggle={loginToggleHandler} />} */}
     </>
   );
 };

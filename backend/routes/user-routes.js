@@ -296,6 +296,8 @@ router.post("/logout", async (req, res) => {
   }
 });
 
+// router.get("/profile")
+
 // router.post("/logout", (req, res) => {
 //   req.session.user = null;
 //   req.session.isAuthenticated = false;

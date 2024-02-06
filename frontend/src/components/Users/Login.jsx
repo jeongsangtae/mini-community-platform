@@ -20,16 +20,12 @@ const Login = ({ onToggle, onLogin }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    // console.log("Login Data before fetch:", loginData);
-
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       body: JSON.stringify(loginData),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
-
-    // console.log("Login Data after fetch:", loginData);
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -39,11 +35,7 @@ const Login = ({ onToggle, onLogin }) => {
       return null;
     } else {
       console.log("로그인 성공");
-      const authData = await response.json();
-      // sessionStorage.setItem("accessToken", authData.accessToken);
-      // sessionStorage.setItem("accessToken", authData.refreshToken);
-      // console.log(authData.token);
-      onLogin(authData.isAuthenticated);
+      onLogin(true);
       onToggle();
     }
   };
