@@ -268,24 +268,7 @@ router.get("/accessToken", accessToken);
 
 router.get("/refreshToken", refreshToken);
 
-router.get("/login/success", async (req, res) => {
-  try {
-    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-    const token = req.cookies.accessToken;
-    const loginUserTokenData = jwt.verify(token, accessTokenKey);
-
-    const loginUserDbData = await db
-      .getDb()
-      .collection("users")
-      .findOne({ email: loginUserTokenData.userEmail });
-
-    const { password, ...othersData } = loginUserDbData;
-
-    res.status(200).json(othersData);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+router.get("/login/success", accessToken);
 
 router.post("/logout", async (req, res) => {
   try {
@@ -296,24 +279,7 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-router.get("/profile", async (req, res) => {
-  try {
-    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-    const token = req.cookies.accessToken;
-    const loginUserTokenData = jwt.verify(token, accessTokenKey);
-
-    const loginUserDbData = await db
-      .getDb()
-      .collection("users")
-      .findOne({ email: loginUserTokenData.userEmail });
-
-    const { password, ...othersData } = loginUserDbData;
-
-    res.status(200).json(othersData);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+router.get("/profile", accessToken);
 
 // router.post("/logout", (req, res) => {
 //   req.session.user = null;
