@@ -231,11 +231,13 @@ router.post("/login", async (req, res) => {
       res.cookie("accessToken", accessToken, {
         secure: false,
         httpOnly: true,
+        maxAge: 60 * 1000,
       });
 
       res.cookie("refreshToken", refreshToken, {
         secure: false,
         httpOnly: true,
+        maxAge: 60 * 60 * 1000,
       });
 
       res.status(200).json({
@@ -248,20 +250,6 @@ router.post("/login", async (req, res) => {
       res.status(500).json(error);
     }
   }
-
-  // token-key 환경변수로 가져오기
-
-  // jwt.sign을 사용하여 토큰 생성
-
-  // console.log(token);
-
-  // req.session.save(() => {
-  //   res.status(200).json({
-  //     message: "Success",
-  //     isAuthenticated: req.session.isAuthenticated,
-  //     token,
-  //   });
-  // });
 });
 
 router.get("/accessToken", accessToken);
@@ -272,7 +260,8 @@ router.get("/login/success", accessToken);
 
 router.post("/logout", async (req, res) => {
   try {
-    res.cookie("accessToken", "");
+    // res.cookie("accessToken", "");
+    res.clearCookie("accessToken");
     res.status(200).json("로그아웃 성공");
   } catch (error) {
     res.status(500).json(error);
