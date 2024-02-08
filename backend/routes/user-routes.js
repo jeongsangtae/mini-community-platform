@@ -262,6 +262,7 @@ router.post("/logout", async (req, res) => {
   try {
     // res.cookie("accessToken", "");
     res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
     res.status(200).json("로그아웃 성공");
   } catch (error) {
     res.status(500).json(error);
