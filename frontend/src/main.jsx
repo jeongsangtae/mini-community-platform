@@ -9,6 +9,7 @@ import HomePage from "./pages/Homepage";
 import PostDetailsPage, {
   loader as postDetailsLoader,
 } from "./pages/PostDetailsPage";
+import PostEditPage from "./pages/PostEditPage";
 import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
@@ -32,8 +33,12 @@ const router = createBrowserRouter([
       },
       {
         path: "posts/:postId",
-        element: <PostDetailsPage />,
+        id: "post-detail",
         loader: postDetailsLoader,
+        children: [
+          { index: true, element: <PostDetailsPage /> },
+          { path: "edit", element: <PostEditPage /> },
+        ],
       },
       { path: "signup-success", element: <SignupSuccessPage /> },
       { path: "profile", element: <ProfilePage /> },

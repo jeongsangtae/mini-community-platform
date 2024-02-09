@@ -1,9 +1,9 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
 
 import classes from "./PostDetails.module.css";
 
 const PostDetails = () => {
-  const post = useLoaderData();
+  const post = useRouteLoaderData("post-detail");
 
   if (!post) {
     // 데이터가 아직 로드되지 않은 경우 로딩 상태를 표시하거나 다른 처리를 수행할 수 있습니다.
@@ -25,6 +25,10 @@ const PostDetails = () => {
         <div>
           <p>내용</p>
           <p className={classes.contents}>{post.content}</p>
+        </div>
+        <div>
+          <Link to="edit">수정</Link>
+          <button>삭제</button>
         </div>
       </div>
     </>
