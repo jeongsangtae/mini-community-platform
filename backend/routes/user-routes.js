@@ -212,7 +212,7 @@ router.post("/login", async (req, res) => {
           userEmail: existingLoginUser.email,
         },
         accessTokenKey,
-        { expiresIn: "1m", issuer: "GGPAN" }
+        { expiresIn: "1h", issuer: "GGPAN" }
       );
 
       // refresh Token 발급
@@ -224,20 +224,20 @@ router.post("/login", async (req, res) => {
           userEmail: existingLoginUser.email,
         },
         refreshTokenKey,
-        { expiresIn: "1h", issuer: "GGPAN" }
+        { expiresIn: "12h", issuer: "GGPAN" }
       );
 
       // token 전송
       res.cookie("accessToken", accessToken, {
         secure: false,
         httpOnly: true,
-        maxAge: 60 * 1000,
+        maxAge: 60 * 60 * 1000,
       });
 
       res.cookie("refreshToken", refreshToken, {
         secure: false,
         httpOnly: true,
-        maxAge: 60 * 60 * 1000,
+        maxAge: 60 * 60 * 12 * 1000,
       });
 
       res.status(200).json({

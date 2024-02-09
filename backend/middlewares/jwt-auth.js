@@ -45,7 +45,7 @@ const refreshToken = async (req, res, next) => {
         userEmail: loginUserDbData.email,
       },
       accessTokenKey,
-      { expiresIn: "1m", issuer: "GGPAN" }
+      { expiresIn: "1h", issuer: "GGPAN" }
     );
 
     res.cookie("accessToken", accessToken, {
