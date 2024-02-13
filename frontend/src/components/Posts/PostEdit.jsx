@@ -29,7 +29,7 @@ const PostEdit = () => {
         </div>
         <div>
           <label htmlFor="name">작성자</label>
-          <input required type="text" id="name" name="name" value={post.name} />
+          <p>{post.name}</p>
         </div>
         <div>
           <textarea
