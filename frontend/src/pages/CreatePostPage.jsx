@@ -1,11 +1,11 @@
 import { redirect } from "react-router-dom";
 
-import CreatePost from "../components/Posts/CreatePost";
+import PostForm from "../components/Posts/PostForm";
 
 const CreatePostPage = () => {
   return (
     <>
-      <CreatePost />
+      <PostForm method="post" />
     </>
   );
 };
@@ -15,7 +15,6 @@ export default CreatePostPage;
 export const action = async ({ request }) => {
   const formData = await request.formData();
   const postData = Object.fromEntries(formData);
-  // formData.get("body");
   await fetch("http://localhost:3000/posts", {
     method: "POST",
     body: JSON.stringify(postData),
