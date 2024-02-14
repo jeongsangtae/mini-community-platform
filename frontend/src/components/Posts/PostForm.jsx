@@ -1,4 +1,4 @@
-import { useNavigate, Form } from "react-router-dom";
+import { useNavigate, Form, redirect } from "react-router-dom";
 
 import classes from "./PostForm.module.css";
 
@@ -48,3 +48,36 @@ const PostForm = ({ method, postData }) => {
 };
 
 export default PostForm;
+
+export const action = async ({ request }) => {
+  const method = await request.method;
+  console.log(method);
+  const formData = await request.formData();
+  const postData = Object.fromEntries(formData);
+
+  // const postData = {
+  //   title: formData.get("title"),
+  //   name: formData.get("name"),
+  //   content: formData.get("content"),
+  // };
+
+  let url = "http://localhost:3000/posts";
+
+  const response = await fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(postData),
+  });
+
+  if (response.status === 422) {
+    return response;
+  }
+
+  if (!response.ok) {
+    throw json({ message: "Could not save event." }, { status: 500 });
+  }
+
+  return redirect("/posts");
+};
