@@ -68,8 +68,8 @@ router.get("/posts/:postId", async (req, res) => {
 
   const post = await db.getDb().collection("posts").findOne({ postId });
 
-  console.log(typeof req.params.postId);
-  console.log(typeof postId);
+  // console.log(typeof req.params.postId);
+  // console.log(typeof postId);
 
   res.json(post);
 });
@@ -78,53 +78,22 @@ router.get("/posts/:postId", async (req, res) => {
 
 router.patch("/posts/:postId/edit", async (req, res) => {
   let postId = parseInt(req.params.postId);
-  // const post = await db
-  //   .getDb()
-  //   .collection("posts")
-  //   .findOne(
-  //     { _id: new ObjectId(postId) },
-  //     { title: 1, writer: 1, content: 1 }
-  //   );
+
+  console.log(postId);
 
   const titleInput = req.body.title;
   const contentInput = req.body.content;
-  // const passwordInput = req.body.password;
 
   const updateData = {
     title: titleInput,
     content: contentInput,
   };
 
-  // const userEmail = req.session.user.email;
-  // const user = await db
-  //   .getDb()
-  //   .collection("users")
-  //   .findOne({ email: userEmail });
-
-  // const existingLoginUser = await db
-  //   .getDb()
-  //   .collection("users")
-  //   .findOne({ email: user.userEmail });
-
-  // 해싱된 비밀번호를 입력한 비밀번호와 비교
-  // const passwordEqual = await bcrypt.compare(passwordInput, user.password);
-
-  // if (!passwordEqual) {
-  //   return res.render("update-post", {
-  //     post: post,
-  //     user: user,
-  //     title: titleInput,
-  //     content: contentInput,
-  //     passwordErrorMessage:
-  //       "비밀번호가 다릅니다. 로그인 비밀번호를 입력해주세요!",
-  //   });
-  // }
-
-  await db
+  const post = await db
     .getDb()
     .collection("posts")
     .updateOne({ _id: new ObjectId(postId) }, { $set: updateData });
-  res.status(201).json({ message: "Success" });
+  res.json(post);
 });
 
 module.exports = router;

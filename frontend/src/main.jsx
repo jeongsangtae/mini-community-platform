@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         loader: postDetailsLoader,
         children: [
           { index: true, element: <PostDetailsPage /> },
-          { path: "edit", element: <PostEditPage /> },
+          { path: "edit", element: <PostEditPage />, action: postFormAction },
         ],
       },
       { path: "signup-success", element: <SignupSuccessPage /> },

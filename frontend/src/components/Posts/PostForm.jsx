@@ -1,4 +1,4 @@
-import { useNavigate, Form, redirect } from "react-router-dom";
+import { useNavigate, Form, redirect, json } from "react-router-dom";
 
 import classes from "./PostForm.module.css";
 
@@ -26,7 +26,11 @@ const PostForm = ({ method, postData }) => {
         </div>
         <div>
           <label htmlFor="name">작성자</label>
-          <input required type="text" id="name" name="name" />
+          {postData ? (
+            <p>{postData.name}</p>
+          ) : (
+            <input required type="text" id="name" name="name" />
+          )}
         </div>
         <div>
           <textarea
@@ -49,7 +53,7 @@ const PostForm = ({ method, postData }) => {
 
 export default PostForm;
 
-export const action = async ({ request }) => {
+export const action = async ({ request, params }) => {
   const method = await request.method;
   console.log(method);
   const formData = await request.formData();
@@ -62,6 +66,11 @@ export const action = async ({ request }) => {
   // };
 
   let url = "http://localhost:3000/posts";
+
+  if (method === "PATCH") {
+    const postId = params.postId;
+    url = "http://localhost:3000/posts/" + postId + "/edit";
+  }
 
   const response = await fetch(url, {
     method: method,
@@ -76,7 +85,7 @@ export const action = async ({ request }) => {
   }
 
   if (!response.ok) {
-    throw json({ message: "Could not save event." }, { status: 500 });
+    throw json({ message: "Could not save post." }, { status: 500 });
   }
 
   return redirect("/posts");
