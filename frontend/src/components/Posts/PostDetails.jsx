@@ -10,6 +10,21 @@ const PostDetails = () => {
     return <div>Loading...</div>;
   }
 
+  const postDeleteHandler = () => {
+    const postId = post.postId;
+    const response = fetch(
+      "http://localhost:3000/posts/" + postId + "/delete",
+      {
+        method: "POST",
+        body: JSON.stringify(),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response;
+  };
+
   return (
     <>
       <h1 className={classes.heading}>게시글 세부 페이지</h1>
@@ -28,7 +43,7 @@ const PostDetails = () => {
         </div>
         <div>
           <Link to="edit">수정</Link>
-          <button>삭제</button>
+          <button onClick={postDeleteHandler}>삭제</button>
         </div>
       </div>
     </>
@@ -36,3 +51,5 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
+
+export const action = async ({ request, method }) => {};

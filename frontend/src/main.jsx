@@ -39,6 +39,7 @@ const router = createBrowserRouter([
           { path: "edit", element: <PostEditPage />, action: postFormAction },
         ],
       },
+      // {path:"posts/:postId/delete", element:}
       { path: "signup-success", element: <SignupSuccessPage /> },
       { path: "profile", element: <ProfilePage /> },
     ],
