@@ -56,7 +56,7 @@ router.post("/posts", async (req, res) => {
 
   const result = await db.getDb().collection("posts").insertOne(newPost);
   console.log(result);
-  res.status(201).json({ message: "Success" });
+  res.status(200).json({ message: "Success" });
   // res.redirect("/posts");
 });
 
@@ -79,8 +79,6 @@ router.get("/posts/:postId", async (req, res) => {
 router.patch("/posts/:postId/edit", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
-  console.log(postId);
-
   const titleInput = req.body.title;
   const contentInput = req.body.content;
 
@@ -89,11 +87,13 @@ router.patch("/posts/:postId/edit", async (req, res) => {
     content: contentInput,
   };
 
-  const post = await db
+  await db
     .getDb()
     .collection("posts")
-    .updateOne({ _id: new ObjectId(postId) }, { $set: updateData });
-  res.json(post);
+    .updateOne({ postId }, { $set: updateData });
+
+  console.log(postId);
+  res.status(200).json({ message: "Success" });
 });
 
 module.exports = router;
