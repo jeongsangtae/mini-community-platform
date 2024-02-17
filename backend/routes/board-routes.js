@@ -96,7 +96,28 @@ router.patch("/posts/:postId/edit", async (req, res) => {
   res.status(200).json({ message: "Success" });
 });
 
-router.post("/posts/:postId/delete", async function (req, res) {
+// router.post("/posts/:postId/delete", async function (req, res) {
+//   let postId = parseInt(req.params.postId);
+
+//   console.log(postId);
+
+//   const post = await db.getDb().collection("posts").findOne({ postId: postId });
+
+//   console.log(post);
+
+//   await db.getDb().collection("posts").deleteOne({ postId: post.postId });
+
+//   // 게시글 삭제시 게시글 번호가 비어있지 않도록 삭제한 게시글 뒤에 있는 게시글의 번호들을 1씩 감소
+//   // 삭제한 게시글 뒤에 있는 게시글의 번호를 확인하기 위해 $gt를 사용해 번호가 더 큰 것을 확인해서 감소시킨다.
+//   await db
+//     .getDb()
+//     .collection("posts")
+//     .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
+
+//   res.status(200).json({ message: "Success" });
+// });
+
+router.delete("/posts/:postId/", async function (req, res) {
   let postId = parseInt(req.params.postId);
 
   console.log(postId);

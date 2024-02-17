@@ -6,6 +6,7 @@ import { action as postFormAction } from "./components/Posts/PostForm";
 import HomePage from "./pages/Homepage";
 import PostDetailsPage, {
   loader as postDetailsLoader,
+  action as postDeleteAction,
 } from "./pages/PostDetailsPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import PostEditPage from "./pages/PostEditPage";
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
         id: "post-detail",
         loader: postDetailsLoader,
         children: [
-          { index: true, element: <PostDetailsPage /> },
+          {
+            index: true,
+            element: <PostDetailsPage />,
+            action: postDeleteAction,
+          },
           { path: "edit", element: <PostEditPage />, action: postFormAction },
         ],
       },
