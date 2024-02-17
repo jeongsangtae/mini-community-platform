@@ -1,4 +1,4 @@
-import { Link, useRouteLoaderData } from "react-router-dom";
+import { Link, redirect, useRouteLoaderData } from "react-router-dom";
 
 import classes from "./PostDetails.module.css";
 
@@ -10,9 +10,9 @@ const PostDetails = () => {
     return <div>Loading...</div>;
   }
 
-  const postDeleteHandler = () => {
+  const postDeleteHandler = async () => {
     const postId = post.postId;
-    const response = fetch(
+    const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/delete",
       {
         method: "POST",
@@ -22,7 +22,12 @@ const PostDetails = () => {
         },
       }
     );
-    return response;
+
+    if (!response.ok) {
+      throw json({ message: "Could not delete post." }, { status: 500 });
+    }
+
+    return redirect("/posts");
   };
 
   return (
