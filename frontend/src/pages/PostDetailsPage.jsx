@@ -1,3 +1,5 @@
+import { redirect } from "react-router-dom";
+
 import PostDetails from "../components/Posts/PostDetails";
 
 const PostDetailsPage = () => {
@@ -13,19 +15,17 @@ export const loader = async ({ params }) => {
   return resData;
 };
 
-export const action = async ({ params }) => {
+export const action = async ({ request, params }) => {
   const postId = params.postId;
   const response = await fetch("http://localhost:3000/posts/" + postId, {
-    method: "DELETE",
-    body: JSON.stringify(),
-    headers: {
-      "Content-Type": "application/json",
-    },
+    method: request.method,
   });
 
   if (!response.ok) {
     throw json({ message: "Could not delete post." }, { status: 500 });
   }
+
+  console.log("action function");
 
   return redirect("/posts");
 };

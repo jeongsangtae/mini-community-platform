@@ -1,9 +1,10 @@
-import { Link, redirect, useRouteLoaderData } from "react-router-dom";
+import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 
 import classes from "./PostDetails.module.css";
 
 const PostDetails = () => {
   const post = useRouteLoaderData("post-detail");
+  const submit = useSubmit();
 
   if (!post) {
     // 데이터가 아직 로드되지 않은 경우 로딩 상태를 표시하거나 다른 처리를 수행할 수 있습니다.
@@ -27,11 +28,11 @@ const PostDetails = () => {
   //     throw json({ message: "Could not delete post." }, { status: 500 });
   //   }
 
-  //   return redirect("/posts");
+  //   window.location.href = "/posts";
   // };
 
   const postDeleteHandler = () => {
-    post;
+    submit(null, { method: "delete" });
   };
 
   return (
@@ -52,7 +53,9 @@ const PostDetails = () => {
         </div>
         <div>
           <Link to="edit">수정</Link>
-          <button onClick={postDeleteHandler}>삭제</button>
+          <button type="button" onClick={postDeleteHandler}>
+            삭제
+          </button>
         </div>
       </div>
     </>
