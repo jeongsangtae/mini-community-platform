@@ -117,7 +117,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
 //   res.status(200).json({ message: "Success" });
 // });
 
-router.delete("/posts/:postId/", async function (req, res) {
+router.delete("/posts/:postId/", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
   console.log(postId);
@@ -134,6 +134,35 @@ router.delete("/posts/:postId/", async function (req, res) {
     .getDb()
     .collection("posts")
     .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
+
+  res.status(200).json({ message: "Success" });
+});
+
+router.post("/posts/:postId/comments", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+  let date = new Date();
+
+  const post = await db.getDb().collection("posts").findOne({ postId });
+
+  const contentInput = req.body.content;
+
+  const newComment = {
+    post_id: post._id,
+    // name: user.name,
+    // email: user.email,
+    content: contentInput,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`,
+  };
+
+  const result = await db.getDb().collection("comments").insertOne(newComment);
+
+  console.log(result);
 
   res.status(200).json({ message: "Success" });
 });

@@ -53,14 +53,14 @@ const PostDetails = () => {
           <p className={classes.contents}>{post.content}</p>
         </div>
         <div>
+          <Comments />
+        </div>
+        <div>
           <Link to="edit">수정</Link>
           <button type="button" onClick={postDeleteHandler}>
             삭제
           </button>
         </div>
-      </div>
-      <div>
-        <Comments />
       </div>
     </>
   );
