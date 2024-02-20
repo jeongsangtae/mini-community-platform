@@ -1,4 +1,5 @@
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
+import Comments from "../Comments/Comments";
 
 import classes from "./PostDetails.module.css";
 
@@ -57,6 +58,9 @@ const PostDetails = () => {
             삭제
           </button>
         </div>
+      </div>
+      <div>
+        <Comments />
       </div>
     </>
   );
