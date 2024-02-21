@@ -5,11 +5,11 @@ const CreateComment = () => {
   const [comment, setComment] = useState("");
   const post = useRouteLoaderData("post-detail");
 
-  const testHandler = () => {
-    const postId = post.postId;
-    console.log(post);
-    console.log(postId);
-  };
+  // const testHandler = () => {
+  //   const postId = post.postId;
+  //   console.log(post);
+  //   console.log(postId);
+  // };
 
   const commentChangeHandler = (event) => {
     const commentContent = event.target.value;
@@ -33,7 +33,7 @@ const CreateComment = () => {
     );
 
     if (!response.ok) {
-      throw json({ message: "Could not delete post." }, { status: 500 });
+      throw json({ message: "댓글 추가 실패" }, { status: 500 });
     }
 
     console.log("add comments");
@@ -53,7 +53,7 @@ const CreateComment = () => {
         />
         <button>등록</button>
       </form>
-      <button onClick={testHandler}>테스트 버튼</button>
+      {/* <button onClick={testHandler}>테스트 버튼</button> */}
     </>
   );
 };
