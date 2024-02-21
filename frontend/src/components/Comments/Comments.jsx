@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import CreateComment from "./CreateComment";
 import CommentEdit from "./CommentEdit";
 import CommentForm from "./CommentForm";
 
 const Comments = () => {
+  const [comments, setComments] = useState([]);
   const post = useRouteLoaderData("post-detail");
 
   const fetchData = async () => {
@@ -18,13 +19,17 @@ const Comments = () => {
       throw json({ message: "댓글 추가 실패" }, { status: 500 });
     }
 
-    console.log(response);
-
     const resData = await response.json();
+
+    console.log(resData.comments);
+    console.log(resData.comments.content);
+    setComments(resData.comments);
+
     return resData;
   };
 
-  console.log(fetchData.comment);
+  console.log(comments);
+  console.log(comments[0]);
 
   // useEffect(() => {
   //   const fetchData = async ()=> {
@@ -40,7 +45,13 @@ const Comments = () => {
   // }, [])
   return (
     <>
-      <p>{fetchData.content}</p>
+      {comments.length > 0 && (
+        <ul>
+          {comments.map((comment) => {
+            return <li>{comment.content}</li>;
+          })}
+        </ul>
+      )}
       <CreateComment />
       <div>
         {/* <button>수정</button> */}
