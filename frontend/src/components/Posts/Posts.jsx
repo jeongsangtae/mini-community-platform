@@ -8,20 +8,6 @@ import classes from "./Posts.module.css";
 
 const Posts = () => {
   const navigate = useNavigate();
-  // const posts = resData.posts;
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch(`http://localhost:3000/posts?page=${page}`);
-  //     console.log(response);
-  //     const resData = await response.json();
-  //     setPosts(resData.posts);
-  //     setTotalPages(resData.totalPages);
-  //     setFirstPageGroup(resData.firstPageGroup);
-  //     setLastPageGroup(resData.lastPageGroup);
-  //   };
-  //   fetchData();
-  // }, [page]);
 
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);

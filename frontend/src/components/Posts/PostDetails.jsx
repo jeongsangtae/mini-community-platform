@@ -12,26 +12,6 @@ const PostDetails = () => {
     return <div>Loading...</div>;
   }
 
-  // const postDeleteHandler = async () => {
-  //   const postId = post.postId;
-  //   const response = await fetch(
-  //     "http://localhost:3000/posts/" + postId + "/delete",
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify(),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-
-  //   if (!response.ok) {
-  //     throw json({ message: "Could not delete post." }, { status: 500 });
-  //   }
-
-  //   window.location.href = "/posts";
-  // };
-
   const postDeleteHandler = () => {
     submit(null, { method: "delete" });
   };
