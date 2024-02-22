@@ -30,8 +30,7 @@ const CreateComment = ({ onCommentData }) => {
     } else {
       console.log("add comments");
       const resData = await response.json();
-      // console.log(resData);
-      // console.log(resData.newComment);
+      // onCommentData(comment);
       onCommentData(resData.newComment);
     }
 
