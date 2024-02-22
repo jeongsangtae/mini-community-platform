@@ -1,19 +1,12 @@
 import { useState } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
-const CreateComment = () => {
+const CreateComment = ({ onCommentData }) => {
   const [comment, setComment] = useState("");
   const post = useRouteLoaderData("post-detail");
 
-  // const testHandler = () => {
-  //   const postId = post.postId;
-  //   console.log(post);
-  //   console.log(postId);
-  // };
-
   const commentChangeHandler = (event) => {
     const commentContent = event.target.value;
-    console.log(commentContent);
     setComment(commentContent);
   };
 
@@ -34,9 +27,13 @@ const CreateComment = () => {
 
     if (!response.ok) {
       throw json({ message: "댓글 추가 실패" }, { status: 500 });
+    } else {
+      console.log("add comments");
+      const resData = await response.json();
+      // console.log(resData);
+      // console.log(resData.newComment);
+      onCommentData(resData.newComment);
     }
-
-    console.log("add comments");
 
     return redirect("/posts/" + postId);
   };
@@ -44,7 +41,6 @@ const CreateComment = () => {
   return (
     <>
       <form onSubmit={submitHandler}>
-        {/* <p></p> */}
         <textarea
           placeholder="내용 입력"
           rows="5"
@@ -53,7 +49,6 @@ const CreateComment = () => {
         />
         <button>등록</button>
       </form>
-      {/* <button onClick={testHandler}>테스트 버튼</button> */}
     </>
   );
 };

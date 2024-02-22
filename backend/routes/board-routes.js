@@ -176,9 +176,10 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
   const result = await db.getDb().collection("comments").insertOne(newComment);
 
+  console.log(newComment);
   console.log(result);
 
-  res.status(200).json({ message: "Success" });
+  res.status(200).json({ newComment });
 });
 
 module.exports = router;
