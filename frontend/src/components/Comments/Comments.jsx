@@ -10,7 +10,7 @@ const Comments = () => {
   const post = useRouteLoaderData("post-detail");
 
   useEffect(() => {
-    const fetchData = async (comment) => {
+    const fetchData = async () => {
       const postId = post.postId;
       const response = await fetch(
         "http://localhost:3000/posts/" + postId + "/comments"
@@ -32,9 +32,6 @@ const Comments = () => {
     setComments((prevComments) => [...prevComments, newComment]);
     console.log(comments);
   };
-
-  console.log(comments);
-  console.log(comments[0]);
 
   return (
     <>

@@ -174,12 +174,22 @@ router.post("/posts/:postId/comments", async (req, res) => {
       .padStart(2, "0")}`,
   };
 
-  const result = await db.getDb().collection("comments").insertOne(newComment);
-
-  console.log(newComment);
-  console.log(result);
+  await db.getDb().collection("comments").insertOne(newComment);
 
   res.status(200).json({ newComment });
+});
+
+router.delete("/posts/:postId/comment", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+
+  const post = await db.getDb().collection("posts").findOne({ postId });
+
+  console.log(post);
+  console.log(post._id);
+
+  await db.getDb().collection("comments").deleteOne({ post_id: post._id });
+
+  res.status(200).json({ message: "Success" });
 });
 
 module.exports = router;
