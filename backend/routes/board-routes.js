@@ -120,11 +120,11 @@ router.patch("/posts/:postId/edit", async (req, res) => {
 router.delete("/posts/:postId/", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
-  console.log(postId);
+  // console.log(postId);
 
   const post = await db.getDb().collection("posts").findOne({ postId: postId });
 
-  console.log(post);
+  // console.log(post);
 
   await db.getDb().collection("posts").deleteOne({ postId: post.postId });
 
@@ -176,6 +176,8 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
   await db.getDb().collection("comments").insertOne(newComment);
 
+  // console.log(comment);
+
   res.status(200).json({ newComment });
 });
 
@@ -186,8 +188,11 @@ router.delete("/posts/:postId/comment", async (req, res) => {
 
   console.log(post);
   console.log(post._id);
+  console.log(post.postId);
 
   await db.getDb().collection("comments").deleteOne({ post_id: post._id });
+
+  // console.log(comment);
 
   res.status(200).json({ message: "Success" });
 });

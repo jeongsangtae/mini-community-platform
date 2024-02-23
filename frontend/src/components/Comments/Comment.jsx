@@ -6,11 +6,13 @@ const Comment = ({ content }) => {
   const commentDeleteHandler = async () => {
     const postId = post.postId;
     const response = await fetch(
-      "http://localhost:3000/posts/" + postId + "comment",
+      "http://localhost:3000/posts/" + postId + "/comment",
       {
         method: "DELETE",
       }
     );
+
+    console.log(postId);
 
     if (!response.ok) {
       throw json({ message: "Could not delete comment." }, { status: 500 });
