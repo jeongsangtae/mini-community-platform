@@ -33,8 +33,15 @@ const Comments = () => {
     console.log(comments);
   };
 
-  const deleteComment = () => {
-    setComments((prevComments) => [...prevComments]);
+  const deleteComment = (commentId) => {
+    // setComments((prevComments) =>
+    //   prevComments.filter((comment) => comment._id !== commentId._id)
+    // );
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment._id !== commentId)
+    );
+    console.log(commentId);
+    console.log(comments);
   };
 
   return (
@@ -45,6 +52,7 @@ const Comments = () => {
             return (
               <Comment
                 key={comment._id}
+                commentId={comment._id}
                 content={comment.content}
                 onDeleteCommentData={deleteComment}
               />
@@ -53,10 +61,7 @@ const Comments = () => {
         </ul>
       )}
       <CreateComment onAddCommentData={addComment} />
-      <div>
-        {/* <button>수정</button> */}
-        {/* <button>삭제</button> */}
-      </div>
+      <div>{/* <button>수정</button> */}</div>
     </>
   );
 };

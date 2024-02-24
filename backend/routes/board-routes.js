@@ -190,15 +190,17 @@ router.delete("/posts/:postId/comment", async (req, res) => {
   // console.log(post._id);
   // console.log(post.postId);
 
-  const comment = await db
-    .getDb()
-    .collection("comments")
-    .deleteOne({ post_id: post._id });
+  // const comment = await db
+  //   .getDb()
+  //   .collection("comments")
+  //   .findOne({ post_id: post._id });
+  // console.log(comment);
+  // console.log(comment._id);
 
-  console.log(comment);
-  console.log(comment._id);
+  await db.getDb().collection("comments").deleteOne({ post_id: post._id });
 
-  res.status(200).json({ comment });
+  // res.status(200).json({ comment });
+  res.status(200).json({ message: "Success" });
 });
 
 module.exports = router;
