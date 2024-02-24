@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from "react-router-dom";
 
-const Comment = ({ content }) => {
+const Comment = ({ content, onDeleteCommentData }) => {
   const post = useRouteLoaderData("post-detail");
 
   const commentDeleteHandler = async () => {
@@ -16,9 +16,13 @@ const Comment = ({ content }) => {
 
     if (!response.ok) {
       throw json({ message: "Could not delete comment." }, { status: 500 });
+    } else {
+      const resData = await response.json();
+      console.log(resData);
+      console.log(resData.comment);
+      onDeleteCommentData(resData.comment);
+      console.log("Delete comment");
     }
-
-    console.log("Delete comment");
   };
 
   return (

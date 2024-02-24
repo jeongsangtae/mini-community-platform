@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
-const CreateComment = ({ onCommentData }) => {
+const CreateComment = ({ onAddCommentData }) => {
   const [comment, setComment] = useState("");
   const post = useRouteLoaderData("post-detail");
 
@@ -31,7 +31,7 @@ const CreateComment = ({ onCommentData }) => {
       console.log("add comments");
       const resData = await response.json();
       // onCommentData(comment);
-      onCommentData(resData.newComment);
+      onAddCommentData(resData.newComment);
     }
 
     return redirect("/posts/" + postId);

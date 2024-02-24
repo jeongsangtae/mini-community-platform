@@ -33,16 +33,26 @@ const Comments = () => {
     console.log(comments);
   };
 
+  const deleteComment = () => {
+    setComments((prevComments) => [...prevComments]);
+  };
+
   return (
     <>
       {comments.length > 0 && (
         <ul>
           {comments.map((comment) => {
-            return <Comment key={comment._id} content={comment.content} />;
+            return (
+              <Comment
+                key={comment._id}
+                content={comment.content}
+                onDeleteCommentData={deleteComment}
+              />
+            );
           })}
         </ul>
       )}
-      <CreateComment onCommentData={addComment} />
+      <CreateComment onAddCommentData={addComment} />
       <div>
         {/* <button>수정</button> */}
         {/* <button>삭제</button> */}
