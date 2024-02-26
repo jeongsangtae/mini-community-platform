@@ -60,7 +60,8 @@ const Comments = () => {
           })}
         </ul>
       )}
-      <CreateComment onAddCommentData={addComment} />
+      {/* <CreateComment onAddCommentData={addComment} /> */}
+      <CommentForm method="POST" onAddCommentData={addComment} />
       <div>{/* <button>수정</button> */}</div>
     </>
   );

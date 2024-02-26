@@ -36,6 +36,7 @@ const Comment = ({ commentId, content, onDeleteCommentData }) => {
     <>
       <li>
         <p>{content}</p>
+        <button type="button">수정</button>
         <button type="button" onClick={commentDeleteHandler}>
           삭제
         </button>
