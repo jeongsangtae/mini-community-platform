@@ -9,6 +9,10 @@ const Comment = ({ commentId, content, onDeleteCommentData }) => {
       "http://localhost:3000/posts/" + postId + "/comment",
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ commentId: commentId }),
       }
     );
 
