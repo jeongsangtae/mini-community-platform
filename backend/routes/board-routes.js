@@ -82,7 +82,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
   const titleInput = req.body.title;
   const contentInput = req.body.content;
 
-  const updateData = {
+  const updatePost = {
     title: titleInput,
     content: contentInput,
   };
@@ -90,7 +90,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
   await db
     .getDb()
     .collection("posts")
-    .updateOne({ postId }, { $set: updateData });
+    .updateOne({ postId }, { $set: updatePost });
 
   console.log(postId);
   res.status(200).json({ message: "Success" });
@@ -179,6 +179,37 @@ router.post("/posts/:postId/comments", async (req, res) => {
   // console.log(comment);
 
   res.status(200).json({ newComment });
+});
+
+router.patch("/posts/:postId/comments", async (req, res) => {
+  // let postId = parseInt(req.params.postId);
+  let commentId = req.body.commentId;
+  let date = new Date();
+
+  commentId = new ObjectId(commentId);
+
+  // const post = await db.getDb().collection("posts").findOne({ postId });
+
+  const contentInput = req.body.content;
+
+  const updateComment = {
+    content: contentInput,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`,
+  };
+
+  await db
+    .getDb()
+    .collection("comments")
+    .updateOne({ _id: commentId }, { $set: updateComment });
+
+  console.log(updateComment);
+  res.status(200).json({ message: "Success" });
 });
 
 router.delete("/posts/:postId/comment", async (req, res) => {

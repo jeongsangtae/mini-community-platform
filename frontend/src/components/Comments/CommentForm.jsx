@@ -16,11 +16,26 @@ const CommentForm = ({ method, commentData, onAddCommentData }) => {
     console.log(comment);
 
     const postId = post.postId;
+
+    let requestBody = {
+      content: comment,
+    };
+
+    // if (method === 'PATCH') {
+    //   requestBody = {
+    //     content: comment,
+    //     commentId: commentData.commentId;
+    // }
+
+    if (method === "PATCH") {
+      requestBody.commentId = commentData.commentId;
+    }
+
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/comments",
       {
         method: method,
-        body: JSON.stringify({ content: comment }),
+        body: JSON.stringify(requestBody),
         headers: { "Content-Type": "application/json" },
       }
     );
@@ -56,9 +71,11 @@ const CommentForm = ({ method, commentData, onAddCommentData }) => {
     <>
       <form onSubmit={submitHandler}>
         <textarea
-          placeholder="내용 입력"
-          rows="5"
+          required
           name="content"
+          rows="5"
+          placeholder="내용 입력"
+          defaultValue={commentData ? commentData.content : ""}
           onChange={commentInputHandler}
         />
         <button>등록</button>

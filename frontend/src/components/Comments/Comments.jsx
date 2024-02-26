@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
-import CreateComment from "./CreateComment";
-import CommentEdit from "./CommentEdit";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 
