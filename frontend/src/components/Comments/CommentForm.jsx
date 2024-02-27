@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
-const CommentForm = ({ method, commentData, onAddCommentData }) => {
+const CommentForm = ({
+  method,
+  commentData,
+  onAddCommentData,
+  onPatchCommentData,
+}) => {
   const [comment, setComment] = useState("");
   const post = useRouteLoaderData("post-detail");
 
@@ -60,6 +65,10 @@ const CommentForm = ({ method, commentData, onAddCommentData }) => {
       console.log(resData.newComment);
     } else if (response.ok && method === "PATCH") {
       // 수정과 관련된 내용
+      const resData = await response.json();
+      onPatchCommentData(resData.updateComment);
+      console.log(resData);
+      console.log(resData.updateComment);
     }
 
     console.log(method);

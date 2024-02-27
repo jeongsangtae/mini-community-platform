@@ -3,7 +3,12 @@ import { useRouteLoaderData } from "react-router-dom";
 
 import CommentForm from "./CommentForm";
 
-const Comment = ({ commentId, content, onDeleteCommentData }) => {
+const Comment = ({
+  commentId,
+  content,
+  onDeleteCommentData,
+  onPatchCommentData,
+}) => {
   const post = useRouteLoaderData("post-detail");
   const [commentEditToggle, setCommentEditToggle] = useState(false);
 
@@ -46,7 +51,11 @@ const Comment = ({ commentId, content, onDeleteCommentData }) => {
           삭제
         </button>
         {commentEditToggle && (
-          <CommentForm method="PATCH" commentData={{ content, commentId }} />
+          <CommentForm
+            method="PATCH"
+            commentData={{ content, commentId }}
+            onPatchCommentData={onPatchCommentData}
+          />
         )}
       </li>
     </>

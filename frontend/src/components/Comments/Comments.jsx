@@ -31,6 +31,21 @@ const Comments = () => {
     console.log(comments);
   };
 
+  const patchComment = (updateComment) => {
+    console.log(updateComment);
+    console.log(updateComment.commentId);
+    console.log(comments);
+    setComments((prevComments) => {
+      return prevComments.map((comment) => {
+        if (comment._id === updateComment.commentId) {
+          return { ...comment, content: updateComment.content };
+        }
+        return comment;
+      });
+    });
+    console.log(comments);
+  };
+
   const deleteComment = (commentId) => {
     // setComments((prevComments) =>
     //   prevComments.filter((comment) => comment._id !== commentId._id)
@@ -53,6 +68,7 @@ const Comments = () => {
                 commentId={comment._id}
                 content={comment.content}
                 onDeleteCommentData={deleteComment}
+                onPatchCommentData={patchComment}
               />
             );
           })}

@@ -194,6 +194,7 @@ router.patch("/posts/:postId/comments", async (req, res) => {
 
   const updateComment = {
     content: contentInput,
+    commentId: commentId,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
       .toString()
@@ -209,7 +210,7 @@ router.patch("/posts/:postId/comments", async (req, res) => {
     .updateOne({ _id: commentId }, { $set: updateComment });
 
   console.log(updateComment);
-  res.status(200).json({ message: "Success" });
+  res.status(200).json({ updateComment });
 });
 
 router.delete("/posts/:postId/comment", async (req, res) => {
