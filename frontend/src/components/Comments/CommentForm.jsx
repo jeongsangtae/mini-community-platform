@@ -6,6 +6,7 @@ const CommentForm = ({
   commentData,
   onAddCommentData,
   onPatchCommentData,
+  onCommentToggle,
 }) => {
   const [comment, setComment] = useState("");
   const post = useRouteLoaderData("post-detail");
@@ -72,6 +73,7 @@ const CommentForm = ({
           onChange={commentInputHandler}
         />
         <button>등록</button>
+        {onCommentToggle && <button onClick={onCommentToggle}>취소</button>}
       </form>
     </>
   );

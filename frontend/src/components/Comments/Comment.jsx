@@ -37,7 +37,7 @@ const Comment = ({
   };
 
   const commentEditToggleHandler = () => {
-    setCommentEditToggle(true);
+    setCommentEditToggle(!commentEditToggle);
   };
 
   return (
@@ -55,6 +55,7 @@ const Comment = ({
             method="PATCH"
             commentData={{ content, commentId }}
             onPatchCommentData={onPatchCommentData}
+            onCommentToggle={commentEditToggleHandler}
           />
         )}
       </li>
