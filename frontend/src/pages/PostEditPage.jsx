@@ -8,7 +8,6 @@ const PostEditPage = () => {
   return (
     <>
       <PostForm method="patch" postData={postData} />
-      {/* <PostEdit /> */}
     </>
   );
 };

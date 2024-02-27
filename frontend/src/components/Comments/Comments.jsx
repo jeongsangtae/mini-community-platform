@@ -47,9 +47,6 @@ const Comments = () => {
   };
 
   const deleteComment = (commentId) => {
-    // setComments((prevComments) =>
-    //   prevComments.filter((comment) => comment._id !== commentId._id)
-    // );
     setComments((prevComments) =>
       prevComments.filter((comment) => comment._id !== commentId)
     );
@@ -74,9 +71,7 @@ const Comments = () => {
           })}
         </ul>
       )}
-      {/* <CreateComment onAddCommentData={addComment} /> */}
       <CommentForm method="POST" onAddCommentData={addComment} />
-      <div>{/* <button>수정</button> */}</div>
     </>
   );
 };

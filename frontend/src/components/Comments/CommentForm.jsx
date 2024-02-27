@@ -26,12 +26,6 @@ const CommentForm = ({
       content: comment,
     };
 
-    // if (method === 'PATCH') {
-    //   requestBody = {
-    //     content: comment,
-    //     commentId: commentData.commentId;
-    // }
-
     if (method === "PATCH") {
       requestBody.commentId = commentData.commentId;
     }
@@ -47,15 +41,6 @@ const CommentForm = ({
 
     console.log(method);
 
-    // if (response.ok && method === "POST") {
-    //   const resData = await response.json();
-    //   onAddCommentData(resData.newComment);
-    //   console.log(resData);
-    //   console.log(resData.newComment);
-    // } else if (!response.ok) {
-    //   throw json({ message: "Could not save comment." }, { status: 500 });
-    // }
-
     if (!response.ok) {
       throw json({ message: "Could not save comment." }, { status: 500 });
     } else if (response.ok && method === "POST") {
@@ -64,7 +49,6 @@ const CommentForm = ({
       console.log(resData);
       console.log(resData.newComment);
     } else if (response.ok && method === "PATCH") {
-      // 수정과 관련된 내용
       const resData = await response.json();
       onPatchCommentData(resData.updateComment);
       console.log(resData);

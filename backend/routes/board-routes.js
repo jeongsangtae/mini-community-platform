@@ -223,22 +223,8 @@ router.delete("/posts/:postId/comment", async (req, res) => {
 
   console.log(commentId);
 
-  // const post = await db.getDb().collection("posts").findOne({ postId });
-
-  // console.log(post);
-  // console.log(post._id);
-  // console.log(post.postId);
-
-  // const comment = await db
-  //   .getDb()
-  //   .collection("comments")
-  //   .findOne({ post_id: post._id });
-  // console.log(comment);
-  // console.log(comment._id);
-
   await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
-  // res.status(200).json({ comment });
   res.status(200).json({ message: "Success" });
 });
 

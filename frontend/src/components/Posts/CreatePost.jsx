@@ -36,16 +36,3 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
-
-// export const action = async ({ request }) => {
-//   const formData = await request.formData();
-//   const postData = Object.fromEntries(formData);
-//   // formData.get("body");
-//   await fetch("http://localhost:3000/posts", {
-//     method: "POST",
-//     body: JSON.stringify(postData),
-//     headers: { "Content-Type": "application/json" },
-//   });
-
-//   return redirect("/posts");
-// };

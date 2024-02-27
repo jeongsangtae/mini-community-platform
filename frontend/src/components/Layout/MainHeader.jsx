@@ -11,8 +11,6 @@ const MainHeader = () => {
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
-  // const [accessTokenVaild, setAccessTokenValid] = useState("")
-  //  const [refreshTokenValid, setRefreshTokenValid] = useState("")
 
   console.log(user);
   console.log(user.name);
@@ -37,19 +35,6 @@ const MainHeader = () => {
 
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   const accessTokenMonitoring = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:3000/refreshToken", {
-  //         credentials: "include",
-  //       });
-  //       if (response.ok) {
-  //         const data = await response.json();
-  //       }
-  //     } catch (error) {}
-  //   };
-  // });
 
   const signupToggleHandler = () => {
     setOpenSignupModal(!openSignupModal);

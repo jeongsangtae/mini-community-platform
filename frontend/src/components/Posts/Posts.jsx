@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from "./PagiNation";
-// import Pagination from "./Pagination";
 
 import Post from "./Post";
 import classes from "./Posts.module.css";
@@ -81,9 +80,3 @@ const Posts = () => {
 };
 
 export default Posts;
-
-// export const loader = async () => {
-//   const response = await fetch("http://localhost:3000/posts");
-//   const resData = await response.json();
-//   return resData.posts;
-// };
