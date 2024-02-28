@@ -73,7 +73,7 @@ const CommentForm = ({
           defaultValue={commentData ? commentData.content : ""}
           onChange={commentInputHandler}
         />
-        <button>등록</button>
+        <button>{method === "POST" ? "등록" : "수정"}</button>
         {onCommentToggle && <button onClick={onCommentToggle}>취소</button>}
       </form>
     </>

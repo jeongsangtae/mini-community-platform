@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+import Replies from "../Replies/Replies";
+import ReplyForm from "../Replies/ReplyForm";
 
 import CommentForm from "./CommentForm";
 
@@ -11,6 +13,7 @@ const Comment = ({
 }) => {
   const post = useRouteLoaderData("post-detail");
   const [commentEditToggle, setCommentEditToggle] = useState(false);
+  const [replyToggle, setReplyToggle] = useState(false);
 
   const commentDeleteHandler = async () => {
     const postId = post.postId;
@@ -40,6 +43,10 @@ const Comment = ({
     setCommentEditToggle(!commentEditToggle);
   };
 
+  const replyToggleHandler = () => {
+    setReplyToggle(!replyToggle);
+  };
+
   return (
     <>
       <li>
@@ -50,6 +57,10 @@ const Comment = ({
         <button type="button" onClick={commentDeleteHandler}>
           삭제
         </button>
+        <button type="button" onClick={replyToggleHandler}>
+          답글쓰기
+        </button>
+
         {commentEditToggle && (
           <CommentForm
             method="PATCH"
@@ -58,6 +69,10 @@ const Comment = ({
             onCommentToggle={commentEditToggleHandler}
           />
         )}
+
+        <Replies />
+
+        {replyToggle && <ReplyForm />}
       </li>
     </>
   );
