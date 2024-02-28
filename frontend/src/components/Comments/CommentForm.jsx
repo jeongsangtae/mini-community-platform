@@ -12,8 +12,14 @@ const CommentForm = ({
   const post = useRouteLoaderData("post-detail");
 
   const commentInputHandler = (event) => {
-    const commentContent = event.target.value;
-    setComment(commentContent);
+    setComment(event.target.value);
+    // const commentContent = event.target.value;
+    // console.log(commentData.content);
+    // if (commentContent.trim() !== "") {
+    //   setComment(commentContent);
+    // } else {
+    //   setComment(commentData.content);
+    // }
   };
 
   const submitHandler = async (event) => {
@@ -21,10 +27,17 @@ const CommentForm = ({
 
     console.log(comment);
 
+    console.log(commentData.content);
+
+    let contentTrimConfrim =
+      comment.trim() !== "" ? comment : commentData.content;
+
+    console.log(contentTrimConfrim);
+
     const postId = post.postId;
 
     let requestBody = {
-      content: comment,
+      content: contentTrimConfrim,
     };
 
     if (method === "PATCH") {
@@ -54,6 +67,7 @@ const CommentForm = ({
       onPatchCommentData(resData.updateComment);
       console.log(resData);
       console.log(resData.updateComment);
+      onCommentToggle();
     }
 
     console.log(method);
