@@ -1,4 +1,4 @@
-const ReplyForm = () => {
+const ReplyForm = ({ onReplyToggle }) => {
   const submitHandler = (event) => {
     event.preventDefault();
   };
@@ -15,7 +15,11 @@ const ReplyForm = () => {
           // onChange={commentInputHandler}
         />
         <button>등록</button>
-        <button>취소</button>
+        {onReplyToggle && (
+          <button type="button" onClick={onReplyToggle}>
+            취소
+          </button>
+        )}
       </form>
     </>
   );

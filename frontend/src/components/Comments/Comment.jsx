@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import Replies from "../Replies/Replies";
-import ReplyForm from "../Replies/ReplyForm";
 
 import CommentForm from "./CommentForm";
 
@@ -44,6 +43,7 @@ const Comment = ({
   };
 
   const replyToggleHandler = () => {
+    console.log(replyToggle);
     setReplyToggle(!replyToggle);
   };
 
@@ -70,9 +70,7 @@ const Comment = ({
           />
         )}
 
-        <Replies />
-
-        {replyToggle && <ReplyForm />}
+        <Replies commentId={commentId} onReplyToggle={replyToggleHandler} />
       </li>
     </>
   );

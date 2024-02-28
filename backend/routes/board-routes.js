@@ -228,4 +228,35 @@ router.delete("/posts/:postId/comment", async (req, res) => {
   res.status(200).json({ message: "Success" });
 });
 
+router.post("/posts/:postId/replies", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+  let commentId = req.body.commentId;
+  let date = new Date();
+
+  commentId = new ObjectId(commentId);
+
+  const post = await db.getDb().collection("posts").findOne({ postId });
+
+  const contentInput = req.body.content;
+
+  const newReply = {
+    post_id: post._id,
+    comment_id: commentId,
+    // name: user.name,
+    // email: user.email,
+    content: contentInput,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`,
+  };
+
+  await db.getDb().collection("replies").insertOne(newReply);
+
+  res.status(200).json({ newReply });
+});
+
 module.exports = router;
