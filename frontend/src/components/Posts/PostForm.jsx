@@ -2,7 +2,7 @@ import { useNavigate, Form, redirect, json } from "react-router-dom";
 
 import classes from "./PostForm.module.css";
 
-const PostForm = ({ method, postData }) => {
+const PostForm = ({ method, postData, postPageName }) => {
   console.log(postData);
   const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ const PostForm = ({ method, postData }) => {
 
   return (
     <>
-      <h1 className={classes.heading}>게시글 추가 페이지</h1>
+      <h1 className={classes.heading}>{postPageName}</h1>
       <Form method={method} className={classes.form}>
         <div>
           <label htmlFor="title">제목</label>

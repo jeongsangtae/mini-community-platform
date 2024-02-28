@@ -13,26 +13,13 @@ const CommentForm = ({
 
   const commentInputHandler = (event) => {
     setComment(event.target.value);
-    // const commentContent = event.target.value;
-    // console.log(commentData.content);
-    // if (commentContent.trim() !== "") {
-    //   setComment(commentContent);
-    // } else {
-    //   setComment(commentData.content);
-    // }
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    console.log(comment);
-
-    console.log(commentData.content);
-
     let contentTrimConfrim =
       comment.trim() !== "" ? comment : commentData.content;
-
-    console.log(contentTrimConfrim);
 
     const postId = post.postId;
 

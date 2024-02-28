@@ -1,5 +1,4 @@
 import { useRouteLoaderData } from "react-router-dom";
-import PostEdit from "../components/Posts/PostEdit";
 import PostForm from "../components/Posts/PostForm";
 
 const PostEditPage = () => {
@@ -7,7 +6,11 @@ const PostEditPage = () => {
   console.log(postData);
   return (
     <>
-      <PostForm method="patch" postData={postData} />
+      <PostForm
+        method="patch"
+        postData={postData}
+        postPageName="게시글 수정 페이지"
+      />
     </>
   );
 };
