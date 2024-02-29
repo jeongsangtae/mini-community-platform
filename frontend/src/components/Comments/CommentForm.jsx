@@ -54,6 +54,7 @@ const CommentForm = ({
       onPatchCommentData(resData.updateComment);
       console.log(resData);
       console.log(resData.updateComment);
+      console.log(resData.updateComment._id);
       onCommentToggle();
     }
 

@@ -37,7 +37,7 @@ const Comments = () => {
     console.log(comments);
     setComments((prevComments) => {
       return prevComments.map((comment) => {
-        if (comment._id === updateComment.commentId) {
+        if (comment._id === updateComment._id) {
           return { ...comment, content: updateComment.content };
         }
         return comment;

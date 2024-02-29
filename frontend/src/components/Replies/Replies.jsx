@@ -24,6 +24,7 @@ const Replies = ({ commentId, onReplyToggle }) => {
       {onReplyToggle && (
         <ReplyForm
           method="POST"
+          commentId={commentId}
           onAddReplyData={addReply}
           onReplyToggle={onReplyToggle}
         />

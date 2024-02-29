@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-const ReplyForm = ({ method, onAddReplyData, onReplyToggle }) => {
+const ReplyForm = ({ method, commentId, onAddReplyData, onReplyToggle }) => {
   const [reply, setReply] = useState();
   const post = useRouteLoaderData("post-detail");
 
@@ -16,11 +16,12 @@ const ReplyForm = ({ method, onAddReplyData, onReplyToggle }) => {
 
     let requestBody = {
       content: reply,
+      commentId: commentId,
     };
 
-    if (method === "PATCH") {
-      requestBody.commentId = commentData.commentId;
-    }
+    // if (method === "PATCH") {
+    //   requestBody.commentId = commentData.commentId;
+    // }
 
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/replies",
@@ -37,6 +38,7 @@ const ReplyForm = ({ method, onAddReplyData, onReplyToggle }) => {
       const resData = await response.json();
       onAddReplyData(resData.newReply);
     }
+    console.log(commentId);
     onReplyToggle();
   };
 

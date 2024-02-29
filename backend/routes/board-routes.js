@@ -192,9 +192,9 @@ router.patch("/posts/:postId/comments", async (req, res) => {
 
   const contentInput = req.body.content;
 
-  const updateComment = {
+  let updateComment = {
+    _id: commentId,
     content: contentInput,
-    commentId: commentId,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
       .toString()
@@ -233,15 +233,31 @@ router.post("/posts/:postId/replies", async (req, res) => {
   let commentId = req.body.commentId;
   let date = new Date();
 
+  console.log(commentId);
+
+  console.log(date);
+
   commentId = new ObjectId(commentId);
 
+  console.log(commentId);
+
   const post = await db.getDb().collection("posts").findOne({ postId });
+
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .findOne({ _id: commentId });
+
+  // const comment = await db
+  //   .getDb()
+  //   .collection("comments")
+  //   .findOne({ commentId });
 
   const contentInput = req.body.content;
 
   const newReply = {
     post_id: post._id,
-    comment_id: commentId,
+    comment_id: comment._id,
     // name: user.name,
     // email: user.email,
     content: contentInput,
@@ -253,6 +269,12 @@ router.post("/posts/:postId/replies", async (req, res) => {
       .toString()
       .padStart(2, "0")}`,
   };
+
+  console.log(newReply.comment_id);
+
+  console.log(commentId);
+
+  console.log(newReply);
 
   await db.getDb().collection("replies").insertOne(newReply);
 
