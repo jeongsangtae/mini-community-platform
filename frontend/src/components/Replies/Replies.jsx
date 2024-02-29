@@ -5,19 +5,22 @@ import ReplyForm from "./ReplyForm";
 
 const Replies = ({ commentId, onReplyToggle }) => {
   const [replies, setReplies] = useState([]);
-  const [replyToggle, setReplyToggle] = useState(false);
+  // const [replyToggle, setReplyToggle] = useState(false);
   // const post = useRouteLoaderData("post-detail");
 
   const addReply = (newReply) => {
     setReplies((prevReplies) => [...prevReplies, newReply]);
   };
 
-  const replyToggleHandler = () => {
-    setReplyToggle(!replyToggle);
-  };
+  // const replyToggleHandler = () => {
+  //   setReplyToggle(!replyToggle);
+  // };
 
   return (
     <>
+      {/* <button type="button" onClick={replyToggleHandler}>
+        답글쓰기
+      </button> */}
       {onReplyToggle && (
         <ReplyForm
           method="POST"

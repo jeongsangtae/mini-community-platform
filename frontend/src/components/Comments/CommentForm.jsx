@@ -74,11 +74,7 @@ const CommentForm = ({
           onChange={commentInputHandler}
         />
         <button>{method === "POST" ? "등록" : "수정"}</button>
-        {onCommentToggle && (
-          <button type="button" onClick={onCommentToggle}>
-            취소
-          </button>
-        )}
+        {onCommentToggle && <button onClick={onCommentToggle}>취소</button>}
       </form>
     </>
   );

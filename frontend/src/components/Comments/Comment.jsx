@@ -70,7 +70,9 @@ const Comment = ({
           />
         )}
 
-        <Replies commentId={commentId} onReplyToggle={replyToggleHandler} />
+        {replyToggle && (
+          <Replies commentId={commentId} onReplyToggle={replyToggleHandler} />
+        )}
       </li>
     </>
   );

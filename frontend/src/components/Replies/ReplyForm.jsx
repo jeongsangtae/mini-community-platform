@@ -15,11 +15,7 @@ const ReplyForm = ({ onReplyToggle }) => {
           // onChange={commentInputHandler}
         />
         <button>등록</button>
-        {onReplyToggle && (
-          <button type="button" onClick={onReplyToggle}>
-            취소
-          </button>
-        )}
+        {onReplyToggle && <button onClick={onReplyToggle}>취소</button>}
       </form>
     </>
   );
