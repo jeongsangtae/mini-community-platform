@@ -27,6 +27,10 @@ const Replies = ({ commentId, onReplyToggle }) => {
     fetchData();
   }, []);
 
+  const replyToggleHandler = () => {
+    setReplyToggle(!replyToggle);
+  };
+
   const addReply = (newReply) => {
     console.log(newReply);
     console.log(replies);
@@ -34,8 +38,12 @@ const Replies = ({ commentId, onReplyToggle }) => {
     console.log(replies);
   };
 
-  const replyToggleHandler = () => {
-    setReplyToggle(!replyToggle);
+  const deleteReply = (replyId) => {
+    setReplies((prevReplies) =>
+      prevReplies.filter((reply) => reply._id !== replyId)
+    );
+    console.log(replyId);
+    console.log(replies);
   };
 
   return (
@@ -60,6 +68,7 @@ const Replies = ({ commentId, onReplyToggle }) => {
                 replyId={reply._id}
                 content={reply.content}
                 commentId={commentId}
+                onDeleteReplyData={deleteReply}
               />
             );
           })}

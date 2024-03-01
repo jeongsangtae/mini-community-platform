@@ -19,10 +19,10 @@ const Comment = ({
       "http://localhost:3000/posts/" + postId + "/comment",
       {
         method: "DELETE",
+        body: JSON.stringify({ commentId }),
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ commentId: commentId }),
       }
     );
 

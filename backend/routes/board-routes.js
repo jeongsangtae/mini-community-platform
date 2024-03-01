@@ -294,4 +294,18 @@ router.post("/posts/:postId/replies", async (req, res) => {
   res.status(200).json({ newReply });
 });
 
+router.delete("/posts/:postId/replies", async (req, res) => {
+  let replyId = req.body.replyId;
+
+  console.log(replyId);
+
+  replyId = new ObjectId(replyId);
+
+  console.log(replyId);
+
+  await db.getDb().collection("replies").deleteOne({ _id: replyId });
+
+  res.status(200).json({ message: "Success" });
+});
+
 module.exports = router;
