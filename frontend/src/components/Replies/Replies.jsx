@@ -6,7 +6,7 @@ import ReplyForm from "./ReplyForm";
 
 const Replies = ({ commentId, onReplyToggle }) => {
   const [replies, setReplies] = useState([]);
-  // const [replyToggle, setReplyToggle] = useState(false);
+  const [replyToggle, setReplyToggle] = useState(false);
   const post = useRouteLoaderData("post-detail");
 
   useEffect(() => {
@@ -34,21 +34,21 @@ const Replies = ({ commentId, onReplyToggle }) => {
     console.log(replies);
   };
 
-  // const replyToggleHandler = () => {
-  //   setReplyToggle(!replyToggle);
-  // };
+  const replyToggleHandler = () => {
+    setReplyToggle(!replyToggle);
+  };
 
   return (
     <>
-      {/* <button type="button" onClick={replyToggleHandler}>
+      <button type="button" onClick={replyToggleHandler}>
         답글쓰기
-      </button> */}
-      {onReplyToggle && (
+      </button>
+      {replyToggle && (
         <ReplyForm
           method="POST"
           commentId={commentId}
           onAddReplyData={addReply}
-          onReplyToggle={onReplyToggle}
+          onReplyToggle={replyToggleHandler}
         />
       )}
       {replies.length > 0 && (

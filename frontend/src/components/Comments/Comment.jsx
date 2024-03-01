@@ -12,7 +12,6 @@ const Comment = ({
 }) => {
   const post = useRouteLoaderData("post-detail");
   const [commentEditToggle, setCommentEditToggle] = useState(false);
-  const [replyToggle, setReplyToggle] = useState(false);
 
   const commentDeleteHandler = async () => {
     const postId = post.postId;
@@ -42,11 +41,6 @@ const Comment = ({
     setCommentEditToggle(!commentEditToggle);
   };
 
-  const replyToggleHandler = () => {
-    console.log(replyToggle);
-    setReplyToggle(!replyToggle);
-  };
-
   return (
     <>
       <li>
@@ -57,9 +51,6 @@ const Comment = ({
         <button type="button" onClick={commentDeleteHandler}>
           삭제
         </button>
-        <button type="button" onClick={replyToggleHandler}>
-          답글쓰기
-        </button>
 
         {commentEditToggle && (
           <CommentForm
@@ -69,10 +60,7 @@ const Comment = ({
             onCommentToggle={commentEditToggleHandler}
           />
         )}
-
-        {replyToggle && (
-          <Replies commentId={commentId} onReplyToggle={replyToggleHandler} />
-        )}
+        <Replies commentId={commentId} />
       </li>
     </>
   );

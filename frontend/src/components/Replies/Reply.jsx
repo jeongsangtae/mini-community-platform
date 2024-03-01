@@ -1,7 +1,9 @@
 const Reply = ({ replyId, content, commentId }) => {
   return (
     <>
-      <p>{content}</p>
+      <li>
+        <p>{content}</p>
+      </li>
     </>
   );
 };
