@@ -1,7 +1,16 @@
+import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+import ReplyForm from "./ReplyForm";
 
-const Reply = ({ replyId, content, commentId, onDeleteReplyData }) => {
+const Reply = ({
+  replyId,
+  content,
+  commentId,
+  onDeleteReplyData,
+  onEditReplyData,
+}) => {
   const post = useRouteLoaderData("post-detail");
+  const [replyEditToggle, setReplyEditToggle] = useState(false);
 
   const replyDeleteHandler = async () => {
     const postId = post.postId;
@@ -25,14 +34,26 @@ const Reply = ({ replyId, content, commentId, onDeleteReplyData }) => {
     }
   };
 
+  const replyEditToggleHandler = () => {
+    setReplyEditToggle(!replyEditToggle);
+  };
+
   return (
     <>
       <li>
         <p>{content}</p>
-        <button>수정</button>
+        <button onClick={replyEditToggleHandler}>수정</button>
         <button type="button" onClick={replyDeleteHandler}>
           삭제
         </button>
+        {replyEditToggle && (
+          <ReplyForm
+            method="PATCH"
+            replyData={{ content, replyId }}
+            onEditReplyData={onEditReplyData}
+            onReplyToggle={replyEditToggleHandler}
+          />
+        )}
       </li>
     </>
   );

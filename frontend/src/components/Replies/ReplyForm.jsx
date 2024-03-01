@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-const ReplyForm = ({ method, commentId, onAddReplyData, onReplyToggle }) => {
+const ReplyForm = ({
+  method,
+  replyData,
+  commentId,
+  onAddReplyData,
+  onEditReplyData,
+  onReplyToggle,
+}) => {
   const [reply, setReply] = useState();
   const post = useRouteLoaderData("post-detail");
 
@@ -16,12 +23,26 @@ const ReplyForm = ({ method, commentId, onAddReplyData, onReplyToggle }) => {
 
     let requestBody = {
       content: reply,
-      commentId: commentId,
     };
 
-    // if (method === "PATCH") {
-    //   requestBody.commentId = commentData.commentId;
-    // }
+    if (method === "POST") {
+      requestBody.commentId = commentId;
+    }
+
+    if (method === "PATCH") {
+      requestBody.replyId = replyData.replyId;
+    }
+
+    // let requestBody = {
+    //   content: reply,
+    //   ...(method === "POST" && { commentId: commentId }),
+    //   ...(method === "PATCH" && { replyId: replyData.replyId }),
+    // };
+
+    // let requestBody = {
+    //   content: reply,
+    //   ...(method === "POST" ? { commentId: commentId } : { replyId: replyData.replyId }),
+    // };
 
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/replies",
@@ -38,8 +59,11 @@ const ReplyForm = ({ method, commentId, onAddReplyData, onReplyToggle }) => {
       const resData = await response.json();
       onAddReplyData(resData.newReply);
       console.log(resData.newReply);
+    } else if (response.ok && method === "PATCH") {
+      const resData = await response.json();
+      onEditReplyData(resData.updateReply);
     }
-    console.log(commentId);
+
     onReplyToggle();
   };
 
@@ -51,10 +75,10 @@ const ReplyForm = ({ method, commentId, onAddReplyData, onReplyToggle }) => {
           name="content"
           rows="5"
           placeholder="내용 입력"
-          // defaultValue={commentReply ? commentReply.content : ""}
+          defaultValue={replyData ? replyData.content : ""}
           onChange={replyinputHandler}
         />
-        <button>등록</button>
+        <button>{method === "POST" ? "등록" : "수정"}</button>
         {onReplyToggle && <button onClick={onReplyToggle}>취소</button>}
       </form>
     </>

@@ -38,6 +38,21 @@ const Replies = ({ commentId, onReplyToggle }) => {
     console.log(replies);
   };
 
+  const editReply = (updateReply) => {
+    console.log(updateReply);
+    console.log(updateReply.replyId);
+    console.log(replies);
+    setReplies((prevReplies) => {
+      return prevReplies.map((reply) => {
+        if (reply._id === updateReply._id) {
+          return { ...reply, content: updateReply.content };
+        }
+        return reply;
+      });
+    });
+    console.log(replies);
+  };
+
   const deleteReply = (replyId) => {
     setReplies((prevReplies) =>
       prevReplies.filter((reply) => reply._id !== replyId)
@@ -69,6 +84,7 @@ const Replies = ({ commentId, onReplyToggle }) => {
                 content={reply.content}
                 commentId={commentId}
                 onDeleteReplyData={deleteReply}
+                onEditReplyData={editReply}
               />
             );
           })}

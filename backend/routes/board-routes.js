@@ -294,6 +294,38 @@ router.post("/posts/:postId/replies", async (req, res) => {
   res.status(200).json({ newReply });
 });
 
+router.patch("/posts/:postId/replies", async (req, res) => {
+  // let postId = parseInt(req.params.postId);
+  let replytId = req.body.replyId;
+  let date = new Date();
+
+  replytId = new ObjectId(replytId);
+
+  // const post = await db.getDb().collection("posts").findOne({ postId });
+
+  const contentInput = req.body.content;
+
+  let updateReply = {
+    _id: replytId,
+    content: contentInput,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0")}`,
+  };
+
+  await db
+    .getDb()
+    .collection("replies")
+    .updateOne({ _id: replytId }, { $set: updateReply });
+
+  console.log(updateReply);
+  res.status(200).json({ updateReply });
+});
+
 router.delete("/posts/:postId/replies", async (req, res) => {
   let replyId = req.body.replyId;
 
