@@ -15,7 +15,7 @@ const Comments = () => {
       );
 
       if (!response.ok) {
-        throw json({ message: "댓글 추가 실패" }, { status: 500 });
+        throw json({ message: "댓글 불러오기 실패" }, { status: 500 });
       }
 
       const resData = await response.json();

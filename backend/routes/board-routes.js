@@ -228,20 +228,33 @@ router.delete("/posts/:postId/comment", async (req, res) => {
   res.status(200).json({ message: "Success" });
 });
 
+router.get("/posts/:postId/replies", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+
+  const post = await db.getDb().collection("posts").findOne({ postId });
+
+  const replies = await db
+    .getDb()
+    .collection("replies")
+    .find({ post_id: post._id })
+    .toArray();
+
+  res.status(200).json({ replies });
+});
+
 router.post("/posts/:postId/replies", async (req, res) => {
   let postId = parseInt(req.params.postId);
   let commentId = req.body.commentId;
   let date = new Date();
-
-  console.log(commentId);
-
-  console.log(date);
 
   commentId = new ObjectId(commentId);
 
   console.log(commentId);
 
   const post = await db.getDb().collection("posts").findOne({ postId });
+
+  console.log(post);
+  console.log(post._id);
 
   const comment = await db
     .getDb()

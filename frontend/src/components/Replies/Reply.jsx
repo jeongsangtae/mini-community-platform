@@ -1,7 +1,7 @@
-const Reply = () => {
+const Reply = ({ replyId, content, commentId }) => {
   return (
     <>
-      <p>답글</p>
+      <p>{content}</p>
     </>
   );
 };

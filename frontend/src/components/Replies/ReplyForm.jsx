@@ -37,6 +37,7 @@ const ReplyForm = ({ method, commentId, onAddReplyData, onReplyToggle }) => {
     } else if (response.ok && method === "POST") {
       const resData = await response.json();
       onAddReplyData(resData.newReply);
+      console.log(resData.newReply);
     }
     console.log(commentId);
     onReplyToggle();
