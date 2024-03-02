@@ -8,7 +8,7 @@ const Comment = ({
   commentId,
   content,
   onDeleteCommentData,
-  onPatchCommentData,
+  onEditCommentData,
 }) => {
   const post = useRouteLoaderData("post-detail");
   const [commentEditToggle, setCommentEditToggle] = useState(false);
@@ -56,7 +56,7 @@ const Comment = ({
           <CommentForm
             method="PATCH"
             commentData={{ content, commentId }}
-            onPatchCommentData={onPatchCommentData}
+            onEditCommentData={onEditCommentData}
             onCommentToggle={commentEditToggleHandler}
           />
         )}

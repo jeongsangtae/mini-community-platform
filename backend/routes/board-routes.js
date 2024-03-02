@@ -82,7 +82,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
   const titleInput = req.body.title;
   const contentInput = req.body.content;
 
-  const updatePost = {
+  const editPost = {
     title: titleInput,
     content: contentInput,
   };
@@ -90,7 +90,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
   await db
     .getDb()
     .collection("posts")
-    .updateOne({ postId }, { $set: updatePost });
+    .updateOne({ postId }, { $set: editPost });
 
   console.log(postId);
   res.status(200).json({ message: "Success" });
@@ -192,7 +192,7 @@ router.patch("/posts/:postId/comments", async (req, res) => {
 
   const contentInput = req.body.content;
 
-  let updateComment = {
+  let editComment = {
     _id: commentId,
     content: contentInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
@@ -207,10 +207,9 @@ router.patch("/posts/:postId/comments", async (req, res) => {
   await db
     .getDb()
     .collection("comments")
-    .updateOne({ _id: commentId }, { $set: updateComment });
+    .updateOne({ _id: commentId }, { $set: editComment });
 
-  console.log(updateComment);
-  res.status(200).json({ updateComment });
+  res.status(200).json({ editComment });
 });
 
 router.delete("/posts/:postId/comment", async (req, res) => {
@@ -296,7 +295,7 @@ router.patch("/posts/:postId/replies", async (req, res) => {
 
   const contentInput = req.body.content;
 
-  let updateReply = {
+  let editReply = {
     _id: replytId,
     content: contentInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
@@ -311,10 +310,9 @@ router.patch("/posts/:postId/replies", async (req, res) => {
   await db
     .getDb()
     .collection("replies")
-    .updateOne({ _id: replytId }, { $set: updateReply });
+    .updateOne({ _id: replytId }, { $set: editReply });
 
-  console.log(updateReply);
-  res.status(200).json({ updateReply });
+  res.status(200).json({ editReply });
 });
 
 router.delete("/posts/:postId/replies", async (req, res) => {

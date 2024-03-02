@@ -63,7 +63,7 @@ const ReplyForm = ({
       console.log(resData.newReply);
     } else if (response.ok && method === "PATCH") {
       const resData = await response.json();
-      onEditReplyData(resData.updateReply);
+      onEditReplyData(resData.editReply);
     }
 
     onReplyToggle();

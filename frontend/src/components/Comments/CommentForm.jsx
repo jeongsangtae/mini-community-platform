@@ -5,7 +5,7 @@ const CommentForm = ({
   method,
   commentData,
   onAddCommentData,
-  onPatchCommentData,
+  onEditCommentData,
   onCommentToggle,
 }) => {
   const [comment, setComment] = useState("");
@@ -51,10 +51,7 @@ const CommentForm = ({
       console.log(resData.newComment);
     } else if (response.ok && method === "PATCH") {
       const resData = await response.json();
-      onPatchCommentData(resData.updateComment);
-      console.log(resData);
-      console.log(resData.updateComment);
-      console.log(resData.updateComment._id);
+      onEditCommentData(resData.editComment);
       onCommentToggle();
     }
 

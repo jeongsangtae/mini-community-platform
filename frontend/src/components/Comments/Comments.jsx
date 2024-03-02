@@ -31,14 +31,11 @@ const Comments = () => {
     console.log(comments);
   };
 
-  const patchComment = (updateComment) => {
-    console.log(updateComment);
-    console.log(updateComment.commentId);
-    console.log(comments);
+  const editComment = (editComment) => {
     setComments((prevComments) => {
       return prevComments.map((comment) => {
-        if (comment._id === updateComment._id) {
-          return { ...comment, content: updateComment.content };
+        if (comment._id === editComment._id) {
+          return { ...comment, content: editComment.content };
         }
         return comment;
       });
@@ -65,7 +62,7 @@ const Comments = () => {
                 commentId={comment._id}
                 content={comment.content}
                 onDeleteCommentData={deleteComment}
-                onPatchCommentData={patchComment}
+                onEditCommentData={editComment}
               />
             );
           })}

@@ -43,14 +43,11 @@ const Replies = ({ commentId, onReplyToggle }) => {
     console.log(replies);
   };
 
-  const editReply = (updateReply) => {
-    console.log(updateReply);
-    console.log(updateReply.replyId);
-    console.log(replies);
+  const editReply = (editReply) => {
     setReplies((prevReplies) => {
       return prevReplies.map((reply) => {
-        if (reply._id === updateReply._id) {
-          return { ...reply, content: updateReply.content };
+        if (reply._id === editReply._id) {
+          return { ...reply, content: editReply.content };
         }
         return reply;
       });
