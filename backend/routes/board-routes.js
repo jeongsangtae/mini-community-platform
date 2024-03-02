@@ -239,6 +239,8 @@ router.get("/posts/:postId/replies", async (req, res) => {
     .find({ post_id: post._id })
     .toArray();
 
+  console.log(replies);
+
   res.status(200).json({ replies });
 });
 
@@ -249,12 +251,7 @@ router.post("/posts/:postId/replies", async (req, res) => {
 
   commentId = new ObjectId(commentId);
 
-  console.log(commentId);
-
   const post = await db.getDb().collection("posts").findOne({ postId });
-
-  console.log(post);
-  console.log(post._id);
 
   const comment = await db
     .getDb()
@@ -282,12 +279,6 @@ router.post("/posts/:postId/replies", async (req, res) => {
       .toString()
       .padStart(2, "0")}`,
   };
-
-  console.log(newReply.comment_id);
-
-  console.log(commentId);
-
-  console.log(newReply);
 
   await db.getDb().collection("replies").insertOne(newReply);
 
