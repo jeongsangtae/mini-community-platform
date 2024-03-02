@@ -9,7 +9,7 @@ const ReplyForm = ({
   onEditReplyData,
   onReplyToggle,
 }) => {
-  const [reply, setReply] = useState();
+  const [reply, setReply] = useState("");
   const post = useRouteLoaderData("post-detail");
 
   const replyinputHandler = (event) => {
@@ -19,10 +19,12 @@ const ReplyForm = ({
   const submitHandler = async (event) => {
     event.preventDefault();
 
+    let contentTrimConfrim = reply.trim() !== "" ? reply : replyData.content;
+
     const postId = post.postId;
 
     let requestBody = {
-      content: reply,
+      content: contentTrimConfrim,
     };
 
     if (method === "POST") {

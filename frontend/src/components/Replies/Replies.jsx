@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-import Reply from "../Replies/Reply";
+// import Reply from "../Replies/Reply";
+import Reply from "./Reply";
 import ReplyForm from "./ReplyForm";
 
 const Replies = ({ commentId, onReplyToggle }) => {
