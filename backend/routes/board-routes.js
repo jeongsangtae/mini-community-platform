@@ -244,13 +244,9 @@ router.delete("/posts/:postId/comment", async (req, res) => {
 // });
 
 router.get("/posts/:postId/replies/:commentId", async (req, res) => {
-  // let postId = parseInt(req.params.postId);
-  // let commentId = parseInt(req.params.commentId);
   let commentId = req.params.commentId;
 
   commentId = new ObjectId(commentId);
-
-  // const post = await db.getDb().collection("posts").findOne({ postId });
 
   console.log(commentId);
 

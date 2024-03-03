@@ -65,10 +65,11 @@ export const action = async ({ request, params }) => {
   //   content: formData.get("content"),
   // };
 
+  const postId = params.postId;
+
   let url = "http://localhost:3000/posts";
 
   if (method === "PATCH") {
-    const postId = params.postId;
     url = "http://localhost:3000/posts/" + postId + "/edit";
   }
 
@@ -88,5 +89,9 @@ export const action = async ({ request, params }) => {
     throw json({ message: "Could not save post." }, { status: 500 });
   }
 
-  return redirect("/posts");
+  if (method === "POST") {
+    return redirect("/posts");
+  } else {
+    return redirect("/posts/" + postId);
+  }
 };

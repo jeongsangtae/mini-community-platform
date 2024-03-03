@@ -46,11 +46,6 @@ const Replies = ({ commentId, onReplyToggle }) => {
       const resData = await response.json();
       console.log(resData.replies);
       setReplies(resData.replies);
-      // setReplies(
-      //   resData.replies.filter(
-      //     (filteredReplies) => filteredReplies.comment_id === commentId
-      //   )
-      // );
     };
 
     fetchData();
