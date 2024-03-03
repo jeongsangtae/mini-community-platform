@@ -227,15 +227,37 @@ router.delete("/posts/:postId/comment", async (req, res) => {
   res.status(200).json({ message: "Success" });
 });
 
-router.get("/posts/:postId/replies", async (req, res) => {
-  let postId = parseInt(req.params.postId);
+// router.get("/posts/:postId/replies", async (req, res) => {
+//   let postId = parseInt(req.params.postId);
 
-  const post = await db.getDb().collection("posts").findOne({ postId });
+//   const post = await db.getDb().collection("posts").findOne({ postId });
+
+//   const replies = await db
+//     .getDb()
+//     .collection("replies")
+//     .find({ post_id: post._id })
+//     .toArray();
+
+//   console.log(replies);
+
+//   res.status(200).json({ replies });
+// });
+
+router.get("/posts/:postId/replies/:commentId", async (req, res) => {
+  // let postId = parseInt(req.params.postId);
+  // let commentId = parseInt(req.params.commentId);
+  let commentId = req.params.commentId;
+
+  commentId = new ObjectId(commentId);
+
+  // const post = await db.getDb().collection("posts").findOne({ postId });
+
+  console.log(commentId);
 
   const replies = await db
     .getDb()
     .collection("replies")
-    .find({ post_id: post._id })
+    .find({ comment_id: commentId })
     .toArray();
 
   console.log(replies);

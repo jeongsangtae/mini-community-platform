@@ -9,11 +9,34 @@ const Replies = ({ commentId, onReplyToggle }) => {
   const [replyToggle, setReplyToggle] = useState(false);
   const post = useRouteLoaderData("post-detail");
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const postId = post.postId;
+  //     const response = await fetch(
+  //       "http://localhost:3000/posts/" + postId + "/replies"
+  //     );
+
+  //     if (!response.ok) {
+  //       throw json({ message: "답글 불러오기 실패" }, { status: 500 });
+  //     }
+
+  //     const resData = await response.json();
+  //     console.log(resData.replies);
+  //     setReplies(
+  //       resData.replies.filter(
+  //         (filteredReplies) => filteredReplies.comment_id === commentId
+  //       )
+  //     );
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       const postId = post.postId;
       const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/replies"
+        "http://localhost:3000/posts/" + postId + "/replies/" + commentId
       );
 
       if (!response.ok) {
@@ -22,11 +45,12 @@ const Replies = ({ commentId, onReplyToggle }) => {
 
       const resData = await response.json();
       console.log(resData.replies);
-      setReplies(
-        resData.replies.filter(
-          (filteredReplies) => filteredReplies.comment_id === commentId
-        )
-      );
+      setReplies(resData.replies);
+      // setReplies(
+      //   resData.replies.filter(
+      //     (filteredReplies) => filteredReplies.comment_id === commentId
+      //   )
+      // );
     };
 
     fetchData();
