@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import Replies from "../Replies/Replies";
 
-import CommentForm from "./CommentForm";
+// import CommentForm from "./CommentForm";
+import EditComment from "./EditComment";
 
 const Comment = ({
   commentId,
@@ -53,7 +54,7 @@ const Comment = ({
         </button>
 
         {commentEditToggle && (
-          <CommentForm
+          <EditComment
             method="PATCH"
             commentData={{ content, commentId }}
             onEditCommentData={onEditCommentData}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
-import CommentForm from "./CommentForm";
+// import CommentForm from "./CommentForm";
 import Comment from "./Comment";
+import CreateComment from "./CreateComment";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
@@ -68,7 +69,7 @@ const Comments = () => {
           })}
         </ul>
       )}
-      <CommentForm method="POST" onAddCommentData={addComment} />
+      <CreateComment method="POST" onAddCommentData={addComment} />
     </>
   );
 };

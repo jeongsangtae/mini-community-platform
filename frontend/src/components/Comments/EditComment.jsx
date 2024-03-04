@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
-const CommentForm = ({
+const EditComment = ({
   method,
   commentData,
-  onAddCommentData,
   onEditCommentData,
   onCommentToggle,
 }) => {
@@ -25,11 +24,8 @@ const CommentForm = ({
 
     let requestBody = {
       content: contentTrimConfrim,
+      commentId: commentData.commentId,
     };
-
-    if (method === "PATCH") {
-      requestBody.commentId = commentData.commentId;
-    }
 
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/comments",
@@ -44,10 +40,7 @@ const CommentForm = ({
 
     if (!response.ok) {
       throw json({ message: "Could not save comment." }, { status: 500 });
-    } else if (response.ok && method === "POST") {
-      const resData = await response.json();
-      onAddCommentData(resData.newComment);
-    } else if (response.ok && method === "PATCH") {
+    } else {
       const resData = await response.json();
       onEditCommentData(resData.editComment);
       onCommentToggle();
@@ -66,14 +59,14 @@ const CommentForm = ({
           name="content"
           rows="5"
           placeholder="내용 입력"
-          defaultValue={commentData ? commentData.content : ""}
+          defaultValue={commentData.content}
           onChange={commentInputHandler}
         />
-        <button>{method === "POST" ? "등록" : "수정"}</button>
+        <button>수정</button>
         {onCommentToggle && <button onClick={onCommentToggle}>취소</button>}
       </form>
     </>
   );
 };
 
-export default CommentForm;
+export default EditComment;
