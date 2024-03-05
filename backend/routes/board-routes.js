@@ -160,10 +160,19 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
   const contentInput = req.body.content;
 
+  // const processedData = contentInput.replace(/\n/g, "<br/>");
+
+  // const processedData = contentInput
+  //   .replace(/<br>/g, "")
+  //   .replace(/\n/g, "<br>");
+
+  // const processedData = escape(contentInput);
+
   const newComment = {
     post_id: post._id,
     // name: user.name,
     // email: user.email,
+    // content: processedData,
     content: contentInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()

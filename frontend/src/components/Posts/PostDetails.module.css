@@ -16,4 +16,5 @@
 .post-detail .contents {
   font: inherit;
   padding: 0.25rem;
+  white-space: pre-line;
 }

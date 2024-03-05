@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
+import classes from "./CreateComment.module.css";
+
 const CreateComment = ({ method, onAddCommentData }) => {
   const [comment, setComment] = useState("");
   const post = useRouteLoaderData("post-detail");
@@ -46,6 +48,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
     <>
       <form onSubmit={submitHandler}>
         <textarea
+          className={classes.textarea}
           required
           name="content"
           rows="5"

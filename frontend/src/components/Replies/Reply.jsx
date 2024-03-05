@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+
+import classes from "./Reply.module.css";
 import ReplyForm from "./ReplyForm";
 
 const Reply = ({
@@ -41,7 +43,7 @@ const Reply = ({
   return (
     <>
       <li>
-        <p>{content}</p>
+        <p className={classes.content}>{content}</p>
         <button onClick={replyEditToggleHandler}>수정</button>
         <button type="button" onClick={replyDeleteHandler}>
           삭제

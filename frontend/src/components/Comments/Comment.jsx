@@ -3,6 +3,7 @@ import { useRouteLoaderData } from "react-router-dom";
 import Replies from "../Replies/Replies";
 
 // import CommentForm from "./CommentForm";
+import classes from "./Comment.module.css";
 import EditComment from "./EditComment";
 
 const Comment = ({
@@ -45,7 +46,7 @@ const Comment = ({
   return (
     <>
       <li>
-        <p>{content}</p>
+        <p className={classes.content}>{content}</p>
         <button type="button" onClick={commentEditToggleHandler}>
           수정
         </button>
