@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
+import classes from "./EditComment.module.css";
+
 const EditComment = ({
   method,
   commentData,
@@ -55,6 +57,7 @@ const EditComment = ({
     <>
       <form onSubmit={submitHandler}>
         <textarea
+          className={classes.textarea}
           required
           name="content"
           rows="5"

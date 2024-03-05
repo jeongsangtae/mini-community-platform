@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
+import classes from "./ReplyForm.module.css";
+
 const ReplyForm = ({
   method,
   replyData,
@@ -73,6 +75,7 @@ const ReplyForm = ({
     <>
       <form onSubmit={submitHandler}>
         <textarea
+          className={classes.textarea}
           required
           name="content"
           rows="5"
