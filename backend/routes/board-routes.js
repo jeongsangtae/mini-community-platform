@@ -126,6 +126,10 @@ router.delete("/posts/:postId/", async (req, res) => {
 
   // console.log(post);
 
+  await db.getDb().collection("replies").deleteMany({ post_id: post._id });
+
+  await db.getDb().collection("comments").deleteMany({ post_id: post._id });
+
   await db.getDb().collection("posts").deleteOne({ postId: post.postId });
 
   // 게시글 삭제시 게시글 번호가 비어있지 않도록 삭제한 게시글 뒤에 있는 게시글의 번호들을 1씩 감소
@@ -230,6 +234,8 @@ router.delete("/posts/:postId/comment", async (req, res) => {
   commentId = new ObjectId(commentId);
 
   console.log(commentId);
+
+  await db.getDb().collection("replies").deleteMany({ comment_id: commentId });
 
   await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
