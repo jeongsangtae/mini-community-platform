@@ -66,7 +66,7 @@ const Replies = ({ commentId, onReplyToggle }) => {
     setReplies((prevReplies) => {
       return prevReplies.map((reply) => {
         if (reply._id === editReply._id) {
-          return { ...reply, content: editReply.content };
+          return { ...reply, content: editReply.content, date: editReply.date };
         }
         return reply;
       });
@@ -103,6 +103,7 @@ const Replies = ({ commentId, onReplyToggle }) => {
                 key={reply._id}
                 replyId={reply._id}
                 content={reply.content}
+                date={reply.date}
                 commentId={commentId}
                 onDeleteReplyData={deleteReply}
                 onEditReplyData={editReply}

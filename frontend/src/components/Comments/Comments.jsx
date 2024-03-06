@@ -37,7 +37,11 @@ const Comments = () => {
     setComments((prevComments) => {
       return prevComments.map((comment) => {
         if (comment._id === editComment._id) {
-          return { ...comment, content: editComment.content };
+          return {
+            ...comment,
+            content: editComment.content,
+            date: editComment.date,
+          };
         }
         return comment;
       });
@@ -63,6 +67,7 @@ const Comments = () => {
                 key={comment._id}
                 commentId={comment._id}
                 content={comment.content}
+                date={comment.date}
                 onDeleteCommentData={deleteComment}
                 onEditCommentData={editComment}
               />

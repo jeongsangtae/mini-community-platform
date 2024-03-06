@@ -7,6 +7,7 @@ import ReplyForm from "./ReplyForm";
 const Reply = ({
   replyId,
   content,
+  date,
   commentId,
   onDeleteReplyData,
   onEditReplyData,
@@ -44,6 +45,7 @@ const Reply = ({
     <>
       <li>
         <p className={classes.content}>{content}</p>
+        <p>{date}</p>
         <button onClick={replyEditToggleHandler}>수정</button>
         <button type="button" onClick={replyDeleteHandler}>
           삭제

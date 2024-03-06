@@ -9,6 +9,7 @@ import EditComment from "./EditComment";
 const Comment = ({
   commentId,
   content,
+  date,
   onDeleteCommentData,
   onEditCommentData,
 }) => {
@@ -47,6 +48,7 @@ const Comment = ({
     <>
       <li>
         <p className={classes.content}>{content}</p>
+        <p>{date}</p>
         <button type="button" onClick={commentEditToggleHandler}>
           수정
         </button>
