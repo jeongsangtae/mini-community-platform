@@ -46,12 +46,12 @@ const CreateComment = ({ method, onAddCommentData }) => {
 
   return (
     <>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className={classes["comment-form"]}>
+        <p>GUEST</p>
         <textarea
-          className={classes.textarea}
           required
           name="content"
-          rows="5"
+          rows="1"
           placeholder="내용 입력"
           value={comment}
           onChange={commentInputHandler}

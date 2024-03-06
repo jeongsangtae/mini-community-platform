@@ -55,18 +55,28 @@ const EditComment = ({
 
   return (
     <>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className={classes["comment-form"]}>
+        <p>GUEST</p>
         <textarea
           className={classes.textarea}
           required
           name="content"
-          rows="5"
+          rows="1"
           placeholder="내용 입력"
           defaultValue={commentData.content}
           onChange={commentInputHandler}
         />
-        <button>수정</button>
-        {onCommentToggle && <button onClick={onCommentToggle}>취소</button>}
+        <div className={classes["comment-button"]}>
+          <button className={classes["edit-button"]}>수정</button>
+          {onCommentToggle && (
+            <button
+              onClick={onCommentToggle}
+              className={classes["cancel-button"]}
+            >
+              취소
+            </button>
+          )}
+        </div>
       </form>
     </>
   );
