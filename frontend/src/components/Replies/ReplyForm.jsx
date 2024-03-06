@@ -73,18 +73,30 @@ const ReplyForm = ({
 
   return (
     <>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} className={classes["reply-form"]}>
+        <p>GUEST</p>
         <textarea
           className={classes.textarea}
           required
           name="content"
-          rows="5"
+          rows="1"
           placeholder="내용 입력"
           defaultValue={replyData ? replyData.content : ""}
           onChange={replyinputHandler}
         />
-        <button>{method === "POST" ? "등록" : "수정"}</button>
-        {onReplyToggle && <button onClick={onReplyToggle}>취소</button>}
+        <div className={classes["reply-button"]}>
+          <button className={classes["edit-button"]}>
+            {method === "POST" ? "등록" : "수정"}
+          </button>
+          {onReplyToggle && (
+            <button
+              onClick={onReplyToggle}
+              className={classes["cancel-button"]}
+            >
+              취소
+            </button>
+          )}
+        </div>
       </form>
     </>
   );
