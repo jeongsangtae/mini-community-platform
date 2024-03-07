@@ -43,13 +43,16 @@ const Reply = ({
 
   return (
     <>
-      <li>
+      <li className={classes.reply}>
+        <div className={classes["reply-user-edit"]}>
+          <p>GUEST</p>
+          <button onClick={replyEditToggleHandler}>수정</button>
+          <button type="button" onClick={replyDeleteHandler}>
+            삭제
+          </button>
+        </div>
         <p className={classes.content}>{content}</p>
-        <p>{date}</p>
-        <button onClick={replyEditToggleHandler}>수정</button>
-        <button type="button" onClick={replyDeleteHandler}>
-          삭제
-        </button>
+        <p className={classes.date}>{date}</p>
         {replyEditToggle && (
           <ReplyForm
             method="PATCH"

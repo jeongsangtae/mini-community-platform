@@ -1,0 +1,18 @@
+.reply-button {
+  border: none;
+  background-color: #180a3a;
+  color: white;
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.3rem;
+  border-radius: 2px;
+  margin-left: 1rem;
+}
+
+.reply-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: rgb(40, 40, 40);
+  border-radius: 2px;
+}

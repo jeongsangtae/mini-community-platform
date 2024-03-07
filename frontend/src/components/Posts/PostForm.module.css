@@ -13,12 +13,34 @@
 .form textarea {
   display: block;
   width: 100%;
+  border: 1px solid rgb(180, 173, 173);
+  background-color: #180a3a;
+  color: white;
+  border-radius: 4px;
 }
 
-.form input,
-.form textarea {
+.form label {
+  margin-bottom: 0.5rem;
+  border: 0;
+}
+
+.form input {
   font: inherit;
   padding: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.form textarea {
+  /* font: inherit;
+  padding: 0.25rem; */
+
+  height: 20rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  /* border: 0; */
+  resize: vertical;
+  font-size: 1rem;
+  line-height: 140%;
 }
 
 .actions {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
+import classes from "./Replies.module.css";
 import Reply from "./Reply";
 import ReplyForm from "./ReplyForm";
 
@@ -84,7 +85,11 @@ const Replies = ({ commentId, onReplyToggle }) => {
 
   return (
     <>
-      <button type="button" onClick={replyToggleHandler}>
+      <button
+        type="button"
+        onClick={replyToggleHandler}
+        className={classes["reply-button"]}
+      >
         답글쓰기
       </button>
       {replyToggle && (

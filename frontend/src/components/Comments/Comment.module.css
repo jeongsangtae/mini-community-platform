@@ -1,3 +1,55 @@
-.content {
+.comment {
+  list-style: none;
+}
+
+.comment-user-edit {
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-user-edit p {
+  /* margin: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem; */
+  font-weight: bold;
+}
+
+.comment-user-edit button {
+  border: none;
+  background: rgb(87, 80, 80);
+  color: white;
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.3rem;
+  border-radius: 2px;
+}
+
+.comment-user-edit button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: rgb(40, 40, 40);
+  border-radius: 2px;
+}
+
+.comment .content {
+  margin-top: 0.2rem;
   white-space: pre-line;
 }
+
+.comment .date {
+  display: inline;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: rgb(196, 181, 181);
+}
+
+/* .board-comment .comment-user-edit {
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+} */
