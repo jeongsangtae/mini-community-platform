@@ -41,10 +41,10 @@ const PostForm = ({ method, postData, postPageName }) => {
           />
         </div>
         <div className={classes.actions}>
+          <button>등록</button>
           <button type="button" onClick={closeHandler}>
             취소
           </button>
-          <button>등록</button>
         </div>
       </Form>
     </>

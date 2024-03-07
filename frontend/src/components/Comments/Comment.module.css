@@ -19,19 +19,26 @@
 
 .comment-user-edit button {
   border: none;
-  background: rgb(87, 80, 80);
+  /* background-color: rgb(87, 80, 80); */
+  background: none;
   color: white;
   padding: 0 0.3rem;
   font-size: 0.8rem;
   cursor: pointer;
   margin-right: 0.3rem;
   border-radius: 2px;
+  /* line-height: 1.5; */
+}
+
+.comment-user-edit button:nth-of-type(2) {
+  font-size: 1rem;
+  margin-top: 0.2rem;
 }
 
 .comment-user-edit button:hover {
   cursor: pointer;
-  color: white;
-  background-color: rgb(40, 40, 40);
+  color: rgb(97, 84, 84);
+  /* background-color: rgb(40, 40, 40); */
   border-radius: 2px;
 }
 
@@ -43,7 +50,7 @@
 .comment .date {
   display: inline;
   margin-top: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: rgb(196, 181, 181);
 }
 

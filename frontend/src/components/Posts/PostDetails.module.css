@@ -18,3 +18,35 @@
   padding: 0.25rem;
   white-space: pre-line;
 }
+
+.actions {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.actions a {
+  text-decoration: none;
+  display: inline-block;
+  width: 5rem;
+  height: 2.5rem;
+  /* line-height: 40px; */
+  text-align: center;
+}
+
+.actions a,
+.actions button {
+  font: inherit;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  background: rgb(87, 80, 80);
+  color: white;
+  border: none;
+}
+
+.actions a:hover,
+.actions button:hover {
+  cursor: pointer;
+  background-color: rgb(40, 40, 40);
+}

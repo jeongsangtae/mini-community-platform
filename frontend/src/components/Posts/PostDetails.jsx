@@ -35,7 +35,7 @@ const PostDetails = () => {
         <div>
           <Comments />
         </div>
-        <div>
+        <div className={classes.actions}>
           <Link to="edit">수정</Link>
           <button type="button" onClick={postDeleteHandler}>
             삭제

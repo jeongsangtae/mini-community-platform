@@ -50,10 +50,10 @@ const Comment = ({
         <div className={classes["comment-user-edit"]}>
           <p>GUEST</p>
           <button type="button" onClick={commentEditToggleHandler}>
-            수정
+            &#9998;
           </button>
           <button type="button" onClick={commentDeleteHandler}>
-            삭제
+            &times;
           </button>
         </div>
         <p className={classes.content}>{content}</p>

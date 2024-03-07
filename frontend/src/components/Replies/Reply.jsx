@@ -46,9 +46,9 @@ const Reply = ({
       <li className={classes.reply}>
         <div className={classes["reply-user-edit"]}>
           <p>GUEST</p>
-          <button onClick={replyEditToggleHandler}>수정</button>
+          <button onClick={replyEditToggleHandler}>&#9998;</button>
           <button type="button" onClick={replyDeleteHandler}>
-            삭제
+            &times;
           </button>
         </div>
         <p className={classes.content}>{content}</p>
