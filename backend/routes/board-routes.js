@@ -1,5 +1,6 @@
 const express = require("express");
 const mongodb = require("mongodb");
+const jwt = require("jsonwebtoken");
 
 const db = require("../data/database");
 
@@ -35,10 +36,123 @@ router.get("/posts", async (req, res) => {
     firstPageGroup + pageButtonSize - 1,
     totalPages
   );
-  res.json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
+
+  // const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  // const token = req.cookies.accessToken;
+  // const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  // if (loginUserTokenData) {
+  //   const loginUserDbData = await db
+  //     .getDb()
+  //     .collection("users")
+  //     .findOne({ email: loginUserTokenData.userEmail });
+
+  //   const { password, ...othersData } = loginUserDbData;
+
+  //   res.json({
+  //     posts,
+  //     page,
+  //     totalPages,
+  //     firstPageGroup,
+  //     lastPageGroup,
+  //     othersData,
+  //   });
+  // } else {
+  //   res.json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
+  // }
+
+  try {
+    const token = req.cookies.accessToken;
+    if (!token) throw new Error("로그인하지 않은 사용자");
+
+    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+    const loginUserTokenData = jwt.verify(token, accessTokenKey);
+    const loginUserDbData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ email: loginUserTokenData.userEmail });
+
+    if (!loginUserDbData) throw new Error("존재하지 않는 사용자");
+
+    const { password, ...othersData } = loginUserDbData;
+
+    res.json({
+      posts,
+      page,
+      totalPages,
+      firstPageGroup,
+      lastPageGroup,
+      userData: othersData,
+    });
+  } catch (error) {
+    console.error(error);
+    // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
+    res.json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
+  }
+
+  // try {
+  //   const token = req.cookies.accessToken;
+  //   let othersData = null;
+
+  //   if (token) {
+  //     const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  //     const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  //     const loginUserDbData = await db
+  //       .getDb()
+  //       .collection("users")
+  //       .findOne({ email: loginUserTokenData.userEmail });
+
+  //     if (loginUserDbData) {
+  //       const { password, ...others } = loginUserDbData;
+  //       othersData = others;
+  //     }
+  //   }
+
+  //   console.log(othersData);
+
+  //   if (othersData) {
+  //     res.json({
+  //       posts,
+  //       page,
+  //       totalPages,
+  //       firstPageGroup,
+  //       lastPageGroup,
+  //       userData: othersData,
+  //     });
+  //   } else {
+  //     res.json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
+  //   }
+  // } catch (error) {
+  //   console.error(error);
+  //   // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
+  // }
 });
 
 router.post("/posts", async (req, res) => {
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  if (!loginUserTokenData) {
+    res.status(500).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  console.log(loginUserDbData);
+  console.log("-------------");
+
+  const { password, ...othersData } = loginUserDbData;
+
+  console.log(othersData);
+
+  res.status(200).json(othersData);
+
+  // if ()
+
   const lastPost = await db
     .getDb()
     .collection("posts")
@@ -51,13 +165,15 @@ router.post("/posts", async (req, res) => {
   const newPost = {
     ...postData,
     postId,
+    name: othersData.name,
+    email: othersData.email,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
   };
 
   const result = await db.getDb().collection("posts").insertOne(newPost);
+  console.log("-------------");
   console.log(result);
   res.status(200).json({ message: "Success" });
-  // res.redirect("/posts");
 });
 
 router.get("/posts/:postId", async (req, res) => {
@@ -92,7 +208,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
     .collection("posts")
     .updateOne({ postId }, { $set: editPost });
 
-  console.log(postId);
+  // console.log(postId);
   res.status(200).json({ message: "Success" });
 });
 
@@ -229,11 +345,11 @@ router.delete("/posts/:postId/comment", async (req, res) => {
   // let postId = parseInt(req.params.postId);
   let commentId = req.body.commentId;
 
-  console.log(commentId);
+  // console.log(commentId);
 
   commentId = new ObjectId(commentId);
 
-  console.log(commentId);
+  // console.log(commentId);
 
   await db.getDb().collection("replies").deleteMany({ comment_id: commentId });
 
@@ -263,7 +379,7 @@ router.get("/posts/:postId/replies/:commentId", async (req, res) => {
 
   commentId = new ObjectId(commentId);
 
-  console.log(commentId);
+  // console.log(commentId);
 
   const replies = await db
     .getDb()
@@ -271,7 +387,7 @@ router.get("/posts/:postId/replies/:commentId", async (req, res) => {
     .find({ comment_id: commentId })
     .toArray();
 
-  console.log(replies);
+  // console.log(replies);
 
   res.status(200).json({ replies });
 });
@@ -351,11 +467,11 @@ router.patch("/posts/:postId/replies", async (req, res) => {
 router.delete("/posts/:postId/replies", async (req, res) => {
   let replyId = req.body.replyId;
 
-  console.log(replyId);
+  // console.log(replyId);
 
   replyId = new ObjectId(replyId);
 
-  console.log(replyId);
+  // console.log(replyId);
 
   await db.getDb().collection("replies").deleteOne({ _id: replyId });
 

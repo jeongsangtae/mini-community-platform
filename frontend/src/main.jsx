@@ -24,12 +24,14 @@ const router = createBrowserRouter([
       {
         path: "posts",
         element: <PostsPage />,
+        // id: "user-data",
         loader: postsLoader,
       },
       {
         path: "posts/create-post",
         element: <CreatePostPage />,
         action: postFormAction,
+        loader: postsLoader,
       },
       {
         path: "posts/:postId",

@@ -2,7 +2,7 @@ import { useNavigate, Form, redirect, json } from "react-router-dom";
 
 import classes from "./PostForm.module.css";
 
-const PostForm = ({ method, postData, postPageName }) => {
+const PostForm = ({ method, userData, postData, postPageName }) => {
   console.log(postData);
   const navigate = useNavigate();
 
@@ -29,7 +29,8 @@ const PostForm = ({ method, postData, postPageName }) => {
           {postData ? (
             <p>{postData.name}</p>
           ) : (
-            <input required type="text" id="name" name="name" />
+            // <p>{resData.name}</p>
+            <p>{userData.name}</p>
           )}
         </div>
         <div>
@@ -79,6 +80,7 @@ export const action = async ({ request, params }) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(postData),
+    credentials: "include",
   });
 
   if (response.status === 422) {
