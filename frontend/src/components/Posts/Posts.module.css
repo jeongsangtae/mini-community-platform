@@ -38,3 +38,8 @@
 .add:hover {
   color: gray;
 }
+
+.opacity {
+  pointer-events: none;
+  opacity: 0.5;
+}

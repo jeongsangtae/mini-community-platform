@@ -24,7 +24,6 @@ const router = createBrowserRouter([
       {
         path: "posts",
         element: <PostsPage />,
-        // id: "user-data",
         loader: postsLoader,
       },
       {

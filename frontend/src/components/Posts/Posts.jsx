@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLoaderData } from "react-router-dom";
 import Pagination from "./PagiNation";
 
 import Post from "./Post";
 import classes from "./Posts.module.css";
 
 const Posts = () => {
+  const loginConfirmResData = useLoaderData();
   const navigate = useNavigate();
 
   const [posts, setPosts] = useState([]);
@@ -72,9 +73,18 @@ const Posts = () => {
         lastPageGroup={lastPageGroup}
         onPageChange={onPageChange}
       />
-      <Link to="create-post" className={classes.add}>
+      {loginConfirmResData.userData ? (
+        <Link to="create-post" className={classes.add}>
+          <p>게시글 추가</p>
+        </Link>
+      ) : (
+        <Link to="create-post" className={`${classes.add} ${classes.opacity}`}>
+          <p>게시글 추가</p>
+        </Link>
+      )}
+      {/* <Link to="create-post" className={classes.add}>
         <p>게시글 추가</p>
-      </Link>
+      </Link> */}
     </>
   );
 };
