@@ -14,6 +14,9 @@ const Posts = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
+  const [loaderData, setLoaderData] = useState(
+    `${classes.add} ${classes.opacity}`
+  );
 
   const fetchData = async (pageNumber) => {
     const response = await fetch(
@@ -32,15 +35,39 @@ const Posts = () => {
     setLastPageGroup(resData.lastPageGroup);
   };
 
-  useEffect(() => {
-    paginationFetchData(page);
-  }, [page]);
-
   const onPageChange = (pageNum) => {
     navigate(`/posts?page=${pageNum}`);
     console.log(pageNum);
     setPage(pageNum);
   };
+
+  useEffect(() => {
+    paginationFetchData(page);
+  }, [page]);
+
+  useEffect(() => {
+    if (loginConfirmResData.userData) {
+      setLoaderData(`${classes.add}`);
+    } else {
+      setLoaderData(`${classes.add} ${classes.opacity}`);
+    }
+  }, [loginConfirmResData]);
+
+  // useEffect(() => {
+  //   postAddButtonHandler();
+  // }, []);
+
+  // const postAddButtonHandler = () => {
+  //   if (loginConfirmResData.userData) {
+  //     setPostAddButtonClass("classes.add");
+  //   } else {
+  //     setPostAddButtonClass(`${classes.add} ${classes.opacity}`);
+  //   }
+  // };
+
+  const postAddButtonClass = loginConfirmResData.userData
+    ? `${classes.add}`
+    : `${classes.add} ${classes.opacity}`;
 
   return (
     <>
@@ -73,18 +100,9 @@ const Posts = () => {
         lastPageGroup={lastPageGroup}
         onPageChange={onPageChange}
       />
-      {loginConfirmResData.userData ? (
-        <Link to="create-post" className={classes.add}>
-          <p>게시글 추가</p>
-        </Link>
-      ) : (
-        <Link to="create-post" className={`${classes.add} ${classes.opacity}`}>
-          <p>게시글 추가</p>
-        </Link>
-      )}
-      {/* <Link to="create-post" className={classes.add}>
+      <Link to="create-post" className={loaderData}>
         <p>게시글 추가</p>
-      </Link> */}
+      </Link>
     </>
   );
 };
