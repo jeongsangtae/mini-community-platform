@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLoaderData } from "react-router-dom";
+import Cookies from "js-cookie";
 import Pagination from "./PagiNation";
 
 import Post from "./Post";
@@ -8,15 +9,18 @@ import classes from "./Posts.module.css";
 const Posts = () => {
   const loginConfirmResData = useLoaderData();
   const navigate = useNavigate();
+  const token = Cookies.get("accessToken");
 
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
-  const [loaderData, setLoaderData] = useState(
-    `${classes.add} ${classes.opacity}`
-  );
+  // const [loaderData, setLoaderData] = useState(
+  //   `${classes.add} ${classes.opacity}`
+  // );
+  const [authenticated, setAuthenticated] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const fetchData = async (pageNumber) => {
     const response = await fetch(
@@ -45,13 +49,16 @@ const Posts = () => {
     paginationFetchData(page);
   }, [page]);
 
+  console.log(token);
+  console.log(isLoggedIn);
+
   useEffect(() => {
-    if (loginConfirmResData.userData) {
-      setLoaderData(`${classes.add}`);
+    if (token) {
+      setIsLoggedIn(true);
     } else {
-      setLoaderData(`${classes.add} ${classes.opacity}`);
+      setIsLoggedIn(false);
     }
-  }, [loginConfirmResData]);
+  }, [token]);
 
   // useEffect(() => {
   //   postAddButtonHandler();
@@ -65,7 +72,7 @@ const Posts = () => {
   //   }
   // };
 
-  const postAddButtonClass = loginConfirmResData.userData
+  const postAddButtonClass = isLoggedIn
     ? `${classes.add}`
     : `${classes.add} ${classes.opacity}`;
 
@@ -100,9 +107,18 @@ const Posts = () => {
         lastPageGroup={lastPageGroup}
         onPageChange={onPageChange}
       />
-      <Link to="create-post" className={loaderData}>
+      {postAddButtonClass ? (
+        <Link to="create-post" className={classes.add}>
+          <p>게시글 추가</p>
+        </Link>
+      ) : (
+        <Link to="create-post" className={`${classes.add} ${classes.opacity}`}>
+          <p>게시글 추가</p>
+        </Link>
+      )}
+      {/* <Link to="create-post" className={postAddButtonClass}>
         <p>게시글 추가</p>
-      </Link>
+      </Link> */}
     </>
   );
 };
