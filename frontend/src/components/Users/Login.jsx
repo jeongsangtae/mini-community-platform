@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import Modal from "../UI/Modal";
 import classes from "./Login.module.css";
+import AuthContext from "../../store/auth-context";
 
 const Login = ({ onToggle, onLogin }) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+
+  const authCtx = useContext(AuthContext);
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -35,6 +38,8 @@ const Login = ({ onToggle, onLogin }) => {
       return null;
     } else {
       console.log("로그인 성공");
+      authCtx.login();
+      console.log(authCtx.isLoggedIn);
       onLogin(true);
       onToggle();
     }

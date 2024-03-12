@@ -63,7 +63,12 @@ router.get("/posts", async (req, res) => {
 
   try {
     const token = req.cookies.accessToken;
-    if (!token) throw new Error("로그인하지 않은 사용자");
+    console.log("1");
+    console.log(token);
+    console.log("---------------");
+    if (!token) {
+      throw new Error("로그인하지 않은 사용자");
+    }
 
     const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
     const loginUserTokenData = jwt.verify(token, accessTokenKey);

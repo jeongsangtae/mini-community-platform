@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import { AuthContextProvier } from "./store/auth-context";
 import "./index.css";
 import { action as postFormAction } from "./components/Posts/PostForm";
 import HomePage from "./pages/Homepage";
@@ -52,5 +54,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <AuthContextProvier>
+    <RouterProvider router={router} />
+  </AuthContextProvier>
 );

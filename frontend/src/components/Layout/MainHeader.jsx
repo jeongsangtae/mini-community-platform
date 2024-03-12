@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
+
 import Login from "../Users/Login";
 import Signup from "../Users/Signup";
+import AuthContext from "../../store/auth-context";
 
 import classes from "./MainHeader.module.css";
 
@@ -13,7 +14,8 @@ const MainHeader = () => {
   const [user, setUser] = useState({});
 
   console.log(user);
-  console.log(user.name);
+
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +44,7 @@ const MainHeader = () => {
 
   const loginToggleHandler = () => {
     setOnLoginModal(!openLoginModal);
+    console.log(authCtx.isLoggedIn);
   };
 
   const logoutHandler = async () => {
@@ -54,6 +57,8 @@ const MainHeader = () => {
 
     if (response.ok) {
       setAuthenticated(!authenticated);
+      authCtx.logout();
+      console.log(authCtx.isLoggedIn);
     }
   };
 

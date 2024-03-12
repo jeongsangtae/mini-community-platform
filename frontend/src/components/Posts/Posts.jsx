@@ -1,32 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useLoaderData } from "react-router-dom";
-import Cookies from "js-cookie";
 import Pagination from "./PagiNation";
 
 import Post from "./Post";
+import AuthContext from "../../store/auth-context";
 import classes from "./Posts.module.css";
 
 const Posts = () => {
-  const loginConfirmResData = useLoaderData();
   const navigate = useNavigate();
-  const token = Cookies.get("accessToken");
+  const authCtx = useContext(AuthContext);
 
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
-  // const [loaderData, setLoaderData] = useState(
-  //   `${classes.add} ${classes.opacity}`
-  // );
-  const [authenticated, setAuthenticated] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const fetchData = async (pageNumber) => {
     const response = await fetch(
       `http://localhost:3000/posts?page=${pageNumber}`
     );
-    console.log(response);
     const resData = await response.json();
     return resData;
   };
@@ -49,30 +43,12 @@ const Posts = () => {
     paginationFetchData(page);
   }, [page]);
 
-  console.log(token);
-  console.log(isLoggedIn);
-
   useEffect(() => {
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [token]);
+    console.log(authCtx.isLoggedIn);
+    setLoggedIn(authCtx.isLoggedIn);
+  }, [authCtx]);
 
-  // useEffect(() => {
-  //   postAddButtonHandler();
-  // }, []);
-
-  // const postAddButtonHandler = () => {
-  //   if (loginConfirmResData.userData) {
-  //     setPostAddButtonClass("classes.add");
-  //   } else {
-  //     setPostAddButtonClass(`${classes.add} ${classes.opacity}`);
-  //   }
-  // };
-
-  const postAddButtonClass = isLoggedIn
+  const postAddButtonClass = loggedIn
     ? `${classes.add}`
     : `${classes.add} ${classes.opacity}`;
 
@@ -107,18 +83,9 @@ const Posts = () => {
         lastPageGroup={lastPageGroup}
         onPageChange={onPageChange}
       />
-      {postAddButtonClass ? (
-        <Link to="create-post" className={classes.add}>
-          <p>게시글 추가</p>
-        </Link>
-      ) : (
-        <Link to="create-post" className={`${classes.add} ${classes.opacity}`}>
-          <p>게시글 추가</p>
-        </Link>
-      )}
-      {/* <Link to="create-post" className={postAddButtonClass}>
+      <Link to="create-post" className={postAddButtonClass}>
         <p>게시글 추가</p>
-      </Link> */}
+      </Link>
     </>
   );
 };
