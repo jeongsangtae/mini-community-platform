@@ -50,3 +50,8 @@
   cursor: pointer;
   background-color: rgb(40, 40, 40);
 }
+
+.opacity {
+  pointer-events: none;
+  opacity: 0.5;
+}

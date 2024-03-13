@@ -46,6 +46,7 @@ export const AuthContextProvier = ({ children }) => {
     console.log(now);
     console.log(expirationTime);
     console.log(new Date(now).toString());
+    console.log(new Date(expirationTime).toString());
   };
 
   const logoutHandler = () => {
