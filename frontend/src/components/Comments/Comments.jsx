@@ -6,14 +6,19 @@ import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 
 const Comments = () => {
-  const [comments, setComments] = useState([]);
   const post = useRouteLoaderData("post-detail");
+
+  const [comments, setComments] = useState([]);
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const postId = post.postId;
       const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/comments"
+        "http://localhost:3000/posts/" + postId + "/comments",
+        {
+          credentials: "include",
+        }
       );
 
       if (!response.ok) {
@@ -22,6 +27,8 @@ const Comments = () => {
 
       const resData = await response.json();
       setComments(resData.comments);
+      console.log(resData.userData);
+      setUserData(resData.userData);
     };
     fetchData();
   }, []);
@@ -75,7 +82,11 @@ const Comments = () => {
           })}
         </ul>
       )}
-      <CreateComment method="POST" onAddCommentData={addComment} />
+      <CreateComment
+        method="POST"
+        onAddCommentData={addComment}
+        userData={userData}
+      />
     </>
   );
 };

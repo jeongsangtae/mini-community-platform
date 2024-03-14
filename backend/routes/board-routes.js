@@ -81,7 +81,7 @@ router.get("/posts", async (req, res) => {
 
     const { password, ...othersData } = loginUserDbData;
 
-    res.json({
+    res.status(200).json({
       posts,
       page,
       totalPages,
@@ -92,7 +92,9 @@ router.get("/posts", async (req, res) => {
   } catch (error) {
     console.error(error);
     // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
-    res.json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
+    res
+      .status(200)
+      .json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
   }
 
   // try {
@@ -274,10 +276,55 @@ router.get("/posts/:postId/comments", async (req, res) => {
     .find({ post_id: post._id })
     .toArray();
 
-  res.status(200).json({ comments });
+  try {
+    const token = req.cookies.accessToken;
+    console.log("1");
+    console.log(token);
+    console.log("---------------");
+    if (!token) {
+      throw new Error("로그인하지 않은 사용자");
+    }
+
+    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+    const loginUserTokenData = jwt.verify(token, accessTokenKey);
+    const loginUserDbData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ email: loginUserTokenData.userEmail });
+
+    if (!loginUserDbData) throw new Error("존재하지 않는 사용자");
+
+    const { password, ...othersData } = loginUserDbData;
+
+    res.status(200).json({ comments, userData: othersData });
+  } catch (error) {
+    console.error(error);
+    // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
+    res.status(200).json({ comments });
+  }
 });
 
 router.post("/posts/:postId/comments", async (req, res) => {
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  if (!loginUserTokenData) {
+    res.status(500).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  console.log(loginUserDbData);
+  console.log("-------------");
+
+  const { password, ...othersData } = loginUserDbData;
+
+  console.log(othersData);
+
   let postId = parseInt(req.params.postId);
   let date = new Date();
 
@@ -285,19 +332,10 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
   const contentInput = req.body.content;
 
-  // const processedData = contentInput.replace(/\n/g, "<br/>");
-
-  // const processedData = contentInput
-  //   .replace(/<br>/g, "")
-  //   .replace(/\n/g, "<br>");
-
-  // const processedData = escape(contentInput);
-
   const newComment = {
     post_id: post._id,
-    // name: user.name,
-    // email: user.email,
-    // content: processedData,
+    name: othersData.name,
+    email: othersData.email,
     content: contentInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
