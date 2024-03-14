@@ -156,10 +156,6 @@ router.post("/posts", async (req, res) => {
 
   console.log(othersData);
 
-  // res.status(200).json(othersData);
-
-  // if ()
-
   const lastPost = await db
     .getDb()
     .collection("posts")

@@ -191,7 +191,7 @@ router.post("/login", async (req, res) => {
     return;
   }
 
-  console.log(existingLoginUser);
+  // console.log(existingLoginUser);
 
   if (existingLoginUser) {
     req.session.user = {
@@ -240,11 +240,29 @@ router.post("/login", async (req, res) => {
         maxAge: 60 * 60 * 12 * 1000,
       });
 
+      const decoded = jwt.decode(accessToken);
+      // const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_KEY);
+
+      const userInfo = {
+        _id: decoded.userId,
+        name: decoded.userName,
+        email: decoded.userEmail,
+      };
+
+      // console.log("00000000000000");
+      // console.log(accessToken);
+      // console.log(decoded);
+      // console.log(decoded.userName);
+      // console.log(decoded.userEmail);
+      // console.log(userInfo);
+      // console.log("00000000000000");
+
       res.status(200).json({
         message: "Success",
         isAuthenticated: req.session.isAuthenticated,
         accessToken,
         refreshToken,
+        userInfo,
       });
     } catch (error) {
       res.status(500).json(error);

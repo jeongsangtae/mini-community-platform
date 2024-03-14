@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 
 const AuthContext = React.createContext({
   isLoggedIn: false,
-  // userData: null,
+  userInfo: null,
   login: () => {},
   logout: () => {},
 });
 
 export const AuthContextProvier = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [userData, setUserData] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+
+  console.log(userInfo);
 
   useEffect(() => {
     const storedExpirationTime = localStorage.getItem("expirationTime");
@@ -30,37 +32,37 @@ export const AuthContextProvier = ({ children }) => {
     }
   }, []);
 
-  const loginHandler = () => {
+  const loginHandler = (userInfoData) => {
     const now = new Date().getTime();
     const expirationTime = now + 60 * 60 * 1000;
     localStorage.setItem("isLoggedIn", "1");
     localStorage.setItem("expirationTime", expirationTime);
     setIsLoggedIn(true);
-    // setUserData(userData);
+    setUserInfo(userInfoData);
 
     setTimeout(() => {
       localStorage.removeItem("isLoggedIn");
       setIsLoggedIn(false);
     }, 60 * 60 * 1000);
 
-    console.log(now);
-    console.log(expirationTime);
-    console.log(new Date(now).toString());
-    console.log(new Date(expirationTime).toString());
+    // console.log(now);
+    // console.log(expirationTime);
+    // console.log(new Date(now).toString());
+    // console.log(new Date(expirationTime).toString());
   };
 
   const logoutHandler = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("expirationTime");
     setIsLoggedIn(false);
-    // setUserData(null);
+    setUserInfo(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
-        // userData: userData,
+        userInfo: userInfo,
         login: loginHandler,
         logout: logoutHandler,
       }}

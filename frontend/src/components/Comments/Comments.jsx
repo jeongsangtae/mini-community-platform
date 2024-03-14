@@ -85,7 +85,7 @@ const Comments = () => {
       <CreateComment
         method="POST"
         onAddCommentData={addComment}
-        userData={userData}
+        // userData={userData}
       />
     </>
   );
