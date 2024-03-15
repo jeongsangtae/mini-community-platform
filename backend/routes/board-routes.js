@@ -277,6 +277,7 @@ router.get("/posts/:postId/comments", async (req, res) => {
     console.log("1");
     console.log(token);
     console.log("---------------");
+
     if (!token) {
       throw new Error("로그인하지 않은 사용자");
     }
@@ -288,7 +289,9 @@ router.get("/posts/:postId/comments", async (req, res) => {
       .collection("users")
       .findOne({ email: loginUserTokenData.userEmail });
 
-    if (!loginUserDbData) throw new Error("존재하지 않는 사용자");
+    if (!loginUserDbData) {
+      throw new Error("존재하지 않는 사용자");
+    }
 
     const { password, ...othersData } = loginUserDbData;
 
