@@ -4,13 +4,13 @@ import { redirect, useRouteLoaderData } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import classes from "./CreateComment.module.css";
 
-const CreateComment = ({ method, onAddCommentData, userData }) => {
+const CreateComment = ({ method, onAddCommentData }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
 
   const [comment, setComment] = useState("");
-  const [userName, setUserName] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userName, setUserName] = useState(null);
 
   const commentInputHandler = (event) => {
     setComment(event.target.value);
@@ -53,24 +53,19 @@ const CreateComment = ({ method, onAddCommentData, userData }) => {
   useEffect(() => {
     console.log(authCtx.isLoggedIn);
     setLoggedIn(authCtx.isLoggedIn);
-    if (userData) {
-      setUserName(userData.name);
-    } else {
-      setUserName("GUEST");
-    }
-    // console.log(userName);
-  }, [authCtx, userData]);
+    setUserName(authCtx.userInfo);
+  }, [authCtx]);
 
   const commentAddButtonClass = loggedIn ? "" : `${classes.opacity}`;
-  // const commentWriterName = userName ? userData.name : "GUEST";
+  const commentUserName = userName === null ? "GUEST" : `${userName.name}`;
 
   return (
     <>
       <form onSubmit={submitHandler} className={classes["comment-form"]}>
         {/* <p>{userName ? userData.name : "GUEST"}</p> */}
         {/* <p>{userData ? userData.name : "GUEST"}</p> */}
-        <p>{userName}</p>
-        {/* <p>GUEST</p> */}
+        {/* <p>{userName}</p> */}
+        <p>{commentUserName}</p>
         {loggedIn ? (
           <textarea
             required

@@ -14,6 +14,24 @@ export const AuthContextProvier = ({ children }) => {
   console.log(userInfo);
 
   useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/accessToken", {
+          credentials: "include",
+        });
+        const resData = await response.json();
+        console.log(resData);
+        if (resData) {
+          console.log(resData);
+          setUserInfo(resData);
+        }
+      } catch (error) {
+        console.error("사용자 인증 오류", error);
+      }
+    };
+
+    verifyUser();
+
     const storedExpirationTime = localStorage.getItem("expirationTime");
     const now = new Date().getTime();
 
@@ -32,13 +50,13 @@ export const AuthContextProvier = ({ children }) => {
     }
   }, []);
 
-  const loginHandler = (userInfoData) => {
+  const loginHandler = () => {
     const now = new Date().getTime();
     const expirationTime = now + 60 * 60 * 1000;
     localStorage.setItem("isLoggedIn", "1");
     localStorage.setItem("expirationTime", expirationTime);
     setIsLoggedIn(true);
-    setUserInfo(userInfoData);
+    // setUserInfo(userInfoData);
 
     setTimeout(() => {
       localStorage.removeItem("isLoggedIn");

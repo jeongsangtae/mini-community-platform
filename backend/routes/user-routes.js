@@ -240,14 +240,14 @@ router.post("/login", async (req, res) => {
         maxAge: 60 * 60 * 12 * 1000,
       });
 
-      const decoded = jwt.decode(accessToken);
+      // const decoded = jwt.decode(accessToken);
       // const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_KEY);
 
-      const userInfo = {
-        _id: decoded.userId,
-        name: decoded.userName,
-        email: decoded.userEmail,
-      };
+      // const userInfo = {
+      //   _id: decoded.userId,
+      //   name: decoded.userName,
+      //   email: decoded.userEmail,
+      // };
 
       // console.log("00000000000000");
       // console.log(accessToken);
@@ -262,7 +262,7 @@ router.post("/login", async (req, res) => {
         isAuthenticated: req.session.isAuthenticated,
         accessToken,
         refreshToken,
-        userInfo,
+        // userInfo,
       });
     } catch (error) {
       res.status(500).json(error);

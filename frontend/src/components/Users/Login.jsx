@@ -37,10 +37,11 @@ const Login = ({ onToggle, onLogin }) => {
       console.log(errorData);
       return null;
     } else {
-      const resData = await response.json();
+      // const resData = await response.json();
       console.log("로그인 성공");
-      console.log(resData.userInfo);
-      authCtx.login(resData.userInfo);
+      // console.log(resData.userInfo);
+      authCtx.login();
+      // authCtx.login(resData.userInfo);
       console.log(authCtx.isLoggedIn);
       onLogin(true);
       onToggle();

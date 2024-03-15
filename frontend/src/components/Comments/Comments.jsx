@@ -9,7 +9,7 @@ const Comments = () => {
   const post = useRouteLoaderData("post-detail");
 
   const [comments, setComments] = useState([]);
-  const [userData, setUserData] = useState([]);
+  // const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,8 +27,8 @@ const Comments = () => {
 
       const resData = await response.json();
       setComments(resData.comments);
-      console.log(resData.userData);
-      setUserData(resData.userData);
+      // console.log(resData.userData);
+      // setUserData(resData.userData);
     };
     fetchData();
   }, []);
@@ -85,7 +85,7 @@ const Comments = () => {
       <CreateComment
         method="POST"
         onAddCommentData={addComment}
-        userData={userData}
+        // userData={userData}
       />
     </>
   );
