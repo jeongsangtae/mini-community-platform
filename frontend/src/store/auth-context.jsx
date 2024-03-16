@@ -19,6 +19,9 @@ export const AuthContextProvier = ({ children }) => {
         const response = await fetch("http://localhost:3000/accessToken", {
           credentials: "include",
         });
+        if (!response.ok) {
+          throw new Error("쿠키에 JWT 토큰 없음");
+        }
         const resData = await response.json();
         console.log(resData);
         if (resData) {
@@ -27,6 +30,7 @@ export const AuthContextProvier = ({ children }) => {
         }
       } catch (error) {
         console.error("사용자 인증 오류", error);
+        setUserInfo(null);
       }
     };
 
@@ -76,11 +80,14 @@ export const AuthContextProvier = ({ children }) => {
     setUserInfo(null);
   };
 
+  const userName = userInfo ? userInfo.name : "GUEST";
+
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
-        userInfo: userInfo,
+        isLoggedIn,
+        userInfo,
+        userName,
         login: loginHandler,
         logout: logoutHandler,
       }}

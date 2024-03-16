@@ -10,7 +10,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
 
   const [comment, setComment] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userName, setUserName] = useState(null);
+  // const [userName, setUserName] = useState(null);
 
   const commentInputHandler = (event) => {
     setComment(event.target.value);
@@ -53,11 +53,11 @@ const CreateComment = ({ method, onAddCommentData }) => {
   useEffect(() => {
     console.log(authCtx.isLoggedIn);
     setLoggedIn(authCtx.isLoggedIn);
-    setUserName(authCtx.userInfo);
+    // setUserName(authCtx.userName);
   }, [authCtx]);
 
   const commentAddButtonClass = loggedIn ? "" : `${classes.opacity}`;
-  const commentUserName = userName === null ? "GUEST" : `${userName.name}`;
+  // const commentUserName = userName === null ? "GUEST" : `${userName.name}`;
 
   return (
     <>
@@ -65,7 +65,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
         {/* <p>{userName ? userData.name : "GUEST"}</p> */}
         {/* <p>{userData ? userData.name : "GUEST"}</p> */}
         {/* <p>{userName}</p> */}
-        <p>{commentUserName}</p>
+        <p>{authCtx.userName}</p>
         {loggedIn ? (
           <textarea
             required
