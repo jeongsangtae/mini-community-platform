@@ -13,28 +13,28 @@ export const AuthContextProvier = ({ children }) => {
 
   console.log(userInfo);
 
-  useEffect(() => {
-    const verifyUser = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/accessToken", {
-          credentials: "include",
-        });
-        if (!response.ok) {
-          throw new Error("쿠키에 JWT 토큰 없음");
-        }
-        const resData = await response.json();
-        console.log(resData);
-        if (resData) {
-          console.log(resData);
-          setUserInfo(resData);
-        }
-      } catch (error) {
-        console.error("사용자 인증 오류", error);
-        setUserInfo(null);
+  const verifyUser = async (setUserInfo) => {
+    try {
+      const response = await fetch("http://localhost:3000/accessToken", {
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("쿠키에 JWT 토큰 없음");
       }
-    };
+      const resData = await response.json();
+      console.log(resData);
+      if (resData) {
+        console.log(resData);
+        setUserInfo(resData);
+      }
+    } catch (error) {
+      console.error("사용자 인증 오류", error);
+      setUserInfo(null);
+    }
+  };
 
-    verifyUser();
+  useEffect(() => {
+    verifyUser(setUserInfo);
 
     const storedExpirationTime = localStorage.getItem("expirationTime");
     const now = new Date().getTime();
@@ -62,9 +62,12 @@ export const AuthContextProvier = ({ children }) => {
     setIsLoggedIn(true);
     // setUserInfo(userInfoData);
 
+    verifyUser(setUserInfo);
+
     setTimeout(() => {
       localStorage.removeItem("isLoggedIn");
       setIsLoggedIn(false);
+      setUserInfo(null);
     }, 60 * 60 * 1000);
 
     // console.log(now);
