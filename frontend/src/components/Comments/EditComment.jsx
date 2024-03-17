@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 
+import AuthContext from "../../store/auth-context";
 import classes from "./EditComment.module.css";
 
 const EditComment = ({
@@ -9,8 +10,11 @@ const EditComment = ({
   onEditCommentData,
   onCommentToggle,
 }) => {
-  const [comment, setComment] = useState("");
   const post = useRouteLoaderData("post-detail");
+  const authCtx = useContext(AuthContext);
+
+  const [comment, setComment] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const commentInputHandler = (event) => {
     setComment(event.target.value);
@@ -53,25 +57,48 @@ const EditComment = ({
     return redirect("/posts/" + postId);
   };
 
+  useEffect(() => {
+    setLoggedIn(authCtx.isLoggedIn);
+  }, [authCtx]);
+
+  const commentEditButtonClass = loggedIn
+    ? `${classes["edit-button"]}`
+    : `${classes["edit-button"]} ${classes.opacity}`;
+  const commentDeleteButtonClass = loggedIn
+    ? `${classes["cancel-button"]}`
+    : `${classes["cancel-button"]} ${classes.opacity}`;
+
   return (
     <>
       <form onSubmit={submitHandler} className={classes["comment-form"]}>
-        <p>GUEST</p>
-        <textarea
-          className={classes.textarea}
-          required
-          name="content"
-          rows="1"
-          placeholder="내용 입력"
-          defaultValue={commentData.content}
-          onChange={commentInputHandler}
-        />
+        <p>{authCtx.userName}</p>
+        {loggedIn ? (
+          <textarea
+            className={classes.textarea}
+            required
+            name="content"
+            rows="1"
+            placeholder="내용 입력"
+            defaultValue={commentData.content}
+            onChange={commentInputHandler}
+          />
+        ) : (
+          <textarea
+            className={classes.textarea}
+            readOnly
+            name="content"
+            rows="1"
+            placeholder="로그인이 필요합니다."
+            // defaultValue={commentData.content}
+            onChange={commentInputHandler}
+          />
+        )}
         <div className={classes["comment-button"]}>
-          <button className={classes["edit-button"]}>수정</button>
+          <button className={commentEditButtonClass}>수정</button>
           {onCommentToggle && (
             <button
               onClick={onCommentToggle}
-              className={classes["cancel-button"]}
+              className={commentDeleteButtonClass}
             >
               취소
             </button>

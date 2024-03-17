@@ -1,20 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+import EditComment from "./EditComment";
 import Replies from "../Replies/Replies";
+import AuthContext from "../../store/auth-context";
 
 // import CommentForm from "./CommentForm";
 import classes from "./Comment.module.css";
-import EditComment from "./EditComment";
 
 const Comment = ({
   commentId,
+  name,
   content,
   date,
   onDeleteCommentData,
   onEditCommentData,
 }) => {
   const post = useRouteLoaderData("post-detail");
+  const authCtx = useContext(AuthContext);
+
   const [commentEditToggle, setCommentEditToggle] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setLoggedIn(authCtx.isLoggedIn);
+  }, [authCtx]);
 
   const commentDeleteHandler = async () => {
     const postId = post.postId;
@@ -48,13 +57,17 @@ const Comment = ({
     <>
       <li className={classes.comment}>
         <div className={classes["comment-user-edit"]}>
-          <p>GUEST</p>
-          <button type="button" onClick={commentEditToggleHandler}>
-            &#9998;
-          </button>
-          <button type="button" onClick={commentDeleteHandler}>
-            &times;
-          </button>
+          <p>{name}</p>
+          {loggedIn && (
+            <>
+              <button type="button" onClick={commentEditToggleHandler}>
+                &#9998;
+              </button>
+              <button type="button" onClick={commentDeleteHandler}>
+                &times;
+              </button>
+            </>
+          )}
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>

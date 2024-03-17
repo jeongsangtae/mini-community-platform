@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 // import CommentForm from "./CommentForm";
 // import classes from "./Comments.module.css";
@@ -73,6 +73,7 @@ const Comments = () => {
               <Comment
                 key={comment._id}
                 commentId={comment._id}
+                name={comment.name}
                 content={comment.content}
                 date={comment.date}
                 onDeleteCommentData={deleteComment}
