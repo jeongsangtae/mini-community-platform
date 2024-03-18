@@ -5,7 +5,7 @@ import classes from "./Replies.module.css";
 import Reply from "./Reply";
 import ReplyForm from "./ReplyForm";
 
-const Replies = ({ commentId, onReplyToggle }) => {
+const Replies = ({ commentId }) => {
   const [replies, setReplies] = useState([]);
   const [replyToggle, setReplyToggle] = useState(false);
   const post = useRouteLoaderData("post-detail");

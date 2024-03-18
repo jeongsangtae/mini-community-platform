@@ -74,6 +74,7 @@ const Comments = () => {
                 key={comment._id}
                 commentId={comment._id}
                 name={comment.name}
+                email={comment.email}
                 content={comment.content}
                 date={comment.date}
                 onDeleteCommentData={deleteComment}

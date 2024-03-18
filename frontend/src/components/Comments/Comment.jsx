@@ -10,6 +10,7 @@ import classes from "./Comment.module.css";
 const Comment = ({
   commentId,
   name,
+  email,
   content,
   date,
   onDeleteCommentData,
@@ -19,11 +20,11 @@ const Comment = ({
   const authCtx = useContext(AuthContext);
 
   const [commentEditToggle, setCommentEditToggle] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    setLoggedIn(authCtx.isLoggedIn);
-  }, [authCtx]);
+  // useEffect(() => {
+  //   setLoggedIn(authCtx.isLoggedIn);
+  // }, [authCtx]);
 
   const commentDeleteHandler = async () => {
     const postId = post.postId;
@@ -54,12 +55,15 @@ const Comment = ({
     setCommentEditToggle(!commentEditToggle);
   };
 
+  // console.log(email);
+  // console.log(authCtx.userInfo.email);
+
   return (
     <>
       <li className={classes.comment}>
         <div className={classes["comment-user-edit"]}>
           <p>{name}</p>
-          {loggedIn && (
+          {email === authCtx.userInfo?.email && (
             <>
               <button type="button" onClick={commentEditToggleHandler}>
                 &#9998;
@@ -69,6 +73,16 @@ const Comment = ({
               </button>
             </>
           )}
+          {/* {loggedIn && (
+            <>
+              <button type="button" onClick={commentEditToggleHandler}>
+                &#9998;
+              </button>
+              <button type="button" onClick={commentDeleteHandler}>
+                &times;
+              </button>
+            </>
+          )} */}
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>
