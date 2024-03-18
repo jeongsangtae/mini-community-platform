@@ -32,15 +32,16 @@ const Comment = ({
       {
         method: "DELETE",
         body: JSON.stringify({ commentId }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       }
     );
 
     console.log(postId);
 
     if (!response.ok) {
+      const errorData = await response.json();
+      console.log(errorData.message);
       throw json({ message: "Could not delete comment." }, { status: 500 });
     } else {
       console.log(commentId);

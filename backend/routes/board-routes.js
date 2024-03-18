@@ -309,7 +309,7 @@ router.post("/posts/:postId/comments", async (req, res) => {
   const loginUserTokenData = jwt.verify(token, accessTokenKey);
 
   if (!loginUserTokenData) {
-    res.status(500).json({ message: "jwt error" });
+    res.status(401).json({ message: "jwt error" });
   }
 
   const loginUserDbData = await db
@@ -354,50 +354,100 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
 router.patch("/posts/:postId/comments", async (req, res) => {
   // let postId = parseInt(req.params.postId);
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  if (!loginUserTokenData) {
+    res.status(401).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  const { password, ...othersData } = loginUserDbData;
+
   let commentId = req.body.commentId;
   let date = new Date();
 
   commentId = new ObjectId(commentId);
 
-  // const post = await db.getDb().collection("posts").findOne({ postId });
+  // console.log(commentId.toString());
+  // console.log(othersData._id.toString());
+
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .findOne({ _id: commentId });
+
+  console.log(comment.email);
+  console.log(othersData.email);
 
   const contentInput = req.body.content;
 
-  let editComment = {
-    _id: commentId,
-    content: contentInput,
-    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
-      .getHours()
-      .toString()
-      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
-      .getSeconds()
-      .toString()
-      .padStart(2, "0")}`,
-  };
+  if (comment.email === othersData.email) {
+    let editComment = {
+      _id: commentId,
+      content: contentInput,
+      date: `${date.getFullYear()}.${
+        date.getMonth() + 1
+      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+    };
 
-  await db
-    .getDb()
-    .collection("comments")
-    .updateOne({ _id: commentId }, { $set: editComment });
+    await db
+      .getDb()
+      .collection("comments")
+      .updateOne({ _id: commentId }, { $set: editComment });
 
-  res.status(200).json({ editComment });
+    res.status(200).json({ editComment });
+  } else {
+    res.status(403).json({ message: "댓글을 수정할 권한이 없습니다." });
+  }
 });
 
 router.delete("/posts/:postId/comment", async (req, res) => {
   // let postId = parseInt(req.params.postId);
-  let commentId = req.body.commentId;
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
 
-  // console.log(commentId);
+  if (!loginUserTokenData) {
+    res.status(401).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  const { password, ...othersData } = loginUserDbData;
+
+  let commentId = req.body.commentId;
 
   commentId = new ObjectId(commentId);
 
-  // console.log(commentId);
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .findOne({ _id: commentId });
 
-  await db.getDb().collection("replies").deleteMany({ comment_id: commentId });
+  if (comment.email === othersData.email) {
+    await db
+      .getDb()
+      .collection("replies")
+      .deleteMany({ comment_id: commentId });
 
-  await db.getDb().collection("comments").deleteOne({ _id: commentId });
+    await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
-  res.status(200).json({ message: "Success" });
+    res.status(200).json({ message: "Success" });
+  } else {
+    res.status(403).json({ message: "댓글을 삭제할 권한이 없습니다." });
+  }
 });
 
 // router.get("/posts/:postId/replies", async (req, res) => {
