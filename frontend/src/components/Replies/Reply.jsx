@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-import classes from "./Reply.module.css";
 import ReplyForm from "./ReplyForm";
+import AuthContext from "../../store/auth-context";
+import classes from "./Reply.module.css";
 
 const Reply = ({
   replyId,
@@ -13,7 +14,10 @@ const Reply = ({
   onEditReplyData,
 }) => {
   const post = useRouteLoaderData("post-detail");
+  const authCtx = useContext(AuthContext);
+
   const [replyEditToggle, setReplyEditToggle] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const replyDeleteHandler = async () => {
     const postId = post.postId;
@@ -40,6 +44,10 @@ const Reply = ({
   const replyEditToggleHandler = () => {
     setReplyEditToggle(!replyEditToggle);
   };
+
+  useEffect(() => {
+    setLoggedIn(authCtx.isLoggedIn);
+  }, [authCtx]);
 
   return (
     <>

@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-import classes from "./Replies.module.css";
 import Reply from "./Reply";
 import ReplyForm from "./ReplyForm";
+import AuthContext from "../../store/auth-context";
+import classes from "./Replies.module.css";
 
 const Replies = ({ commentId }) => {
+  const post = useRouteLoaderData("post-detail");
+  const authCtx = useContext(AuthContext);
+
   const [replies, setReplies] = useState([]);
   const [replyToggle, setReplyToggle] = useState(false);
-  const post = useRouteLoaderData("post-detail");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -52,6 +56,10 @@ const Replies = ({ commentId }) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setLoggedIn(authCtx.isLoggedIn);
+  }, [authCtx]);
+
   const replyToggleHandler = () => {
     setReplyToggle(!replyToggle);
   };
@@ -85,13 +93,15 @@ const Replies = ({ commentId }) => {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={replyToggleHandler}
-        className={classes["reply-button"]}
-      >
-        답글쓰기
-      </button>
+      {loggedIn && (
+        <button
+          type="button"
+          onClick={replyToggleHandler}
+          className={classes["reply-button"]}
+        >
+          답글쓰기
+        </button>
+      )}
       {replyToggle && (
         <ReplyForm
           method="POST"

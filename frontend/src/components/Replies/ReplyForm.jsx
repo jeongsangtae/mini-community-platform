@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
+import AuthContext from "../../store/auth-context";
 import classes from "./ReplyForm.module.css";
 
 const ReplyForm = ({
@@ -11,8 +12,11 @@ const ReplyForm = ({
   onEditReplyData,
   onReplyToggle,
 }) => {
-  const [reply, setReply] = useState("");
   const post = useRouteLoaderData("post-detail");
+  const authCtx = useContext(AuthContext);
+
+  const [reply, setReply] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const replyinputHandler = (event) => {
     setReply(event.target.value);
@@ -71,28 +75,53 @@ const ReplyForm = ({
     onReplyToggle();
   };
 
+  useEffect(() => {
+    setLoggedIn(authCtx.isLoggedIn);
+
+    if (authCtx.isLoggedIn === false) {
+      onReplyToggle();
+    }
+  }, [authCtx]);
+
+  const replyEditButtonClass = loggedIn
+    ? `${classes["edit-button"]}`
+    : `${classes["edit-button"]} ${classes.opacity}`;
+  const replyDeleteButtonClass = loggedIn
+    ? `${classes["cancel-button"]}`
+    : `${classes["cancel-button"]} ${classes.opacity}`;
+
   return (
     <>
       <form onSubmit={submitHandler} className={classes["reply-form"]}>
-        <p>GUEST</p>
-        <textarea
-          className={classes.textarea}
-          required
-          name="content"
-          rows="1"
-          placeholder="내용 입력"
-          defaultValue={replyData ? replyData.content : ""}
-          onChange={replyinputHandler}
-        />
+        <p>{authCtx.userName}</p>
+        {loggedIn ? (
+          <textarea
+            className={classes.textarea}
+            required
+            name="content"
+            rows="1"
+            placeholder="내용 입력"
+            defaultValue={replyData ? replyData.content : ""}
+            onChange={replyinputHandler}
+          />
+        ) : (
+          <textarea
+            className={classes.textarea}
+            readOnly
+            name="content"
+            rows="1"
+            placeholder="로그인이 필요합니다."
+            // defaultValue={replyData ? replyData.content : ""}
+            onChange={replyinputHandler}
+          />
+        )}
+
         <div className={classes["reply-button"]}>
-          <button className={classes["edit-button"]}>
+          <button className={replyEditButtonClass}>
             {method === "POST" ? "등록" : "수정"}
           </button>
           {onReplyToggle && (
-            <button
-              onClick={onReplyToggle}
-              className={classes["cancel-button"]}
-            >
+            <button onClick={onReplyToggle} className={replyDeleteButtonClass}>
               취소
             </button>
           )}
