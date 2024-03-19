@@ -88,6 +88,8 @@ export const action = async ({ request, params }) => {
   }
 
   if (!response.ok) {
+    const errorData = await response.json();
+    console.log(errorData.message);
     throw json({ message: "Could not save post." }, { status: 500 });
   }
 

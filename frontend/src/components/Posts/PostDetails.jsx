@@ -10,7 +10,9 @@ const PostDetails = () => {
   const post = useRouteLoaderData("post-detail");
   const submit = useSubmit();
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  console.log(post);
+
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   if (!post) {
     // 데이터가 아직 로드되지 않은 경우 로딩 상태를 표시하거나 다른 처리를 수행할 수 있다.
@@ -21,14 +23,15 @@ const PostDetails = () => {
     submit(null, { method: "delete" });
   };
 
-  useEffect(() => {
-    console.log(authCtx.isLoggedIn);
-    setLoggedIn(authCtx.isLoggedIn);
-  }, [authCtx]);
+  // useEffect(() => {
+  //   console.log(authCtx.isLoggedIn);
+  //   setLoggedIn(authCtx.isLoggedIn);
+  // }, [authCtx]);
 
-  const actionsButtonClass = loggedIn
-    ? `${classes.actions}`
-    : `${classes.actions} ${classes.opacity}`;
+  const actionsButtonClass =
+    post.email === authCtx.userInfo?.email
+      ? `${classes.actions}`
+      : `${classes.actions} ${classes.opacity}`;
 
   return (
     <>

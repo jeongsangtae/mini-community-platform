@@ -196,23 +196,44 @@ router.get("/posts/:postId", async (req, res) => {
 // router.get("/posts/:postId/edit", async (req, res) => {});
 
 router.patch("/posts/:postId/edit", async (req, res) => {
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  if (!loginUserTokenData) {
+    res.status(401).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  const { password, ...othersData } = loginUserDbData;
+
   let postId = parseInt(req.params.postId);
+
+  const post = await db.getDb().collection("posts").findOne({ postId: postId });
 
   const titleInput = req.body.title;
   const contentInput = req.body.content;
 
-  const editPost = {
-    title: titleInput,
-    content: contentInput,
-  };
+  if (post.email === othersData.email) {
+    const editPost = {
+      title: titleInput,
+      content: contentInput,
+    };
 
-  await db
-    .getDb()
-    .collection("posts")
-    .updateOne({ postId }, { $set: editPost });
+    await db
+      .getDb()
+      .collection("posts")
+      .updateOne({ postId }, { $set: editPost });
 
-  // console.log(postId);
-  res.status(200).json({ message: "Success" });
+    // console.log(postId);
+    res.status(200).json({ message: "Success" });
+  } else {
+    res.status(403).json({ message: "게시글 수정할 권한이 없습니다." });
+  }
 });
 
 // router.post("/posts/:postId/delete", async function (req, res) {
@@ -237,6 +258,21 @@ router.patch("/posts/:postId/edit", async (req, res) => {
 // });
 
 router.delete("/posts/:postId/", async (req, res) => {
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  if (!loginUserTokenData) {
+    res.status(401).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  const { password, ...othersData } = loginUserDbData;
+
   let postId = parseInt(req.params.postId);
 
   // console.log(postId);
@@ -245,20 +281,24 @@ router.delete("/posts/:postId/", async (req, res) => {
 
   // console.log(post);
 
-  await db.getDb().collection("replies").deleteMany({ post_id: post._id });
+  if (post.email === othersData.email) {
+    await db.getDb().collection("replies").deleteMany({ post_id: post._id });
 
-  await db.getDb().collection("comments").deleteMany({ post_id: post._id });
+    await db.getDb().collection("comments").deleteMany({ post_id: post._id });
 
-  await db.getDb().collection("posts").deleteOne({ postId: post.postId });
+    await db.getDb().collection("posts").deleteOne({ postId: post.postId });
 
-  // 게시글 삭제시 게시글 번호가 비어있지 않도록 삭제한 게시글 뒤에 있는 게시글의 번호들을 1씩 감소
-  // 삭제한 게시글 뒤에 있는 게시글의 번호를 확인하기 위해 $gt를 사용해 번호가 더 큰 것을 확인해서 감소시킨다.
-  await db
-    .getDb()
-    .collection("posts")
-    .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
+    // 게시글 삭제시 게시글 번호가 비어있지 않도록 삭제한 게시글 뒤에 있는 게시글의 번호들을 1씩 감소
+    // 삭제한 게시글 뒤에 있는 게시글의 번호를 확인하기 위해 $gt를 사용해 번호가 더 큰 것을 확인해서 감소시킨다.
+    await db
+      .getDb()
+      .collection("posts")
+      .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
 
-  res.status(200).json({ message: "Success" });
+    res.status(200).json({ message: "Success" });
+  } else {
+    res.status(403).json({ message: "게시글 삭제할 권한이 없습니다." });
+  }
 });
 
 router.get("/posts/:postId/comments", async (req, res) => {

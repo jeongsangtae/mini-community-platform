@@ -19,6 +19,7 @@ export const action = async ({ request, params }) => {
   const postId = params.postId;
   const response = await fetch("http://localhost:3000/posts/" + postId, {
     method: request.method,
+    credentials: "include",
   });
 
   if (!response.ok) {

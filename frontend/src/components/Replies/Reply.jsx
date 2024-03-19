@@ -19,7 +19,7 @@ const Reply = ({
   const authCtx = useContext(AuthContext);
 
   const [replyEditToggle, setReplyEditToggle] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   const replyDeleteHandler = async () => {
     const postId = post.postId;
@@ -48,9 +48,9 @@ const Reply = ({
     setReplyEditToggle(!replyEditToggle);
   };
 
-  useEffect(() => {
-    setLoggedIn(authCtx.isLoggedIn);
-  }, [authCtx]);
+  // useEffect(() => {
+  //   setLoggedIn(authCtx.isLoggedIn);
+  // }, [authCtx]);
 
   return (
     <>
