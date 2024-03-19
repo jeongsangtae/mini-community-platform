@@ -117,6 +117,8 @@ const Replies = ({ commentId }) => {
               <Reply
                 key={reply._id}
                 replyId={reply._id}
+                name={reply.name}
+                email={reply.email}
                 content={reply.content}
                 date={reply.date}
                 commentId={commentId}

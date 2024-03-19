@@ -7,6 +7,8 @@ import classes from "./Reply.module.css";
 
 const Reply = ({
   replyId,
+  name,
+  email,
   content,
   date,
   commentId,
@@ -53,7 +55,7 @@ const Reply = ({
     <>
       <li className={classes.reply}>
         <div className={classes["reply-user-edit"]}>
-          <p>GUEST</p>
+          <p>{name}</p>
           <button onClick={replyEditToggleHandler}>&#9998;</button>
           <button type="button" onClick={replyDeleteHandler}>
             &times;

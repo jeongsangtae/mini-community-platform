@@ -58,6 +58,7 @@ const ReplyForm = ({
         method: method,
         body: JSON.stringify(requestBody),
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       }
     );
 

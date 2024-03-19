@@ -485,6 +485,24 @@ router.get("/posts/:postId/replies/:commentId", async (req, res) => {
 });
 
 router.post("/posts/:postId/replies", async (req, res) => {
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  if (!loginUserTokenData) {
+    res.status(401).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  console.log(loginUserDbData);
+  console.log("-------------");
+
+  const { password, ...othersData } = loginUserDbData;
+
   let postId = parseInt(req.params.postId);
   let commentId = req.body.commentId;
   let date = new Date();
@@ -508,8 +526,8 @@ router.post("/posts/:postId/replies", async (req, res) => {
   const newReply = {
     post_id: post._id,
     comment_id: comment._id,
-    // name: user.name,
-    // email: user.email,
+    name: othersData.name,
+    email: othersData.email,
     content: contentInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
