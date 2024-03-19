@@ -63,6 +63,8 @@ const ReplyForm = ({
     );
 
     if (!response.ok) {
+      const errorData = await response.json();
+      console.log(errorData.message);
       throw json({ message: "Could not save reply." }, { status: 500 });
     } else if (response.ok && method === "POST") {
       const resData = await response.json();

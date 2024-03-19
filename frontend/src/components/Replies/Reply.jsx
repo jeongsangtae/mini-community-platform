@@ -28,13 +28,14 @@ const Reply = ({
       {
         method: "DELETE",
         body: JSON.stringify({ replyId }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       }
     );
 
     if (!response.ok) {
+      const errorData = await response.json();
+      console.log(errorData.message);
       throw json({ message: "Could not delete reply." }, { status: 500 });
     } else {
       console.log(replyId);
@@ -56,10 +57,14 @@ const Reply = ({
       <li className={classes.reply}>
         <div className={classes["reply-user-edit"]}>
           <p>{name}</p>
-          <button onClick={replyEditToggleHandler}>&#9998;</button>
-          <button type="button" onClick={replyDeleteHandler}>
-            &times;
-          </button>
+          {email === authCtx.userInfo?.email && (
+            <>
+              <button onClick={replyEditToggleHandler}>&#9998;</button>
+              <button type="button" onClick={replyDeleteHandler}>
+                &times;
+              </button>
+            </>
+          )}
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>

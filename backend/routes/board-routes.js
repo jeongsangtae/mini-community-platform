@@ -544,48 +544,88 @@ router.post("/posts/:postId/replies", async (req, res) => {
 });
 
 router.patch("/posts/:postId/replies", async (req, res) => {
-  // let postId = parseInt(req.params.postId);
-  let replytId = req.body.replyId;
-  let date = new Date();
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
 
-  replytId = new ObjectId(replytId);
+  if (!loginUserTokenData) {
+    res.status(401).json({ message: "jwt error" });
+  }
 
-  // const post = await db.getDb().collection("posts").findOne({ postId });
-
-  const contentInput = req.body.content;
-
-  let editReply = {
-    _id: replytId,
-    content: contentInput,
-    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
-      .getHours()
-      .toString()
-      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
-      .getSeconds()
-      .toString()
-      .padStart(2, "0")}`,
-  };
-
-  await db
+  const loginUserDbData = await db
     .getDb()
-    .collection("replies")
-    .updateOne({ _id: replytId }, { $set: editReply });
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
 
-  res.status(200).json({ editReply });
-});
+  const { password, ...othersData } = loginUserDbData;
 
-router.delete("/posts/:postId/replies", async (req, res) => {
   let replyId = req.body.replyId;
-
-  // console.log(replyId);
+  let date = new Date();
 
   replyId = new ObjectId(replyId);
 
-  // console.log(replyId);
+  const reply = await db
+    .getDb()
+    .collection("replies")
+    .findOne({ _id: replyId });
 
-  await db.getDb().collection("replies").deleteOne({ _id: replyId });
+  const contentInput = req.body.content;
 
-  res.status(200).json({ message: "Success" });
+  if (reply.email === othersData.email) {
+    let editReply = {
+      _id: replyId,
+      content: contentInput,
+      date: `${date.getFullYear()}.${
+        date.getMonth() + 1
+      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+    };
+
+    await db
+      .getDb()
+      .collection("replies")
+      .updateOne({ _id: replyId }, { $set: editReply });
+
+    res.status(200).json({ editReply });
+  } else {
+    res.status(403).json({ message: "답글을 수정할 권한이 없습니다." });
+  }
+});
+
+router.delete("/posts/:postId/replies", async (req, res) => {
+  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+  const token = req.cookies.accessToken;
+  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+  if (!loginUserTokenData) {
+    res.status(401).json({ message: "jwt error" });
+  }
+
+  const loginUserDbData = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: loginUserTokenData.userEmail });
+
+  const { password, ...othersData } = loginUserDbData;
+
+  let replyId = req.body.replyId;
+
+  replyId = new ObjectId(replyId);
+
+  const reply = await db
+    .getDb()
+    .collection("replies")
+    .findOne({ _id: replyId });
+
+  if (reply.email === othersData.email) {
+    await db.getDb().collection("replies").deleteOne({ _id: replyId });
+
+    res.status(200).json({ message: "Success" });
+  } else {
+    res.status(403).json({ message: "답글을 삭제할 권한이 없습니다." });
+  }
 });
 
 module.exports = router;
