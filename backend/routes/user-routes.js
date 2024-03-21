@@ -270,11 +270,29 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/accessToken", accessToken);
+// router.get("/accessToken", accessToken);
+
+router.get("/accessToken", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  res.status(200).json(othersData);
+});
 
 router.get("/refreshToken", refreshToken);
 
-router.get("/login/success", accessToken);
+router.get("/login/success", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  res.status(200).json(othersData);
+});
 
 router.post("/logout", async (req, res) => {
   try {

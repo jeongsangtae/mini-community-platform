@@ -3,6 +3,7 @@ const mongodb = require("mongodb");
 const jwt = require("jsonwebtoken");
 
 const db = require("../data/database");
+const { accessToken } = require("../middlewares/jwt-auth");
 
 const ObjectId = mongodb.ObjectId;
 
@@ -63,9 +64,6 @@ router.get("/posts", async (req, res) => {
 
   try {
     const token = req.cookies.accessToken;
-    console.log("1");
-    console.log(token);
-    console.log("---------------");
     if (!token) {
       throw new Error("로그인하지 않은 사용자");
     }
@@ -136,25 +134,11 @@ router.get("/posts", async (req, res) => {
 });
 
 router.post("/posts", async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(500).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  console.log(loginUserDbData);
-  console.log("-------------");
-
-  const { password, ...othersData } = loginUserDbData;
-
-  console.log(othersData);
 
   const lastPost = await db
     .getDb()
@@ -196,20 +180,11 @@ router.get("/posts/:postId", async (req, res) => {
 // router.get("/posts/:postId/edit", async (req, res) => {});
 
 router.patch("/posts/:postId/edit", async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  const { password, ...othersData } = loginUserDbData;
 
   let postId = parseInt(req.params.postId);
 
@@ -258,20 +233,11 @@ router.patch("/posts/:postId/edit", async (req, res) => {
 // });
 
 router.delete("/posts/:postId/", async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  const { password, ...othersData } = loginUserDbData;
 
   let postId = parseInt(req.params.postId);
 
@@ -344,23 +310,11 @@ router.get("/posts/:postId/comments", async (req, res) => {
 });
 
 router.post("/posts/:postId/comments", async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  console.log(loginUserDbData);
-  console.log("-------------");
-
-  const { password, ...othersData } = loginUserDbData;
 
   console.log(othersData);
 
@@ -394,20 +348,11 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
 router.patch("/posts/:postId/comments", async (req, res) => {
   // let postId = parseInt(req.params.postId);
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  const { password, ...othersData } = loginUserDbData;
 
   let commentId = req.body.commentId;
   let date = new Date();
@@ -452,20 +397,11 @@ router.patch("/posts/:postId/comments", async (req, res) => {
 
 router.delete("/posts/:postId/comment", async (req, res) => {
   // let postId = parseInt(req.params.postId);
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  const { password, ...othersData } = loginUserDbData;
 
   let commentId = req.body.commentId;
 
@@ -525,23 +461,11 @@ router.get("/posts/:postId/replies/:commentId", async (req, res) => {
 });
 
 router.post("/posts/:postId/replies", async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  console.log(loginUserDbData);
-  console.log("-------------");
-
-  const { password, ...othersData } = loginUserDbData;
 
   let postId = parseInt(req.params.postId);
   let commentId = req.body.commentId;
@@ -584,20 +508,11 @@ router.post("/posts/:postId/replies", async (req, res) => {
 });
 
 router.patch("/posts/:postId/replies", async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  const { password, ...othersData } = loginUserDbData;
 
   let replyId = req.body.replyId;
   let date = new Date();
@@ -635,20 +550,11 @@ router.patch("/posts/:postId/replies", async (req, res) => {
 });
 
 router.delete("/posts/:postId/replies", async (req, res) => {
-  const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  const token = req.cookies.accessToken;
-  const loginUserTokenData = jwt.verify(token, accessTokenKey);
+  const othersData = await accessToken(req, res);
 
-  if (!loginUserTokenData) {
-    res.status(401).json({ message: "jwt error" });
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
   }
-
-  const loginUserDbData = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: loginUserTokenData.userEmail });
-
-  const { password, ...othersData } = loginUserDbData;
 
   let replyId = req.body.replyId;
 

@@ -4,6 +4,26 @@ const db = require("../data/database");
 
 // dotenv.config();
 
+// const accessToken = async (req, res) => {
+//   try {
+//     const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+//     const token = req.cookies.accessToken;
+//     const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+//     const loginUserDbData = await db
+//       .getDb()
+//       .collection("users")
+//       .findOne({ email: loginUserTokenData.userEmail });
+
+//     // 디스트럭처링을 통해서 password를 제외한 다른 데이터만 가져옴
+//     const { password, ...othersData } = loginUserDbData;
+
+//     res.status(200).json(othersData);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// };
+
 const accessToken = async (req, res) => {
   try {
     const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
@@ -17,10 +37,13 @@ const accessToken = async (req, res) => {
 
     // 디스트럭처링을 통해서 password를 제외한 다른 데이터만 가져옴
     const { password, ...othersData } = loginUserDbData;
+    return othersData;
 
-    res.status(200).json(othersData);
+    // res.status(200).json(othersData);
   } catch (error) {
-    res.status(500).json(error);
+    console.log(error);
+    return null;
+    // res.status(500).json(error);
   }
 };
 
