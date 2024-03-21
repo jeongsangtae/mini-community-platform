@@ -15,7 +15,7 @@ const Posts = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   const fetchData = async (pageNumber) => {
     const response = await fetch(
@@ -43,12 +43,12 @@ const Posts = () => {
     paginationFetchData(page);
   }, [page]);
 
-  useEffect(() => {
-    console.log(authCtx.isLoggedIn);
-    setLoggedIn(authCtx.isLoggedIn);
-  }, [authCtx]);
+  // useEffect(() => {
+  //   console.log(authCtx.isLoggedIn);
+  //   setLoggedIn(authCtx.isLoggedIn);
+  // }, [authCtx]);
 
-  const postAddButtonClass = loggedIn
+  const postAddButtonClass = authCtx.isLoggedIn
     ? `${classes.add}`
     : `${classes.add} ${classes.opacity}`;
 

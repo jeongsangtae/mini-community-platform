@@ -14,7 +14,6 @@ const EditComment = ({
   const authCtx = useContext(AuthContext);
 
   const [comment, setComment] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const commentInputHandler = (event) => {
     setComment(event.target.value);
@@ -61,17 +60,15 @@ const EditComment = ({
   };
 
   useEffect(() => {
-    setLoggedIn(authCtx.isLoggedIn);
-
     if (authCtx.isLoggedIn === false) {
       onCommentToggle();
     }
   }, [authCtx]);
 
-  const commentEditButtonClass = loggedIn
+  const commentEditButtonClass = authCtx.isLoggedIn
     ? `${classes["edit-button"]}`
     : `${classes["edit-button"]} ${classes.opacity}`;
-  const commentDeleteButtonClass = loggedIn
+  const commentDeleteButtonClass = authCtx.isLoggedIn
     ? `${classes["cancel-button"]}`
     : `${classes["cancel-button"]} ${classes.opacity}`;
 
@@ -79,7 +76,7 @@ const EditComment = ({
     <>
       <form onSubmit={submitHandler} className={classes["comment-form"]}>
         <p>{authCtx.userName}</p>
-        {loggedIn ? (
+        {authCtx.isLoggedIn ? (
           <textarea
             className={classes.textarea}
             required

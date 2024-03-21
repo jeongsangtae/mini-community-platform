@@ -16,7 +16,6 @@ const ReplyForm = ({
   const authCtx = useContext(AuthContext);
 
   const [reply, setReply] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const replyinputHandler = (event) => {
     setReply(event.target.value);
@@ -79,17 +78,15 @@ const ReplyForm = ({
   };
 
   useEffect(() => {
-    setLoggedIn(authCtx.isLoggedIn);
-
     if (authCtx.isLoggedIn === false) {
       onReplyToggle();
     }
   }, [authCtx]);
 
-  const replyEditButtonClass = loggedIn
+  const replyEditButtonClass = authCtx.isLoggedIn
     ? `${classes["edit-button"]}`
     : `${classes["edit-button"]} ${classes.opacity}`;
-  const replyDeleteButtonClass = loggedIn
+  const replyDeleteButtonClass = authCtx.isLoggedIn
     ? `${classes["cancel-button"]}`
     : `${classes["cancel-button"]} ${classes.opacity}`;
 
@@ -97,7 +94,7 @@ const ReplyForm = ({
     <>
       <form onSubmit={submitHandler} className={classes["reply-form"]}>
         <p>{authCtx.userName}</p>
-        {loggedIn ? (
+        {authCtx.isLoggedIn ? (
           <textarea
             className={classes.textarea}
             required

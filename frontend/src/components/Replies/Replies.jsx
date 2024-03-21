@@ -12,7 +12,7 @@ const Replies = ({ commentId }) => {
 
   const [replies, setReplies] = useState([]);
   const [replyToggle, setReplyToggle] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -56,9 +56,9 @@ const Replies = ({ commentId }) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    setLoggedIn(authCtx.isLoggedIn);
-  }, [authCtx]);
+  // useEffect(() => {
+  //   setLoggedIn(authCtx.isLoggedIn);
+  // }, [authCtx]);
 
   const replyToggleHandler = () => {
     setReplyToggle(!replyToggle);
@@ -93,7 +93,7 @@ const Replies = ({ commentId }) => {
 
   return (
     <>
-      {loggedIn && (
+      {authCtx.isLoggedIn && (
         <button
           type="button"
           onClick={replyToggleHandler}

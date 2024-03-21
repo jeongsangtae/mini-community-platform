@@ -50,13 +50,13 @@ const CreateComment = ({ method, onAddCommentData }) => {
     return redirect("/posts/" + postId);
   };
 
-  useEffect(() => {
-    console.log(authCtx.isLoggedIn);
-    setLoggedIn(authCtx.isLoggedIn);
-    // setUserName(authCtx.userName);
-  }, [authCtx]);
+  // useEffect(() => {
+  //   console.log(authCtx.isLoggedIn);
+  //   setLoggedIn(authCtx.isLoggedIn);
+  //   // setUserName(authCtx.userName);
+  // }, [authCtx]);
 
-  const commentAddButtonClass = loggedIn ? "" : `${classes.opacity}`;
+  const commentAddButtonClass = authCtx.isLoggedIn ? "" : `${classes.opacity}`;
   // const commentUserName = userName === null ? "GUEST" : `${userName.name}`;
 
   return (
@@ -66,7 +66,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
         {/* <p>{userData ? userData.name : "GUEST"}</p> */}
         {/* <p>{userName}</p> */}
         <p>{authCtx.userName}</p>
-        {loggedIn ? (
+        {authCtx.isLoggedIn ? (
           <textarea
             required
             name="content"
