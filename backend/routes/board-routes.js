@@ -153,7 +153,19 @@ router.get("/posts/:postId", async (req, res) => {
   res.json(post);
 });
 
-// router.get("/posts/:postId/edit", async (req, res) => {});
+router.get("/profile/:postId", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+  // let postId = req.params.id;
+
+  // postId = new ObjectId(postId);
+
+  const post = await db.getDb().collection("posts").findOne({ postId });
+
+  // console.log(typeof req.params.postId);
+  // console.log(typeof postId);
+
+  res.json(post);
+});
 
 router.patch("/posts/:postId/edit", async (req, res) => {
   const othersData = await accessToken(req, res);

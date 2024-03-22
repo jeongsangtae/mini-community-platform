@@ -67,17 +67,17 @@ const MainHeader = () => {
     setAuthenticated(isAuthenticated);
   };
 
-  const accessTokenTestHandler = async () => {
-    await fetch("http://localhost:3000/accessToken", {
-      credentials: "include",
-    });
-  };
+  // const accessTokenTestHandler = async () => {
+  //   await fetch("http://localhost:3000/accessToken", {
+  //     credentials: "include",
+  //   });
+  // };
 
-  const refreshTokenTestHandler = async () => {
-    await fetch("http://localhost:3000/refreshToken", {
-      credentials: "include",
-    });
-  };
+  // const refreshTokenTestHandler = async () => {
+  //   await fetch("http://localhost:3000/refreshToken", {
+  //     credentials: "include",
+  //   });
+  // };
 
   return (
     <>
@@ -106,7 +106,7 @@ const MainHeader = () => {
                   로그아웃
                 </button>
               </p>
-              <p>
+              {/* <p>
                 <button
                   className={classes.button}
                   onClick={accessTokenTestHandler}
@@ -121,7 +121,7 @@ const MainHeader = () => {
                 >
                   리프레쉬토큰
                 </button>
-              </p>
+              </p> */}
             </nav>
           </>
         ) : (

@@ -6,7 +6,7 @@ const Post = ({ num, title, name, date }) => {
   return (
     <>
       <li className={classes.post}>
-        <Link to={num.toString()}>
+        <Link to={`/posts/${num.toString()}`}>
           <p>{num}</p>
           <p>{title}</p>
           <p>{name}</p>
