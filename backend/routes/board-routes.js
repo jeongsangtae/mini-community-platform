@@ -38,30 +38,6 @@ router.get("/posts", async (req, res) => {
     totalPages
   );
 
-  // const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-  // const token = req.cookies.accessToken;
-  // const loginUserTokenData = jwt.verify(token, accessTokenKey);
-
-  // if (loginUserTokenData) {
-  //   const loginUserDbData = await db
-  //     .getDb()
-  //     .collection("users")
-  //     .findOne({ email: loginUserTokenData.userEmail });
-
-  //   const { password, ...othersData } = loginUserDbData;
-
-  //   res.json({
-  //     posts,
-  //     page,
-  //     totalPages,
-  //     firstPageGroup,
-  //     lastPageGroup,
-  //     othersData,
-  //   });
-  // } else {
-  //   res.json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
-  // }
-
   try {
     const token = req.cookies.accessToken;
     if (!token) {

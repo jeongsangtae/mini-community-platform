@@ -7,7 +7,7 @@ import AuthContext from "../../store/auth-context";
 import classes from "./Profile.module.css";
 
 const Profile = () => {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
 
   const [posts, setPosts] = useState([]);
@@ -15,15 +15,14 @@ const Profile = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
-  const [user, setUser] = useState({});
-
-  console.log(posts);
 
   const fetchData = async (pageNumber) => {
     const response = await fetch(
-      `http://localhost:3000/profile?page=${pageNumber}`
+      `http://localhost:3000/profile?page=${pageNumber}`,
+      { credentials: "include" }
     );
     const resData = await response.json();
+    console.log(resData);
     return resData;
   };
 
@@ -45,25 +44,27 @@ const Profile = () => {
     paginationFetchData(page);
   }, [page]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/profile", {
-          credentials: "include",
-        });
-        if (!response.ok) {
-          throw new Error("네트워크 오류");
-        }
-        const resData = await response.json();
-        setPosts(resData.posts);
-        console.log(resData);
-      } catch (error) {
-        console.error("로그인 유지 불가능", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:3000/profile", {
+  //         credentials: "include",
+  //       });
+  //       if (!response.ok) {
+  //         throw new Error("네트워크 오류");
+  //       }
+  //       const resData = await response.json();
+  //       setPosts(resData.posts);
+  //       setTotalPages(resData.totalPages);
+  //       setFirstPageGroup(resData.firstPageGroup);
+  //       setLastPageGroup(resData.lastPageGroup);
+  //     } catch (error) {
+  //       console.error("로그인 유지 불가능", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <>
@@ -76,28 +77,6 @@ const Profile = () => {
         <p>글쓴이</p>
         <p>날짜</p>
       </div>
-      {/* {posts.map((post) => {
-        return (
-          <>
-            <p>{post.num}</p>
-          </>
-        );
-      })} */}
-      {/* {posts && (
-        <ul className={classes.posts}>
-          {posts.map((post) => {
-            return (
-              <li>
-                {post.postId}
-                {post.postId}
-                {post.title}
-                {post.name}
-                {post.date}
-              </li>
-            );
-          })}
-        </ul>
-      )} */}
 
       {posts && (
         <ul className={classes.posts}>
