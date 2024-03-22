@@ -305,7 +305,46 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-router.get("/profile", accessToken);
+router.get("/profile", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 5;
+  const pageButtonSize = 5;
+
+  const posts = await db
+    .getDb()
+    .collection("posts")
+    .find({ email: othersData.email })
+    .sort({ postId: -1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
+    .toArray();
+
+  const countPosts = await db.getDb().collection("posts").countDocuments({});
+  const totalPages = Math.ceil(countPosts / pageSize);
+
+  const firstPageGroup =
+    Math.ceil(page / pageButtonSize) * pageButtonSize - pageButtonSize + 1;
+  const lastPageGroup = Math.min(
+    firstPageGroup + pageButtonSize - 1,
+    totalPages
+  );
+
+  res.status(200).json({
+    posts,
+    page,
+    totalPages,
+    firstPageGroup,
+    lastPageGroup,
+    othersData,
+  });
+});
 
 // router.post("/logout", (req, res) => {
 //   req.session.user = null;

@@ -1,0 +1,45 @@
+.heading {
+  margin: 5rem;
+  font-size: 2rem;
+}
+
+.posts-item {
+  display: flex;
+  flex-direction: row;
+  /* width: 60rem; */
+  /* margin: 0 auto; */
+  /* justify-content: center; */
+}
+
+.posts-item p {
+  margin-left: 5rem;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0;
+}
+
+.add {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  max-width: 10rem;
+  background-color: #86b687;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.add:hover {
+  color: gray;
+}
+
+.opacity {
+  pointer-events: none;
+  opacity: 0.5;
+}

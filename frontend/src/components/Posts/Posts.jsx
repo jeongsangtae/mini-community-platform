@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Pagination from "./PagiNation";
 
 import Post from "./Post";
+import Pagination from "./PagiNation";
 import AuthContext from "../../store/auth-context";
 import classes from "./Posts.module.css";
 
