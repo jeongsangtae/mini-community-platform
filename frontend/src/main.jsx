@@ -16,11 +16,13 @@ import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    // errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       {
@@ -51,6 +53,7 @@ const router = createBrowserRouter([
       { path: "profile", element: <ProfilePage /> },
     ],
   },
+  { path: "*", element: <ErrorPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
