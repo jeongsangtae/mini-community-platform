@@ -17,12 +17,13 @@ import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
 import ErrorPage from "./pages/ErrorPage";
+import Authentication from "./components/Users/Authentication";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       {
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
       },
       {
         path: "posts/create-post",
-        element: <CreatePostPage />,
+        element: (
+          <Authentication>
+            <CreatePostPage />
+          </Authentication>
+        ),
         action: postFormAction,
         loader: postsLoader,
       },
@@ -46,11 +51,26 @@ const router = createBrowserRouter([
             element: <PostDetailsPage />,
             action: postDeleteAction,
           },
-          { path: "edit", element: <PostEditPage />, action: postFormAction },
+          {
+            path: "edit",
+            element: (
+              <Authentication>
+                <PostEditPage />
+              </Authentication>
+            ),
+            action: postFormAction,
+          },
         ],
       },
       { path: "signup-success", element: <SignupSuccessPage /> },
-      { path: "profile", element: <ProfilePage /> },
+      {
+        path: "profile",
+        element: (
+          <Authentication>
+            <ProfilePage />
+          </Authentication>
+        ),
+      },
     ],
   },
   { path: "*", element: <ErrorPage /> },
