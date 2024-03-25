@@ -18,6 +18,7 @@ import RootLayout from "./pages/RootLayout";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
 import ErrorPage from "./pages/ErrorPage";
 import Authentication from "./components/Users/Authentication";
+import NotFound from "./components/Users/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -71,9 +72,9 @@ const router = createBrowserRouter([
           </Authentication>
         ),
       },
+      { path: "*", element: <NotFound /> },
     ],
   },
-  { path: "*", element: <ErrorPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
