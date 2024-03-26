@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 
+import Signup from "./Signup";
 import Modal from "../UI/Modal";
 import classes from "./Login.module.css";
 import AuthContext from "../../store/auth-context";
@@ -14,6 +15,7 @@ const Login = ({ onToggle, onLogin }) => {
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -46,6 +48,11 @@ const Login = ({ onToggle, onLogin }) => {
       onLogin(true);
       onToggle();
     }
+  };
+
+  const toggleSignupModal = () => {
+    onToggle();
+    setIsSignUpOpen(!isSignUpOpen);
   };
 
   return (
@@ -81,10 +88,12 @@ const Login = ({ onToggle, onLogin }) => {
           <button type="submit">로그인</button>
           <button onClick={onToggle}>취소</button>
         </div>
-        <a href="/signup" className={classes.signup}>
+        {/* <Signup value="회원가입 하러가기" /> */}
+        <button className={classes.signup} onClick={toggleSignupModal}>
           회원가입 하러가기
-        </a>
+        </button>
       </form>
+      {isSignUpOpen && <Signup />}
     </Modal>
   );
 };
