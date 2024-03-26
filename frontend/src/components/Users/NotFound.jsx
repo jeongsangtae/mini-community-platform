@@ -4,12 +4,13 @@ import classes from "./NotFound.module.css";
 
 const NotFound = () => {
   return (
-    <>
-      <h1>404 페이지</h1>
+    <div className={classes["not-found"]}>
+      <h1>이 리소스를 찾을 수 없습니다</h1>
+      <p>안타깝게도 이 리소스를 찾을 수 없습니다.</p>
       <Link to="/" className={classes["redirect-button"]}>
-        <p>홈으로 이동</p>
+        <button>홈으로 돌아가기</button>
       </Link>
-    </>
+    </div>
   );
 };
 

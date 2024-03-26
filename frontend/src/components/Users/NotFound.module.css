@@ -1,12 +1,21 @@
-.redirect-button {
-  /* border-radius: 4px; */
-  /* padding: 0.25rem 0.5rem; */
-  text-decoration: none;
-  /* padding: 0.5rem 2rem; */
+.not-found {
+  margin: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
 }
 
-.redirect-button p {
+.redirect-button {
+  text-decoration: none;
+  margin-top: 1rem;
+}
+
+.redirect-button button {
   border: 1px solid black;
+  cursor: pointer;
   padding: 0.5rem 2rem;
   border-radius: 4px;
   color: white;
