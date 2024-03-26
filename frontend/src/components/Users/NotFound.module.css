@@ -1,0 +1,15 @@
+.redirect-button {
+  /* border-radius: 4px; */
+  /* padding: 0.25rem 0.5rem; */
+  text-decoration: none;
+  /* padding: 0.5rem 2rem; */
+}
+
+.redirect-button p {
+  border: 1px solid black;
+  padding: 0.5rem 2rem;
+  border-radius: 4px;
+  color: white;
+  background-color: black;
+  font-size: 0.9rem;
+}

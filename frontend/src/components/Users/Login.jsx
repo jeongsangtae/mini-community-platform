@@ -78,7 +78,7 @@ const Login = ({ onToggle, onLogin }) => {
         </div>
 
         <div className={classes.actions}>
-          <button type="submit">가입</button>
+          <button type="submit">로그인</button>
           <button onClick={onToggle}>취소</button>
         </div>
         <a href="/signup" className={classes.signup}>

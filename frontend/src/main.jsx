@@ -72,9 +72,9 @@ const router = createBrowserRouter([
           </Authentication>
         ),
       },
-      { path: "*", element: <NotFound /> },
     ],
   },
+  { path: "*", element: <NotFound /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
