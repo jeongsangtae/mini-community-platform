@@ -1,11 +1,10 @@
 import { useState, useContext } from "react";
 
-import Signup from "./Signup";
 import Modal from "../UI/Modal";
 import classes from "./Login.module.css";
 import AuthContext from "../../store/auth-context";
 
-const Login = ({ onToggle, onLogin }) => {
+const Login = ({ onLoginToggle, onSignupToggle, onLogin }) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -15,7 +14,6 @@ const Login = ({ onToggle, onLogin }) => {
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -46,17 +44,12 @@ const Login = ({ onToggle, onLogin }) => {
       // authCtx.login(resData.userInfo);
       console.log(authCtx.isLoggedIn);
       onLogin(true);
-      onToggle();
+      onLoginToggle();
     }
   };
 
-  const toggleSignupModal = () => {
-    onToggle();
-    setIsSignUpOpen(!isSignUpOpen);
-  };
-
   return (
-    <Modal onClose={onToggle}>
+    <Modal onClose={onLoginToggle}>
       <p className={classes.heading}>로그인 페이지</p>
       {error && <p>{errorMessage}</p>}
       <form className={classes.form} onSubmit={submitHandler}>
@@ -86,14 +79,12 @@ const Login = ({ onToggle, onLogin }) => {
 
         <div className={classes.actions}>
           <button type="submit">로그인</button>
-          <button onClick={onToggle}>취소</button>
+          <button onClick={onLoginToggle}>취소</button>
         </div>
-        {/* <Signup value="회원가입 하러가기" /> */}
-        <button className={classes.signup} onClick={toggleSignupModal}>
-          회원가입 하러가기
-        </button>
       </form>
-      {isSignUpOpen && <Signup />}
+      <button className={classes.signup} onClick={onSignupToggle}>
+        회원가입 하러가기
+      </button>
     </Modal>
   );
 };

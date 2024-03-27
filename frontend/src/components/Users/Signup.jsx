@@ -4,7 +4,7 @@ import { useState } from "react";
 import Modal from "../UI/Modal";
 import classes from "./Signup.module.css";
 
-const Signup = ({ onToggle }) => {
+const Signup = ({ onLoginToggle, onSignupToggle }) => {
   const [signupData, setSignupData] = useState({
     username: "",
     email: "",
@@ -40,13 +40,13 @@ const Signup = ({ onToggle }) => {
       return null;
     } else {
       console.log("회원가입 성공");
-      onToggle();
+      onSignupToggle();
       return navigate("signup-success");
     }
   };
 
   return (
-    <Modal onClose={onToggle}>
+    <Modal onClose={onSignupToggle}>
       <p className={classes.heading}>회원가입 페이지</p>
       {error && <p>{errorMessage}</p>}
       <form className={classes.form} onSubmit={submitHandler}>
@@ -100,12 +100,12 @@ const Signup = ({ onToggle }) => {
 
         <div className={classes.actions}>
           <button type="submit">가입</button>
-          <button onClick={onToggle}>취소</button>
+          <button onClick={onSignupToggle}>취소</button>
         </div>
-        <a href="/login" className={classes.login}>
-          로그인 하러가기
-        </a>
       </form>
+      <button className={classes.login} onClick={onLoginToggle}>
+        로그인 하러가기
+      </button>
     </Modal>
   );
 };

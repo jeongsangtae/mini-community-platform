@@ -8,7 +8,7 @@ import AuthContext from "../../store/auth-context";
 import classes from "./MainHeader.module.css";
 
 const MainHeader = () => {
-  const [openSignupModal, setOpenSignupModal] = useState(false);
+  const [openSignupModal, setOnSignupModal] = useState(false);
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
@@ -39,12 +39,13 @@ const MainHeader = () => {
   }, []);
 
   const signupToggleHandler = () => {
-    setOpenSignupModal(!openSignupModal);
+    setOnSignupModal(!openSignupModal);
+    setOnLoginModal(false);
   };
 
   const loginToggleHandler = () => {
     setOnLoginModal(!openLoginModal);
-    console.log(authCtx.isLoggedIn);
+    setOnSignupModal(false);
   };
 
   const logoutHandler = async () => {
@@ -156,10 +157,16 @@ const MainHeader = () => {
       </header>
       {!authenticated && (
         <>
-          {openSignupModal && <Signup onToggle={signupToggleHandler} />}
+          {openSignupModal && (
+            <Signup
+              onSignupToggle={signupToggleHandler}
+              onLoginToggle={loginToggleHandler}
+            />
+          )}
           {openLoginModal && (
             <Login
-              onToggle={loginToggleHandler}
+              onLoginToggle={loginToggleHandler}
+              onSignupToggle={signupToggleHandler}
               onLogin={authenticatedHandler}
             />
           )}

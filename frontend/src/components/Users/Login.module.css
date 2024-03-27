@@ -32,7 +32,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
-  margin: 1rem;
+  margin: 1rem 1rem 0 1rem;
 }
 
 .actions button {
@@ -65,8 +65,10 @@
   border: none;
   color: #eadbfb;
   background-color: transparent;
+  margin: 0 0 1rem 1rem;
 }
 
 .signup:hover {
+  cursor: pointer;
   color: #d1bee6;
 }
