@@ -1,9 +1,9 @@
 import classes from "./NoAccess.module.css";
-const NoAccess = () => {
+const NoAccess = ({ message }) => {
   return (
     <div className={classes["no-access"]}>
-      <h1>로그인이 필요합니다</h1>
-      <p>로그인 하지 않은 사용자는 접근할 수 없습니다.</p>
+      <h1>{message.title}</h1>
+      <p>{message.description}</p>
     </div>
   );
 };
