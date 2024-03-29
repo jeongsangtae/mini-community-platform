@@ -4,6 +4,7 @@ import classes from "./PostForm.module.css";
 
 const PostForm = ({ method, userData, postData, postPageName }) => {
   console.log(postData);
+  console.log(userData);
   const navigate = useNavigate();
 
   const closeHandler = () => {
@@ -26,12 +27,7 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
         </div>
         <div>
           <label htmlFor="name">작성자</label>
-          {postData ? (
-            <p>{postData.name}</p>
-          ) : (
-            // <p>{resData.name}</p>
-            <p>{userData.name}</p>
-          )}
+          {postData ? <p>{postData.name}</p> : <p>{userData?.name}</p>}
         </div>
         <div>
           <textarea
