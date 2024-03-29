@@ -10,7 +10,6 @@ import classes from "./MainHeader.module.css";
 const MainHeader = () => {
   const [openSignupModal, setOnSignupModal] = useState(false);
   const [openLoginModal, setOnLoginModal] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState({});
 
   console.log(user);
@@ -27,7 +26,6 @@ const MainHeader = () => {
           throw new Error("네트워크 오류");
         }
         const resData = await response.json();
-        setAuthenticated((prevAuthenticated) => !prevAuthenticated);
         setUser(resData);
         console.log(resData);
       } catch (error) {
@@ -57,15 +55,9 @@ const MainHeader = () => {
     });
 
     if (response.ok) {
-      setAuthenticated(!authenticated);
       authCtx.logout();
       console.log(authCtx.isLoggedIn);
     }
-  };
-
-  const authenticatedHandler = (isAuthenticated) => {
-    console.log(isAuthenticated);
-    setAuthenticated(isAuthenticated);
   };
 
   // const accessTokenTestHandler = async () => {
@@ -84,7 +76,7 @@ const MainHeader = () => {
     <>
       <header className={classes.header}>
         <h1 className={classes.logo}>커뮤니티 게시판</h1>
-        {authenticated ? (
+        {authCtx.isLoggedIn ? (
           <>
             <nav className={classes.navbutton}>
               <p>
@@ -155,7 +147,7 @@ const MainHeader = () => {
           </>
         )}
       </header>
-      {!authenticated && (
+      {!authCtx.isLoggedIn && (
         <>
           {openSignupModal && (
             <Signup
@@ -167,7 +159,6 @@ const MainHeader = () => {
             <Login
               onLoginToggle={loginToggleHandler}
               onSignupToggle={signupToggleHandler}
-              onLogin={authenticatedHandler}
             />
           )}
         </>
