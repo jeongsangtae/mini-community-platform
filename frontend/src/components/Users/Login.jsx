@@ -4,7 +4,7 @@ import Modal from "../UI/Modal";
 import classes from "./Login.module.css";
 import AuthContext from "../../store/auth-context";
 
-const Login = ({ onLoginToggle, onSignupToggle, onLogin }) => {
+const Login = ({ onLoginToggle, onSignupToggle }) => {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",

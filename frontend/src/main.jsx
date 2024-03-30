@@ -16,7 +16,6 @@ import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
-import ErrorPage from "./pages/ErrorPage";
 import Authentication from "./components/Users/Authentication";
 import NotFound from "./components/Users/NotFound";
 
@@ -24,7 +23,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    // errorElement: <ErrorPage />,
+    // errorElement: <NotFound />,
     children: [
       { index: true, element: <HomePage /> },
       {
@@ -40,7 +39,6 @@ const router = createBrowserRouter([
           </Authentication>
         ),
         action: postFormAction,
-        loader: postsLoader,
       },
       {
         path: "posts/:postId",
