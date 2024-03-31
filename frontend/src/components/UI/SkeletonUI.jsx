@@ -4,10 +4,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 export const PostsSkeleton = ({ classes }) => {
   return (
     <>
-      <Skeleton height={30} width={100} className={classes.heading}></Skeleton>
+      <Skeleton height={40} width={100} className={classes.heading}></Skeleton>
       <div className={classes["posts-item"]}>
         <Skeleton count={5} height={30} />
       </div>
+      <Skeleton count={5} height={30} className={classes.posts} />
       {/* <Skeleton className={classes.posts}>
         <Skeleton width={"50px"} />
         <Skeleton width={"100px"} />

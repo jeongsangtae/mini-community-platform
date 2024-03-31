@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { PostsSkeleton } from "../UI/SkeletonUI";
+// import { PostsSkeleton } from "../UI/SkeletonUI";
 
 import Post from "./Post";
 import Pagination from "./PagiNation";
@@ -53,46 +53,44 @@ const Posts = () => {
     ? `${classes.add}`
     : `${classes.add} ${classes.opacity}`;
 
+  // const postHeadingSkeleton = authCtx.isLoggedIn
+  //   ? `${classes.heading}`
+  //   : `${classes["heading-skeleton"]}`;
+
   return (
     <>
-      {!authCtx.isLoggedIn ? (
-        <PostsSkeleton classes={classes} />
-      ) : (
-        <>
-          <h1 className={classes.heading}>게시글</h1>
-          <div className={classes["posts-item"]}>
-            <p>번호</p>
-            <p>제목</p>
-            <p>글쓴이</p>
-            <p>날짜</p>
-          </div>
-          {posts.length > 0 && (
-            <ul className={classes.posts}>
-              {posts.map((post) => {
-                return (
-                  <Post
-                    key={post.postId}
-                    num={post.postId}
-                    title={post.title}
-                    name={post.name}
-                    date={post.date}
-                  />
-                );
-              })}
-            </ul>
-          )}
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            firstPageGroup={firstPageGroup}
-            lastPageGroup={lastPageGroup}
-            onPageChange={onPageChange}
-          />
-          <Link to="create-post" className={postAddButtonClass}>
-            <p>게시글 추가</p>
-          </Link>
-        </>
+      <h1 className={classes.heading}>게시글</h1>
+      <div className={classes["posts-item"]}>
+        <p>번호</p>
+        <p>제목</p>
+        <p>글쓴이</p>
+        <p>날짜</p>
+      </div>
+      {posts.length > 0 && (
+        <ul className={classes.posts}>
+          {posts.map((post) => {
+            return (
+              <Post
+                key={post.postId}
+                num={post.postId}
+                title={post.title}
+                name={post.name}
+                date={post.date}
+              />
+            );
+          })}
+        </ul>
       )}
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        firstPageGroup={firstPageGroup}
+        lastPageGroup={lastPageGroup}
+        onPageChange={onPageChange}
+      />
+      <Link to="create-post" className={postAddButtonClass}>
+        <p>게시글 추가</p>
+      </Link>
     </>
   );
 };
