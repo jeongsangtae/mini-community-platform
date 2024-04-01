@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { PostsSkeleton } from "../UI/SkeletonUI";
 
 import Post from "./Post";
 import Pagination from "./PagiNation";
+import LoadingIndicator from "../UI/LoadingIndicator";
+// import { PostsSkeleton } from "../UI/SkeletonUI";
 import AuthContext from "../../store/auth-context";
 import classes from "./Posts.module.css";
 
@@ -16,13 +17,21 @@ const Posts = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (pageNumber) => {
-    const response = await fetch(
-      `http://localhost:3000/posts?page=${pageNumber}`
-    );
-    const resData = await response.json();
-    return resData;
+    setIsLoading(true);
+    setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/posts?page=${pageNumber}`
+        );
+        const resData = await response.json();
+        return resData;
+      } finally {
+        setIsLoading(false);
+      }
+    }, 2000);
   };
 
   const paginationFetchData = async (pageNumber) => {
@@ -53,8 +62,8 @@ const Posts = () => {
 
   return (
     <>
-      {!authCtx.isLoggedIn ? (
-        <PostsSkeleton />
+      {isLoading ? (
+        <LoadingIndicator />
       ) : (
         <>
           <h1 className={classes.heading}>게시글</h1>
