@@ -12,6 +12,7 @@
   "dependencies": {
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
+    "react-content-loader": "^7.0.0",
     "react-dom": "^18.2.0",
     "react-js-pagination": "^3.0.3",
     "react-loading-skeleton": "^3.4.0",
