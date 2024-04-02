@@ -12,23 +12,23 @@ const router = express.Router();
 
 // router.use("/login", jwtAuth);
 
-router.get("/signup", (req, res) => {
-  let sessionSignUpInputData = req.session.inputData;
+// router.get("/signup", (req, res) => {
+//   let sessionSignUpInputData = req.session.inputData;
 
-  if (!sessionSignUpInputData) {
-    sessionSignUpInputData = {
-      hasError: false,
-      email: "",
-      confirmEmail: "",
-      name: "",
-      password: "",
-    };
-  }
+//   if (!sessionSignUpInputData) {
+//     sessionSignUpInputData = {
+//       hasError: false,
+//       email: "",
+//       confirmEmail: "",
+//       name: "",
+//       password: "",
+//     };
+//   }
 
-  req.session.inputData = {};
+//   req.session.inputData = {};
 
-  res.json({ inputData: sessionSignUpInputData });
-});
+//   res.json({ inputData: sessionSignUpInputData });
+// });
 
 // 가입한 이메일, 패스워드를 mongodb에 저장
 // 패스워드는 bcrypt를 통해서 hash되며, 안전하게 저장
@@ -46,52 +46,70 @@ router.post("/signup", async (req, res) => {
     !signUpUsername ||
     !signUpPassword ||
     signUpEmail !== signUpConfirmEmail ||
-    !signUpEmail.includes("@")
+    !signUpEmail.includes("@") ||
+    signUpUsername.trim().length > 6 ||
+    signUpPassword.trim().length < 6
   ) {
-    req.session.inputData = {
-      hasError: true,
-      message: "잘못된 입력입니다. 다시 입력해주세요.",
-      email: signUpEmail,
-      confirmEmail: signUpConfirmEmail,
-      name: signUpUsername,
-      password: signUpPassword,
-    };
-
-    req.session.save(() => {
-      res.status(400).json(req.session.inputData);
-    });
-
-    return;
-  } else if (signUpUsername.trim().length > 6) {
-    req.session.inputData = {
-      hasError: true,
-      message: "이름은 6자리까지 입력할 수 있습니다.",
-      email: signUpEmail,
-      confirmEmail: signUpConfirmEmail,
-      name: signUpUsername,
-      password: signUpPassword,
-    };
-
-    req.session.save(() => {
-      res.status(400).json(req.session.inputData);
-    });
-
-    return;
-  } else if (signUpPassword.trim().length < 6) {
-    req.session.inputData = {
-      hasError: true,
-      message: "비밀번호를 6자리 이상 입력해주세요.",
-      email: signUpEmail,
-      confirmEmail: signUpConfirmEmail,
-      name: signUpUsername,
-      password: signUpPassword,
-    };
-
-    req.session.save(() => {
-      res.status(400).json(req.session.inputData);
+    let message = "잘못된 입력입니다. 다시 입력해주세요.";
+    if (signUpUsername.trim().length > 6) {
+      message = "이름은 6자리까지 입력할 수 있습니다.";
+    } else if (signUpPassword.trim().length < 6) {
+      message = "비밀번호를 6자리 이상 입력해주세요.";
+    }
+    res.status(400).json({
+      // hasError: true,
+      message,
+      // email: signUpEmail,
+      // confirmEmail: signUpConfirmEmail,
+      // name: signUpUsername,
+      // password: signUpPassword,
     });
     return;
   }
+  //   req.session.inputData = {
+  //     hasError: true,
+  //     message: "잘못된 입력입니다. 다시 입력해주세요.",
+  //     email: signUpEmail,
+  //     confirmEmail: signUpConfirmEmail,
+  //     name: signUpUsername,
+  //     password: signUpPassword,
+  //   };
+
+  //   req.session.save(() => {
+  //     res.status(400).json(req.session.inputData);
+  //   });
+
+  //   return;
+  // } else if (signUpUsername.trim().length > 6) {
+  //   req.session.inputData = {
+  //     hasError: true,
+  //     message: "이름은 6자리까지 입력할 수 있습니다.",
+  //     email: signUpEmail,
+  //     confirmEmail: signUpConfirmEmail,
+  //     name: signUpUsername,
+  //     password: signUpPassword,
+  //   };
+
+  //   req.session.save(() => {
+  //     res.status(400).json(req.session.inputData);
+  //   });
+
+  //   return;
+  // } else if (signUpPassword.trim().length < 6) {
+  //   req.session.inputData = {
+  //     hasError: true,
+  //     message: "비밀번호를 6자리 이상 입력해주세요.",
+  //     email: signUpEmail,
+  //     confirmEmail: signUpConfirmEmail,
+  //     name: signUpUsername,
+  //     password: signUpPassword,
+  //   };
+
+  //   req.session.save(() => {
+  //     res.status(400).json(req.session.inputData);
+  //   });
+  //   return;
+  // }
 
   const existingSignUpUser = await db
     .getDb()
@@ -100,16 +118,13 @@ router.post("/signup", async (req, res) => {
 
   // 이메일이 이미 존재하는지 확인해 다른 이메일을 입력하도록 한다.
   if (existingSignUpUser) {
-    req.session.inputData = {
-      hasError: true,
+    res.status(400).json({
+      // hasError: true,
       message: "해당 이메일은 이미 사용중입니다.",
-      email: signUpEmail,
-      confirmEmail: signUpConfirmEmail,
-      name: signUpUsername,
-      password: signUpPassword,
-    };
-    req.session.save(() => {
-      res.status(400).json(req.session.inputData);
+      // email: signUpEmail,
+      // confirmEmail: signUpConfirmEmail,
+      // name: signUpUsername,
+      // password: signUpPassword,
     });
     return;
   }
