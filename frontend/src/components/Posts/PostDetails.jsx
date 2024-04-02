@@ -1,9 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 import Comments from "../Comments/Comments";
 
 import AuthContext from "../../store/auth-context";
 import classes from "./PostDetails.module.css";
+import LoadingIndicator from "../UI/LoadingIndicator";
 
 const PostDetails = () => {
   const authCtx = useContext(AuthContext);
@@ -12,11 +13,8 @@ const PostDetails = () => {
 
   console.log(post);
 
-  // const [loggedIn, setLoggedIn] = useState(false);
-
   if (!post) {
-    // 데이터가 아직 로드되지 않은 경우 로딩 상태를 표시하거나 다른 처리를 수행할 수 있다.
-    return <div>Loading...</div>;
+    return <LoadingIndicator />;
   }
 
   const postDeleteHandler = () => {
