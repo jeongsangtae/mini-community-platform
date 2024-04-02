@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 const AuthContext = React.createContext({
   isLoggedIn: false,
   userInfo: null,
+  isLoading: false,
+  setIsLoading: () => {},
   login: () => {},
   logout: () => {},
 });
@@ -10,6 +12,7 @@ const AuthContext = React.createContext({
 export const AuthContextProvier = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log(userInfo);
 
@@ -89,6 +92,8 @@ export const AuthContextProvier = ({ children }) => {
     <AuthContext.Provider
       value={{
         isLoggedIn,
+        isLoading,
+        setIsLoading,
         userInfo,
         userName,
         login: loginHandler,

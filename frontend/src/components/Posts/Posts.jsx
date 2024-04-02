@@ -17,21 +17,20 @@ const Posts = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async (pageNumber) => {
-    setIsLoading(true);
-    setTimeout(async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/posts?page=${pageNumber}`
-        );
-        const resData = await response.json();
-        return resData;
-      } finally {
-        setIsLoading(false);
-      }
-    }, 2000);
+    authCtx.setIsLoading(true);
+    // setTimeout(async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/posts?page=${pageNumber}`
+      );
+      const resData = await response.json();
+      return resData;
+    } finally {
+      authCtx.setIsLoading(false);
+    }
+    // }, 2000);
   };
 
   const paginationFetchData = async (pageNumber) => {
@@ -56,13 +55,9 @@ const Posts = () => {
     ? `${classes.add}`
     : `${classes.add} ${classes.opacity}`;
 
-  // const postHeadingSkeleton = authCtx.isLoggedIn
-  //   ? `${classes.heading}`
-  //   : `${classes["heading-skeleton"]}`;
-
   return (
     <>
-      {isLoading ? (
+      {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
         <>
