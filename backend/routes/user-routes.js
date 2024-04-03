@@ -12,24 +12,6 @@ const router = express.Router();
 
 // router.use("/login", jwtAuth);
 
-// router.get("/signup", (req, res) => {
-//   let sessionSignUpInputData = req.session.inputData;
-
-//   if (!sessionSignUpInputData) {
-//     sessionSignUpInputData = {
-//       hasError: false,
-//       email: "",
-//       confirmEmail: "",
-//       name: "",
-//       password: "",
-//     };
-//   }
-
-//   req.session.inputData = {};
-
-//   res.json({ inputData: sessionSignUpInputData });
-// });
-
 // 가입한 이메일, 패스워드를 mongodb에 저장
 // 패스워드는 bcrypt를 통해서 hash되며, 안전하게 저장
 router.post("/signup", async (req, res) => {
@@ -51,65 +33,16 @@ router.post("/signup", async (req, res) => {
     signUpPassword.trim().length < 6
   ) {
     let message = "잘못된 입력입니다. 다시 입력해주세요.";
+
     if (signUpUsername.trim().length > 6) {
       message = "이름은 6자리까지 입력할 수 있습니다.";
     } else if (signUpPassword.trim().length < 6) {
       message = "비밀번호를 6자리 이상 입력해주세요.";
     }
-    res.status(400).json({
-      // hasError: true,
-      message,
-      // email: signUpEmail,
-      // confirmEmail: signUpConfirmEmail,
-      // name: signUpUsername,
-      // password: signUpPassword,
-    });
+
+    res.status(400).json({ message });
     return;
   }
-  //   req.session.inputData = {
-  //     hasError: true,
-  //     message: "잘못된 입력입니다. 다시 입력해주세요.",
-  //     email: signUpEmail,
-  //     confirmEmail: signUpConfirmEmail,
-  //     name: signUpUsername,
-  //     password: signUpPassword,
-  //   };
-
-  //   req.session.save(() => {
-  //     res.status(400).json(req.session.inputData);
-  //   });
-
-  //   return;
-  // } else if (signUpUsername.trim().length > 6) {
-  //   req.session.inputData = {
-  //     hasError: true,
-  //     message: "이름은 6자리까지 입력할 수 있습니다.",
-  //     email: signUpEmail,
-  //     confirmEmail: signUpConfirmEmail,
-  //     name: signUpUsername,
-  //     password: signUpPassword,
-  //   };
-
-  //   req.session.save(() => {
-  //     res.status(400).json(req.session.inputData);
-  //   });
-
-  //   return;
-  // } else if (signUpPassword.trim().length < 6) {
-  //   req.session.inputData = {
-  //     hasError: true,
-  //     message: "비밀번호를 6자리 이상 입력해주세요.",
-  //     email: signUpEmail,
-  //     confirmEmail: signUpConfirmEmail,
-  //     name: signUpUsername,
-  //     password: signUpPassword,
-  //   };
-
-  //   req.session.save(() => {
-  //     res.status(400).json(req.session.inputData);
-  //   });
-  //   return;
-  // }
 
   const existingSignUpUser = await db
     .getDb()
@@ -119,12 +52,7 @@ router.post("/signup", async (req, res) => {
   // 이메일이 이미 존재하는지 확인해 다른 이메일을 입력하도록 한다.
   if (existingSignUpUser) {
     res.status(400).json({
-      // hasError: true,
       message: "해당 이메일은 이미 사용중입니다.",
-      // email: signUpEmail,
-      // confirmEmail: signUpConfirmEmail,
-      // name: signUpUsername,
-      // password: signUpPassword,
     });
     return;
   }
@@ -145,24 +73,6 @@ router.post("/signup", async (req, res) => {
   // res.status(500).send("Internal Server Error");
 });
 
-router.get("/login", (req, res) => {
-  let sessionLoginInputData = req.session.inputData;
-
-  // 로그인 페이지 내용을 빈 내용으로 초기화
-  if (!sessionLoginInputData) {
-    sessionLoginInputData = {
-      hasError: false,
-      email: "",
-      name: "",
-      password: "",
-    };
-  }
-
-  req.session.inputData = {};
-
-  res.json({ inputData: sessionLoginInputData });
-});
-
 router.post("/login", async (req, res) => {
   const userData = req.body;
   const loginEmail = userData.email;
@@ -173,50 +83,34 @@ router.post("/login", async (req, res) => {
     .collection("users")
     .findOne({ email: loginEmail });
 
-  // 이메일이 존재하는지 확인
+  console.log(existingLoginUser);
+
+  // 이메일이 존재하지 않거나 비밀번호가 일치하지 않는 경우
   if (!existingLoginUser) {
-    req.session.inputData = {
-      hasError: true,
-      message: "로그인할 수 없습니다. 존재하지 않는 이메일입니다.",
-      email: loginEmail,
-      password: loginPassword,
-    };
-    req.session.save(() => {
-      res.status(400).json(req.session.inputData);
-    });
-    return;
-  }
+    let message = "로그인할 수 없습니다. 존재하지 않는 이메일입니다.";
 
-  const passwordEqual = await bcrypt.compare(
-    loginPassword,
-    existingLoginUser.password
-  );
+    res.status(400).json({ message });
 
-  // 해싱되기전 비밀번호와 해싱된 후 비밀번호를 비교해 일치하는지 확인
-  if (!passwordEqual) {
-    req.session.inputData = {
-      hasError: true,
-      message: "로그인할 수 없습니다. 패스워드가 틀렸습니다.",
-      email: loginEmail,
-      password: loginPassword,
-    };
-    req.session.save(() => {
-      res.status(400).json(req.session.inputData);
-    });
     return;
+  } else {
+    // 해싱되기전 비밀번호와 해싱된 후 비밀번호를 비교해 일치하는지 확인
+    const passwordEqual = await bcrypt.compare(
+      loginPassword,
+      existingLoginUser.password
+    );
+
+    if (!passwordEqual) {
+      let message = "로그인할 수 없습니다. 패스워드가 틀렸습니다.";
+
+      res.status(400).json({ message });
+
+      return;
+    }
   }
 
   // console.log(existingLoginUser);
 
   if (existingLoginUser) {
-    req.session.user = {
-      id: existingLoginUser._id,
-      name: existingLoginUser.name,
-      email: existingLoginUser.email,
-    };
-
-    req.session.isAuthenticated = true;
-
     try {
       // access Token 발급
       const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
@@ -255,29 +149,11 @@ router.post("/login", async (req, res) => {
         maxAge: 60 * 60 * 12 * 1000,
       });
 
-      // const decoded = jwt.decode(accessToken);
-      // const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_KEY);
-
-      // const userInfo = {
-      //   _id: decoded.userId,
-      //   name: decoded.userName,
-      //   email: decoded.userEmail,
-      // };
-
-      // console.log("00000000000000");
-      // console.log(accessToken);
-      // console.log(decoded);
-      // console.log(decoded.userName);
-      // console.log(decoded.userEmail);
-      // console.log(userInfo);
-      // console.log("00000000000000");
-
       res.status(200).json({
         message: "Success",
         isAuthenticated: req.session.isAuthenticated,
         accessToken,
         refreshToken,
-        // userInfo,
       });
     } catch (error) {
       res.status(500).json(error);
