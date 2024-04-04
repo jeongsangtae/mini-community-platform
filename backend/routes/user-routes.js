@@ -163,25 +163,25 @@ router.post("/login", async (req, res) => {
 // router.get("/accessToken", accessToken);
 
 router.get("/accessToken", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  const responseData = await accessToken(req, res);
 
-  if (!othersData) {
+  if (!responseData) {
     return res.status(401).json({ message: "jwt error" });
   }
 
-  res.status(200).json(othersData);
+  res.status(200).json(responseData);
 });
 
 router.get("/refreshToken", refreshToken);
 
 router.get("/login/success", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  const responseData = await accessToken(req, res);
 
-  if (!othersData) {
+  if (!responseData) {
     return res.status(401).json({ message: "jwt error" });
   }
 
-  res.status(200).json(othersData);
+  res.status(200).json(responseData);
 });
 
 router.post("/logout", async (req, res) => {
@@ -196,9 +196,9 @@ router.post("/logout", async (req, res) => {
 });
 
 router.get("/profile", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  const responseData = await accessToken(req, res);
 
-  if (!othersData) {
+  if (!responseData) {
     return res.status(401).json({ message: "jwt error" });
   }
 
@@ -209,12 +209,14 @@ router.get("/profile", async (req, res) => {
   const posts = await db
     .getDb()
     .collection("posts")
-    .find({ email: othersData.email })
+    .find({ email: responseData.email })
     .sort({ postId: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
     .toArray();
+
+  console.log(posts);
 
   const countPosts = await db.getDb().collection("posts").countDocuments({});
   const totalPages = Math.ceil(countPosts / pageSize);
@@ -232,7 +234,7 @@ router.get("/profile", async (req, res) => {
     totalPages,
     firstPageGroup,
     lastPageGroup,
-    othersData,
+    responseData,
   });
 });
 

@@ -37,8 +37,12 @@ const accessToken = async (req, res) => {
 
     // 디스트럭처링을 통해서 password를 제외한 다른 데이터만 가져옴
     const { password, ...othersData } = loginUserDbData;
-    return othersData;
+    const responseData = {
+      ...othersData,
+      tokenExp: loginUserTokenData.exp,
+    };
 
+    return responseData;
     // res.status(200).json(othersData);
   } catch (error) {
     console.log(error);
