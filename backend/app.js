@@ -2,11 +2,8 @@ const path = require("path");
 
 const express = require("express");
 const dotenv = require("dotenv");
-const expressSession = require("express-session");
 
-const createSessionConfig = require("./config/session");
 const db = require("./data/database");
-const userAuthMiddleware = require("./middlewares/user");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
 
@@ -49,12 +46,6 @@ app.use(
     credentials: true,
   })
 );
-
-const sessionConfig = createSessionConfig();
-
-app.use(expressSession(sessionConfig));
-
-app.use(userAuthMiddleware);
 
 app.use(boardRoutes);
 app.use(userRoutes);

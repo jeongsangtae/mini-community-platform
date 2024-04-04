@@ -151,7 +151,6 @@ router.post("/login", async (req, res) => {
 
       res.status(200).json({
         message: "Success",
-        isAuthenticated: req.session.isAuthenticated,
         accessToken,
         refreshToken,
       });
