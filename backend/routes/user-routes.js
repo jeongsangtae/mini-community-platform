@@ -172,7 +172,15 @@ router.get("/accessToken", async (req, res) => {
   res.status(200).json(responseData);
 });
 
-router.get("/refreshToken", refreshToken);
+router.get("/refreshToken", async (req, res) => {
+  const responseData = await refreshToken(req, res);
+
+  if (!responseData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  res.status(200).json(responseData);
+});
 
 router.get("/login/success", async (req, res) => {
   const responseData = await accessToken(req, res);

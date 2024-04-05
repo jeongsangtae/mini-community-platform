@@ -25,7 +25,7 @@ export const AuthContextProvier = ({ children }) => {
         throw new Error("쿠키에 JWT 토큰 없음");
       }
       const resData = await response.json();
-      console.log(resData);
+      console.log(resData.tokenExp);
       if (resData) {
         console.log(resData);
         setUserInfo(resData);

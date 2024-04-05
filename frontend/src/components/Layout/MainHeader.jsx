@@ -66,11 +66,11 @@ const MainHeader = () => {
   //   });
   // };
 
-  // const refreshTokenTestHandler = async () => {
-  //   await fetch("http://localhost:3000/refreshToken", {
-  //     credentials: "include",
-  //   });
-  // };
+  const refreshTokenTestHandler = async () => {
+    await fetch("http://localhost:3000/refreshToken", {
+      credentials: "include",
+    });
+  };
 
   return (
     <>
@@ -106,7 +106,7 @@ const MainHeader = () => {
                 >
                   액세스토큰
                 </button>
-              </p>
+              </p> */}
               <p>
                 <button
                   className={classes.button}
@@ -114,7 +114,7 @@ const MainHeader = () => {
                 >
                   리프레쉬토큰
                 </button>
-              </p> */}
+              </p>
             </nav>
           </>
         ) : (
