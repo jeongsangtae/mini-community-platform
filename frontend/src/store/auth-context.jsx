@@ -7,11 +7,13 @@ const AuthContext = React.createContext({
   setIsLoading: () => {},
   login: () => {},
   logout: () => {},
+  refreshToken: () => {},
 });
 
 export const AuthContextProvier = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [refreshTokenExp, setRefreshTokenExp] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   console.log(userInfo);
@@ -33,6 +35,26 @@ export const AuthContextProvier = ({ children }) => {
     } catch (error) {
       console.error("사용자 인증 오류", error);
       setUserInfo(null);
+    }
+  };
+
+  const refreshTokenHandler = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/refreshToken", {
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("쿠키에 JWT 토큰 없음");
+      }
+      const resData = await response.json();
+      console.log(resData.tokenExp);
+      if (resData) {
+        console.log(resData);
+        setRefreshTokenExp(resData.tokenExp);
+      }
+    } catch (error) {
+      console.error("사용자 인증 오류", error);
+      setRefreshTokenExp(null);
     }
   };
 
@@ -98,6 +120,7 @@ export const AuthContextProvier = ({ children }) => {
         userName,
         login: loginHandler,
         logout: logoutHandler,
+        refreshToken: refreshTokenHandler,
       }}
     >
       {children}

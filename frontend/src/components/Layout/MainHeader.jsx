@@ -66,11 +66,13 @@ const MainHeader = () => {
   //   });
   // };
 
-  const refreshTokenTestHandler = async () => {
-    await fetch("http://localhost:3000/refreshToken", {
-      credentials: "include",
-    });
-  };
+  // const refreshTokenTestHandler = async () => {
+  //   await fetch("http://localhost:3000/refreshToken", {
+  //     credentials: "include",
+  //   });
+  // };
+
+  console.log();
 
   return (
     <>
@@ -110,7 +112,7 @@ const MainHeader = () => {
               <p>
                 <button
                   className={classes.button}
-                  onClick={refreshTokenTestHandler}
+                  onClick={authCtx.refreshToken}
                 >
                   리프레쉬토큰
                 </button>
