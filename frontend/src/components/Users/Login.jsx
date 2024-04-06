@@ -37,6 +37,10 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
       console.log(errorData);
       return null;
     } else {
+      const resData = await response.json();
+      // console.log(resData);
+      // console.log(resData.accessToken);
+      // console.log(resData.refreshToken);
       console.log("로그인 성공");
       authCtx.login();
       console.log(authCtx.isLoggedIn);

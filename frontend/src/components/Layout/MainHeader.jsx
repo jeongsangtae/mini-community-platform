@@ -117,6 +117,14 @@ const MainHeader = () => {
                   리프레쉬토큰
                 </button>
               </p>
+              <p>
+                <button
+                  className={classes.button}
+                  onClick={authCtx.refreshTokenExp}
+                >
+                  리프레쉬토큰 EXP
+                </button>
+              </p>
             </nav>
           </>
         ) : (

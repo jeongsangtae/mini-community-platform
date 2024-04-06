@@ -114,10 +114,7 @@ const refreshToken = async (req, res) => {
       httpOnly: true,
     });
 
-    const responseData = {
-      tokenExp: loginUserTokenData.exp,
-      message: "Access Token 재생성",
-    };
+    const responseData = { message: "Access Token 재생성" };
 
     console.log(accessToken);
     console.log(loginUserTokenData);
@@ -128,4 +125,18 @@ const refreshToken = async (req, res) => {
   }
 };
 
-module.exports = { accessToken, refreshToken };
+const refreshTokenExp = async (req, res) => {
+  try {
+    const refreshTokenKey = process.env.REFRESH_TOKEN_KEY;
+    const token = req.cookies.refreshToken;
+    const loginUserTokenData = jwt.verify(token, refreshTokenKey);
+
+    const responseData = { tokenExp: loginUserTokenData.exp };
+
+    return responseData;
+  } catch (error) {
+    return null;
+  }
+};
+
+module.exports = { accessToken, refreshToken, refreshTokenExp };

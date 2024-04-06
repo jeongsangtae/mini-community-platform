@@ -6,7 +6,11 @@ const jwt = require("jsonwebtoken");
 // dotenv.config();
 
 const db = require("../data/database");
-const { accessToken, refreshToken } = require("../middlewares/jwt-auth");
+const {
+  accessToken,
+  refreshToken,
+  refreshTokenExp,
+} = require("../middlewares/jwt-auth");
 
 const router = express.Router();
 
@@ -174,6 +178,16 @@ router.get("/accessToken", async (req, res) => {
 
 router.get("/refreshToken", async (req, res) => {
   const responseData = await refreshToken(req, res);
+
+  if (!responseData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  res.status(200).json(responseData);
+});
+
+router.get("/refreshTokenExp", async (req, res) => {
+  const responseData = await refreshTokenExp(req, res);
 
   if (!responseData) {
     return res.status(401).json({ message: "jwt error" });
