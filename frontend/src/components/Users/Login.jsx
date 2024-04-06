@@ -37,7 +37,7 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
       console.log(errorData);
       return null;
     } else {
-      const resData = await response.json();
+      // const resData = await response.json();
       // console.log(resData);
       // console.log(resData.accessToken);
       // console.log(resData.refreshToken);

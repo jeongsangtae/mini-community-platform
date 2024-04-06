@@ -17,7 +17,8 @@ export const AuthContextProvier = ({ children }) => {
   const [refreshTokenExp, setRefreshTokenExp] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(userInfo);
+  // console.log(userInfo);
+  console.log(refreshTokenExp);
 
   const verifyUser = async (setUserInfo) => {
     try {
@@ -50,7 +51,9 @@ export const AuthContextProvier = ({ children }) => {
       const resData = await response.json();
       if (resData) {
         console.log(resData);
-        // setRefreshTokenExp(resData.tokenExp);
+        const expirationTime = now + 60 * 60 * 1000;
+        localStorage.setItem("isLoggedIn", "1");
+        localStorage.setItem("expirationTime", expirationTime);
       }
     } catch (error) {
       console.error("사용자 인증 오류", error);
@@ -79,24 +82,53 @@ export const AuthContextProvier = ({ children }) => {
 
   useEffect(() => {
     verifyUser(setUserInfo);
+    refreshTokenExpHandler();
 
-    const storedExpirationTime = localStorage.getItem("expirationTime");
-    const now = new Date().getTime();
+    const checkTokenExpiration = () => {
+      const now = new Date().getTime();
+      const storedExpirationTime = localStorage.getItem("expirationTime");
 
-    if (now > storedExpirationTime) {
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("expirationTime");
-      setIsLoggedIn(false);
-    } else {
-      setIsLoggedIn(true);
-    }
+      if (now > storedExpirationTime && refreshTokenExp > now) {
+        refreshTokenHandler();
+        setIsLoggedIn(true);
+      } else if (now > refreshTokenExp) {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("expirationTime");
+        setIsLoggedIn(false);
+      }
+    };
 
+    checkTokenExpiration();
+
+    const interval = setInterval(checkTokenExpiration, 30 * 60 * 1000);
+
+    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+  }, []);
+
+  useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
 
     if (storedUserLoggedInInformation === "1") {
       setIsLoggedIn(true);
     }
-  }, []);
+  });
+
+  // useEffect(() => {
+  //   verifyUser(setUserInfo);
+  //   const storedExpirationTime = localStorage.getItem("expirationTime");
+  //   const now = new Date().getTime();
+  //   if (now > storedExpirationTime) {
+  //     localStorage.removeItem("isLoggedIn");
+  //     localStorage.removeItem("expirationTime");
+  //     setIsLoggedIn(false);
+  //   } else {
+  //     setIsLoggedIn(true);
+  //   }
+  //   const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
+  //   if (storedUserLoggedInInformation === "1") {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, []);
 
   const loginHandler = () => {
     const now = new Date().getTime();
@@ -104,9 +136,9 @@ export const AuthContextProvier = ({ children }) => {
     localStorage.setItem("isLoggedIn", "1");
     localStorage.setItem("expirationTime", expirationTime);
     setIsLoggedIn(true);
-    // setUserInfo(userInfoData);
 
     verifyUser(setUserInfo);
+    refreshTokenExpHandler();
 
     setTimeout(() => {
       localStorage.removeItem("isLoggedIn");
