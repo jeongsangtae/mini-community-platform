@@ -29,7 +29,6 @@ export const AuthContextProvier = ({ children }) => {
         throw new Error("쿠키에 JWT 토큰 없음");
       }
       const resData = await response.json();
-      console.log(resData.tokenExp);
       if (resData) {
         console.log(resData);
         setUserInfo(resData);
@@ -51,6 +50,7 @@ export const AuthContextProvier = ({ children }) => {
       const resData = await response.json();
       if (resData) {
         console.log(resData);
+        const now = new Date().getTime();
         const expirationTime = now + 60 * 60 * 1000;
         localStorage.setItem("isLoggedIn", "1");
         localStorage.setItem("expirationTime", expirationTime);
@@ -88,10 +88,18 @@ export const AuthContextProvier = ({ children }) => {
       const now = new Date().getTime();
       const storedExpirationTime = localStorage.getItem("expirationTime");
 
-      if (now > storedExpirationTime && refreshTokenExp > now) {
+      console.log(now);
+      console.log(storedExpirationTime);
+      console.log(refreshTokenExp);
+
+      if (
+        refreshTokenExp !== null &&
+        now > storedExpirationTime &&
+        refreshTokenExp > now
+      ) {
         refreshTokenHandler();
         setIsLoggedIn(true);
-      } else if (now > refreshTokenExp) {
+      } else if (refreshTokenExp !== null && now > refreshTokenExp) {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("expirationTime");
         setIsLoggedIn(false);
@@ -111,7 +119,7 @@ export const AuthContextProvier = ({ children }) => {
     if (storedUserLoggedInInformation === "1") {
       setIsLoggedIn(true);
     }
-  });
+  }, []);
 
   // useEffect(() => {
   //   verifyUser(setUserInfo);
