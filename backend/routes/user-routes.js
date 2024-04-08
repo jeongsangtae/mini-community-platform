@@ -125,7 +125,7 @@ router.post("/login", async (req, res) => {
           userEmail: existingLoginUser.email,
         },
         accessTokenKey,
-        { expiresIn: "1h", issuer: "GGPAN" }
+        { expiresIn: "5m", issuer: "GGPAN" }
       );
 
       // refresh Token 발급
@@ -137,20 +137,20 @@ router.post("/login", async (req, res) => {
           userEmail: existingLoginUser.email,
         },
         refreshTokenKey,
-        { expiresIn: "12h", issuer: "GGPAN" }
+        { expiresIn: "30m", issuer: "GGPAN" }
       );
 
       // token 전송
       res.cookie("accessToken", accessToken, {
         secure: false,
         httpOnly: true,
-        maxAge: 60 * 60 * 1000,
+        maxAge: 60 * 5 * 1000,
       });
 
       res.cookie("refreshToken", refreshToken, {
         secure: false,
         httpOnly: true,
-        maxAge: 60 * 60 * 12 * 1000,
+        maxAge: 60 * 30 * 1000,
       });
 
       res.status(200).json({
@@ -192,6 +192,8 @@ router.get("/refreshTokenExp", async (req, res) => {
   if (!responseData) {
     return res.status(401).json({ message: "jwt error" });
   }
+
+  console.log(responseData);
 
   res.status(200).json(responseData);
 });

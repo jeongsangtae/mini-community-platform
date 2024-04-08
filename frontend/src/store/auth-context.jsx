@@ -14,11 +14,8 @@ const AuthContext = React.createContext({
 export const AuthContextProvier = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  const [refreshTokenExp, setRefreshTokenExp] = useState(null);
+  // const [refreshTokenExp, setRefreshTokenExp] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // console.log(userInfo);
-  console.log(refreshTokenExp);
 
   const verifyUser = async (setUserInfo) => {
     try {
@@ -30,7 +27,7 @@ export const AuthContextProvier = ({ children }) => {
       }
       const resData = await response.json();
       if (resData) {
-        console.log(resData);
+        console.log(resData.tokenExp);
         setUserInfo(resData);
       }
     } catch (error) {
@@ -50,8 +47,8 @@ export const AuthContextProvier = ({ children }) => {
       const resData = await response.json();
       if (resData) {
         console.log(resData);
-        const now = new Date().getTime();
-        const expirationTime = now + 60 * 60 * 1000;
+        const now = Math.floor(new Date().getTime() / 1000);
+        const expirationTime = Math.ceil(now + 60 * 5);
         localStorage.setItem("isLoggedIn", "1");
         localStorage.setItem("expirationTime", expirationTime);
       }
@@ -71,44 +68,52 @@ export const AuthContextProvier = ({ children }) => {
       const resData = await response.json();
       console.log(resData.tokenExp);
       if (resData) {
-        console.log(resData);
-        setRefreshTokenExp(resData.tokenExp);
+        localStorage.setItem("refreshTokenExp", resData.tokenExp);
+        // setRefreshTokenExp(resData.tokenExp);
       }
     } catch (error) {
       console.error("사용자 인증 오류", error);
-      setRefreshTokenExp(null);
+      // setRefreshTokenExp(null);
     }
   };
 
   useEffect(() => {
     verifyUser(setUserInfo);
-    refreshTokenExpHandler();
+    // refreshTokenExpHandler();
 
     const checkTokenExpiration = () => {
-      const now = new Date().getTime();
-      const storedExpirationTime = localStorage.getItem("expirationTime");
+      const now = Math.floor(new Date().getTime() / 1000);
+      const storedExpirationTime = parseInt(
+        localStorage.getItem("expirationTime")
+      );
+      const refreshTokenExpirationTime = parseInt(
+        localStorage.getItem("refreshTokenExp")
+      );
 
       console.log(now);
       console.log(storedExpirationTime);
-      console.log(refreshTokenExp);
+      console.log(refreshTokenExpirationTime);
 
-      if (
-        refreshTokenExp !== null &&
-        now > storedExpirationTime &&
-        refreshTokenExp > now
-      ) {
+      console.log(
+        now > storedExpirationTime && refreshTokenExpirationTime > now
+      );
+      console.log(now > refreshTokenExpirationTime);
+
+      if (now > storedExpirationTime && refreshTokenExpirationTime > now) {
         refreshTokenHandler();
         setIsLoggedIn(true);
-      } else if (refreshTokenExp !== null && now > refreshTokenExp) {
+      } else if (now > refreshTokenExpirationTime) {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("expirationTime");
+        localStorage.removeItem("refreshTokenExp");
         setIsLoggedIn(false);
+        setUserInfo(null);
       }
     };
 
     checkTokenExpiration();
 
-    const interval = setInterval(checkTokenExpiration, 30 * 60 * 1000);
+    const interval = setInterval(checkTokenExpiration, 60 * 1000);
 
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
   }, []);
@@ -139,8 +144,8 @@ export const AuthContextProvier = ({ children }) => {
   // }, []);
 
   const loginHandler = () => {
-    const now = new Date().getTime();
-    const expirationTime = now + 60 * 60 * 1000;
+    const now = Math.floor(new Date().getTime() / 1000);
+    const expirationTime = Math.ceil(now + 60 * 5);
     localStorage.setItem("isLoggedIn", "1");
     localStorage.setItem("expirationTime", expirationTime);
     setIsLoggedIn(true);
@@ -150,9 +155,10 @@ export const AuthContextProvier = ({ children }) => {
 
     setTimeout(() => {
       localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("expirationTime");
       setIsLoggedIn(false);
       setUserInfo(null);
-    }, 60 * 60 * 1000);
+    }, 60 * 5 * 1000);
 
     // console.log(now);
     // console.log(expirationTime);
@@ -163,6 +169,7 @@ export const AuthContextProvier = ({ children }) => {
   const logoutHandler = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("expirationTime");
+    localStorage.removeItem("refreshTokenExp");
     setIsLoggedIn(false);
     setUserInfo(null);
   };
