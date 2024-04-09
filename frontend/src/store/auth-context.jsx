@@ -78,45 +78,47 @@ export const AuthContextProvier = ({ children }) => {
   };
 
   useEffect(() => {
-    verifyUser(setUserInfo);
-    // refreshTokenExpHandler();
+    if (isLoggedIn) {
+      verifyUser(setUserInfo);
+      // refreshTokenExpHandler();
 
-    const checkTokenExpiration = () => {
-      const now = Math.floor(new Date().getTime() / 1000);
-      const storedExpirationTime = parseInt(
-        localStorage.getItem("expirationTime")
-      );
-      const refreshTokenExpirationTime = parseInt(
-        localStorage.getItem("refreshTokenExp")
-      );
+      const checkTokenExpiration = () => {
+        const now = Math.floor(new Date().getTime() / 1000);
+        const storedExpirationTime = parseInt(
+          localStorage.getItem("expirationTime")
+        );
+        const refreshTokenExpirationTime = parseInt(
+          localStorage.getItem("refreshTokenExp")
+        );
 
-      console.log(now);
-      console.log(storedExpirationTime);
-      console.log(refreshTokenExpirationTime);
+        console.log(now);
+        console.log(storedExpirationTime);
+        console.log(refreshTokenExpirationTime);
 
-      console.log(
-        now > storedExpirationTime && refreshTokenExpirationTime > now
-      );
-      console.log(now > refreshTokenExpirationTime);
+        console.log(
+          now > storedExpirationTime && refreshTokenExpirationTime > now
+        );
+        console.log(now > refreshTokenExpirationTime);
 
-      if (now > storedExpirationTime && refreshTokenExpirationTime > now) {
-        refreshTokenHandler();
-        setIsLoggedIn(true);
-      } else if (now > refreshTokenExpirationTime) {
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("expirationTime");
-        localStorage.removeItem("refreshTokenExp");
-        setIsLoggedIn(false);
-        setUserInfo(null);
-      }
-    };
+        if (now > storedExpirationTime && refreshTokenExpirationTime > now) {
+          refreshTokenHandler();
+          setIsLoggedIn(true);
+        } else if (now > refreshTokenExpirationTime) {
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("expirationTime");
+          localStorage.removeItem("refreshTokenExp");
+          setIsLoggedIn(false);
+          setUserInfo(null);
+        }
+      };
 
-    checkTokenExpiration();
+      checkTokenExpiration();
 
-    const interval = setInterval(checkTokenExpiration, 60 * 1000);
+      const interval = setInterval(checkTokenExpiration, 60 * 1000);
 
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
-  }, []);
+      return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
