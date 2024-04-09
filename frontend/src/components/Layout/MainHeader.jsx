@@ -109,22 +109,22 @@ const MainHeader = () => {
                   액세스토큰
                 </button>
               </p> */}
-              <p>
+              {/* <p>
                 <button
                   className={classes.button}
                   onClick={authCtx.refreshToken}
                 >
                   리프레쉬토큰
                 </button>
-              </p>
-              <p>
+              </p> */}
+              {/* <p>
                 <button
                   className={classes.button}
                   onClick={authCtx.refreshTokenExp}
                 >
                   리프레쉬토큰 EXP
                 </button>
-              </p>
+              </p> */}
             </nav>
           </>
         ) : (

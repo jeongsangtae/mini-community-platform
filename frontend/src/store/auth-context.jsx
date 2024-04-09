@@ -153,12 +153,12 @@ export const AuthContextProvier = ({ children }) => {
     verifyUser(setUserInfo);
     refreshTokenExpHandler();
 
-    setTimeout(() => {
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("expirationTime");
-      setIsLoggedIn(false);
-      setUserInfo(null);
-    }, 60 * 5 * 1000);
+    // setTimeout(() => {
+    //   localStorage.removeItem("isLoggedIn");
+    //   localStorage.removeItem("expirationTime");
+    //   setIsLoggedIn(false);
+    //   setUserInfo(null);
+    // }, 60 * 5 * 1000);
 
     // console.log(now);
     // console.log(expirationTime);
