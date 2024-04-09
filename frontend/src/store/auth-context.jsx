@@ -104,11 +104,7 @@ export const AuthContextProvier = ({ children }) => {
           refreshTokenHandler();
           setIsLoggedIn(true);
         } else if (now > refreshTokenExpirationTime) {
-          localStorage.removeItem("isLoggedIn");
-          localStorage.removeItem("expirationTime");
-          localStorage.removeItem("refreshTokenExp");
-          setIsLoggedIn(false);
-          setUserInfo(null);
+          logoutHandler();
         }
       };
 
@@ -168,12 +164,21 @@ export const AuthContextProvier = ({ children }) => {
     // console.log(new Date(expirationTime).toString());
   };
 
-  const logoutHandler = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("expirationTime");
-    localStorage.removeItem("refreshTokenExp");
-    setIsLoggedIn(false);
-    setUserInfo(null);
+  const logoutHandler = async () => {
+    const response = await fetch("http://localhost:3000/logout", {
+      method: "POST",
+      body: JSON.stringify(),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("expirationTime");
+      localStorage.removeItem("refreshTokenExp");
+      setIsLoggedIn(false);
+      setUserInfo(null);
+    }
   };
 
   const userName = userInfo ? userInfo.name : "GUEST";

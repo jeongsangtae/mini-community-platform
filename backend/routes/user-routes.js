@@ -137,7 +137,7 @@ router.post("/login", async (req, res) => {
           userEmail: existingLoginUser.email,
         },
         refreshTokenKey,
-        { expiresIn: "30m", issuer: "GGPAN" }
+        { expiresIn: "10m", issuer: "GGPAN" }
       );
 
       // token 전송
@@ -150,7 +150,7 @@ router.post("/login", async (req, res) => {
       res.cookie("refreshToken", refreshToken, {
         secure: false,
         httpOnly: true,
-        maxAge: 60 * 30 * 1000,
+        maxAge: 60 * 10 * 1000,
       });
 
       res.status(200).json({

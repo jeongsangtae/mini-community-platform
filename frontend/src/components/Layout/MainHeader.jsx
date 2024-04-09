@@ -46,19 +46,19 @@ const MainHeader = () => {
     setOnSignupModal(false);
   };
 
-  const logoutHandler = async () => {
-    const response = await fetch("http://localhost:3000/logout", {
-      method: "POST",
-      body: JSON.stringify(),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+  // const logoutHandler = async () => {
+  //   const response = await fetch("http://localhost:3000/logout", {
+  //     method: "POST",
+  //     body: JSON.stringify(),
+  //     headers: { "Content-Type": "application/json" },
+  //     credentials: "include",
+  //   });
 
-    if (response.ok) {
-      authCtx.logout();
-      console.log(authCtx.isLoggedIn);
-    }
-  };
+  //   if (response.ok) {
+  //     authCtx.logout();
+  //     console.log(authCtx.isLoggedIn);
+  //   }
+  // };
 
   // const accessTokenTestHandler = async () => {
   //   await fetch("http://localhost:3000/accessToken", {
@@ -97,7 +97,7 @@ const MainHeader = () => {
                 </NavLink>
               </p>
               <p>
-                <button className={classes.button} onClick={logoutHandler}>
+                <button className={classes.button} onClick={authCtx.logout}>
                   로그아웃
                 </button>
               </p>
