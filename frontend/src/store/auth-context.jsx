@@ -14,7 +14,6 @@ const AuthContext = React.createContext({
 export const AuthContextProvier = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  // const [refreshTokenExp, setRefreshTokenExp] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const verifyUser = async (setUserInfo) => {
@@ -48,7 +47,7 @@ export const AuthContextProvier = ({ children }) => {
       if (resData) {
         console.log(resData);
         const now = Math.floor(new Date().getTime() / 1000);
-        const expirationTime = Math.ceil(now + 60 * 5);
+        const expirationTime = Math.ceil(now + 60 * 60);
         localStorage.setItem("isLoggedIn", "1");
         localStorage.setItem("expirationTime", expirationTime);
       }
@@ -69,18 +68,15 @@ export const AuthContextProvier = ({ children }) => {
       console.log(resData.tokenExp);
       if (resData) {
         localStorage.setItem("refreshTokenExp", resData.tokenExp);
-        // setRefreshTokenExp(resData.tokenExp);
       }
     } catch (error) {
       console.error("사용자 인증 오류", error);
-      // setRefreshTokenExp(null);
     }
   };
 
   useEffect(() => {
     if (isLoggedIn) {
       verifyUser(setUserInfo);
-      // refreshTokenExpHandler();
 
       const checkTokenExpiration = () => {
         const now = Math.floor(new Date().getTime() / 1000);
@@ -96,21 +92,21 @@ export const AuthContextProvier = ({ children }) => {
         console.log(refreshTokenExpirationTime);
 
         console.log(
-          now > storedExpirationTime && refreshTokenExpirationTime > now
+          now >= storedExpirationTime && refreshTokenExpirationTime > now
         );
-        console.log(now > refreshTokenExpirationTime);
+        console.log(now >= refreshTokenExpirationTime);
 
-        if (now > storedExpirationTime && refreshTokenExpirationTime > now) {
+        if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
           refreshTokenHandler();
           setIsLoggedIn(true);
-        } else if (now > refreshTokenExpirationTime) {
+        } else if (now >= refreshTokenExpirationTime) {
           logoutHandler();
         }
       };
 
       checkTokenExpiration();
 
-      const interval = setInterval(checkTokenExpiration, 60 * 1000);
+      const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
 
       return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
     }
@@ -143,7 +139,7 @@ export const AuthContextProvier = ({ children }) => {
 
   const loginHandler = () => {
     const now = Math.floor(new Date().getTime() / 1000);
-    const expirationTime = Math.ceil(now + 60 * 5);
+    const expirationTime = Math.ceil(now + 60 * 60);
     localStorage.setItem("isLoggedIn", "1");
     localStorage.setItem("expirationTime", expirationTime);
     setIsLoggedIn(true);
