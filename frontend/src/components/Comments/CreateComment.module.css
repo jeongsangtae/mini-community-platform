@@ -30,6 +30,8 @@
 .comment-form textarea {
   flex-grow: 1;
   width: 100%;
+  min-height: 10px;
+  line-height: 1.5;
   border: 0;
   resize: none;
   outline: none;

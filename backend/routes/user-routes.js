@@ -144,13 +144,13 @@ router.post("/login", async (req, res) => {
       res.cookie("accessToken", accessToken, {
         secure: false,
         httpOnly: true,
-        maxAge: 60 * 60,
+        maxAge: 60 * 60 * 1000,
       });
 
       res.cookie("refreshToken", refreshToken, {
         secure: false,
         httpOnly: true,
-        maxAge: 6 * 60 * 60,
+        maxAge: 6 * 60 * 60 * 1000,
       });
 
       res.status(200).json({
