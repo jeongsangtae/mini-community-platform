@@ -1,5 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
+import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
 import classes from "./CreateComment.module.css";
@@ -9,22 +10,13 @@ const CreateComment = ({ method, onAddCommentData }) => {
   const authCtx = useContext(AuthContext);
 
   const [comment, setComment] = useState("");
-  const [textareaHeight, setTextareaHeight] = useState("auth");
-  // const [prevTextLength, setPrevTextLength] = useState(0);
+  const maxLength = 300;
 
   const commentInputHandler = (event) => {
-    setComment(event.target.value);
-    setTextareaHeight(`${event.target.scrollHeight}px`);
+    if (event.target.value.length <= maxLength) {
+      setComment(event.target.value);
+    }
   };
-
-  // const textareaRestoreHandler = (event) => {
-  //   console.log(event.target.value.length + " 입력한 텍스트 길이");
-  //   console.log(prevTextLength + " 이전 텍스트 길이");
-  //   if (event.target.value.length < prevTextLength) {
-  //     setTextareaHeight(`${event.target.scrollHeight}px`);
-  //   }
-  //   setPrevTextLength(event.target.value.length);
-  // };
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -67,11 +59,12 @@ const CreateComment = ({ method, onAddCommentData }) => {
       <form onSubmit={submitHandler} className={classes["comment-form"]}>
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (
-          <textarea
+          <TextareaAutosize
             required
             name="content"
-            rows="1"
-            style={{ height: textareaHeight }}
+            minRows={1}
+            maxRows={5}
+            maxLength={maxLength}
             placeholder="내용 입력"
             value={comment}
             onChange={commentInputHandler}

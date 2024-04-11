@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
+import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
 import classes from "./EditComment.module.css";
@@ -14,9 +15,12 @@ const EditComment = ({
   const authCtx = useContext(AuthContext);
 
   const [comment, setComment] = useState("");
+  const maxLength = 300;
 
   const commentInputHandler = (event) => {
-    setComment(event.target.value);
+    if (event.target.value.length <= maxLength) {
+      setComment(event.target.value);
+    }
   };
 
   const submitHandler = async (event) => {
@@ -77,11 +81,12 @@ const EditComment = ({
       <form onSubmit={submitHandler} className={classes["comment-form"]}>
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (
-          <textarea
-            className={classes.textarea}
+          <TextareaAutosize
             required
             name="content"
-            rows="1"
+            minRows={1}
+            maxRows={5}
+            maxLength={maxLength}
             placeholder="내용 입력"
             defaultValue={commentData.content}
             onChange={commentInputHandler}

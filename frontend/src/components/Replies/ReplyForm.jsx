@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
 import classes from "./ReplyForm.module.css";
@@ -16,9 +17,12 @@ const ReplyForm = ({
   const authCtx = useContext(AuthContext);
 
   const [reply, setReply] = useState("");
+  const maxLength = 300;
 
   const replyinputHandler = (event) => {
-    setReply(event.target.value);
+    if (event.target.value.length <= maxLength) {
+      setReply(event.target.value);
+    }
   };
 
   const submitHandler = async (event) => {
@@ -95,11 +99,13 @@ const ReplyForm = ({
       <form onSubmit={submitHandler} className={classes["reply-form"]}>
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (
-          <textarea
+          <TextareaAutosize
             className={classes.textarea}
             required
             name="content"
-            rows="1"
+            minRows={1}
+            maxRows={5}
+            maxLength={maxLength}
             placeholder="내용 입력"
             defaultValue={replyData ? replyData.content : ""}
             onChange={replyinputHandler}
