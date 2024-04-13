@@ -11,7 +11,7 @@
 .logo {
   font-size: 1.5rem;
   /* font-weight: bold; */
-  margin-left: 1rem;
+  margin-left: 3rem;
   display: flex;
   gap: 1.5rem;
   align-items: center;
@@ -22,11 +22,7 @@
 .navbutton {
   display: flex;
   flex-direction: row;
-}
-
-.navbutton > * {
-  /* width: 100px; */
-  /* flex: 0.5; */
+  margin-right: 3rem;
 }
 
 .button {
@@ -44,11 +40,11 @@
   /* border-radius: 4px; */
   /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
   cursor: pointer;
-  font-weight: bold;
+  /* font-weight: bold; */
   text-decoration: none;
   font-size: 16px; /* 적절한 크기로 조정 */
   line-height: 1.5; /* 적절한 줄 높낮이로 조정 */
-  min-width: 7rem;
+  min-width: 5rem;
   /* max-width: 200px; */
   justify-content: center;
 }
@@ -56,9 +52,9 @@
 .button::after {
   content: "";
   position: absolute;
-  left: 25%;
+  left: 20%;
   bottom: -5px;
-  width: 50%;
+  width: 60%;
   height: 2px;
   background-color: black;
   transform: scaleX(0);
@@ -67,4 +63,23 @@
 
 .button:hover::after {
   transform: scaleX(1);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 100%;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }

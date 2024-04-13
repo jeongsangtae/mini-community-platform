@@ -81,26 +81,30 @@ const MainHeader = () => {
         {authCtx.isLoggedIn ? (
           <>
             <nav className={classes.navbutton}>
-              <p>
-                <NavLink to="/" className={classes.button}>
-                  Home
-                </NavLink>
-              </p>
-              <p>
-                <NavLink to="/posts" className={classes.button}>
-                  게시판
-                </NavLink>
-              </p>
-              <p>
-                <NavLink to="/profile" className={classes.button}>
-                  프로필
-                </NavLink>
-              </p>
-              <p>
-                <button className={classes.button} onClick={authCtx.logout}>
-                  로그아웃
-                </button>
-              </p>
+              <NavLink to="/" className={classes.button}>
+                Home
+              </NavLink>
+
+              <NavLink to="/posts" className={classes.button}>
+                게시판
+              </NavLink>
+
+              <div className={classes.dropdown}>
+                <div>드롭다운</div>
+                <div className={classes["dropdown-content"]}>
+                  <a>라이트 모드</a>
+                  <a>로그아웃</a>
+                </div>
+              </div>
+
+              <NavLink to="/profile" className={classes.button}>
+                계정
+              </NavLink>
+
+              <button className={classes.button} onClick={authCtx.logout}>
+                로그아웃
+              </button>
+
               {/* <p>
                 <button
                   className={classes.button}
