@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { MoreVertical, User } from "react-feather";
 
 import Login from "../Users/Login";
 import Signup from "../Users/Signup";
@@ -90,20 +91,20 @@ const MainHeader = () => {
               </NavLink>
 
               <div className={classes.dropdown}>
-                <div>드롭다운</div>
+                <div className={classes.iconWrapper}>
+                  <User color="black" />
+                  <div className={classes.circle}></div>
+                </div>
+                {/* <MoreVertical /> */}
                 <div className={classes["dropdown-content"]}>
-                  <a>라이트 모드</a>
-                  <a>로그아웃</a>
+                  <NavLink to="/profile" className={classes.button}>
+                    계정
+                  </NavLink>
+                  <button className={classes.button} onClick={authCtx.logout}>
+                    로그아웃
+                  </button>
                 </div>
               </div>
-
-              <NavLink to="/profile" className={classes.button}>
-                계정
-              </NavLink>
-
-              <button className={classes.button} onClick={authCtx.logout}>
-                로그아웃
-              </button>
 
               {/* <p>
                 <button

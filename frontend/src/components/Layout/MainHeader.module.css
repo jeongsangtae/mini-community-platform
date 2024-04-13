@@ -11,7 +11,7 @@
 .logo {
   font-size: 1.5rem;
   /* font-weight: bold; */
-  margin-left: 3rem;
+  margin-left: 15rem;
   display: flex;
   gap: 1.5rem;
   align-items: center;
@@ -22,7 +22,9 @@
 .navbutton {
   display: flex;
   flex-direction: row;
-  margin-right: 3rem;
+  margin-right: 15rem;
+  align-items: center;
+  /* margin-top: 0.5rem; */
 }
 
 .button {
@@ -44,9 +46,10 @@
   text-decoration: none;
   font-size: 16px; /* 적절한 크기로 조정 */
   line-height: 1.5; /* 적절한 줄 높낮이로 조정 */
-  min-width: 5rem;
+  min-width: 4.5rem;
   /* max-width: 200px; */
   justify-content: center;
+  /* margin-top: 0.3rem; */
 }
 
 .button::after {
@@ -68,6 +71,25 @@
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.iconWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: rgb(202, 230, 241);
+  z-index: -1;
 }
 
 .dropdown .dropdown-content {
@@ -77,6 +99,7 @@
   min-width: 100px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
+  transform: translateX(-40%);
   top: 100%;
 }
 
