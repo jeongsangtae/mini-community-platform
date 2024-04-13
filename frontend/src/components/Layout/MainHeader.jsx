@@ -83,7 +83,7 @@ const MainHeader = () => {
             <nav className={classes.navbutton}>
               <p>
                 <NavLink to="/" className={classes.button}>
-                  홈
+                  Home
                 </NavLink>
               </p>
               <p>

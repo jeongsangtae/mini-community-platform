@@ -9,7 +9,8 @@
   line-height: 24px;
   font-weight: 400;
   /* background-image: radial-gradient(ellipse at top left, #0f0624, #2b076e); */
-  background-color: #180a3a;
+  /* background-color: #180a3a; */
+  background-color: white;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
