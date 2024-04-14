@@ -103,6 +103,20 @@ const MainHeader = () => {
                   <button className={classes.button} onClick={authCtx.logout}>
                     로그아웃
                   </button>
+                  <div className={classes["toggle-button"]}>
+                    <div className={classes["toggle-mode"]}>라이트 모드</div>
+                    <div className={`${classes.toggle} ${classes.normal}`}>
+                      <input
+                        id="normal"
+                        className={classes["normal-check"]}
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="normal"
+                        className={classes["toggle-item"]}
+                      ></label>
+                    </div>
+                  </div>
                 </div>
               </div>
 

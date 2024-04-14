@@ -93,7 +93,7 @@
 }
 
 .dropdown .dropdown-content {
-  display: none;
+  display: block;
   position: absolute;
   background-color: #f9f9f9;
   min-width: 100px;
@@ -105,4 +105,104 @@
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+*:before,
+*:after {
+  content: "";
+  position: absolute;
+}
+
+.toggle-button {
+  /* background: #a5fbf7; */
+  flex: 1 1 calc(100% / 3);
+  min-height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  width: 7rem;
+  height: 3rem;
+}
+
+.toggle-mode {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+  margin-right: 0.5rem;
+}
+
+/* .toggle {
+  position: relative;
+  display: inline-block;
+} */
+
+input {
+  width: 20px;
+  height: 20px;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+}
+
+.normal label {
+  background: rgb(128, 122, 122);
+  border: 0.5px solid rgba(117, 117, 117, 0.31);
+  box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.2),
+    0 -3px 4px rgba(0, 0, 0, 0.15);
+}
+
+.normal-check:checked + .toggle-item:before {
+  left: 18px;
+}
+
+.normal-check:checked + .toggle-item {
+  background: rgb(66, 177, 221);
+}
+
+.normal .toggle-item:before {
+  border: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  box-shadow: inset 0.5px -1px 1px rgba(0, 0, 0, 0.35);
+  background: #fff;
+  transform: rotate(-25deg);
+}
+
+.normal .toggle-item:after {
+  background: transparent;
+  height: calc(100% + 8px);
+  border-radius: 30px;
+  top: -5px;
+  width: calc(100% + 8px);
+  left: -4px;
+  z-index: 0;
+  box-shadow: inset 0px 2px 4px -2px rgba(0, 0, 0, 0.2),
+    0px 1px 2px 0px rgba(151, 151, 151, 0.2);
+}
+
+.toggle-item {
+  width: 2em;
+  background: #2e394d;
+  height: 1em;
+  display: inline-block;
+  border-radius: 50px;
+  /* margin: 10px; */
+  position: relative;
+  transition: all 0.3s ease;
+  transform-origin: 20% center;
+  cursor: pointer;
+}
+
+.toggle-item:before {
+  display: block;
+  transition: all 0.2s ease;
+  width: 2em;
+  height: 2em;
+  top: 0.1rem;
+  left: 0.05rem;
+  border-radius: 2em;
+  border: 2px solid #88cf8f;
+  transition: 0.3s ease;
 }
