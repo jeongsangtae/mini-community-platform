@@ -19,6 +19,8 @@ export const AuthContextProvier = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [themeMode, setThemeMode] = useState("light");
 
+  console.log(themeMode);
+
   const verifyUser = async (setUserInfo) => {
     try {
       const response = await fetch("http://localhost:3000/accessToken", {
@@ -125,10 +127,12 @@ export const AuthContextProvier = ({ children }) => {
 
   useEffect(() => {
     const storedThemeMode = localStorage.getItem("themeMode");
-
-    setThemeMode(storedThemeMode || "light");
-
-    localStorage.setItem("themeMode", themeMode);
+    if (storedThemeMode) {
+      setThemeMode(storedThemeMode);
+    } else {
+      setThemeMode("light");
+      localStorage.setItem("themeMode", "light");
+    }
   }, []);
 
   useEffect(() => {
@@ -203,11 +207,8 @@ export const AuthContextProvier = ({ children }) => {
   const userName = userInfo ? userInfo.name : "GUEST";
 
   const themeModeToggleHandler = () => {
-    if (themeMode === "light") {
-      setThemeMode("dark");
-    } else {
-      setThemeMode("light");
-    }
+    const newThemeMode = themeMode === "light" ? "dark" : "light";
+    setThemeMode(newThemeMode);
   };
 
   return (

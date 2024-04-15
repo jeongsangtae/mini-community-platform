@@ -1,3 +1,11 @@
+.light-mode {
+  background-color: skyblue;
+}
+
+.dark-mode {
+  background-color: rgb(66, 61, 61);
+}
+
 .header {
   /* margin: 1rem; */
   /* padding: 1rem; */
@@ -5,7 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #ece1fa;
+  /* border-bottom: 2px solid #ece1fa; */
 }
 
 .logo {

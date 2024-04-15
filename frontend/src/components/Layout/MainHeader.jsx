@@ -73,11 +73,14 @@ const MainHeader = () => {
   //   });
   // };
 
-  console.log();
+  const themeMode =
+    authCtx.themeMode === "light"
+      ? classes["light-mode"]
+      : classes["dark-mode"];
 
   return (
     <>
-      <header className={classes.header}>
+      <header className={`${classes.header} ${themeMode}`}>
         <h1 className={classes.logo}>커뮤니티 게시판</h1>
         {authCtx.isLoggedIn ? (
           <>
@@ -109,6 +112,7 @@ const MainHeader = () => {
                       <input
                         id="normal"
                         className={classes["normal-check"]}
+                        defaultChecked={authCtx.themeMode === "dark"}
                         type="checkbox"
                         onClick={authCtx.themeModeToggle}
                       />
