@@ -110,6 +110,7 @@ const MainHeader = () => {
                         id="normal"
                         className={classes["normal-check"]}
                         type="checkbox"
+                        onClick={authCtx.themeModeToggle}
                       />
                       <label
                         htmlFor="normal"

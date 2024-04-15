@@ -4,17 +4,20 @@ const AuthContext = React.createContext({
   isLoggedIn: false,
   userInfo: null,
   isLoading: false,
+  themeMode: "light",
   setIsLoading: () => {},
   login: () => {},
   logout: () => {},
   refreshToken: () => {},
   refreshTokenExp: () => {},
+  themeModeToggleHandler: () => {},
 });
 
 export const AuthContextProvier = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [themeMode, setThemeMode] = useState("light");
 
   const verifyUser = async (setUserInfo) => {
     try {
@@ -120,6 +123,26 @@ export const AuthContextProvier = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const storedThemeMode = localStorage.getItem("themeMode");
+
+    setThemeMode(storedThemeMode || "light");
+
+    localStorage.setItem("themeMode", themeMode);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("themeMode", themeMode);
+  }, [themeMode]);
+
+  // useEffect(() => {
+  //   const storedThemeMode = localStorage.getItem("themeMode");
+
+  //   setThemeMode(storedThemeMode || "light");
+
+  //   localStorage.setItem("themeMode", themeMode);
+  // }, [themeMode]);
+
   // useEffect(() => {
   //   verifyUser(setUserInfo);
   //   const storedExpirationTime = localStorage.getItem("expirationTime");
@@ -179,6 +202,14 @@ export const AuthContextProvier = ({ children }) => {
 
   const userName = userInfo ? userInfo.name : "GUEST";
 
+  const themeModeToggleHandler = () => {
+    if (themeMode === "light") {
+      setThemeMode("dark");
+    } else {
+      setThemeMode("light");
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -187,10 +218,12 @@ export const AuthContextProvier = ({ children }) => {
         setIsLoading,
         userInfo,
         userName,
+        themeMode,
         login: loginHandler,
         logout: logoutHandler,
         refreshToken: refreshTokenHandler,
         refreshTokenExp: refreshTokenExpHandler,
+        themeModeToggle: themeModeToggleHandler,
       }}
     >
       {children}
