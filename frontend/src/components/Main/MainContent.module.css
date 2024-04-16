@@ -1,9 +1,28 @@
+body,
+html {
+  /* padding: 0; */
+  /* overflow: hidden; */
+  /* height: 100%; */
+}
+
 .main-content {
-  margin: 1rem;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
-  height: 75vh;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
   justify-content: center;
   align-items: center;
+}
+
+.main-content.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
+.title.dark-mode {
+  color: white;
+}
+
+.subtitle.dark-mode {
+  color: white;
 }

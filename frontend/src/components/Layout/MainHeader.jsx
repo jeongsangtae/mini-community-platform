@@ -73,23 +73,26 @@ const MainHeader = () => {
   //   });
   // };
 
-  const themeMode =
-    authCtx.themeMode === "light"
-      ? classes["light-mode"]
-      : classes["dark-mode"];
-
   return (
     <>
-      <header className={`${classes.header} ${themeMode}`}>
-        <h1 className={classes.logo}>커뮤니티 게시판</h1>
+      <header className={`${classes.header} ${classes[authCtx.themeClass]}`}>
+        <h1 className={`${classes.logo} ${classes[authCtx.themeClass]}`}>
+          커뮤니티 게시판
+        </h1>
         {authCtx.isLoggedIn ? (
           <>
             <nav className={classes.navbutton}>
-              <NavLink to="/" className={classes.button}>
+              <NavLink
+                to="/"
+                className={`${classes.button} ${classes[authCtx.themeClass]}`}
+              >
                 Home
               </NavLink>
 
-              <NavLink to="/posts" className={classes.button}>
+              <NavLink
+                to="/posts"
+                className={`${classes.button} ${classes[authCtx.themeClass]}`}
+              >
                 게시판
               </NavLink>
 
@@ -99,15 +102,35 @@ const MainHeader = () => {
                   <div className={classes.circle}></div>
                 </div>
                 {/* <MoreVertical /> */}
-                <div className={classes["dropdown-content"]}>
-                  <NavLink to="/profile" className={classes.button}>
+                <div
+                  className={`${classes["dropdown-content"]} ${
+                    classes[authCtx.themeClass]
+                  }`}
+                >
+                  <NavLink
+                    to="/profile"
+                    className={`${classes.button} ${
+                      classes[authCtx.themeClass]
+                    }`}
+                  >
                     계정
                   </NavLink>
-                  <button className={classes.button} onClick={authCtx.logout}>
+                  <button
+                    className={`${classes.button} ${
+                      classes[authCtx.themeClass]
+                    }`}
+                    onClick={authCtx.logout}
+                  >
                     로그아웃
                   </button>
                   <div className={classes["toggle-button"]}>
-                    <div className={classes["toggle-mode"]}>라이트 모드</div>
+                    <div
+                      className={`${classes["toggle-mode"]} ${
+                        classes[authCtx.themeClass]
+                      }`}
+                    >
+                      라이트 모드
+                    </div>
                     <div className={`${classes.toggle} ${classes.normal}`}>
                       <input
                         id="normal"

@@ -211,6 +211,8 @@ export const AuthContextProvier = ({ children }) => {
     setThemeMode(newThemeMode);
   };
 
+  const themeClass = themeMode === "dark" ? "dark-mode" : "";
+
   return (
     <AuthContext.Provider
       value={{
@@ -220,6 +222,7 @@ export const AuthContextProvier = ({ children }) => {
         userInfo,
         userName,
         themeMode,
+        themeClass,
         login: loginHandler,
         logout: logoutHandler,
         refreshToken: refreshTokenHandler,

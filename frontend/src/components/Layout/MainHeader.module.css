@@ -1,30 +1,30 @@
-.light-mode {
-  background-color: skyblue;
-}
-
-.dark-mode {
-  background-color: rgb(66, 61, 61);
-}
-
 .header {
-  /* margin: 1rem; */
-  /* padding: 1rem; */
   text-align: center;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* border-bottom: 2px solid #ece1fa; */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgb(250, 250, 250);
+}
+
+.header.dark-mode {
+  background-color: rgb(35, 35, 35);
 }
 
 .logo {
   font-size: 1.5rem;
-  /* font-weight: bold; */
   margin-left: 15rem;
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  /* color: #ece1fa; */
   color: black;
+}
+
+.logo.dark-mode {
+  color: white;
 }
 
 .navbutton {
@@ -45,19 +45,25 @@
   gap: 0.5rem;
   /* padding: 0.75rem; */
   /* background-color: #a990fb; */
-  color: #2a2630;
+  background-color: rgb(248, 247, 247);
+  color: black;
   border: none;
   /* border-radius: 4px; */
   /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
   cursor: pointer;
   /* font-weight: bold; */
   text-decoration: none;
-  font-size: 16px; /* 적절한 크기로 조정 */
-  line-height: 1.5; /* 적절한 줄 높낮이로 조정 */
+  font-size: 16px;
+  line-height: 1.5;
   min-width: 4.5rem;
   /* max-width: 200px; */
   justify-content: center;
-  /* margin-top: 0.3rem; */
+  margin-top: 0.3rem;
+}
+
+.button.dark-mode {
+  background-color: var(--dark-mode-background-color);
+  color: white;
 }
 
 .button::after {
@@ -81,6 +87,7 @@
   display: inline-block;
   margin-left: 1rem;
   cursor: pointer;
+  z-index: 0;
 }
 
 .iconWrapper {
@@ -104,11 +111,16 @@
   display: block;
   position: absolute;
   background-color: #f9f9f9;
+  border-radius: 8px;
   min-width: 100px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
   transform: translateX(-40%);
   top: 100%;
+}
+
+.dropdown .dropdown-content.dark-mode {
+  background-color: rgb(32, 30, 30);
 }
 
 .dropdown:hover .dropdown-content {
@@ -138,6 +150,10 @@
   font-size: 0.75rem;
   margin-bottom: 0rem;
   margin-right: 0.5rem;
+}
+
+.toggle-mode.dark-mode {
+  color: var(--dark-mode-color);
 }
 
 /* .toggle {
@@ -187,7 +203,7 @@
   transition: all 0.2s ease;
   width: 2em;
   height: 2em;
-  top: 0.1rem;
+  top: 0.025rem;
   left: 0.05rem;
   border-radius: 2em;
   border: 2px solid #88cf8f;
