@@ -98,10 +98,15 @@ const MainHeader = () => {
 
               <div className={classes.dropdown}>
                 <div className={classes.iconWrapper}>
-                  <User color="black" />
-                  <div className={classes.circle}></div>
+                  <User
+                    className={`${classes.icon} ${classes[authCtx.themeClass]}`}
+                  />
+                  <div
+                    className={`${classes.circle} ${
+                      classes[authCtx.themeClass]
+                    }`}
+                  ></div>
                 </div>
-                {/* <MoreVertical /> */}
                 <div
                   className={`${classes["dropdown-content"]} ${
                     classes[authCtx.themeClass]
@@ -177,29 +182,71 @@ const MainHeader = () => {
         ) : (
           <>
             <nav className={classes.navbutton}>
-              <p>
-                <NavLink to="/" className={classes.button}>
-                  홈
-                </NavLink>
-              </p>
-              <p>
-                <NavLink to="/posts" className={classes.button}>
-                  게시판
-                </NavLink>
-              </p>
-              <p>
-                <button
-                  className={classes.button}
-                  onClick={signupToggleHandler}
+              <NavLink
+                to="/"
+                className={`${classes.button} ${classes[authCtx.themeClass]}`}
+              >
+                Home
+              </NavLink>
+
+              <NavLink
+                to="/posts"
+                className={`${classes.button} ${classes[authCtx.themeClass]}`}
+              >
+                게시판
+              </NavLink>
+
+              <div className={classes.dropdown}>
+                <div className={classes.iconWrapper}>
+                  <MoreVertical
+                    className={`${classes.icon} ${classes[authCtx.themeClass]}`}
+                  />
+                </div>
+                <div
+                  className={`${classes["dropdown-content"]} ${
+                    classes[authCtx.themeClass]
+                  }`}
                 >
-                  회원가입
-                </button>
-              </p>
-              <p>
-                <button className={classes.button} onClick={loginToggleHandler}>
-                  로그인
-                </button>
-              </p>
+                  <button
+                    className={`${classes.button} ${
+                      classes["dropdown-button"]
+                    } ${classes[authCtx.themeClass]}`}
+                    onClick={signupToggleHandler}
+                  >
+                    회원가입
+                  </button>
+                  <button
+                    className={`${classes.button} ${
+                      classes["dropdown-button"]
+                    } ${classes[authCtx.themeClass]}`}
+                    onClick={loginToggleHandler}
+                  >
+                    로그인
+                  </button>
+                  <div className={classes["toggle-button"]}>
+                    <div
+                      className={`${classes["toggle-mode"]} ${
+                        classes[authCtx.themeClass]
+                      }`}
+                    >
+                      라이트 모드
+                    </div>
+                    <div className={`${classes.toggle} ${classes.normal}`}>
+                      <input
+                        id="normal"
+                        className={classes["normal-check"]}
+                        defaultChecked={authCtx.themeMode === "dark"}
+                        type="checkbox"
+                        onClick={authCtx.themeModeToggle}
+                      />
+                      <label
+                        htmlFor="normal"
+                        className={classes["toggle-item"]}
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </nav>
           </>
         )}
