@@ -110,15 +110,15 @@ const MainHeader = () => {
                   <NavLink
                     to="/profile"
                     className={`${classes.button} ${
-                      classes[authCtx.themeClass]
-                    }`}
+                      classes["dropdown-button"]
+                    } ${classes[authCtx.themeClass]}`}
                   >
                     계정
                   </NavLink>
                   <button
                     className={`${classes.button} ${
-                      classes[authCtx.themeClass]
-                    }`}
+                      classes["dropdown-button"]
+                    } ${classes[authCtx.themeClass]}`}
                     onClick={authCtx.logout}
                   >
                     로그아웃
