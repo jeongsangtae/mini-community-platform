@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { FaUser, FaLock } from "react-icons/fa";
 
 import Modal from "../UI/Modal";
 import classes from "./Login.module.css";
@@ -50,11 +51,10 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
 
   return (
     <Modal onClose={onLoginToggle}>
-      <p className={classes.heading}>로그인 페이지</p>
       {error && <p>{errorMessage}</p>}
       <form className={classes.form} onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="email">이메일</label>
+        <h1 className={classes.heading}>로그인</h1>
+        <div className={classes["input-box"]}>
           <input
             required
             type="email"
@@ -62,11 +62,13 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
             name="email"
             value={loginData.email}
             onChange={inputChangeHandler}
+            placeholder="이메일"
+            // autocomplete="off"
           />
+          <FaUser className={classes.icon} />
         </div>
 
-        <div>
-          <label htmlFor="password">비밀번호</label>
+        <div className={classes["input-box"]}>
           <input
             required
             type="password"
@@ -74,17 +76,24 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
             name="password"
             value={loginData.password}
             onChange={inputChangeHandler}
+            placeholder="비밀번호"
           />
+          <FaLock className={classes.icon} />
         </div>
 
-        <div className={classes.actions}>
-          <button type="submit">로그인</button>
-          <button onClick={onLoginToggle}>취소</button>
-        </div>
+        {/* <div className={classes.actions}> */}
+        <button type="submit" className={classes["login-button"]}>
+          로그인
+        </button>
+        {/* <button onClick={onLoginToggle}>취소</button> */}
+        {/* </div> */}
       </form>
-      <button className={classes.signup} onClick={onSignupToggle}>
-        회원가입 하러가기
-      </button>
+
+      <div className={classes["signup-link"]}>
+        <button className={classes.signup} onClick={onSignupToggle}>
+          회원가입 하러가기
+        </button>
+      </div>
     </Modal>
   );
 };
