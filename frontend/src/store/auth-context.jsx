@@ -17,7 +17,10 @@ export const AuthContextProvier = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [themeMode, setThemeMode] = useState("light");
+  const [themeMode, setThemeMode] = useState(() => {
+    const storedThemeMode = localStorage.getItem("themeMode");
+    return storedThemeMode || "light";
+  });
 
   console.log(themeMode);
 
@@ -125,15 +128,15 @@ export const AuthContextProvier = ({ children }) => {
     }
   }, []);
 
-  useEffect(() => {
-    const storedThemeMode = localStorage.getItem("themeMode");
-    if (storedThemeMode) {
-      setThemeMode(storedThemeMode);
-    } else {
-      setThemeMode("light");
-      localStorage.setItem("themeMode", "light");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedThemeMode = localStorage.getItem("themeMode");
+  //   if (storedThemeMode) {
+  //     setThemeMode(storedThemeMode);
+  //   } else {
+  //     setThemeMode("light");
+  //     localStorage.setItem("themeMode", "light");
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem("themeMode", themeMode);

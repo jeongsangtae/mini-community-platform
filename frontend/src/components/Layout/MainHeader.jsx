@@ -13,9 +13,11 @@ const MainHeader = () => {
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [user, setUser] = useState({});
 
-  console.log(user);
+  // console.log(user);
 
   const authCtx = useContext(AuthContext);
+
+  console.log(authCtx.themeMode);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -142,7 +144,7 @@ const MainHeader = () => {
                         className={classes["normal-check"]}
                         defaultChecked={authCtx.themeMode === "dark"}
                         type="checkbox"
-                        onClick={authCtx.themeModeToggle}
+                        onChange={authCtx.themeModeToggle}
                       />
                       <label
                         htmlFor="normal"
@@ -237,7 +239,7 @@ const MainHeader = () => {
                         className={classes["normal-check"]}
                         defaultChecked={authCtx.themeMode === "dark"}
                         type="checkbox"
-                        onClick={authCtx.themeModeToggle}
+                        onChange={authCtx.themeModeToggle}
                       />
                       <label
                         htmlFor="normal"
