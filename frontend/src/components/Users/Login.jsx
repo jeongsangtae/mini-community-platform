@@ -89,7 +89,7 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
         {/* </div> */}
       </form>
 
-      <div className={classes["signup-link"]}>
+      <div className={classes.link}>
         <button className={classes.signup} onClick={onSignupToggle}>
           회원가입 하러가기
         </button>

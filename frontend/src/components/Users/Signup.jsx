@@ -1,8 +1,10 @@
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { FaUser, FaLock } from "react-icons/fa";
 
 import Modal from "../UI/Modal";
 import classes from "./Signup.module.css";
+import AuthContext from "../../store/auth-context";
 
 const Signup = ({ onLoginToggle, onSignupToggle }) => {
   const [signupData, setSignupData] = useState({
@@ -11,6 +13,8 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
     confirmEmail: "",
     password: "",
   });
+
+  const authCtx = useContext(AuthContext);
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -47,11 +51,10 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
 
   return (
     <Modal onClose={onSignupToggle}>
-      <p className={classes.heading}>회원가입 페이지</p>
       {error && <p>{errorMessage}</p>}
       <form className={classes.form} onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="email">이메일</label>
+        <h1 className={classes.heading}>회원가입</h1>
+        <div className={classes["input-box"]}>
           <input
             required
             type="email"
@@ -59,11 +62,12 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
             name="email"
             value={signupData.email}
             onChange={inputChangeHandler}
+            placeholder="이메일"
           />
+          <FaUser className={classes.icon} />
         </div>
 
-        <div>
-          <label htmlFor="confirm-email">이메일 확인</label>
+        <div className={classes["input-box"]}>
           <input
             required
             type="email"
@@ -71,11 +75,12 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
             name="confirmEmail"
             value={signupData.confirmEmail}
             onChange={inputChangeHandler}
+            placeholder="이메일 확인"
           />
+          <FaUser className={classes.icon} />
         </div>
 
-        <div>
-          <label htmlFor="username">이름</label>
+        <div className={classes["input-box"]}>
           <input
             required
             type="text"
@@ -83,11 +88,12 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
             name="username"
             value={signupData.username}
             onChange={inputChangeHandler}
+            placeholder="이름"
           />
+          <FaUser className={classes.icon} />
         </div>
 
-        <div>
-          <label htmlFor="password">비밀번호</label>
+        <div className={classes["input-box"]}>
           <input
             required
             type="password"
@@ -95,17 +101,23 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
             name="password"
             value={signupData.password}
             onChange={inputChangeHandler}
+            placeholder="비밀번호"
           />
+          <FaLock className={classes.icon} />
         </div>
 
-        <div className={classes.actions}>
-          <button type="submit">가입</button>
-          <button onClick={onSignupToggle}>취소</button>
-        </div>
+        {/* <div className={classes.actions}> */}
+        <button type="submit" className={classes["signup-button"]}>
+          가입
+        </button>
+        {/* <button onClick={onSignupToggle}>취소</button> */}
+        {/* </div> */}
       </form>
-      <button className={classes.login} onClick={onLoginToggle}>
-        로그인 하러가기
-      </button>
+      <div className={classes.link}>
+        <button className={classes.login} onClick={onLoginToggle}>
+          로그인 하러가기
+        </button>
+      </div>
     </Modal>
   );
 };
