@@ -107,13 +107,18 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
         </div>
 
         {/* <div className={classes.actions}> */}
-        <button type="submit" className={classes["signup-button"]}>
+        <button
+          type="submit"
+          className={`${classes["signup-button"]} ${
+            classes[authCtx.themeClass]
+          }`}
+        >
           가입
         </button>
         {/* <button onClick={onSignupToggle}>취소</button> */}
         {/* </div> */}
       </form>
-      <div className={classes.link}>
+      <div className={`${classes.link} ${classes[authCtx.themeClass]}`}>
         <button className={classes.login} onClick={onLoginToggle}>
           로그인 하러가기
         </button>

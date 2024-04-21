@@ -67,6 +67,16 @@
   font-weight: 700;
 }
 
+.login-button:hover {
+  background-color: rgb(181, 178, 185);
+  color: rgb(224, 224, 224);
+}
+
+.login-button.dark-mode:hover {
+  background-color: rgb(131, 180, 172);
+  color: rgb(224, 224, 224);
+}
+
 .link {
   font-size: 0.9rem;
   text-align: center;
@@ -80,6 +90,14 @@
   font-weight: 600;
   margin-bottom: 2rem;
   cursor: pointer;
+}
+
+.link button:hover {
+  color: rgb(205, 205, 205);
+}
+
+.linK.dark-mode button:hover {
+  color: rgb(131, 180, 172);
 }
 
 /* .signup:hover {
