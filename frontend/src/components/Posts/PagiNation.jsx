@@ -1,3 +1,6 @@
+import { useContext } from "react";
+
+import AuthContext from "../../store/auth-context";
 import classes from "./Pagination.module.css";
 
 const Pagination = ({
@@ -7,6 +10,7 @@ const Pagination = ({
   lastPageGroup,
   onPageChange,
 }) => {
+  const authCtx = useContext(AuthContext);
   const firstPageButton = "<<";
   const lastPageButton = ">>";
 
@@ -29,7 +33,11 @@ const Pagination = ({
         <button
           key={pageNumber}
           onClick={() => pageChangeHandler(pageNumber)}
-          className={pageNumber === page ? classes.on : ""}
+          className={
+            pageNumber === page
+              ? `${classes.on} ${classes[authCtx.themeClass]}`
+              : ""
+          }
         >
           {pageNumber}
         </button>
@@ -40,7 +48,7 @@ const Pagination = ({
   return (
     <>
       {totalPages > 1 && (
-        <div className={classes.pagination}>
+        <div className={`${classes.pagination} ${classes[authCtx.themeClass]}`}>
           {pageMove(firstPage, firstPageButton, () => pageChangeHandler(1))}
           {pageMove(firstPage, "이전", () => pageChangeHandler(page - 1))}
 

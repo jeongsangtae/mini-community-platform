@@ -7,9 +7,23 @@
   }
 } */
 
+.background {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.background.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
 .heading {
   margin: 5rem;
   font-size: 2rem;
+}
+
+.heading.dark-mode {
+  color: white;
 }
 
 /* .heading-skeleton {
@@ -32,6 +46,10 @@
 
 .posts-item p {
   margin-left: 5rem;
+}
+
+.posts-item.dark-mode p {
+  color: white;
 }
 
 .posts {

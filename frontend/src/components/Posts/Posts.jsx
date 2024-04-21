@@ -60,9 +60,15 @@ const Posts = () => {
       {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
-        <>
-          <h1 className={classes.heading}>게시글</h1>
-          <div className={classes["posts-item"]}>
+        <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+          <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+            게시글
+          </h1>
+          <div
+            className={`${classes["posts-item"]} ${
+              classes[authCtx.themeClass]
+            }`}
+          >
             <p>번호</p>
             <p>제목</p>
             <p>글쓴이</p>
@@ -93,7 +99,7 @@ const Posts = () => {
           <Link to="create-post" className={postAddButtonClass}>
             <p>게시글 추가</p>
           </Link>
-        </>
+        </div>
       )}
     </>
   );
