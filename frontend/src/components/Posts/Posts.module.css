@@ -17,8 +17,12 @@
   background-color: var(--dark-mode-background-color);
 }
 
+.board-container {
+  padding: 5rem 10rem;
+}
+
 .heading {
-  margin: 5rem;
+  margin: 2rem 5rem;
   font-size: 2rem;
 }
 
@@ -36,9 +40,21 @@
   width: 6rem;
 } */
 
+.sub-menu {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 5rem;
+  padding: 0;
+}
+
+.sub-menu.dark-mode {
+  color: white;
+}
+
 .posts-item {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   /* width: 60rem; */
   /* margin: 0 auto; */
   /* justify-content: center; */
@@ -60,16 +76,26 @@
   padding: 0;
 }
 
+.last-menu {
+  display: flex;
+  justify-content: end;
+  margin: 0 5rem;
+  padding: 0;
+}
+
 .add {
-  display: block;
+  /* display: block;
   text-align: center;
-  margin: 0 auto;
-  padding: 0.5rem 1rem;
-  max-width: 10rem;
-  background-color: #86b687;
+  margin: 0 auto; */
+  /* padding: 0.5rem 1rem; */
+  /* max-width: 10rem; */
+  margin: 0;
+  padding: 0 1.5rem;
+  background-color: transparent;
   color: white;
   text-decoration: none;
-  border-radius: 4px;
+  border: 2px solid gray;
+  border-radius: 2px;
 }
 
 .add:hover {

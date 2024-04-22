@@ -56,15 +56,25 @@ const Posts = () => {
     : `${classes.add} ${classes.opacity}`;
 
   return (
-    <>
+    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
       {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
-        <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+        <div className={classes["board-container"]}>
           <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
             게시글
           </h1>
+
           <div
+            className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
+          >
+            <p>개의 글</p>
+            <Link to="create-post" className={postAddButtonClass}>
+              <p>글쓰기</p>
+            </Link>
+          </div>
+
+          {/* <div
             className={`${classes["posts-item"]} ${
               classes[authCtx.themeClass]
             }`}
@@ -73,7 +83,8 @@ const Posts = () => {
             <p>제목</p>
             <p>글쓴이</p>
             <p>날짜</p>
-          </div>
+          </div> */}
+
           {posts.length > 0 && (
             <ul className={classes.posts}>
               {posts.map((post) => {
@@ -89,6 +100,13 @@ const Posts = () => {
               })}
             </ul>
           )}
+          <div
+            className={`${classes["last-menu"]} ${classes[authCtx.themeClass]}`}
+          >
+            <Link to="create-post" className={postAddButtonClass}>
+              <p>글쓰기</p>
+            </Link>
+          </div>
           <Pagination
             page={page}
             totalPages={totalPages}
@@ -96,12 +114,9 @@ const Posts = () => {
             lastPageGroup={lastPageGroup}
             onPageChange={onPageChange}
           />
-          <Link to="create-post" className={postAddButtonClass}>
-            <p>게시글 추가</p>
-          </Link>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
