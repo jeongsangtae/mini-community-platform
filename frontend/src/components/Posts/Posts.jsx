@@ -73,6 +73,7 @@ const Posts = () => {
               <p>글쓰기</p>
             </Link>
           </div>
+          <p className={classes.underline}></p>
 
           {/* <div
             className={`${classes["posts-item"]} ${
@@ -95,6 +96,7 @@ const Posts = () => {
                     title={post.title}
                     name={post.name}
                     date={post.date}
+                    content={post.content}
                   />
                 );
               })}

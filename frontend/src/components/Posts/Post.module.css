@@ -1,13 +1,12 @@
 .post {
   display: flex;
   flex-direction: column;
-  /* margin-left: 14rem; */
   margin-top: 0.5rem;
 }
 
 .post a {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   text-decoration: none;
   color: black;
 }
@@ -18,4 +17,37 @@
 
 .post p {
   margin-left: 5rem;
+}
+
+.info-wrap,
+.title,
+.content {
+  display: flex;
+  align-items: center;
+}
+
+/* .bullet {
+  width: 0.1rem;
+  height: 0.1rem;
+  background-color: white;
+  border-radius: 50%;
+  margin: 0 1rem;
+} */
+
+.info-wrap span::before {
+  content: "●";
+  font-size: 0.5rem;
+  position: relative;
+  margin: 0 1rem;
+  color: white;
+  vertical-align: middle;
+}
+
+.underline {
+  content: "";
+  margin: 1rem 5rem;
+  /* display: block; */
+  width: 85.5%;
+  height: 1px;
+  background-color: rgb(68, 68, 68);
 }
