@@ -86,8 +86,7 @@
 .underline {
   content: "";
   margin: 1rem 5rem;
-  display: block;
-  width: 85.5%;
+  width: 90%;
   height: 1px;
   background-color: rgb(68, 68, 68);
 }

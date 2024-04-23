@@ -73,6 +73,7 @@ const Posts = () => {
               <p>글쓰기</p>
             </Link>
           </div>
+
           <p className={classes.underline}></p>
 
           {/* <div
