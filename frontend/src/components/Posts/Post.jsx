@@ -12,8 +12,6 @@ const Post = ({ num, title, name, date, content, count }) => {
   const truncatedText = lines.slice(0, linesToShow).join("\n");
   const moreLines = lines.length > linesToShow;
 
-  console.log(count);
-
   const postCountHandler = async () => {
     try {
       await fetch("http://localhost:3000/posts/" + num + "/count", {

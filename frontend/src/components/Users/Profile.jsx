@@ -72,20 +72,29 @@ const Profile = () => {
   // }, []);
 
   return (
-    <>
+    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
       {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
-        <>
-          <h1 className={classes.heading}>
+        <div className={classes["board-container"]}>
+          <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
             {authCtx.userInfo?.email} 프로필 페이지
           </h1>
-          <div className={classes["posts-item"]}>
+
+          {/* <div className={classes["posts-item"]}>
             <p>번호</p>
             <p>제목</p>
             <p>글쓴이</p>
             <p>날짜</p>
+          </div> */}
+
+          <div
+            className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
+          >
+            <p>{posts.length}개의 글</p>
           </div>
+
+          <p className={classes.underline}></p>
 
           {posts && (
             <ul className={classes.posts}>
@@ -97,6 +106,8 @@ const Profile = () => {
                     title={post.title}
                     name={post.name}
                     date={post.date}
+                    content={post.content}
+                    count={post.count}
                   />
                 );
               })}
@@ -110,9 +121,9 @@ const Profile = () => {
             lastPageGroup={lastPageGroup}
             onPageChange={onPageChange}
           />
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

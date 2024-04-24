@@ -51,18 +51,18 @@
   color: white;
 }
 
-.posts-item {
+/* .posts-item {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* width: 60rem; */
-  /* margin: 0 auto; */
-  /* justify-content: center; */
-}
+  width: 60rem;
+  margin: 0 auto;
+  justify-content: center;
+} */
 
-.posts-item p {
+/* .posts-item p {
   margin-left: 5rem;
-}
+} */
 
 .posts-item.dark-mode p {
   color: white;

@@ -18,8 +18,6 @@ const Posts = () => {
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
 
-  console.log(posts);
-
   const fetchData = async (pageNumber) => {
     authCtx.setIsLoading(true);
     // setTimeout(async () => {
@@ -70,7 +68,7 @@ const Posts = () => {
           <div
             className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
           >
-            <p>개의 글</p>
+            <p>{posts.length}개의 글</p>
             <Link to="create-post" className={postAddButtonClass}>
               <p>글쓰기</p>
             </Link>
