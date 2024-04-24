@@ -18,6 +18,8 @@ const Posts = () => {
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
 
+  console.log(posts);
+
   const fetchData = async (pageNumber) => {
     authCtx.setIsLoading(true);
     // setTimeout(async () => {
@@ -98,6 +100,7 @@ const Posts = () => {
                     name={post.name}
                     date={post.date}
                     content={post.content}
+                    count={post.count}
                   />
                 );
               })}

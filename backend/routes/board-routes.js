@@ -25,7 +25,7 @@ router.get("/posts", async (req, res) => {
     .sort({ postId: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
+    .project({ postId: 1, title: 1, name: 1, content: 1, date: 1, count: 1 })
     .toArray();
 
   const countPosts = await db.getDb().collection("posts").countDocuments({});
@@ -123,6 +123,7 @@ router.post("/posts", async (req, res) => {
 
   let postId = lastPost ? lastPost.postId + 1 : 1;
   let date = new Date();
+  let count = 0;
   const postData = req.body;
 
   const newPost = {
@@ -130,6 +131,7 @@ router.post("/posts", async (req, res) => {
     postId,
     name: othersData.name,
     email: othersData.email,
+    count: count,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
   };
 
@@ -141,16 +143,25 @@ router.post("/posts", async (req, res) => {
 
 router.get("/posts/:postId", async (req, res) => {
   let postId = parseInt(req.params.postId);
-  // let postId = req.params.id;
-
-  // postId = new ObjectId(postId);
 
   const post = await db.getDb().collection("posts").findOne({ postId });
 
-  // console.log(typeof req.params.postId);
-  // console.log(typeof postId);
-
   res.json(post);
+});
+
+router.post("/posts/:postId/count", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+
+  try {
+    await db
+      .getDb()
+      .collection("posts")
+      .updateOne({ postId: postId }, { $inc: { count: 1 } });
+    res.status(200).json({ message: "조회 수 상승 성공" });
+  } catch (error) {
+    console.log("조회 수를 올리는 중에 에러 발생");
+    res.status(500).json({ message: "조회 수 상승 실패" });
+  }
 });
 
 router.patch("/posts/:postId/edit", async (req, res) => {

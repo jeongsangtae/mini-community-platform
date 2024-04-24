@@ -21,11 +21,6 @@ const PostDetails = () => {
     submit(null, { method: "delete" });
   };
 
-  // useEffect(() => {
-  //   console.log(authCtx.isLoggedIn);
-  //   setLoggedIn(authCtx.isLoggedIn);
-  // }, [authCtx]);
-
   const actionsButtonClass =
     post.email === authCtx.userInfo?.email
       ? `${classes.actions}`
