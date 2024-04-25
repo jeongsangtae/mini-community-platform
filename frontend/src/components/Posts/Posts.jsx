@@ -52,8 +52,8 @@ const Posts = () => {
   }, [page]);
 
   const postAddButtonClass = authCtx.isLoggedIn
-    ? `${classes.add}`
-    : `${classes.add} ${classes.opacity}`;
+    ? `${classes.add} ${classes[authCtx.themeClass]}`
+    : `${classes.add} ${classes[authCtx.themeClass]} ${classes.opacity}`;
 
   return (
     <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
@@ -70,7 +70,7 @@ const Posts = () => {
           >
             <p>{posts.length}개의 글</p>
             <Link to="create-post" className={postAddButtonClass}>
-              <p>글쓰기</p>
+              글쓰기
             </Link>
           </div>
 
@@ -108,7 +108,7 @@ const Posts = () => {
             className={`${classes["last-menu"]} ${classes[authCtx.themeClass]}`}
           >
             <Link to="create-post" className={postAddButtonClass}>
-              <p>글쓰기</p>
+              글쓰기
             </Link>
           </div>
           <Pagination
