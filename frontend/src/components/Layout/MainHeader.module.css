@@ -35,6 +35,16 @@
   /* margin-top: 0.5rem; */
 }
 
+.active span::after {
+  content: "";
+  position: absolute;
+  top: 60%;
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+}
+
 .button {
   display: inline-block;
   align-items: center;

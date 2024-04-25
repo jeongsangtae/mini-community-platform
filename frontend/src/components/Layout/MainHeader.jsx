@@ -75,6 +75,12 @@ const MainHeader = () => {
   //   });
   // };
 
+  const navLinkClass = ({ isActive }) => {
+    return isActive
+      ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
+      : `${classes.button} ${classes[authCtx.themeClass]}`;
+  };
+
   return (
     <>
       <header className={`${classes.header} ${classes[authCtx.themeClass]}`}>
@@ -84,18 +90,16 @@ const MainHeader = () => {
         {authCtx.isLoggedIn ? (
           <>
             <nav className={classes.navbutton}>
-              <NavLink
-                to="/"
-                className={`${classes.button} ${classes[authCtx.themeClass]}`}
-              >
-                Home
+              <NavLink to="/" className={navLinkClass}>
+                <div className={classes.point}>
+                  홈<span></span>
+                </div>
               </NavLink>
 
-              <NavLink
-                to="/posts"
-                className={`${classes.button} ${classes[authCtx.themeClass]}`}
-              >
-                게시판
+              <NavLink to="/posts" className={navLinkClass}>
+                <div className={classes.point}>
+                  게시판<span></span>
+                </div>
               </NavLink>
 
               <div className={classes.dropdown}>
