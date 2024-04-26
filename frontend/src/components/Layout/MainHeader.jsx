@@ -188,18 +188,16 @@ const MainHeader = () => {
         ) : (
           <>
             <nav className={classes.navbutton}>
-              <NavLink
-                to="/"
-                className={`${classes.button} ${classes[authCtx.themeClass]}`}
-              >
-                Home
+              <NavLink to="/" className={navLinkClass}>
+                <div>
+                  홈<span></span>
+                </div>
               </NavLink>
 
-              <NavLink
-                to="/posts"
-                className={`${classes.button} ${classes[authCtx.themeClass]}`}
-              >
-                게시판
+              <NavLink to="/posts" className={navLinkClass}>
+                <div>
+                  게시판<span></span>
+                </div>
               </NavLink>
 
               <div className={classes.dropdown}>

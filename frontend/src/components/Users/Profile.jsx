@@ -49,28 +49,6 @@ const Profile = () => {
     paginationFetchData(page);
   }, [page]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:3000/profile", {
-  //         credentials: "include",
-  //       });
-  //       if (!response.ok) {
-  //         throw new Error("네트워크 오류");
-  //       }
-  //       const resData = await response.json();
-  //       setPosts(resData.posts);
-  //       setTotalPages(resData.totalPages);
-  //       setFirstPageGroup(resData.firstPageGroup);
-  //       setLastPageGroup(resData.lastPageGroup);
-  //     } catch (error) {
-  //       console.error("로그인 유지 불가능", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   return (
     <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
       {authCtx.isLoading ? (
@@ -96,7 +74,7 @@ const Profile = () => {
 
           <p className={classes.underline}></p>
 
-          {posts && (
+          {posts.length > 0 ? (
             <ul className={classes.posts}>
               {posts.map((post) => {
                 return (
@@ -112,6 +90,17 @@ const Profile = () => {
                 );
               })}
             </ul>
+          ) : (
+            <>
+              <h2
+                className={`${classes["no-posts"]} ${
+                  classes[authCtx.themeClass]
+                }`}
+              >
+                게시글이 존재하지 않습니다.
+              </h2>
+              <p className={classes.underline}></p>
+            </>
           )}
 
           <Pagination

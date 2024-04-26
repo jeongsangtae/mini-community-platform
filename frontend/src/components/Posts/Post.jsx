@@ -29,7 +29,9 @@ const Post = ({ num, title, name, date, content, count }) => {
     <>
       <div className={classes.postWrapper}>
         <li className={`${classes.post} ${classes[authCtx.themeClass]}`}>
-          <div className={classes["info-wrap"]}>
+          <div
+            className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
+          >
             <p>{num}</p>
             <span>{name}</span>
             <span>{date}</span>

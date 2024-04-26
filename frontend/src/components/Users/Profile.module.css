@@ -44,6 +44,16 @@
   padding: 0;
 }
 
+.no-posts {
+  text-align: center;
+  color: black;
+  margin: 5.75rem 0;
+}
+
+.no-posts.dark-mode {
+  color: white;
+}
+
 .underline {
   content: "";
   margin: 1rem 5rem;

@@ -87,7 +87,7 @@ const Posts = () => {
             <p>날짜</p>
           </div> */}
 
-          {posts.length > 0 && (
+          {posts.length > 0 ? (
             <ul className={classes.posts}>
               {posts.map((post) => {
                 return (
@@ -103,6 +103,17 @@ const Posts = () => {
                 );
               })}
             </ul>
+          ) : (
+            <>
+              <h2
+                className={`${classes["no-posts"]} ${
+                  classes[authCtx.themeClass]
+                }`}
+              >
+                게시글이 존재하지 않습니다.
+              </h2>
+              <p className={classes.underline}></p>
+            </>
           )}
           <div
             className={`${classes["last-menu"]} ${classes[authCtx.themeClass]}`}

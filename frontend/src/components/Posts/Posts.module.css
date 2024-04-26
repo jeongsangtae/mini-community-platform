@@ -77,6 +77,16 @@
   padding: 0;
 }
 
+.no-posts {
+  text-align: center;
+  color: black;
+  margin: 5.75rem 0;
+}
+
+.no-posts.dark-mode {
+  color: white;
+}
+
 .last-menu {
   display: flex;
   justify-content: end;
@@ -99,7 +109,7 @@
   text-decoration: none;
   border: 1px solid rgb(68, 68, 68);
   border-radius: 2px;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
   /* display: block;
   text-align: center;
   margin: 0 auto; */
@@ -109,7 +119,7 @@
 }
 
 .add:hover {
-  color: rgb(226, 169, 169);
+  background-color: rgb(237, 237, 237);
 }
 
 .add.dark-mode {
@@ -117,7 +127,7 @@
 }
 
 .add.dark-mode:hover {
-  color: rgb(172, 172, 172);
+  background-color: rgb(25, 25, 25);
 }
 
 .opacity {
