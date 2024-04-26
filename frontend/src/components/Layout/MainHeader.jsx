@@ -91,13 +91,13 @@ const MainHeader = () => {
           <>
             <nav className={classes.navbutton}>
               <NavLink to="/" className={navLinkClass}>
-                <div className={classes.point}>
+                <div>
                   홈<span></span>
                 </div>
               </NavLink>
 
-              <NavLink to="/posts" className={navLinkClass}>
-                <div className={classes.point}>
+              <NavLink to="/posts" className={navLinkClass} end>
+                <div>
                   게시판<span></span>
                 </div>
               </NavLink>

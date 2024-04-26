@@ -108,12 +108,12 @@
   /* margin: 0; */
 }
 
-.add.dark-mode {
-  color: white;
-}
-
 .add:hover {
   color: rgb(226, 169, 169);
+}
+
+.add.dark-mode {
+  color: white;
 }
 
 .add.dark-mode:hover {

@@ -35,16 +35,6 @@
   /* margin-top: 0.5rem; */
 }
 
-.active span::after {
-  content: "";
-  position: absolute;
-  top: 60%;
-  width: 5px;
-  height: 5px;
-  background-color: red;
-  border-radius: 50%;
-}
-
 .button {
   display: inline-block;
   align-items: center;
@@ -53,7 +43,7 @@
   width: 20px;
   gap: 0.5rem;
   background-color: rgb(250, 250, 250);
-  color: black;
+  color: rgb(105, 105, 105);
   border: none;
   cursor: pointer;
   text-decoration: none;
@@ -73,19 +63,59 @@
 }
 
 .button:hover {
-  color: rgb(226, 169, 169);
+  color: black;
 }
 
 .button.dark-mode {
   background-color: rgb(35, 35, 35);
-  color: white;
+  color: rgb(226, 169, 169);
 }
 
 .button.dark-mode:hover {
-  color: rgb(172, 172, 172);
+  color: white;
   /* background-color: rgb(50, 50, 50); */
   /* border-radius: 15px; */
 }
+
+.button:hover span {
+  content: "";
+  position: absolute;
+  top: 60%;
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.active.button {
+  font-weight: bold;
+  color: black;
+}
+
+.active.button.dark-mode {
+  font-weight: bold;
+  color: white;
+}
+
+.active span {
+  content: "";
+  position: absolute;
+  top: 60%;
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+/* .active span::after {
+  content: "";
+  position: absolute;
+  top: 65%;
+  width: 5px;
+  height: 5px;
+  background-color: red;
+  border-radius: 50%;
+} */
 
 .button.dropdown-button {
   font-size: 0.9rem;
