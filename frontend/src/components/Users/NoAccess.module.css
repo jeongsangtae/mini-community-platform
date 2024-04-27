@@ -1,9 +1,13 @@
 .no-access {
-  margin: 1rem;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
-  height: 75vh;
+  height: 100vh;
+  overflow: auto;
   justify-content: center;
   align-items: center;
+}
+
+.no-access.dark-mode {
+  background-color: var(--dark-mode-background-color);
+  color: white;
 }
