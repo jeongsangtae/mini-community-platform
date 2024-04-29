@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { LuUserCircle2, LuLogOut } from "react-icons/lu";
 import { MoreVertical, User } from "react-feather";
 
 import Login from "../Users/Login";
@@ -124,6 +125,7 @@ const MainHeader = () => {
                       classes["dropdown-button"]
                     } ${classes[authCtx.themeClass]}`}
                   >
+                    <LuUserCircle2 className={classes["dropdown-icon"]} />
                     계정
                   </NavLink>
                   <button
@@ -132,8 +134,14 @@ const MainHeader = () => {
                     } ${classes[authCtx.themeClass]}`}
                     onClick={authCtx.logout}
                   >
+                    <LuLogOut className={classes["dropdown-icon"]} />
                     로그아웃
                   </button>
+                  <p
+                    className={`${classes.underline} ${
+                      classes[authCtx.themeClass]
+                    }`}
+                  ></p>
                   <div className={classes["toggle-button"]}>
                     <div
                       className={`${classes["toggle-mode"]} ${
@@ -227,6 +235,7 @@ const MainHeader = () => {
                   >
                     로그인
                   </button>
+                  <p className={classes.underline}></p>
                   <div className={classes["toggle-button"]}>
                     <div
                       className={`${classes["toggle-mode"]} ${
