@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { LuUserCircle2, LuLogOut } from "react-icons/lu";
+import { LuUserCircle2, LuLogOut, LuLogIn, LuKeyRound } from "react-icons/lu";
+import { FaRegAddressCard } from "react-icons/fa";
 import { MoreVertical, User } from "react-feather";
 
 import Login from "../Users/Login";
@@ -225,6 +226,8 @@ const MainHeader = () => {
                     } ${classes[authCtx.themeClass]}`}
                     onClick={signupToggleHandler}
                   >
+                    {/* <FaRegAddressCard className={classes["dropdown-icon"]} /> */}
+                    <LuKeyRound className={classes["dropdown-icon"]} />
                     회원가입
                   </button>
                   <button
@@ -233,9 +236,14 @@ const MainHeader = () => {
                     } ${classes[authCtx.themeClass]}`}
                     onClick={loginToggleHandler}
                   >
+                    <LuLogIn className={classes["dropdown-icon"]} />
                     로그인
                   </button>
-                  <p className={classes.underline}></p>
+                  <p
+                    className={`${classes.underline} ${
+                      classes[authCtx.themeClass]
+                    }`}
+                  ></p>
                   <div className={classes["toggle-button"]}>
                     <div
                       className={`${classes["toggle-mode"]} ${

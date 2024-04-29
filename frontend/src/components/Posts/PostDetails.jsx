@@ -27,32 +27,41 @@ const PostDetails = () => {
       : `${classes.actions} ${classes.opacity}`;
 
   return (
-    <>
-      <h1 className={classes.heading}>게시글 세부 페이지</h1>
-      <div className={classes["post-detail"]}>
-        <div>
+    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+      <div className={classes["post-container"]}>
+        <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+          게시글 세부 페이지
+        </h1>
+        <div
+          className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
+        >
+          <p>게시글</p>
+        </div>
+        <p className={classes.underline}></p>
+        <div
+          className={`${classes["post-detail"]} ${classes[authCtx.themeClass]}`}
+        >
           <p>제목</p>
           <p className={classes.contents}>{post.title}</p>
-        </div>
-        <div>
-          <p>이름</p>
-          <p className={classes.contents}>{post.name}</p>
-        </div>
-        <div>
-          <p>내용</p>
+
+          <span className={classes.contents}>{post.name}</span>
+          <span>{post.date}</span>
+          <span>조회 {post.count}</span>
+
           <p className={classes.contents}>{post.content}</p>
         </div>
-        <div>
-          <Comments />
-        </div>
+        <p className={classes.underline}></p>
         <div className={actionsButtonClass}>
           <Link to="edit">수정</Link>
           <button type="button" onClick={postDeleteHandler}>
             삭제
           </button>
         </div>
+        <div>
+          <Comments />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

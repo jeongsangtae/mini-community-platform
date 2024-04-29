@@ -1,16 +1,57 @@
+.background {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.background.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
+.post-container {
+  padding: 5rem 10rem;
+}
+
 .heading {
-  margin: 5rem;
+  margin: 2rem 5rem;
   font-size: 2rem;
 }
 
-.post-detail {
-  max-width: 40rem;
-  margin: 2rem auto;
+.heading.dark-mode {
+  color: white;
 }
 
-.post-detail p {
+.post-detail {
+  margin: 0rem 5rem;
+}
+
+/* .post-detail p {
   display: block;
   width: 100%;
+} */
+
+.post-detail.dark-mode p {
+  color: white;
+}
+
+.sub-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 5rem;
+  padding: 0;
+}
+
+.sub-menu.dark-mode {
+  color: white;
+}
+
+.underline {
+  content: "";
+  margin: 1rem 5rem;
+  height: 1px;
+  background-color: rgb(68, 68, 68);
+  /* width: 90%; */
 }
 
 .post-detail .contents {
