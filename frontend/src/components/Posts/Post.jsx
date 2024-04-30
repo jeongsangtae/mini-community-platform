@@ -37,6 +37,7 @@ const Post = ({ num, title, name, date, content, count }) => {
             <span>{date}</span>
             <span>조회 {count}</span>
           </div>
+
           <Link to={`/posts/${num.toString()}`} onClick={postCountHandler}>
             <div className={classes.title}>
               <p>{title}</p>

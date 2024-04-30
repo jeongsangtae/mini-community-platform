@@ -10,6 +10,11 @@
 
 .post-container {
   padding: 5rem 10rem;
+  align-items: center;
+}
+
+.post-container.dark-mode {
+  color: white;
 }
 
 .heading {
@@ -19,6 +24,10 @@
 
 .heading.dark-mode {
   color: white;
+}
+
+.title {
+  padding: 0 5rem;
 }
 
 .post-detail {
@@ -34,16 +43,32 @@
   color: white;
 }
 
-.sub-menu {
+.info-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 5rem;
-  padding: 0;
+  padding: 0 5rem;
 }
 
-.sub-menu.dark-mode {
+.info-wrap > div > span:nth-child(1)::before {
+  content: none;
+}
+
+.info-wrap span::before {
+  content: "●";
+  font-size: 0.5rem;
+  position: relative;
+  margin: 0 1rem;
+  color: black;
+  vertical-align: middle;
+}
+
+.info-wrap.dark-mode span::before {
   color: white;
+}
+
+.dropdown svg {
+  vertical-align: middle;
 }
 
 .underline {
@@ -54,10 +79,10 @@
   /* width: 90%; */
 }
 
-.post-detail .contents {
+.post-detail p {
   font: inherit;
-  padding: 0.25rem;
   white-space: pre-line;
+  margin: 2.5rem 0;
 }
 
 .actions {
