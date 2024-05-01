@@ -157,16 +157,16 @@
   /* display: none; */
   display: block;
   position: absolute;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  min-width: 100px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  transform: translateX(-40%);
   top: 100%;
+  background-color: #f9f9f9;
+  min-width: 100px;
   padding-top: 1rem;
   margin-top: 0.075rem;
   border: 0.5px solid rgba(117, 117, 117, 0.31);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  transform: translateX(-40%);
+  z-index: 1;
 }
 
 .dropdown .dropdown-content.dark-mode {

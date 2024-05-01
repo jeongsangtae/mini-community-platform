@@ -46,6 +46,7 @@
 .info-wrap {
   display: flex;
   align-items: center;
+  position: relative;
   padding: 0 5rem;
 }
 
@@ -64,6 +65,35 @@
 
 .info-wrap svg {
   margin-left: auto;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 3rem;
+  right: 4.5rem;
+  background-color: #f9f9f9;
+  margin-top: 0.075rem;
+  border: 0.5px solid rgba(117, 117, 117, 0.31);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 0;
+  /* top: 100%; */
+}
+
+.dropdown a,
+.dropdown button {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown.dark-mode {
+  background-color: rgb(35, 35, 35);
 }
 
 .underline {

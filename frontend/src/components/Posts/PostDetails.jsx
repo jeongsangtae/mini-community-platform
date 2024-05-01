@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 import { MoreVertical } from "react-feather";
 
@@ -12,6 +12,8 @@ const PostDetails = () => {
   const post = useRouteLoaderData("post-detail");
   const submit = useSubmit();
 
+  const [dropdownToggle, setDropdownToggle] = useState(false);
+
   console.log(post);
 
   if (!post) {
@@ -22,13 +24,24 @@ const PostDetails = () => {
     submit(null, { method: "delete" });
   };
 
+  const dropdownButtonHandler = () => {
+    setDropdownToggle(!dropdownToggle);
+  };
+
+  const dropdownClose = () => {
+    setDropdownToggle(false);
+  };
+
   const actionsButtonClass =
     post.email === authCtx.userInfo?.email
       ? `${classes.actions}`
       : `${classes.actions} ${classes.opacity}`;
 
   return (
-    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+    <div
+      className={`${classes.background} ${classes[authCtx.themeClass]}`}
+      onClick={dropdownClose}
+    >
       <div
         className={`${classes["post-container"]} ${
           classes[authCtx.themeClass]
@@ -51,7 +64,20 @@ const PostDetails = () => {
             <span>{post.date}</span>
             <span>조회 {post.count}</span>
 
-            <MoreVertical />
+            <MoreVertical
+              onClick={dropdownButtonHandler}
+              className={classes.icon}
+            />
+            {dropdownToggle && (
+              <div
+                className={`${classes.dropdown} ${classes[authCtx.themeClass]}`}
+              >
+                <Link to="edit">수정하기</Link>
+                <button type="button" onClick={postDeleteHandler}>
+                  삭제하기
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
