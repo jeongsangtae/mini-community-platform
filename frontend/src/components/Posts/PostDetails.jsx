@@ -38,20 +38,19 @@ const PostDetails = () => {
           게시글 세부 페이지
         </h1>
 
-        <div className={`${classes.title} ${classes[authCtx.themeClass]}`}>
-          {/* <p>제목</p> */}
-          <p>{post.title}</p>
-        </div>
+        <div className={classes["post-wrap"]}>
+          <div className={`${classes.title} ${classes[authCtx.themeClass]}`}>
+            {/* <p>제목</p> */}
+            <p>{post.title}</p>
+          </div>
 
-        <div
-          className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
-        >
-          <div className={classes.info}>
-            <span>{post.name}</span>
+          <div
+            className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
+          >
+            <p>{post.name}</p>
             <span>{post.date}</span>
             <span>조회 {post.count}</span>
-          </div>
-          <div className={classes.dropdown}>
+
             <MoreVertical />
           </div>
         </div>

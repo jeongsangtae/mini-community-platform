@@ -26,6 +26,11 @@
   color: white;
 }
 
+.post-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
 .title {
   padding: 0 5rem;
 }
@@ -34,24 +39,14 @@
   margin: 0rem 5rem;
 }
 
-/* .post-detail p {
-  display: block;
-  width: 100%;
-} */
-
 .post-detail.dark-mode p {
   color: white;
 }
 
 .info-wrap {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 5rem;
-}
-
-.info-wrap > div > span:nth-child(1)::before {
-  content: none;
 }
 
 .info-wrap span::before {
@@ -67,8 +62,8 @@
   color: white;
 }
 
-.dropdown svg {
-  vertical-align: middle;
+.info-wrap svg {
+  margin-left: auto;
 }
 
 .underline {
