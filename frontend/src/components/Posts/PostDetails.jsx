@@ -24,7 +24,8 @@ const PostDetails = () => {
     submit(null, { method: "delete" });
   };
 
-  const dropdownButtonHandler = () => {
+  const dropdownButtonHandler = (event) => {
+    event.stopPropagation();
     setDropdownToggle(!dropdownToggle);
   };
 
@@ -68,12 +69,17 @@ const PostDetails = () => {
               onClick={dropdownButtonHandler}
               className={classes.icon}
             />
+
             {dropdownToggle && (
               <div
                 className={`${classes.dropdown} ${classes[authCtx.themeClass]}`}
               >
-                <Link to="edit">수정하기</Link>
+                <Link to="edit">
+                  {/* <div>수정하기</div> */}
+                  수정하기
+                </Link>
                 <button type="button" onClick={postDeleteHandler}>
+                  {/* <div>삭제하기</div> */}
                   삭제하기
                 </button>
               </div>
