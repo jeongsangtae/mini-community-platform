@@ -35,8 +35,13 @@ const PostDetails = () => {
 
   const actionsButtonClass =
     post.email === authCtx.userInfo?.email
-      ? `${classes.actions}`
-      : `${classes.actions} ${classes.opacity}`;
+      ? `${classes.actions} ${classes[authCtx.themeClass]}`
+      : `${classes.actions} ${classes[authCtx.themeClass]} ${classes.opacity}`;
+
+  const iconButtonClass =
+    post.email === authCtx.userInfo?.email
+      ? `${classes.icon}`
+      : `${classes.icon} ${classes.opacity}`;
 
   return (
     <div
@@ -67,7 +72,7 @@ const PostDetails = () => {
 
             <MoreVertical
               onClick={dropdownButtonHandler}
-              className={classes.icon}
+              className={iconButtonClass}
             />
 
             {dropdownToggle && (
