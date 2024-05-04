@@ -1,8 +1,14 @@
 import { redirect } from "react-router-dom";
 
+import Authentication from "../components/Users/Authentication";
+
 import PostDetails from "../components/Posts/PostDetails";
 
-const PostDetailsPage = () => {
+const PostDetailsPage = ({ isError }) => {
+  if (isError) {
+    return <Authentication />;
+  }
+
   return <PostDetails />;
 };
 
@@ -23,7 +29,8 @@ export const action = async ({ request, params }) => {
   });
 
   if (!response.ok) {
-    throw json({ message: "Could not delete post." }, { status: 500 });
+    return redirect("/no-access");
+    // throw json({ message: "Could not delete post." }, { status: 500 });
   }
 
   console.log("action function");

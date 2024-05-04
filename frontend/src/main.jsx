@@ -70,6 +70,7 @@ const router = createBrowserRouter([
           </Authentication>
         ),
       },
+      { path: "no-access", element: <Authentication /> },
     ],
   },
   { path: "*", element: <NotFound /> },
