@@ -59,6 +59,7 @@ const router = createBrowserRouter([
             ),
             action: postFormAction,
           },
+          { path: "no-access", element: <Authentication /> },
         ],
       },
       { path: "signup-success", element: <SignupSuccessPage /> },
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
           </Authentication>
         ),
       },
-      { path: "no-access", element: <Authentication /> },
+      // { path: "no-access", element: <Authentication /> },
     ],
   },
   { path: "*", element: <NotFound /> },

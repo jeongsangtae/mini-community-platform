@@ -226,8 +226,8 @@ const MainHeader = () => {
                     } ${classes[authCtx.themeClass]}`}
                     onClick={signupToggleHandler}
                   >
-                    {/* <FaRegAddressCard className={classes["dropdown-icon"]} /> */}
-                    <LuKeyRound className={classes["dropdown-icon"]} />
+                    <FaRegAddressCard className={classes["dropdown-icon"]} />
+                    {/* <LuKeyRound className={classes["dropdown-icon"]} /> */}
                     회원가입
                   </button>
                   <button

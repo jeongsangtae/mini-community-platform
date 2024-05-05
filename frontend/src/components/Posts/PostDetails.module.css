@@ -81,7 +81,7 @@
   margin-top: 0.075rem;
   border: 0.5px solid rgba(117, 117, 117, 0.31);
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  /* border-radius: 8px; */
   /* z-index: 1; */
   /* top: 100%; */
 }
@@ -98,8 +98,8 @@
   border: none;
   color: rgb(105, 105, 105);
   background-color: rgb(249, 249, 249);
-  border-radius: 8px;
   cursor: pointer;
+  /* border-radius: 8px; */
   /* cursor: default; */
 }
 
@@ -111,6 +111,7 @@
 .dropdown button:hover {
   color: black;
   background-color: rgb(233, 233, 233);
+  transition: all 0.3s ease;
 }
 
 /* .dropdown div:hover {
@@ -193,6 +194,6 @@
 }
 
 .opacity {
-  pointer-events: none;
+  /* pointer-events: none; */
   opacity: 0.5;
 }
