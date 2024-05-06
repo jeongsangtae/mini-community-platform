@@ -97,7 +97,9 @@ const Replies = ({ commentId }) => {
         <button
           type="button"
           onClick={replyToggleHandler}
-          className={classes["reply-button"]}
+          className={`${classes["reply-button"]} ${
+            classes[authCtx.themeClass]
+          }`}
         >
           답글쓰기
         </button>

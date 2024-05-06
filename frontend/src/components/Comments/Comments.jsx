@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 // import CommentForm from "./CommentForm";
-// import classes from "./Comments.module.css";
+import AuthContext from "../../store/auth-context";
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
+import classes from "./Comments.module.css";
 
 const Comments = () => {
+  const authCtx = useContext(AuthContext);
   const post = useRouteLoaderData("post-detail");
 
   const [comments, setComments] = useState([]);
@@ -65,9 +67,17 @@ const Comments = () => {
   };
 
   return (
-    <>
+    <div className={classes["comment-container"]}>
+      <p className={classes["total-comment"]}>
+        댓글 <span>{comments.length}</span>
+      </p>
+      <CreateComment
+        method="POST"
+        onAddCommentData={addComment}
+        // userData={userData}
+      />
       {comments.length > 0 && (
-        <ul>
+        <ul className={`${classes.comments} ${classes[authCtx.themeClass]}`}>
           {comments.map((comment) => {
             return (
               <Comment
@@ -84,12 +94,7 @@ const Comments = () => {
           })}
         </ul>
       )}
-      <CreateComment
-        method="POST"
-        onAddCommentData={addComment}
-        // userData={userData}
-      />
-    </>
+    </div>
   );
 };
 

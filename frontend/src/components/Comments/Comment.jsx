@@ -61,17 +61,21 @@ const Comment = ({
   return (
     <>
       <li className={classes.comment}>
-        <div className={classes["comment-user-edit"]}>
+        <div
+          className={`${classes["comment-user-edit"]} ${
+            classes[authCtx.themeClass]
+          }`}
+        >
           <p>{name}</p>
           {email === authCtx.userInfo?.email && (
-            <>
+            <div className={classes.actions}>
               <button type="button" onClick={commentEditToggleHandler}>
                 &#9998;
               </button>
               <button type="button" onClick={commentDeleteHandler}>
                 &times;
               </button>
-            </>
+            </div>
           )}
           {/* {loggedIn && (
             <>
