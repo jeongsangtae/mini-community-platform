@@ -60,6 +60,7 @@ const PostDetails = () => {
         <div className={classes["post-wrap"]}>
           <div className={`${classes.title} ${classes[authCtx.themeClass]}`}>
             {/* <p>제목</p> */}
+            <span>제목</span>
             <p>{post.title}</p>
           </div>
 

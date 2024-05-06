@@ -35,6 +35,24 @@
   margin: 0 1rem;
 } */
 
+.title span {
+  height: 20px;
+  margin-right: 0.4rem;
+  margin-bottom: 0.1rem;
+  padding: 0 0.375rem;
+  border: 1px solid rgb(0, 187, 237);
+  border-radius: 30px;
+  color: rgb(0, 187, 237);
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.title p {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
 .content p {
   white-space: pre-line;
   text-align: left;

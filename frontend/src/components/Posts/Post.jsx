@@ -40,6 +40,7 @@ const Post = ({ num, title, name, date, content, count }) => {
 
           <Link to={`/posts/${num.toString()}`} onClick={postCountHandler}>
             <div className={classes.title}>
+              <span>제목</span>
               <p>{title}</p>
             </div>
             <div className={classes.content}>
