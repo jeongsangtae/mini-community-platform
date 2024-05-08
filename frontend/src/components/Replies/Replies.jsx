@@ -6,12 +6,11 @@ import ReplyForm from "./ReplyForm";
 import AuthContext from "../../store/auth-context";
 import classes from "./Replies.module.css";
 
-const Replies = ({ commentId }) => {
+const Replies = ({ commentId, replyToggle, onReplyToggle }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
 
   const [replies, setReplies] = useState([]);
-  const [replyToggle, setReplyToggle] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(false);
 
   // useEffect(() => {
@@ -60,10 +59,6 @@ const Replies = ({ commentId }) => {
   //   setLoggedIn(authCtx.isLoggedIn);
   // }, [authCtx]);
 
-  const replyToggleHandler = () => {
-    setReplyToggle(!replyToggle);
-  };
-
   const addReply = (newReply) => {
     console.log(newReply);
     console.log(replies);
@@ -93,23 +88,12 @@ const Replies = ({ commentId }) => {
 
   return (
     <>
-      {authCtx.isLoggedIn && (
-        <button
-          type="button"
-          onClick={replyToggleHandler}
-          className={`${classes["reply-button"]} ${
-            classes[authCtx.themeClass]
-          }`}
-        >
-          답글쓰기
-        </button>
-      )}
       {replyToggle && (
         <ReplyForm
           method="POST"
           commentId={commentId}
           onAddReplyData={addReply}
-          onReplyToggle={replyToggleHandler}
+          onReplyToggle={onReplyToggle}
         />
       )}
       {replies.length > 0 && (

@@ -58,12 +58,12 @@ const Reply = ({
         <div className={classes["reply-user-edit"]}>
           <p>{name}</p>
           {email === authCtx.userInfo?.email && (
-            <>
+            <div>
               <button onClick={replyEditToggleHandler}>&#9998;</button>
               <button type="button" onClick={replyDeleteHandler}>
                 &times;
               </button>
-            </>
+            </div>
           )}
         </div>
         <p className={classes.content}>{content}</p>

@@ -64,6 +64,33 @@
   color: rgb(196, 181, 181);
 }
 
+.reply-button {
+  border: none;
+  background-color: transparent;
+  color: rgb(105, 105, 105);
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.3rem;
+  border-radius: 2px;
+  margin-left: 1rem;
+  transition: all 0.3s ease;
+}
+
+.reply-button:hover {
+  cursor: pointer;
+  color: black;
+  border-radius: 2px;
+}
+
+.reply-button.dark-mode {
+  color: rgb(226, 169, 169);
+}
+
+.reply-button.dark-mode:hover {
+  color: white;
+}
+
 .underline-reply {
   content: "";
   margin-top: 2.5rem;

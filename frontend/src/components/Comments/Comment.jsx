@@ -20,6 +20,7 @@ const Comment = ({
   const authCtx = useContext(AuthContext);
 
   const [commentEditToggle, setCommentEditToggle] = useState(false);
+  const [replyToggle, setReplyToggle] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(false);
 
   // useEffect(() => {
@@ -55,6 +56,10 @@ const Comment = ({
     setCommentEditToggle(!commentEditToggle);
   };
 
+  const replyToggleHandler = () => {
+    setReplyToggle(!replyToggle);
+  };
+
   // console.log(email);
   // console.log(authCtx.userInfo.email);
 
@@ -68,7 +73,7 @@ const Comment = ({
         >
           <p>{name}</p>
           {email === authCtx.userInfo?.email && (
-            <div className={classes.actions}>
+            <div>
               <button type="button" onClick={commentEditToggleHandler}>
                 &#9998;
               </button>
@@ -90,6 +95,19 @@ const Comment = ({
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>
+
+        {authCtx.isLoggedIn && (
+          <button
+            type="button"
+            onClick={replyToggleHandler}
+            className={`${classes["reply-button"]} ${
+              classes[authCtx.themeClass]
+            }`}
+          >
+            답글쓰기
+          </button>
+        )}
+
         {commentEditToggle && (
           <EditComment
             method="PATCH"
@@ -99,7 +117,11 @@ const Comment = ({
           />
         )}
         <p className={classes["underline-reply"]}></p>
-        <Replies commentId={commentId} />
+        <Replies
+          commentId={commentId}
+          replyToggle={replyToggle}
+          onReplyToggle={replyToggleHandler}
+        />
         <p className={classes["underline-comment"]}></p>
       </li>
     </>
