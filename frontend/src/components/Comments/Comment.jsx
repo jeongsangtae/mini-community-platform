@@ -21,6 +21,9 @@ const Comment = ({
 
   const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
+  const [repliesCount, setRepliesCount] = useState([]);
+
+  console.log(repliesCount);
   // const [loggedIn, setLoggedIn] = useState(false);
 
   // useEffect(() => {
@@ -58,6 +61,10 @@ const Comment = ({
 
   const replyToggleHandler = () => {
     setReplyToggle(!replyToggle);
+  };
+
+  const repliesLengthHandler = (length) => {
+    setRepliesCount(length);
   };
 
   // console.log(email);
@@ -116,13 +123,23 @@ const Comment = ({
             onCommentToggle={commentEditToggleHandler}
           />
         )}
-        <p className={classes["underline-reply"]}></p>
+        {repliesCount > 0 && (
+          <p
+            className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+          ></p>
+        )}
         <Replies
           commentId={commentId}
           replyToggle={replyToggle}
           onReplyToggle={replyToggleHandler}
+          repliesLength={repliesLengthHandler}
         />
-        <p className={classes["underline-comment"]}></p>
+        <p
+          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+        ></p>
+        {/* <p
+          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+        ></p> */}
       </li>
     </>
   );

@@ -55,6 +55,9 @@ const Reply = ({
   return (
     <>
       <li className={classes.reply}>
+        <p
+          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+        ></p>
         <div className={classes["reply-user-edit"]}>
           <p>{name}</p>
           {email === authCtx.userInfo?.email && (

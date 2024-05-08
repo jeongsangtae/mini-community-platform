@@ -6,35 +6,11 @@ import ReplyForm from "./ReplyForm";
 import AuthContext from "../../store/auth-context";
 import classes from "./Replies.module.css";
 
-const Replies = ({ commentId, replyToggle, onReplyToggle }) => {
+const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
 
   const [replies, setReplies] = useState([]);
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const postId = post.postId;
-  //     const response = await fetch(
-  //       "http://localhost:3000/posts/" + postId + "/replies"
-  //     );
-
-  //     if (!response.ok) {
-  //       throw json({ message: "답글 불러오기 실패" }, { status: 500 });
-  //     }
-
-  //     const resData = await response.json();
-  //     console.log(resData.replies);
-  //     setReplies(
-  //       resData.replies.filter(
-  //         (filteredReplies) => filteredReplies.comment_id === commentId
-  //       )
-  //     );
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,14 +26,11 @@ const Replies = ({ commentId, replyToggle, onReplyToggle }) => {
       const resData = await response.json();
       console.log(resData.replies);
       setReplies(resData.replies);
+      repliesLength(resData.replies.length);
     };
 
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   setLoggedIn(authCtx.isLoggedIn);
-  // }, [authCtx]);
 
   const addReply = (newReply) => {
     console.log(newReply);

@@ -1,5 +1,22 @@
 .reply {
   list-style: none;
+  position: relative;
+}
+
+.reply:first-child .underline {
+  display: none;
+}
+
+.underline {
+  content: "";
+  margin-top: 2rem;
+  height: 1px;
+  width: 90%;
+  background-color: rgb(224, 224, 224);
+}
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
 }
 
 .reply-user-edit {
