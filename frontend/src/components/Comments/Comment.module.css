@@ -6,9 +6,9 @@
 
 .comment-user-edit {
   display: flex;
-  margin-top: 1rem;
   align-items: center;
   justify-content: space-between;
+  /* margin-top: 0.5rem; */
 }
 
 .comment-user-edit p {
@@ -62,6 +62,40 @@
   margin-top: 0.5rem;
   font-size: 0.75rem;
   color: rgb(196, 181, 181);
+}
+
+.underline-reply {
+  content: "";
+  margin-top: 2.5rem;
+  height: 1px;
+  background-color: rgb(68, 68, 68);
+}
+
+.underline-comment {
+  content: "";
+  margin-top: 2rem;
+  height: 1px;
+  background-color: rgb(68, 68, 68);
+}
+
+/* .underline {
+  content: "";
+  margin: 1rem 0;
+  height: 1px;
+  background-color: rgb(68, 68, 68);
+} */
+
+.comment:first-child {
+  padding-top: 1.5rem;
+}
+
+.comment:last-child {
+  padding-bottom: 2.5rem;
+}
+
+.comment:last-child .underline-reply,
+.comment:last-child .underline-comment {
+  display: none;
 }
 
 /* .board-comment .comment-user-edit {

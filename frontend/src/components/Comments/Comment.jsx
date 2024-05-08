@@ -90,7 +90,6 @@ const Comment = ({
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>
-
         {commentEditToggle && (
           <EditComment
             method="PATCH"
@@ -99,7 +98,9 @@ const Comment = ({
             onCommentToggle={commentEditToggleHandler}
           />
         )}
+        <p className={classes["underline-reply"]}></p>
         <Replies commentId={commentId} />
+        <p className={classes["underline-comment"]}></p>
       </li>
     </>
   );
