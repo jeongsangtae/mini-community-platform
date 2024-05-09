@@ -11,7 +11,7 @@
   content: "";
   margin-top: 2rem;
   height: 1px;
-  width: 90%;
+  /* width: 95%; */
   background-color: rgb(224, 224, 224);
 }
 
@@ -22,6 +22,7 @@
 .reply-user-edit {
   display: flex;
   margin-top: 1rem;
+  /* margin-right: 2rem; */
   align-items: center;
   justify-content: space-between;
 }

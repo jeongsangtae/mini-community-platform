@@ -24,7 +24,6 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
       }
 
       const resData = await response.json();
-      console.log(resData.replies);
       setReplies(resData.replies);
       repliesLength(resData.replies.length);
     };

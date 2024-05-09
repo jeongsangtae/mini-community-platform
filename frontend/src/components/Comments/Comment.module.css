@@ -102,26 +102,6 @@
   background-color: rgb(68, 68, 68);
 }
 
-/* .underline-reply {
-  content: "";
-  margin-top: 2rem;
-  height: 1px;
-  background-color: rgb(68, 68, 68);
-} */
-
-.underline-reply.dark-mode {
-}
-
-/* .underline-comment {
-  content: "";
-  margin-top: 2rem;
-  height: 1px;
-  background-color: rgb(68, 68, 68);
-} */
-
-.underline-comment.dark-mode {
-}
-
 /* .underline {
   content: "";
   margin: 1rem 0;

@@ -11,6 +11,8 @@ const Comments = () => {
   const post = useRouteLoaderData("post-detail");
 
   const [comments, setComments] = useState([]);
+  const [totalReplies, setTotalReplies] = useState(0);
+  // const [totalCommentCount, setTotalCommentCount] = useState(0);
   // const [userData, setUserData] = useState([]);
 
   useEffect(() => {
@@ -66,10 +68,14 @@ const Comments = () => {
     console.log(comments);
   };
 
+  const totalRepliesHandler = (repliesValue) => {
+    setTotalReplies((prevValue) => prevValue + repliesValue);
+  };
+
   return (
     <div className={classes["comment-container"]}>
       <p className={classes["total-comment"]}>
-        댓글 <span>{comments.length}</span>
+        댓글 <span>{comments.length + totalReplies}</span>
       </p>
       <CreateComment
         method="POST"
@@ -89,6 +95,7 @@ const Comments = () => {
                 date={comment.date}
                 onDeleteCommentData={deleteComment}
                 onEditCommentData={editComment}
+                onRepliesValue={totalRepliesHandler}
               />
             );
           })}
