@@ -56,7 +56,10 @@ const CreateComment = ({ method, onAddCommentData }) => {
 
   return (
     <>
-      <form onSubmit={submitHandler} className={classes["comment-form"]}>
+      <form
+        onSubmit={submitHandler}
+        className={`${classes["comment-form"]} ${classes[authCtx.themeClass]}`}
+      >
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (
           <TextareaAutosize
