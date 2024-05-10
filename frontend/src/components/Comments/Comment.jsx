@@ -22,8 +22,6 @@ const Comment = ({
 
   const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
-  const [repliesCount, setRepliesCount] = useState([]);
-  const [totalReplies, setTotalReplies] = useState();
 
   // console.log(repliesCount);
   // const [loggedIn, setLoggedIn] = useState(false);
@@ -31,8 +29,6 @@ const Comment = ({
   // useEffect(() => {
   //   setLoggedIn(authCtx.isLoggedIn);
   // }, [authCtx]);
-
-  console.log(totalReplies);
 
   const commentDeleteHandler = async () => {
     const postId = post.postId;
@@ -68,35 +64,8 @@ const Comment = ({
   };
 
   const repliesLengthHandler = (length) => {
-    setRepliesCount(length);
     onRepliesValue(length);
-
-    // const lengthValue = parseFloat(length);
-
-    // setTotalReplies((prevSum) => prevSum + lengthValue);
-
-    // console.log(totalReplies);
-
-    // const repliesSum = length.reduce((acc, curr) => acc + curr, 0);
-
-    // console.log(repliesSum);
   };
-
-  // const rs =
-  //   repliesCount.length > 0
-  //     ? repliesCount.reduce((acc, curr) => acc + curr, 0)
-  //     : 0;
-  // console.log(rs);
-
-  // const calculateSum = (repliesCountArray) => {
-  //   if (repliesCountArray.length === 0) {
-  //     return 0;
-  //   }
-  //   return repliesCountArray.reduce((acc, curr) => acc + curr, 0);
-  // };
-
-  // const repliesSum = calculateSum(repliesCount);
-  // console.log(repliesSum);
 
   // console.log(email);
   // console.log(authCtx.userInfo.email);
@@ -120,16 +89,6 @@ const Comment = ({
               </button>
             </div>
           )}
-          {/* {loggedIn && (
-            <>
-              <button type="button" onClick={commentEditToggleHandler}>
-                &#9998;
-              </button>
-              <button type="button" onClick={commentDeleteHandler}>
-                &times;
-              </button>
-            </>
-          )} */}
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>
@@ -154,23 +113,17 @@ const Comment = ({
             onCommentToggle={commentEditToggleHandler}
           />
         )}
-        {repliesCount > 0 && (
-          <p
-            className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-          ></p>
-        )}
+
         <Replies
           commentId={commentId}
           replyToggle={replyToggle}
           onReplyToggle={replyToggleHandler}
           repliesLength={repliesLengthHandler}
         />
+
         <p
           className={`${classes.underline} ${classes[authCtx.themeClass]}`}
         ></p>
-        {/* <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p> */}
       </li>
     </>
   );

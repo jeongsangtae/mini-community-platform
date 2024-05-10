@@ -69,6 +69,11 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
         />
       )}
       {replies.length > 0 && (
+        <p
+          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+        ></p>
+      )}
+      {replies.length > 0 && (
         <ul>
           {replies.map((reply) => {
             return (

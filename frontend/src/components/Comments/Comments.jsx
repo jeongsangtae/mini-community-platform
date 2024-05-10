@@ -12,7 +12,6 @@ const Comments = () => {
 
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
-  // const [totalCommentCount, setTotalCommentCount] = useState(0);
   // const [userData, setUserData] = useState([]);
 
   useEffect(() => {
