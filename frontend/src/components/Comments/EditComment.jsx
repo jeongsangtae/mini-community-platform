@@ -70,15 +70,22 @@ const EditComment = ({
   }, [authCtx]);
 
   const commentEditButtonClass = authCtx.isLoggedIn
-    ? `${classes["edit-button"]}`
-    : `${classes["edit-button"]} ${classes.opacity}`;
-  const commentDeleteButtonClass = authCtx.isLoggedIn
-    ? `${classes["cancel-button"]}`
-    : `${classes["cancel-button"]} ${classes.opacity}`;
+    ? `${classes["edit-button"]} ${classes[authCtx.themeClass]}`
+    : `${classes["edit-button"]} ${classes[authCtx.themeClass]} ${
+        classes.opacity
+      }`;
+  const commentCancelButtonClass = authCtx.isLoggedIn
+    ? `${classes["cancel-button"]} ${classes[authCtx.themeClass]}`
+    : `${classes["cancel-button"]} ${classes[authCtx.themeClass]} ${
+        classes.opacity
+      }`;
 
   return (
     <>
-      <form onSubmit={submitHandler} className={classes["comment-form"]}>
+      <form
+        onSubmit={submitHandler}
+        className={`${classes["comment-form"]} ${classes[authCtx.themeClass]}`}
+      >
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (
           <TextareaAutosize
@@ -107,7 +114,7 @@ const EditComment = ({
           {onCommentToggle && (
             <button
               onClick={onCommentToggle}
-              className={commentDeleteButtonClass}
+              className={commentCancelButtonClass}
             >
               취소
             </button>

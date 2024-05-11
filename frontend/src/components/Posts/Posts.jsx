@@ -74,7 +74,9 @@ const Posts = () => {
             </Link>
           </div>
 
-          <p className={classes.underline}></p>
+          <p
+            className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+          ></p>
 
           {/* <div
             className={`${classes["posts-item"]} ${
@@ -112,7 +114,11 @@ const Posts = () => {
               >
                 게시글이 존재하지 않습니다.
               </h2>
-              <p className={classes.underline}></p>
+              <p
+                className={`${classes.underline} ${
+                  classes[authCtx.themeClass]
+                }`}
+              ></p>
             </>
           )}
           <div

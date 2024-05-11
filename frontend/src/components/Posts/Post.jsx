@@ -51,7 +51,7 @@ const Post = ({ num, title, name, date, content, count }) => {
           </Link>
         </li>
       </div>
-      <p className={classes.underline}></p>
+      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
     </>
   );
 };

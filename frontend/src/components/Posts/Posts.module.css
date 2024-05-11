@@ -98,8 +98,12 @@
   content: "";
   margin: 1rem 5rem;
   height: 1px;
-  background-color: rgb(68, 68, 68);
+  background-color: rgb(224, 224, 224);
   /* width: 90%; */
+}
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
 }
 
 .add {

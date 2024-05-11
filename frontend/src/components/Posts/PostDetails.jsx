@@ -93,7 +93,9 @@ const PostDetails = () => {
           </div>
         </div>
 
-        <p className={classes.underline}></p>
+        <p
+          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+        ></p>
 
         <div
           className={`${classes["post-detail"]} ${classes[authCtx.themeClass]}`}
@@ -101,7 +103,9 @@ const PostDetails = () => {
           <p className={classes.contents}>{post.content}</p>
         </div>
 
-        <p className={classes.underline}></p>
+        <p
+          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+        ></p>
 
         <div className={actionsButtonClass}>
           <Link to="edit">수정</Link>

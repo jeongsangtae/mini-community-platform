@@ -14,9 +14,15 @@
   margin: 0.5rem auto 0 auto;
   flex-direction: column;
   align-items: stretch;
-  border: 1px solid rgb(180, 173, 173);
-  border-radius: 4px;
+  border-radius: 2px;
+  background-color: white;
+  border: 1px solid rgb(210, 210, 210);
   padding: 1rem;
+}
+
+.comment-form.dark-mode {
+  background-color: var(--dark-mode-background-color);
+  border: 1px solid rgb(68, 68, 68);
 }
 
 .comment-form p {
@@ -36,7 +42,11 @@
   resize: none;
   outline: none;
   font-size: 14px;
-  background-color: #180a3a;
+  background-color: transparent;
+  color: black;
+}
+
+.comment-form.dark-mode textarea {
   color: white;
 }
 
@@ -56,25 +66,30 @@
 
 .comment-button .edit-button,
 .comment-button .cancel-button {
-  border: none;
   padding: 0.25rem 0.5rem;
   margin-right: 0.25rem;
-  color: white;
-  background: rgb(87, 80, 80);
-}
-
-.comment-button .edit-button:hover {
-  cursor: pointer;
-  color: white;
-  background-color: rgb(40, 40, 40);
   border-radius: 2px;
+  color: black;
+  background-color: transparent;
+  border: 1px solid rgb(68, 68, 68);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
+.comment-button .edit-button:hover,
 .comment-button .cancel-button:hover {
-  cursor: pointer;
+  background-color: rgb(237, 237, 237);
+}
+
+.comment-button .edit-button.dark-mode,
+.comment-button .cancel-button.dark-mode {
   color: white;
-  background-color: rgb(139, 131, 131);
-  border-radius: 2px;
+  border: 1px solid rgb(68, 68, 68);
+}
+
+.comment-button .edit-button.dark-mode:hover,
+.comment-button .cancel-button.dark-mode:hover {
+  background-color: rgb(25, 25, 25);
 }
 
 .opacity {

@@ -56,7 +56,7 @@ const Profile = () => {
       ) : (
         <div className={classes["board-container"]}>
           <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
-            {authCtx.userInfo?.email} 프로필 페이지
+            {authCtx.userInfo?.name}
           </h1>
 
           {/* <div className={classes["posts-item"]}>

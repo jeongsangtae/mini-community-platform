@@ -88,15 +88,22 @@ const ReplyForm = ({
   }, [authCtx]);
 
   const replyEditButtonClass = authCtx.isLoggedIn
-    ? `${classes["edit-button"]}`
-    : `${classes["edit-button"]} ${classes.opacity}`;
-  const replyDeleteButtonClass = authCtx.isLoggedIn
-    ? `${classes["cancel-button"]}`
-    : `${classes["cancel-button"]} ${classes.opacity}`;
+    ? `${classes["edit-button"]} ${classes[authCtx.themeClass]}`
+    : `${classes["edit-button"]} ${classes[authCtx.themeClass]} ${
+        classes.opacity
+      }`;
+  const replyCancelButtonClass = authCtx.isLoggedIn
+    ? `${classes["cancel-button"]} ${classes[authCtx.themeClass]}`
+    : `${classes["cancel-button"]} ${classes[authCtx.themeClass]} ${
+        classes.opacity
+      }`;
 
   return (
     <>
-      <form onSubmit={submitHandler} className={classes["reply-form"]}>
+      <form
+        onSubmit={submitHandler}
+        className={`${classes["reply-form"]} ${classes[authCtx.themeClass]}`}
+      >
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (
           <TextareaAutosize
@@ -122,12 +129,16 @@ const ReplyForm = ({
           />
         )}
 
-        <div className={classes["reply-button"]}>
+        <div
+          className={`${classes["reply-button"]} ${
+            classes[authCtx.themeClass]
+          }`}
+        >
           <button className={replyEditButtonClass}>
             {method === "POST" ? "등록" : "수정"}
           </button>
           {onReplyToggle && (
-            <button onClick={onReplyToggle} className={replyDeleteButtonClass}>
+            <button onClick={onReplyToggle} className={replyCancelButtonClass}>
               취소
             </button>
           )}
