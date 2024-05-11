@@ -19,10 +19,7 @@ html {
   background-color: var(--dark-mode-background-color);
 }
 
-.title.dark-mode {
-  color: white;
-}
-
+.title.dark-mode,
 .subtitle.dark-mode {
   color: white;
 }

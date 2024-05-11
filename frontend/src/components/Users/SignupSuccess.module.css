@@ -1,9 +1,18 @@
 .signup-success {
-  margin: 1rem;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
-  height: 75vh;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.signup-success.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
+.signup-success.dark-mode h1,
+.signup-success.dark-mode p {
+  color: white;
 }

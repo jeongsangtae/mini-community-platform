@@ -33,13 +33,13 @@ router.post("/signup", async (req, res) => {
     !signUpPassword ||
     signUpEmail !== signUpConfirmEmail ||
     !signUpEmail.includes("@") ||
-    signUpUsername.trim().length > 6 ||
+    signUpUsername.trim().length > 5 ||
     signUpPassword.trim().length < 6
   ) {
     let message = "잘못된 입력입니다. 다시 입력해주세요.";
 
-    if (signUpUsername.trim().length > 6) {
-      message = "이름은 6자리까지 입력할 수 있습니다.";
+    if (signUpUsername.trim().length > 5) {
+      message = "이름은 5자리까지 입력할 수 있습니다.";
     } else if (signUpPassword.trim().length < 6) {
       message = "비밀번호를 6자리 이상 입력해주세요.";
     }
