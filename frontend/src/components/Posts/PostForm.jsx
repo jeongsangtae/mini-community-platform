@@ -1,10 +1,11 @@
+import { useContext } from "react";
 import { useNavigate, Form, redirect, json } from "react-router-dom";
 
+import AuthContext from "../../store/auth-context";
 import classes from "./PostForm.module.css";
 
 const PostForm = ({ method, userData, postData, postPageName }) => {
-  console.log(postData);
-  console.log(userData);
+  const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   const closeHandler = () => {
@@ -12,39 +13,51 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
   };
 
   return (
-    <>
-      <h1 className={classes.heading}>{postPageName}</h1>
-      <Form method={method} className={classes.form}>
-        <div>
-          <label htmlFor="title">제목</label>
-          <input
-            required
-            type="text"
-            id="title"
-            name="title"
-            defaultValue={postData ? postData.title : ""}
-          />
-        </div>
-        <div>
-          <label htmlFor="name">작성자</label>
-          {postData ? <p>{postData.name}</p> : <p>{userData?.name}</p>}
-        </div>
-        <div>
-          <textarea
-            required
-            name="content"
-            placeholder="내용 입력"
-            defaultValue={postData ? postData.content : ""}
-          />
-        </div>
-        <div className={classes.actions}>
-          <button>등록</button>
-          <button type="button" onClick={closeHandler}>
-            취소
-          </button>
-        </div>
-      </Form>
-    </>
+    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+      <div
+        className={`${classes["post-form-container"]} ${
+          classes[authCtx.themeClass]
+        }`}
+      >
+        <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+          {postPageName}
+        </h1>
+        <Form
+          method={method}
+          className={`${classes.form} ${classes[authCtx.themeClass]}`}
+        >
+          <div>
+            {/* <label htmlFor="title">제목</label> */}
+            <input
+              required
+              type="text"
+              id="title"
+              name="title"
+              placeholder="제목을 입력해 주세요"
+              defaultValue={postData ? postData.title : ""}
+            />
+          </div>
+          <div>
+            {/* <label htmlFor="name">작성자</label> */}
+            {postData ? <p>{postData.name}</p> : <p>{userData?.name}</p>}
+          </div>
+          <div>
+            <textarea
+              required
+              name="content"
+              placeholder="내용 입력"
+              defaultValue={postData ? postData.content : ""}
+            />
+          </div>
+          <div className={`${classes.actions} ${classes[authCtx.themeClass]}`}>
+            <button>등록</button>
+            <button type="button" onClick={closeHandler}>
+              취소
+            </button>
+          </div>
+        </Form>
+      </div>
+    </div>
   );
 };
 

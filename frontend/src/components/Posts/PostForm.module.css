@@ -1,64 +1,118 @@
+.background {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* z-index: -1; */
+}
+
+.background.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
+.post-form-container {
+  padding: 5rem 10rem 5rem 10rem;
+}
+
 .heading {
-  margin: 5rem;
+  margin: 2rem 5rem;
   font-size: 2rem;
 }
 
+.heading.dark-mode {
+  color: white;
+}
+
 .form {
-  max-width: 40rem;
-  margin: 2rem auto;
+  max-width: 90rem;
+  margin: 3rem auto;
 }
 
 .form label,
 .form input,
 .form textarea {
+  font: inherit;
   display: block;
   width: 100%;
-  border: 1px solid rgb(180, 173, 173);
-  background-color: #180a3a;
+  color: black;
+  background-color: transparent;
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 2px;
+  outline: none;
+}
+
+.form.dark-mode input,
+.form.dark-mode textarea {
   color: white;
-  border-radius: 4px;
+  border: 1px solid rgb(68, 68, 68);
 }
 
 .form label {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
   border: 0;
 }
 
+.form.dark-mode label,
+.form.dark-mode p {
+  color: white;
+}
+
 .form input {
-  font: inherit;
-  padding: 0.25rem;
+  padding: 0.5rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
 }
 
 .form textarea {
-  /* font: inherit;
-  padding: 0.25rem; */
-
-  height: 20rem;
-  padding: 1rem;
+  height: 30rem;
+  padding: 0.5rem;
   box-sizing: border-box;
-  /* border: 0; */
-  resize: vertical;
+  resize: none;
   font-size: 1rem;
   line-height: 140%;
+  background-color: transparent;
+}
+
+.form textarea::-webkit-scrollbar {
+  width: 0;
+}
+
+.form textarea:focus::placeholder {
+  color: rgb(94, 88, 88);
 }
 
 .actions {
   display: block;
   text-align: center;
-  margin-top: 1rem;
-  /* display: flex; */
-  /* gap: 1rem; */
-  /* justify-content: flex-end; */
+  margin-top: 2.5rem;
 }
 
 .actions button {
   font: inherit;
-  cursor: pointer;
   margin: 0 0.5rem;
   padding: 0.5rem 1.5rem;
-  border-radius: 4px;
-  background-color: gray;
+  color: black;
+  background-color: transparent;
+  border-radius: 2px;
+  border: 1px solid rgb(68, 68, 68);
+  transition: all 0.3s ease;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.actions button:last-child {
+  margin-left: 0.5rem;
+}
+
+.actions button:hover {
+  background-color: rgb(237, 237, 237);
+}
+
+.actions.dark-mode button {
   color: white;
-  border: none;
+  /* background: rgb(87, 80, 80); */
+}
+
+.actions.dark-mode button:hover {
+  background-color: rgb(25, 25, 25);
 }
