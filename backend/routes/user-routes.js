@@ -91,7 +91,7 @@ router.post("/login", async (req, res) => {
 
   // 이메일이 존재하지 않거나 비밀번호가 일치하지 않는 경우
   if (!existingLoginUser) {
-    let message = "로그인할 수 없습니다. 존재하지 않는 이메일입니다.";
+    let message = `존재하지 않는 이메일입니다.`;
 
     res.status(400).json({ message });
 
@@ -104,7 +104,7 @@ router.post("/login", async (req, res) => {
     );
 
     if (!passwordEqual) {
-      let message = "로그인할 수 없습니다. 패스워드가 틀렸습니다.";
+      let message = `패스워드가 일치하지 않습니다.`;
 
       res.status(400).json({ message });
 

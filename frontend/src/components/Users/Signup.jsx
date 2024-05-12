@@ -51,7 +51,6 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
 
   return (
     <Modal onClose={onSignupToggle}>
-      {error && <p>{errorMessage}</p>}
       <form className={classes.form} onSubmit={submitHandler}>
         <h1 className={classes.heading}>회원가입</h1>
         <div className={classes["input-box"]}>
@@ -106,6 +105,15 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
           <FaLock className={classes.icon} />
         </div>
 
+        {error && (
+          <p
+            className={`${classes["error-message"]} ${
+              classes[authCtx.themeClass]
+            }`}
+          >
+            {errorMessage}
+          </p>
+        )}
         {/* <div className={classes.actions}> */}
         <button
           type="submit"

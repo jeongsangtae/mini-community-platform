@@ -4,6 +4,19 @@
   background-color: #6233b9;
 } */
 
+.error-message {
+  margin: 1rem;
+  margin-bottom: 1.3rem;
+  white-space: pre-line;
+  text-align: center;
+  color: rgb(177, 77, 77);
+  font-size: 0.9rem;
+}
+
+.error-message.dark-mode {
+  color: rgb(247, 120, 120);
+}
+
 .form {
   position: relative;
   padding: 1rem;

@@ -127,7 +127,7 @@ const MainHeader = () => {
                     } ${classes[authCtx.themeClass]}`}
                   >
                     <LuUserCircle2 className={classes["dropdown-icon"]} />
-                    계정
+                    {authCtx.userInfo?.name}
                   </NavLink>
                   <button
                     className={`${classes.button} ${

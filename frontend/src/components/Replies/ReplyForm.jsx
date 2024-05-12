@@ -129,11 +129,7 @@ const ReplyForm = ({
           />
         )}
 
-        <div
-          className={`${classes["reply-button"]} ${
-            classes[authCtx.themeClass]
-          }`}
-        >
+        <div className={classes["reply-button"]}>
           <button className={replyEditButtonClass}>
             {method === "POST" ? "등록" : "수정"}
           </button>
