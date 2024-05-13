@@ -154,8 +154,8 @@
 }
 
 .dropdown .dropdown-content {
-  /* display: none; */
-  display: block;
+  /* display: block; */
+  display: none;
   position: absolute;
   top: 100%;
   background-color: rgb(249, 249, 249);
