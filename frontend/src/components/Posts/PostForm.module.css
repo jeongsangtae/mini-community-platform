@@ -119,7 +119,7 @@
   background-color: rgb(25, 25, 25);
 }
 
-@media (max-width: 1440px) {
+@media (max-height: 900px) {
   .background {
     overflow: auto;
   }

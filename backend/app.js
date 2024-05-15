@@ -1,6 +1,8 @@
 const path = require("path");
 
 const express = require("express");
+const http = require("http"); // socket.io를 위한 기본 구성
+const socketIo = require("socket.io"); // socket.io를 위한 기본 구성2
 const dotenv = require("dotenv");
 
 const db = require("./data/database");
@@ -8,6 +10,8 @@ const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
 
 const app = express();
+const server = http.createServer(app); // socket.io
+const io = socketIo(server);
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -59,6 +63,7 @@ app.use((error, req, res, next) => {
   res.status(500).render("500");
 });
 
+// MongoDB 설정
 db.connectToDatabase()
   .then(() => {
     app.listen(3000);
@@ -69,3 +74,19 @@ db.connectToDatabase()
   });
 
 console.log("run server");
+
+// Socket.IO 설정
+io.on("connection", (socket) => {
+  console.log("클라이언트가 연결되었습니다.");
+
+  // 클라이언트에서 보낸 이벤트 수신 및 처리
+  socket.on("message", (msg) => {
+    console.log("메시지를 받았습니다:", msg);
+    // 클라이언트에게 메시지 전송
+    io.emit("message", msg);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("클라이언트가 연결을 끊었습니다.");
+  });
+});
