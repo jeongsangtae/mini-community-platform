@@ -63,56 +63,21 @@ app.use((error, req, res, next) => {
   res.status(500).render("500");
 });
 
-// MongoDB 설정
-// db.connectToDatabase()
-//   .then(() => {
-//     app.listen(3000);
-//   })
-//   .catch((error) => {
-//     console.log("데이터베이스에 연결하지 못했습니다.");
-//     console.log(error);
-//   });
+const PORT = 3000;
 
-// console.log("run server");
+server.listen(PORT, () => {
+  console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
+});
 
-// Socket.IO 설정
 // io.on("connection", (socket) => {
-//   console.log("클라이언트가 연결되었습니다.");
-
-//   // 클라이언트에서 보낸 이벤트 수신 및 처리
-//   socket.on("message", (msg) => {
-//     console.log("메시지를 받았습니다:", msg);
-//     // 클라이언트에게 메시지 전송
-//     io.emit("message", msg);
-//   });
-
-//   socket.on("disconnect", () => {
-//     console.log("클라이언트가 연결을 끊었습니다.");
-//   });
+//   console.log("클라이언트가 연결되었습니다.", socket.message);
 // });
 
+// MongoDB 설정
 db.connectToDatabase()
   .then(() => {
-    // Express.js 앱 생성
-    const app = express();
-
-    // HTTP 서버 생성
-    const server = http.createServer(app);
-
-    // Socket.IO 서버 생성 및 연결
-    io.on("connection", (socket) => {
-      console.log("A user connected");
-
-      socket.on("chat message", (msg) => {
-        console.log("message: " + msg);
-        io.emit("chat message", msg);
-      });
-    });
-
-    // 서버 실행
-    server.listen(3000, () => {
-      console.log("Server listening on port 3000");
-    });
+    // app.listen(3000);
+    console.log("데이터베이스에 연결되었습니다.");
   })
   .catch((error) => {
     console.log("데이터베이스에 연결하지 못했습니다.");
@@ -120,3 +85,51 @@ db.connectToDatabase()
   });
 
 console.log("run server");
+
+// Socket.IO 설정
+// io.on("connection", (socket) => {
+// console.log("클라이언트가 연결되었습니다.");
+
+// 클라이언트에서 보낸 이벤트 수신 및 처리
+// socket.on("message", (msg) => {
+//   console.log("메시지를 받았습니다:", msg);
+//   // 클라이언트에게 메시지 전송
+//   io.emit("message", msg);
+// });
+
+// socket.on("disconnect", () => {
+//   console.log("클라이언트가 연결을 끊었습니다.");
+// });
+// });
+
+// io.listen(3000);
+
+// db.connectToDatabase()
+//   .then(() => {
+//     // Express.js 앱 생성
+//     const app = express();
+
+//     // HTTP 서버 생성
+//     const server = http.createServer(app);
+
+//     // Socket.IO 서버 생성 및 연결
+//     io.on("connection", (socket) => {
+//       console.log("A user connected");
+
+//       socket.on("chat message", (msg) => {
+//         console.log("message: " + msg);
+//         io.emit("chat message", msg);
+//       });
+//     });
+
+//     // 서버 실행
+//     server.listen(3000, () => {
+//       console.log("Server listening on port 3000");
+//     });
+//   })
+//   .catch((error) => {
+//     console.log("데이터베이스에 연결하지 못했습니다.");
+//     console.log(error);
+//   });
+
+// console.log("run server");
