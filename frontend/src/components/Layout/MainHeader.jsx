@@ -9,6 +9,7 @@ import Signup from "../Users/Signup";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./MainHeader.module.css";
+import Chat from "../Chat/Chat";
 
 const MainHeader = () => {
   const [openSignupModal, setOnSignupModal] = useState(false);
@@ -288,6 +289,7 @@ const MainHeader = () => {
           )}
         </>
       )}
+      <Chat />
     </>
   );
 };

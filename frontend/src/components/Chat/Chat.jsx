@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
+import { BsChatFill } from "react-icons/bs";
+
+import classes from "./Chat.module.css";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [socket, setSocket] = useState(null);
+  const [chatToggle, setChatToggle] = useState(false);
 
   // socket.emit("message", "socket.io 체크");
   useEffect(() => {
@@ -37,19 +41,30 @@ const Chat = () => {
     }
   };
 
+  const chatToggleHandler = () => {
+    setChatToggle(!chatToggle);
+  };
+
   return (
     <div>
-      <ul>
-        {messages.map((message, index) => (
-          <li key={index}>{message}</li>
-        ))}
-      </ul>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-      <button onClick={sendMessage}>Send</button>
+      <div className={classes["chat-icon"]}>
+        <BsChatFill onClick={chatToggleHandler} />
+      </div>
+      {chatToggle && (
+        <>
+          <ul>
+            {messages.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+          <button onClick={sendMessage}>Send</button>
+        </>
+      )}
     </div>
   );
 };

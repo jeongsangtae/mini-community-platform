@@ -16,7 +16,7 @@ const MainContent = () => {
       <p className={`${classes.subtitle} ${classes[authCtx.themeClass]}`}>
         미니 커뮤니티 플랫폼
       </p>
-      <Chat />
+      {/* <Chat /> */}
     </div>
   );
 };
