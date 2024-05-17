@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
+// import { IoIosClose } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
 
 import classes from "./Chat.module.css";
 
@@ -51,7 +53,10 @@ const Chat = () => {
         <BsChatFill onClick={chatToggleHandler} />
       </div>
       {chatToggle && (
-        <>
+        <div className={classes["chat-container"]}>
+          <div className={classes["chat-close-icon"]}>
+            <MdCancel onClick={chatToggleHandler} />
+          </div>
           <ul>
             {messages.map((message, index) => (
               <li key={index}>{message}</li>
@@ -63,7 +68,7 @@ const Chat = () => {
             onChange={(e) => setInputValue(e.target.value)}
           />
           <button onClick={sendMessage}>Send</button>
-        </>
+        </div>
       )}
     </div>
   );

@@ -25,3 +25,31 @@
   color: white;
   transition: all 0.3s ease;
 }
+
+.chat-container {
+  position: fixed;
+  right: 1%;
+  bottom: 2%;
+  width: 300px;
+  height: 30rem;
+  /* max-height: 400px; */
+  background-color: rgb(105, 105, 105);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.chat-close-icon {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-close-icon svg {
+  cursor: pointer;
+}
+
+.chat-close-icon svg:hover {
+  color: rgb(35, 35, 35);
+}
