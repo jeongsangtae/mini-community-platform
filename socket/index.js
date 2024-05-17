@@ -25,6 +25,11 @@ const io = new Server({ cors: "http://localhost:5173" });
 
 io.on("connection", (socket) => {
   console.log("socket 연결", socket.id);
+
+  socket.on("clientMessage", (msg) => {
+    console.log("클라이언트로부터의 메시지:", msg);
+  });
+
   socket.emit("message", "소켓 연결이 성공적으로 이루어졌습니다.");
 });
 

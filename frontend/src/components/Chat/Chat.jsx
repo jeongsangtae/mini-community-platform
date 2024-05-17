@@ -7,8 +7,6 @@ const Chat = () => {
   const [socket, setSocket] = useState(null);
 
   // socket.emit("message", "socket.io 체크");
-
-  console.log(messages);
   useEffect(() => {
     const socket = io("http://localhost:3001");
     // socket.on("message", (msg) => {
@@ -28,10 +26,14 @@ const Chat = () => {
   }, []);
 
   const sendMessage = () => {
-    if (inputValue.trim() !== "") {
-      socket.emit("message", inputValue);
-      // setMessages([...messages, inputValue]);
-      setInputValue("");
+    // if (inputValue.trim() !== "") {
+    //   socket.emit("message", inputValue);
+    //   // setMessages([...messages, inputValue]);
+    //   setInputValue("");
+    // }
+
+    if (socket) {
+      socket.emit("clientMessage", inputValue);
     }
   };
 
