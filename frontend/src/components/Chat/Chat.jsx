@@ -48,15 +48,9 @@ const Chat = () => {
   };
 
   return (
-    <div>
-      <div className={classes["chat-icon"]}>
-        <BsChatFill onClick={chatToggleHandler} />
-      </div>
+    <div className={classes.chat}>
       {chatToggle && (
         <div className={classes["chat-container"]}>
-          <div className={classes["chat-close-icon"]}>
-            <MdCancel onClick={chatToggleHandler} />
-          </div>
           <ul>
             {messages.map((message, index) => (
               <li key={index}>{message}</li>
@@ -70,6 +64,9 @@ const Chat = () => {
           <button onClick={sendMessage}>Send</button>
         </div>
       )}
+      <div className={classes["chat-icon"]}>
+        <BsChatFill onClick={chatToggleHandler} />
+      </div>
     </div>
   );
 };
