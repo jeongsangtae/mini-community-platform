@@ -47,10 +47,19 @@ const Chat = () => {
     setChatToggle(!chatToggle);
   };
 
+  const chatContainerToggleClass = chatToggle
+    ? `${classes["chat-container"]} ${classes.open}`
+    : `${classes["chat-container"]} ${classes.close}`;
+
   return (
     <div className={classes.chat}>
       {chatToggle && (
         <div className={classes["chat-container"]}>
+          {/* <div
+        className={`${classes["chat-container"]} ${
+          chatToggle ? `${classes.open}` : `${classes.close}`
+        }`}
+      > */}
           <ul>
             {messages.map((message, index) => (
               <li key={index}>{message}</li>
