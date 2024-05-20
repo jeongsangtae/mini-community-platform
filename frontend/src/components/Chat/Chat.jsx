@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
 // import { IoIosClose } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
+import { IoIosArrowDown } from "react-icons/io";
 
 import classes from "./Chat.module.css";
 
@@ -74,7 +75,29 @@ const Chat = () => {
       </div>
       {/* )} */}
       <div className={classes["chat-icon"]}>
-        <BsChatFill onClick={chatToggleHandler} />
+        {!chatToggle ? (
+          <BsChatFill
+            onClick={chatToggleHandler}
+            className={classes["chat-fill"]}
+          />
+        ) : (
+          <IoIosArrowDown
+            onClick={chatToggleHandler}
+            className={classes["arrow-down"]}
+          />
+        )}
+        {/* <BsChatFill
+           onClick={chatToggleHandler}
+           className={`${classes["chat-fill"]} ${
+            chatToggle ? `${classes.hide}` : `${classes.show}`
+          }`}
+        />
+         <IoIosArrowDown
+           onClick={chatToggleHandler}
+           className={`${classes["arrow-down"]} ${
+             chatToggle ? `${classes.show}` : `${classes.hide}`
+           }`}
+         /> */}
       </div>
     </div>
   );

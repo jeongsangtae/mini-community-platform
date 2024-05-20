@@ -160,6 +160,34 @@
   height: 1.5rem;
 }
 
+.chat-fill {
+  animation: chat-button-rotate-chat-fill-icon 0.3s forwards;
+}
+
+.arrow-down {
+  animation: chat-button-rotate-arrow-down-icon 0.3s forwards;
+}
+
+@keyframes chat-button-rotate-chat-fill-icon {
+  0% {
+    transform: rotate(90deg) scale(0.2);
+  }
+
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes chat-button-rotate-arrow-down-icon {
+  0% {
+    transform: rotate(-90deg) scale(0.2);
+  }
+
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
 @media (max-width: 1440px) {
   .chat {
     right: 2%;
