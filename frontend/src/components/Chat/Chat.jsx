@@ -53,26 +53,26 @@ const Chat = () => {
 
   return (
     <div className={classes.chat}>
-      {chatToggle && (
-        <div className={classes["chat-container"]}>
-          {/* <div
+      {/* {chatToggle && ( */}
+      {/* <div className={classes["chat-container"]}> */}
+      <div
         className={`${classes["chat-container"]} ${
           chatToggle ? `${classes.open}` : `${classes.close}`
         }`}
-      > */}
-          <ul>
-            {messages.map((message, index) => (
-              <li key={index}>{message}</li>
-            ))}
-          </ul>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          <button onClick={sendMessage}>Send</button>
-        </div>
-      )}
+      >
+        <ul>
+          {messages.map((message, index) => (
+            <li key={index}>{message}</li>
+          ))}
+        </ul>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button onClick={sendMessage}>Send</button>
+      </div>
+      {/* )} */}
       <div className={classes["chat-icon"]}>
         <BsChatFill onClick={chatToggleHandler} />
       </div>
