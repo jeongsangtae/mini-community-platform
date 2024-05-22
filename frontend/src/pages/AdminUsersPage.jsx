@@ -1,9 +1,9 @@
-import { Outlet } from "react-router-dom";
+import AdminUsers from "../components/Admin/AdminUsers";
 
 const AdminUsersLayout = () => {
   return (
     <>
-      <Outlet />
+      <AdminUsers />
     </>
   );
 };

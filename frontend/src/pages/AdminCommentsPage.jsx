@@ -1,9 +1,9 @@
-import { Outlet } from "react-router-dom";
+import AdminComments from "../components/Admin/AdminComments";
 
 const AdminCommentsLayout = () => {
   return (
     <>
-      <Outlet />
+      <AdminComments />
     </>
   );
 };
