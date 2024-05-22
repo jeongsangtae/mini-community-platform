@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { LuUserCircle2, LuLogOut, LuLogIn, LuKeyRound } from "react-icons/lu";
+import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
 import { FaRegAddressCard } from "react-icons/fa";
 import { MoreVertical, User } from "react-feather";
 

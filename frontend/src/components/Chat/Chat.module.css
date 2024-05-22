@@ -161,11 +161,11 @@
 }
 
 .chat-fill {
-  animation: chat-button-rotate-chat-fill-icon 0.3s forwards;
+  animation: chat-button-rotate-chat-fill-icon 0.3s ease-out forwards;
 }
 
 .arrow-down {
-  animation: chat-button-rotate-arrow-down-icon 0.3s forwards;
+  animation: chat-button-rotate-arrow-down-icon 0.3s ease-out forwards;
 }
 
 @keyframes chat-button-rotate-chat-fill-icon {

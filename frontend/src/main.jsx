@@ -18,6 +18,10 @@ import RootLayout from "./pages/RootLayout";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
 import Authentication from "./components/Users/Authentication";
 import NotFound from "./components/Users/NotFound";
+import AdminRootLayout from "./pages/AdminRootLayout";
+import AdminCommentsLayout from "./pages/AdminCommentsPage";
+import AdminPostsLayout from "./pages/AdminPostsPage";
+import AdminUsersLayout from "./pages/AdminUsersPage";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +76,15 @@ const router = createBrowserRouter([
         ),
       },
       // { path: "no-access", element: <Authentication /> },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminRootLayout />,
+    children: [
+      { path: "posts", element: <AdminPostsLayout /> },
+      { path: "comments", element: <AdminCommentsLayout /> },
+      { path: "users", element: <AdminUsersLayout /> },
     ],
   },
   { path: "*", element: <NotFound /> },
