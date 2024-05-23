@@ -116,6 +116,7 @@ router.post("/login", async (req, res) => {
 
   if (existingLoginUser) {
     try {
+      const userRole = loginEmail === "admin@admin.com" ? "admin" : "user";
       // access Token 발급
       const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
       const accessToken = jwt.sign(
@@ -123,6 +124,7 @@ router.post("/login", async (req, res) => {
           userId: existingLoginUser._id,
           userName: existingLoginUser.name,
           userEmail: existingLoginUser.email,
+          role: userRole,
         },
         accessTokenKey,
         { expiresIn: "1h", issuer: "GGPAN" }
@@ -135,6 +137,7 @@ router.post("/login", async (req, res) => {
           userId: existingLoginUser._id,
           userName: existingLoginUser.name,
           userEmail: existingLoginUser.email,
+          role: userRole,
         },
         refreshTokenKey,
         { expiresIn: "6h", issuer: "GGPAN" }
@@ -158,6 +161,7 @@ router.post("/login", async (req, res) => {
         accessToken,
         refreshToken,
       });
+      console.log(userRole);
     } catch (error) {
       res.status(500).json(error);
     }

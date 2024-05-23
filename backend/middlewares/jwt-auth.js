@@ -40,6 +40,7 @@ const accessToken = async (req, res) => {
     const responseData = {
       ...othersData,
       tokenExp: loginUserTokenData.exp,
+      role: loginUserTokenData.role,
     };
 
     return responseData;
@@ -104,6 +105,7 @@ const refreshToken = async (req, res) => {
         userId: loginUserDbData._id,
         userName: loginUserDbData.name,
         userEmail: loginUserDbData.email,
+        role: loginUserTokenData.role,
       },
       accessTokenKey,
       { expiresIn: "1h", issuer: "GGPAN" }
