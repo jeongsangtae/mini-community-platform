@@ -36,6 +36,7 @@ export const AuthContextProvier = ({ children }) => {
       if (resData) {
         console.log(resData.tokenExp);
         setUserInfo(resData);
+        localStorage.setItem("role", resData.role);
       }
     } catch (error) {
       console.error("사용자 인증 오류", error);
@@ -167,15 +168,26 @@ export const AuthContextProvier = ({ children }) => {
   //   }
   // }, []);
 
-  const loginHandler = () => {
+  const loginHandler = async () => {
     const now = Math.floor(new Date().getTime() / 1000);
     const expirationTime = Math.ceil(now + 60 * 60);
     localStorage.setItem("isLoggedIn", "1");
     localStorage.setItem("expirationTime", expirationTime);
     setIsLoggedIn(true);
 
-    verifyUser(setUserInfo);
+    await verifyUser(setUserInfo);
+    // console.log(localStorage.getItem("role"));
     refreshTokenExpHandler();
+
+    const role = localStorage.getItem("role");
+    console.log(role);
+    if (role === "admin") {
+      window.location.href = "/admin";
+    }
+
+    // if (localStorage.getItem("role") === "admin") {
+    //   return redirect("/admin");
+    // }
 
     // setTimeout(() => {
     //   localStorage.removeItem("isLoggedIn");
@@ -199,9 +211,15 @@ export const AuthContextProvier = ({ children }) => {
     });
 
     if (response.ok) {
+      const role = localStorage.getItem("role");
+      console.log(role);
+      if (role === "admin") {
+        window.location.href = "/";
+      }
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("expirationTime");
       localStorage.removeItem("refreshTokenExp");
+      localStorage.removeItem("role");
       setIsLoggedIn(false);
       setUserInfo(null);
     }

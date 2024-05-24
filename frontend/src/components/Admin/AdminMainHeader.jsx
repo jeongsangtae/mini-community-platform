@@ -13,6 +13,8 @@ import classes from "./AdminMainHeader.module.css";
 import Chat from "../Chat/Chat";
 
 const AdminMainHeader = () => {
+  // const [openLoginModal, setOnLoginModal] = useState(false);
+
   const authCtx = useContext(AuthContext);
 
   const navLinkClass = ({ isActive }) => {
@@ -20,6 +22,11 @@ const AdminMainHeader = () => {
       ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
       : `${classes.button} ${classes[authCtx.themeClass]}`;
   };
+
+  // const loginToggleHandler = () => {
+  //   setOnLoginModal(!openLoginModal);
+  //   setOnSignupModal(false);
+  // };
 
   return (
     <>
@@ -115,14 +122,8 @@ const AdminMainHeader = () => {
           </>
         )}
       </header>
-      {!authCtx.isLoggedIn && (
-        <>
-          {openSignupModal && (
-            <Signup
-              onSignupToggle={signupToggleHandler}
-              onLoginToggle={loginToggleHandler}
-            />
-          )}
+      {/* {!authCtx.isLoggedIn && (
+        <>         
           {openLoginModal && (
             <Login
               onLoginToggle={loginToggleHandler}
@@ -130,7 +131,7 @@ const AdminMainHeader = () => {
             />
           )}
         </>
-      )}
+      )} */}
       <Chat />
     </>
   );
