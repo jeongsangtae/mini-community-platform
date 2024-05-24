@@ -37,6 +37,18 @@ const AdminMainHeader = () => {
         {authCtx.isLoggedIn && (
           <>
             <nav className={classes.navbutton}>
+              {/* <NavLink to="/admin" className={navLinkClass}>
+                <div>
+                  홈<span></span>
+                </div>
+              </NavLink> */}
+
+              <NavLink to="/admin" className={navLinkClass}>
+                <div>
+                  홈<span></span>
+                </div>
+              </NavLink>
+
               <NavLink to="/admin/posts" className={navLinkClass}>
                 <div>
                   게시글<span></span>
@@ -71,7 +83,7 @@ const AdminMainHeader = () => {
                     classes[authCtx.themeClass]
                   }`}
                 >
-                  <NavLink
+                  {/* <NavLink
                     to="/profile"
                     className={`${classes.button} ${
                       classes["dropdown-button"]
@@ -79,7 +91,7 @@ const AdminMainHeader = () => {
                   >
                     <LuUserCircle2 className={classes["dropdown-icon"]} />
                     {authCtx.userInfo?.name}
-                  </NavLink>
+                  </NavLink> */}
                   <button
                     className={`${classes.button} ${
                       classes["dropdown-button"]

@@ -22,6 +22,8 @@ import AdminRootLayout from "./pages/AdminRootLayout";
 import AdminCommentsLayout from "./pages/AdminCommentsPage";
 import AdminPostsLayout from "./pages/AdminPostsPage";
 import AdminUsersLayout from "./pages/AdminUsersPage";
+import AdminAuthentication from "./components/Admin/AdminAuthentication";
+import AdminHomePage from "./pages/AdminHomePage";
 
 const router = createBrowserRouter([
   {
@@ -82,9 +84,39 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <AdminRootLayout />,
     children: [
-      { path: "posts", element: <AdminPostsLayout /> },
-      { path: "comments", element: <AdminCommentsLayout /> },
-      { path: "users", element: <AdminUsersLayout /> },
+      {
+        index: true,
+        path: "admin",
+        element: (
+          <AdminAuthentication>
+            <AdminHomePage />
+          </AdminAuthentication>
+        ),
+      },
+      {
+        path: "posts",
+        element: (
+          <AdminAuthentication>
+            <AdminPostsLayout />
+          </AdminAuthentication>
+        ),
+      },
+      {
+        path: "comments",
+        element: (
+          <AdminAuthentication>
+            <AdminCommentsLayout />
+          </AdminAuthentication>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <AdminAuthentication>
+            <AdminUsersLayout />
+          </AdminAuthentication>
+        ),
+      },
     ],
   },
   { path: "*", element: <NotFound /> },
