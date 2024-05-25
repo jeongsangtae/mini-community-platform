@@ -86,7 +86,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        path: "admin",
+        path: "",
         element: (
           <AdminAuthentication>
             <AdminHomePage />

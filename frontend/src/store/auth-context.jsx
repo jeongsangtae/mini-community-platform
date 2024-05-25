@@ -180,15 +180,10 @@ export const AuthContextProvier = ({ children }) => {
     refreshTokenExpHandler();
 
     const role = localStorage.getItem("role");
-    console.log(role);
+    // console.log(role);
     if (role === "admin") {
       window.location.href = "/admin";
     }
-
-    // if (localStorage.getItem("role") === "admin") {
-    //   return redirect("/admin");
-    // }
-
     // setTimeout(() => {
     //   localStorage.removeItem("isLoggedIn");
     //   localStorage.removeItem("expirationTime");

@@ -93,7 +93,7 @@ const MainHeader = () => {
         {authCtx.isLoggedIn ? (
           <>
             <nav className={classes.navbutton}>
-              <NavLink to="/" className={navLinkClass}>
+              <NavLink to="/" className={navLinkClass} end>
                 <div>
                   홈<span></span>
                 </div>
@@ -198,13 +198,13 @@ const MainHeader = () => {
         ) : (
           <>
             <nav className={classes.navbutton}>
-              <NavLink to="/" className={navLinkClass}>
+              <NavLink to="/" className={navLinkClass} end>
                 <div>
                   홈<span></span>
                 </div>
               </NavLink>
 
-              <NavLink to="/posts" className={navLinkClass}>
+              <NavLink to="/posts" className={navLinkClass} end>
                 <div>
                   게시판<span></span>
                 </div>
