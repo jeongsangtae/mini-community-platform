@@ -1,0 +1,140 @@
+/* @keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+} */
+
+.background {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.background.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
+.board-container {
+  padding: 5rem 10rem;
+}
+
+.heading {
+  margin: 2rem 5rem;
+  font-size: 2rem;
+}
+
+.heading.dark-mode {
+  color: white;
+}
+
+/* .heading-skeleton {
+  margin: 5rem;
+  text-indent: -9999px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  animation: loading 1.5s infinite;
+  background-size: 200% 100%;
+  height: 2rem;
+  width: 6rem;
+} */
+
+.sub-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 5rem;
+  padding: 0;
+}
+
+.sub-menu.dark-mode {
+  color: white;
+}
+
+/* .posts-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 60rem;
+  margin: 0 auto;
+  justify-content: center;
+} */
+
+/* .posts-item p {
+  margin-left: 5rem;
+} */
+
+.posts-item.dark-mode p {
+  color: white;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0;
+}
+
+.no-posts {
+  text-align: center;
+  color: black;
+  margin: 5.75rem 0;
+}
+
+.no-posts.dark-mode {
+  color: white;
+}
+
+.last-menu {
+  display: flex;
+  justify-content: end;
+  margin: 0 5rem;
+  padding: 0;
+}
+
+.underline {
+  content: "";
+  margin: 1rem 5rem;
+  height: 1px;
+  background-color: rgb(224, 224, 224);
+  /* width: 90%; */
+}
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
+}
+
+.add {
+  padding: 0.5rem 1.5rem;
+  color: black;
+  background-color: transparent;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1px solid rgb(68, 68, 68);
+  transition: all 0.3s ease;
+  /* display: block;
+  text-align: center;
+  margin: 0 auto; */
+  /* padding: 0.5rem 1rem; */
+  /* max-width: 10rem; */
+  /* margin: 0; */
+}
+
+.add:hover {
+  background-color: rgb(237, 237, 237);
+}
+
+.add.dark-mode {
+  color: white;
+}
+
+.add.dark-mode:hover {
+  background-color: rgb(25, 25, 25);
+}
+
+.opacity {
+  pointer-events: none;
+  opacity: 0.5;
+}

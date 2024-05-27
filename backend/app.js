@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const db = require("./data/database");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
+const adminRoutes = require("./routes/admin-router");
 
 const app = express();
 const cors = require("cors");
@@ -49,6 +50,7 @@ app.use(
 
 app.use(boardRoutes);
 app.use(userRoutes);
+app.use(adminRoutes);
 
 app.use((req, res, next) => {
   res.status(404).render("404");
