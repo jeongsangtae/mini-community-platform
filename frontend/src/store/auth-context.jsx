@@ -179,11 +179,11 @@ export const AuthContextProvier = ({ children }) => {
     // console.log(localStorage.getItem("role"));
     refreshTokenExpHandler();
 
-    const role = localStorage.getItem("role");
+    // const role = localStorage.getItem("role");
     // console.log(role);
-    if (role === "admin") {
-      window.location.href = "/admin";
-    }
+    // if (role === "admin") {
+    //   window.location.href = "/admin";
+    // }
     // setTimeout(() => {
     //   localStorage.removeItem("isLoggedIn");
     //   localStorage.removeItem("expirationTime");

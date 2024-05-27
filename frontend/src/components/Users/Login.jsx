@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 
 import Modal from "../UI/Modal";
@@ -12,6 +13,7 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
   });
 
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,9 +45,14 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
       // console.log(resData.accessToken);
       // console.log(resData.refreshToken);
       console.log("로그인 성공");
-      authCtx.login();
+      await authCtx.login();
       console.log(authCtx.isLoggedIn);
       onLoginToggle();
+    }
+    const role = localStorage.getItem("role");
+    console.log(role);
+    if (role === "admin") {
+      navigate("/admin");
     }
   };
 
