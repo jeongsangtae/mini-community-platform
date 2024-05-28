@@ -21,7 +21,7 @@ const AdminPosts = () => {
     authCtx.setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:3000/admin?page=${pageNumber}`
+        `http://localhost:3000/admin/posts?page=${pageNumber}`
       );
       const resData = await response.json();
       return resData;

@@ -20,8 +20,8 @@ import Authentication from "./components/Users/Authentication";
 import NotFound from "./components/Users/NotFound";
 import AdminRootLayout from "./pages/AdminRootLayout";
 import AdminCommentsLayout from "./pages/AdminCommentsPage";
-import AdminPostsLayout from "./pages/AdminPostsPage";
-import AdminUsersLayout from "./pages/AdminUsersPage";
+import AdminPostsPage from "./pages/AdminPostsPage";
+import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminAuthentication from "./components/Admin/AdminAuthentication";
 import AdminHomePage from "./pages/AdminHomePage";
 
@@ -97,7 +97,7 @@ const router = createBrowserRouter([
         path: "posts",
         element: (
           <AdminAuthentication>
-            <AdminPostsLayout />
+            <AdminPostsPage />
           </AdminAuthentication>
         ),
       },
@@ -113,7 +113,7 @@ const router = createBrowserRouter([
         path: "users",
         element: (
           <AdminAuthentication>
-            <AdminUsersLayout />
+            <AdminUsersPage />
           </AdminAuthentication>
         ),
       },

@@ -1,6 +1,6 @@
 import AdminUsers from "../components/Admin/AdminUsers";
 
-const AdminUsersLayout = () => {
+const AdminUsersPage = () => {
   return (
     <>
       <AdminUsers />
@@ -8,4 +8,4 @@ const AdminUsersLayout = () => {
   );
 };
 
-export default AdminUsersLayout;
+export default AdminUsersPage;

@@ -1,6 +1,6 @@
 import AdminPosts from "../components/Admin/AdminPosts";
 
-const AdminPostsLayout = () => {
+const AdminPostsPage = () => {
   return (
     <>
       <AdminPosts />
@@ -8,10 +8,10 @@ const AdminPostsLayout = () => {
   );
 };
 
-export default AdminPostsLayout;
+export default AdminPostsPage;
 
 export const loader = async () => {
-  const response = await fetch("http://localhost:3000/posts", {
+  const response = await fetch("http://localhost:3000/admin/posts", {
     credentials: "include",
   });
   const resData = await response.json();
