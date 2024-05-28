@@ -6,6 +6,7 @@ import classes from "./MainContent.module.css";
 
 const MainContent = () => {
   const authCtx = useContext(AuthContext);
+
   return (
     <div
       className={`${classes["main-content"]} ${classes[authCtx.themeClass]}`}

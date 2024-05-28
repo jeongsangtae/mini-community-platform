@@ -49,11 +49,11 @@ const AdminMainHeader = () => {
                 </div>
               </NavLink>
 
-              <NavLink to="/admin/comments" className={navLinkClass}>
+              {/* <NavLink to="/admin/comments" className={navLinkClass}>
                 <div>
                   댓글<span></span>
                 </div>
-              </NavLink>
+              </NavLink> */}
 
               <NavLink to="/admin/users" className={navLinkClass}>
                 <div>

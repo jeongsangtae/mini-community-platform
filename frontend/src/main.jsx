@@ -10,17 +10,23 @@ import PostDetailsPage, {
   loader as postDetailsLoader,
   action as postDeleteAction,
 } from "./pages/PostDetailsPage";
+import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import PostEditPage from "./pages/PostEditPage";
-import PostsPage, { loader as postsLoader } from "./pages/PostsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RootLayout from "./pages/RootLayout";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
 import Authentication from "./components/Users/Authentication";
 import NotFound from "./components/Users/NotFound";
 import AdminRootLayout from "./pages/AdminRootLayout";
+import AdminPostsPage, {
+  loader as adminPostsLoader,
+} from "./pages/AdminPostsPage";
+import AdminPostDetailsPage, {
+  loader as adminPostDetailsLoader,
+  action as adminPostDeleteAction,
+} from "./pages/AdminPostDetailsPage";
 import AdminCommentsLayout from "./pages/AdminCommentsPage";
-import AdminPostsPage from "./pages/AdminPostsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminAuthentication from "./components/Admin/AdminAuthentication";
 import AdminHomePage from "./pages/AdminHomePage";
@@ -100,6 +106,14 @@ const router = createBrowserRouter([
             <AdminPostsPage />
           </AdminAuthentication>
         ),
+        loader: adminPostsLoader,
+      },
+      {
+        path: "posts/:postId",
+        id: "admin-post-detail",
+        element: <AdminPostDetailsPage />,
+        loader: adminPostDetailsLoader,
+        action: adminPostDeleteAction,
       },
       {
         path: "comments",

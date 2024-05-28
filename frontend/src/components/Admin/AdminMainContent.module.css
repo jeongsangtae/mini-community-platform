@@ -1,0 +1,18 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
+.title.dark-mode,
+.subtitle.dark-mode {
+  color: white;
+}
