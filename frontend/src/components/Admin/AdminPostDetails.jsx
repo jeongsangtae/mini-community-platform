@@ -5,11 +5,11 @@ import { MoreVertical } from "react-feather";
 import AuthContext from "../../store/auth-context";
 import Comments from "../Comments/Comments";
 import LoadingIndicator from "../UI/LoadingIndicator";
-// import classes from "./PostDetails.module.css";
+import classes from "./AdminPostDetails.module.css";
 
 const AdminPostDetails = () => {
   const authCtx = useContext(AuthContext);
-  const post = useRouteLoaderData("post-detail");
+  const post = useRouteLoaderData("admin-post-detail");
   const submit = useSubmit();
 
   const [dropdownToggle, setDropdownToggle] = useState(false);
@@ -80,12 +80,8 @@ const AdminPostDetails = () => {
               <div
                 className={`${classes.dropdown} ${classes[authCtx.themeClass]}`}
               >
-                <Link to="edit">
-                  {/* <div>수정하기</div> */}
-                  수정하기
-                </Link>
+                <Link to="edit">수정하기</Link>
                 <button type="button" onClick={postDeleteHandler}>
-                  {/* <div>삭제하기</div> */}
                   삭제하기
                 </button>
               </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Post from "../Posts/Post";
+import AdminPost from "./AdminPost";
 import Pagination from "../Posts/PagiNation";
 import LoadingIndicator from "../UI/LoadingIndicator";
 import AuthContext from "../../store/auth-context";
@@ -39,7 +39,7 @@ const AdminPosts = () => {
   };
 
   const onPageChange = (pageNum) => {
-    navigate(`/posts?page=${pageNum}`);
+    navigate(`/admin/posts?page=${pageNum}`);
     console.log(pageNum);
     setPage(pageNum);
   };
@@ -72,7 +72,7 @@ const AdminPosts = () => {
             <ul className={classes.posts}>
               {posts.map((post) => {
                 return (
-                  <Post
+                  <AdminPost
                     key={post.postId}
                     num={post.postId}
                     title={post.title}

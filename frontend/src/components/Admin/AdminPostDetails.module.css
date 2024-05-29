@@ -1,0 +1,198 @@
+.background {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.background.dark-mode {
+  background-color: var(--dark-mode-background-color);
+}
+
+.post-container {
+  padding: 5rem 10rem;
+}
+
+.post-container.dark-mode {
+  color: white;
+}
+
+.heading {
+  margin: 2rem 5rem;
+  font-size: 2rem;
+}
+
+.heading.dark-mode {
+  color: white;
+}
+
+.post-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  padding: 0 5rem;
+}
+
+.title span {
+  height: 20px;
+  margin-right: 0.4rem;
+  margin-bottom: 0.1rem;
+  padding: 0 0.375rem;
+  border: 1px solid rgb(0, 187, 237);
+  border-radius: 30px;
+  color: rgb(0, 187, 237);
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.title p {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.post-detail {
+  margin: 0rem 5rem;
+}
+
+.post-detail.dark-mode p {
+  color: white;
+}
+
+.info-wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 5rem;
+}
+
+.info-wrap span::before {
+  content: "●";
+  font-size: 0.5rem;
+  position: relative;
+  margin: 0 1rem;
+  color: black;
+  vertical-align: middle;
+}
+
+.info-wrap.dark-mode span::before {
+  color: white;
+}
+
+.info-wrap svg {
+  margin-left: auto;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 3rem;
+  right: 4.5rem;
+  margin-top: 0.075rem;
+  border: 0.5px solid rgba(117, 117, 117, 0.31);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dropdown a,
+.dropdown button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 0.8rem;
+  height: 24px;
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  border: none;
+  color: rgb(105, 105, 105);
+  background-color: rgb(249, 249, 249);
+  cursor: pointer;
+}
+
+.dropdown a:hover,
+.dropdown button:hover {
+  color: black;
+  background-color: rgb(233, 233, 233);
+  transition: all 0.3s ease;
+}
+
+.dropdown.dark-mode a,
+.dropdown.dark-mode button {
+  color: rgb(226, 169, 169);
+  background-color: rgb(35, 35, 35);
+}
+
+.dropdown.dark-mode a:hover,
+.dropdown.dark-mode button:hover {
+  color: white;
+  background-color: rgb(48, 48, 48);
+}
+
+.underline {
+  content: "";
+  margin: 1rem 5rem;
+  height: 1px;
+  background-color: rgb(224, 224, 224);
+}
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
+}
+
+.post-detail p {
+  font: inherit;
+  white-space: pre-line;
+  margin: 2.5rem 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: end;
+  margin: 0 5rem;
+}
+
+.actions a,
+.actions button {
+  font: inherit;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1.5rem;
+  color: black;
+  background-color: transparent;
+  border-radius: 2px;
+  border: 1px solid rgb(68, 68, 68);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.actions a {
+  text-decoration: none;
+}
+
+.actions button {
+  margin-left: 0.5rem;
+}
+
+.actions a:hover,
+.actions button:hover {
+  background-color: rgb(237, 237, 237);
+}
+
+.actions.dark-mode a,
+.actions.dark-mode button {
+  color: white;
+}
+
+.actions.dark-mode a:hover,
+.actions.dark-mode button:hover {
+  background-color: rgb(25, 25, 25);
+}
+
+/* .opacity {
+  pointer-events: none;
+  opacity: 0.5;
+} */

@@ -26,7 +26,6 @@ export const action = async ({ request, params }) => {
 
   if (!response.ok) {
     return redirect(`/admin/posts/${postId}/no-access`);
-    // throw json({ message: "Could not delete post." }, { status: 500 });
   }
 
   console.log("action function");

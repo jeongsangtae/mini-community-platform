@@ -70,7 +70,15 @@ router.get("/admin/posts", async (req, res) => {
   }
 });
 
-router.delete("/admin/posts", async (req, res) => {
+router.get("/admin/posts/:postId", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+
+  const post = await db.getDb().collection("posts").findOne({ postId });
+
+  res.json(post);
+});
+
+router.delete("/admin/posts/:postId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
   if (!othersData) {
