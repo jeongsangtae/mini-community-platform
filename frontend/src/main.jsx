@@ -18,6 +18,7 @@ import RootLayout from "./pages/RootLayout";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
 import Authentication from "./components/Users/Authentication";
 import NotFound from "./components/Users/NotFound";
+import AdminAuthentication from "./components/Admin/Auth/AdminAuthentication";
 import AdminRootLayout from "./pages/AdminRootLayout";
 import AdminPostsPage, {
   loader as adminPostsLoader,
@@ -26,9 +27,8 @@ import AdminPostDetailsPage, {
   loader as adminPostDetailsLoader,
   action as adminPostDeleteAction,
 } from "./pages/AdminPostDetailsPage";
-import AdminCommentsLayout from "./pages/AdminCommentsPage";
+// import AdminCommentsLayout from "./pages/AdminCommentsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
-import AdminAuthentication from "./components/Admin/AdminAuthentication";
 import AdminHomePage from "./pages/AdminHomePage";
 
 const router = createBrowserRouter([
@@ -115,14 +115,14 @@ const router = createBrowserRouter([
         loader: adminPostDetailsLoader,
         action: adminPostDeleteAction,
       },
-      {
-        path: "comments",
-        element: (
-          <AdminAuthentication>
-            <AdminCommentsLayout />
-          </AdminAuthentication>
-        ),
-      },
+      // {
+      //   path: "comments",
+      //   element: (
+      //     <AdminAuthentication>
+      //       <AdminCommentsLayout />
+      //     </AdminAuthentication>
+      //   ),
+      // },
       {
         path: "users",
         element: (

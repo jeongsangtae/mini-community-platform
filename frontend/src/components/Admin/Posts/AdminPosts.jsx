@@ -2,9 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AdminPost from "./AdminPost";
-import Pagination from "../Posts/PagiNation";
-import LoadingIndicator from "../UI/LoadingIndicator";
-import AuthContext from "../../store/auth-context";
+import Pagination from "../../Posts/PagiNation";
+import LoadingIndicator from "../../UI/LoadingIndicator";
+import AuthContext from "../../../store/auth-context";
 import classes from "./AdminPosts.module.css";
 
 const AdminPosts = () => {

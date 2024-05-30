@@ -109,4 +109,46 @@ router.delete("/admin/posts/:postId", async (req, res) => {
   }
 });
 
+router.get("/admin/posts/:postId/comments", async (req, res) => {
+  let postId = parseInt(req.params.postId);
+
+  const post = await db.getDb().collection("posts").findOne({ postId });
+
+  const comments = await db
+    .getDb()
+    .collection("comments")
+    .find({ post_id: post._id })
+    .toArray();
+
+  try {
+    const token = req.cookies.accessToken;
+    console.log("1");
+    console.log(token);
+    console.log("---------------");
+
+    if (!token) {
+      throw new Error("로그인하지 않은 사용자");
+    }
+
+    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
+    const loginUserTokenData = jwt.verify(token, accessTokenKey);
+    const loginUserDbData = await db
+      .getDb()
+      .collection("users")
+      .findOne({ email: loginUserTokenData.userEmail });
+
+    if (!loginUserDbData) {
+      throw new Error("존재하지 않는 사용자");
+    }
+
+    const { password, ...othersData } = loginUserDbData;
+
+    res.status(200).json({ comments, userData: othersData });
+  } catch (error) {
+    console.error(error);
+    // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
+    res.status(200).json({ comments });
+  }
+});
+
 module.exports = router;

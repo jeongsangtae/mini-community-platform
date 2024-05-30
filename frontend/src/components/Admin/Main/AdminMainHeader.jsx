@@ -4,13 +4,12 @@ import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
 import { FaRegAddressCard } from "react-icons/fa";
 import { MoreVertical, User } from "react-feather";
 
-import Login from "../Users/Login";
-import Signup from "../Users/Signup";
-import AuthContext from "../../store/auth-context";
+// import Login from "../Users/Login";
+// import Signup from "../Users/Signup";
+import AuthContext from "../../../store/auth-context";
+import Chat from "../../Chat/Chat";
 
 import classes from "./AdminMainHeader.module.css";
-
-import Chat from "../Chat/Chat";
 
 const AdminMainHeader = () => {
   // const [openLoginModal, setOnLoginModal] = useState(false);

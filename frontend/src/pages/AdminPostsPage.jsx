@@ -1,4 +1,4 @@
-import AdminPosts from "../components/Admin/AdminPosts";
+import AdminPosts from "../components/Admin/Posts/AdminPosts";
 
 const AdminPostsPage = () => {
   return (

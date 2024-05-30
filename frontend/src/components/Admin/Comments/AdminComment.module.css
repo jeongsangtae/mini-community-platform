@@ -1,0 +1,127 @@
+.comment {
+  list-style: none;
+  /* margin: 0; */
+  padding: 0.025rem 2rem 1rem 0.25rem;
+}
+
+.comment-user-edit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* margin-top: 0.5rem; */
+}
+
+.comment-user-edit p {
+  /* margin: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem; */
+  font-weight: bold;
+}
+
+.comment-user-edit button {
+  border: none;
+  /* background-color: rgb(87, 80, 80); */
+  background: none;
+  color: rgb(105, 105, 105);
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.3rem;
+  border-radius: 2px;
+  /* line-height: 1.5; */
+  transition: all 0.3s ease;
+}
+
+.comment-user-edit button:nth-of-type(2) {
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
+.comment-user-edit button:hover {
+  cursor: pointer;
+  color: black;
+  border-radius: 2px;
+}
+
+.comment-user-edit.dark-mode button {
+  color: rgb(226, 169, 169);
+}
+
+.comment-user-edit.dark-mode button:hover {
+  color: white;
+}
+
+.comment .content {
+  margin-top: 0.2rem;
+  white-space: pre-line;
+}
+
+.comment .date {
+  display: inline;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(196, 181, 181);
+}
+
+.reply-button {
+  border: none;
+  background-color: transparent;
+  color: rgb(105, 105, 105);
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.3rem;
+  border-radius: 2px;
+  margin-left: 1rem;
+  transition: all 0.3s ease;
+}
+
+.reply-button:hover {
+  cursor: pointer;
+  color: black;
+  border-radius: 2px;
+}
+
+.reply-button.dark-mode {
+  color: rgb(226, 169, 169);
+}
+
+.reply-button.dark-mode:hover {
+  color: white;
+}
+
+.underline {
+  content: "";
+  margin-top: 2rem;
+  height: 1px;
+  background-color: rgb(224, 224, 224);
+}
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
+}
+
+.comment:first-child {
+  padding-top: 1.5rem;
+}
+
+.comment:last-child {
+  padding-bottom: 2.5rem;
+}
+
+.comment:last-child .underline {
+  display: none;
+}
+
+/* .comment:last-child .underline-reply,
+.comment:last-child .underline-comment {
+  display: none;
+} */
+
+/* .board-comment .comment-user-edit {
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+} */

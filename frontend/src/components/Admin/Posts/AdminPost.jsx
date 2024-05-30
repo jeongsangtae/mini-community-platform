@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../../store/auth-context";
 import classes from "./AdminPost.module.css";
 
 const AdminPost = ({ num, title, name, date, content, count }) => {

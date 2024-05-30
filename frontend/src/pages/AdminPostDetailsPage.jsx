@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-import AdminPostDetails from "../components/Admin/AdminPostDetails";
+import AdminPostDetails from "../components/Admin/Posts/AdminPostDetails";
 
 const AdminPostDetailsPage = () => {
   return <AdminPostDetails />;

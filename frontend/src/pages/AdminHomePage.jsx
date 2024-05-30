@@ -1,4 +1,4 @@
-import AdminMainContent from "../components/Admin/AdminMainContent";
+import AdminMainContent from "../components/Admin/Main/AdminMainContent";
 
 const AdminHomePage = () => {
   return <AdminMainContent />;

@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 import { MoreVertical } from "react-feather";
 
-import AuthContext from "../../store/auth-context";
-import Comments from "../Comments/Comments";
-import LoadingIndicator from "../UI/LoadingIndicator";
+import AdminComments from "../Comments/AdminComments";
+import AuthContext from "../../../store/auth-context";
+import LoadingIndicator from "../../UI/LoadingIndicator";
 import classes from "./AdminPostDetails.module.css";
 
 const AdminPostDetails = () => {
@@ -80,7 +80,7 @@ const AdminPostDetails = () => {
               <div
                 className={`${classes.dropdown} ${classes[authCtx.themeClass]}`}
               >
-                <Link to="edit">수정하기</Link>
+                {/* <Link to="edit">수정하기</Link> */}
                 <button type="button" onClick={postDeleteHandler}>
                   삭제하기
                 </button>
@@ -104,13 +104,13 @@ const AdminPostDetails = () => {
         ></p>
 
         <div className={actionsButtonClass}>
-          <Link to="edit">수정</Link>
+          {/* <Link to="edit">수정</Link> */}
           <button type="button" onClick={postDeleteHandler}>
             삭제
           </button>
         </div>
         <div>
-          <Comments />
+          <AdminComments />
         </div>
       </div>
     </div>

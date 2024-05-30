@@ -1,0 +1,35 @@
+.comment-container {
+  margin: 0 5rem;
+}
+
+.comments {
+  /* margin: 0 5rem; */
+  /* padding: 1rem; */
+  border-radius: 4px;
+  background-color: rgb(240, 240, 240);
+}
+
+.comments.dark-mode {
+  background-color: rgb(27, 27, 27);
+}
+
+/* .comments ul {
+  margin: 0;
+  padding: 0;
+} */
+
+.total-comment {
+  font-size: 1.2rem;
+}
+
+.total-comment span {
+  font-weight: bold;
+  color: rgb(0, 187, 237);
+}
+
+/* .underline {
+  content: "";
+  margin: 1rem 0;
+  height: 1px;
+  background-color: rgb(68, 68, 68);
+} */
