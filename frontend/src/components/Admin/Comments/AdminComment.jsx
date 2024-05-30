@@ -1,10 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
-// import Replies from "../Replies/Replies";
 
 import AuthContext from "../../../store/auth-context";
-
-// import CommentForm from "./CommentForm";
+import AdminReplies from "../Replies/AdminReplies";
 import classes from "./AdminComment.module.css";
 
 const AdminComment = ({
@@ -33,7 +31,7 @@ const AdminComment = ({
   const commentDeleteHandler = async () => {
     const postId = post.postId;
     const response = await fetch(
-      "http://localhost:3000/posts/" + postId + "/comment",
+      "http://localhost:3000/admin/posts/" + postId + "/comment",
       {
         method: "DELETE",
         body: JSON.stringify({ commentId }),
@@ -105,12 +103,12 @@ const AdminComment = ({
           </button>
         )}
 
-        {/* <Replies
+        <AdminReplies
           commentId={commentId}
           replyToggle={replyToggle}
           onReplyToggle={replyToggleHandler}
           repliesLength={repliesLengthHandler}
-        /> */}
+        />
 
         <p
           className={`${classes.underline} ${classes[authCtx.themeClass]}`}

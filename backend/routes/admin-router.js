@@ -1,5 +1,6 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
+const mongodb = require("mongodb");
+// const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const db = require("../data/database");
@@ -8,6 +9,8 @@ const {
   refreshToken,
   refreshTokenExp,
 } = require("../middlewares/jwt-auth");
+
+const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
@@ -149,6 +152,50 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
     // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
     res.status(200).json({ comments });
   }
+});
+
+// router.delete("/admin/posts/:postId/comment", async (req, res) => {
+//   const othersData = await accessToken(req, res);
+
+//   if (!othersData) {
+//     return res.status(401).json({ message: "jwt error" });
+//   }
+
+//   let commentId = req.body.commentId;
+
+//   commentId = new ObjectId(commentId);
+
+//   const comment = await db
+//     .getDb()
+//     .collection("comments")
+//     .findOne({ _id: commentId });
+
+//   if (comment.email === othersData.email) {
+//     await db
+//       .getDb()
+//       .collection("replies")
+//       .deleteMany({ comment_id: commentId });
+
+//     await db.getDb().collection("comments").deleteOne({ _id: commentId });
+
+//     res.status(200).json({ message: "Success" });
+//   } else {
+//     res.status(403).json({ message: "댓글을 삭제할 권한이 없습니다." });
+//   }
+// });
+
+router.get("/admin/posts/:postId/replies/:commentId", async (req, res) => {
+  let commentId = req.params.commentId;
+
+  commentId = new ObjectId(commentId);
+
+  const replies = await db
+    .getDb()
+    .collection("replies")
+    .find({ comment_id: commentId })
+    .toArray();
+
+  res.status(200).json({ replies });
 });
 
 module.exports = router;

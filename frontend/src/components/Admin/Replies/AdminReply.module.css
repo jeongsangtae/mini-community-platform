@@ -1,0 +1,72 @@
+.reply {
+  list-style: none;
+  position: relative;
+}
+
+.reply:first-child .underline {
+  display: none;
+}
+
+.underline {
+  content: "";
+  margin-top: 2rem;
+  height: 1px;
+  background-color: rgb(224, 224, 224);
+}
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
+}
+
+.reply-user-edit {
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reply-user-edit p {
+  font-weight: bold;
+}
+
+.reply-user-edit button {
+  border: none;
+  background: none;
+  color: rgb(105, 105, 105);
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-right: 0.3rem;
+  border-radius: 2px;
+}
+
+.reply-user-edit button:nth-of-type(2) {
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+
+.reply-user-edit button:hover {
+  cursor: pointer;
+  color: black;
+  border-radius: 2px;
+}
+
+.reply-user-edit.dark-mode button {
+  color: rgb(226, 169, 169);
+}
+
+.reply-user-edit.dark-mode button:hover {
+  color: white;
+}
+
+.reply .content {
+  margin-top: 0.2rem;
+  white-space: pre-line;
+}
+
+.reply .date {
+  display: inline;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(196, 181, 181);
+}
