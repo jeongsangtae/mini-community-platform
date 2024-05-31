@@ -20,7 +20,7 @@ const AdminReply = ({
   const replyDeleteHandler = async () => {
     const postId = post.postId;
     const response = await fetch(
-      "http://localhost:3000/admin/posts/" + postId + "/replies",
+      "http://localhost:3000/admin/posts/" + postId + "/reply",
       {
         method: "DELETE",
         body: JSON.stringify({ replyId }),

@@ -427,7 +427,7 @@ router.delete("/posts/:postId/comment", async (req, res) => {
 //   res.status(200).json({ replies });
 // });
 
-router.get("/posts/:postId/replies/:commentId", async (req, res) => {
+router.get("/posts/:postId/:commentId/replies", async (req, res) => {
   let commentId = req.params.commentId;
 
   commentId = new ObjectId(commentId);
@@ -534,7 +534,7 @@ router.patch("/posts/:postId/replies", async (req, res) => {
   }
 });
 
-router.delete("/posts/:postId/replies", async (req, res) => {
+router.delete("/posts/:postId/reply", async (req, res) => {
   const othersData = await accessToken(req, res);
 
   if (!othersData) {

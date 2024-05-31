@@ -16,7 +16,7 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
     const fetchData = async () => {
       const postId = post.postId;
       const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/replies/" + commentId
+        "http://localhost:3000/posts/" + postId + "/" + commentId + "/replies"
       );
 
       if (!response.ok) {

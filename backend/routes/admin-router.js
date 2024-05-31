@@ -108,6 +108,8 @@ router.delete("/admin/posts/:postId", async (req, res) => {
       .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
 
     res.status(200).json({ message: "Success" });
+  } else {
+    res.status(403).json({ message: "게시글이 없습니다." });
   }
 });
 
@@ -150,37 +152,37 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
   }
 });
 
-// router.delete("/admin/posts/:postId/comment", async (req, res) => {
-//   const othersData = await accessToken(req, res);
+router.delete("/admin/posts/:postId/comment", async (req, res) => {
+  const othersData = await accessToken(req, res);
 
-//   if (!othersData) {
-//     return res.status(401).json({ message: "jwt error" });
-//   }
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
 
-//   let commentId = req.body.commentId;
+  let commentId = req.body.commentId;
 
-//   commentId = new ObjectId(commentId);
+  commentId = new ObjectId(commentId);
 
-//   const comment = await db
-//     .getDb()
-//     .collection("comments")
-//     .findOne({ _id: commentId });
+  const comment = await db
+    .getDb()
+    .collection("comments")
+    .findOne({ _id: commentId });
 
-//   if (comment.email === othersData.email) {
-//     await db
-//       .getDb()
-//       .collection("replies")
-//       .deleteMany({ comment_id: commentId });
+  if (comment) {
+    await db
+      .getDb()
+      .collection("replies")
+      .deleteMany({ comment_id: commentId });
 
-//     await db.getDb().collection("comments").deleteOne({ _id: commentId });
+    await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
-//     res.status(200).json({ message: "Success" });
-//   } else {
-//     res.status(403).json({ message: "댓글을 삭제할 권한이 없습니다." });
-//   }
-// });
+    res.status(200).json({ message: "Success" });
+  } else {
+    res.status(403).json({ message: "댓글이 없습니다." });
+  }
+});
 
-router.get("/admin/posts/:postId/replies/:commentId", async (req, res) => {
+router.get("/admin/posts/:postId/:commentId/replies", async (req, res) => {
   let commentId = req.params.commentId;
 
   commentId = new ObjectId(commentId);
@@ -192,6 +194,31 @@ router.get("/admin/posts/:postId/replies/:commentId", async (req, res) => {
     .toArray();
 
   res.status(200).json({ replies });
+});
+
+router.delete("/admin/posts/:postId/reply", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  let replyId = req.body.replyId;
+
+  replyId = new ObjectId(replyId);
+
+  const reply = await db
+    .getDb()
+    .collection("replies")
+    .findOne({ _id: replyId });
+
+  if (reply) {
+    await db.getDb().collection("replies").deleteOne({ _id: replyId });
+
+    res.status(200).json({ message: "Success" });
+  } else {
+    res.status(403).json({ message: "답글이 없습니다.." });
+  }
 });
 
 module.exports = router;

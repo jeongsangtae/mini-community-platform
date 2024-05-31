@@ -15,10 +15,9 @@ const AdminComment = ({
   onEditCommentData,
   onRepliesValue,
 }) => {
-  const post = useRouteLoaderData("post-detail");
+  const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
 
-  const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
 
   // console.log(repliesCount);
@@ -49,10 +48,6 @@ const AdminComment = ({
       onDeleteCommentData(commentId);
       console.log("Delete comment");
     }
-  };
-
-  const commentEditToggleHandler = () => {
-    setCommentEditToggle(!commentEditToggle);
   };
 
   const replyToggleHandler = () => {

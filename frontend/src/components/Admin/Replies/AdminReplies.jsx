@@ -17,7 +17,11 @@ const AdminReplies = ({ commentId, repliesLength }) => {
     const fetchData = async () => {
       const postId = post.postId;
       const response = await fetch(
-        "http://localhost:3000/admin/posts/" + postId + "/replies/" + commentId
+        "http://localhost:3000/admin/posts/" +
+          postId +
+          "/" +
+          commentId +
+          "/replies"
       );
 
       if (!response.ok) {
