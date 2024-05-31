@@ -1,6 +1,5 @@
 .comment {
   list-style: none;
-  /* margin: 0; */
   padding: 0.025rem 2rem 1rem 0.25rem;
 }
 
@@ -8,20 +7,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* margin-top: 0.5rem; */
 }
 
 .comment-user-edit p {
-  /* margin: 0;
-  display: block;
-  width: 100%;
-  margin-bottom: 0.5rem; */
   font-weight: bold;
 }
 
 .comment-user-edit button {
   border: none;
-  /* background-color: rgb(87, 80, 80); */
   background: none;
   color: rgb(105, 105, 105);
   padding: 0 0.3rem;
@@ -29,7 +22,6 @@
   cursor: pointer;
   margin-right: 0.3rem;
   border-radius: 2px;
-  /* line-height: 1.5; */
   transition: all 0.3s ease;
 }
 
@@ -113,15 +105,3 @@
 .comment:last-child .underline {
   display: none;
 }
-
-/* .comment:last-child .underline-reply,
-.comment:last-child .underline-comment {
-  display: none;
-} */
-
-/* .board-comment .comment-user-edit {
-  display: flex;
-  margin-top: 1rem;
-  align-items: center;
-  justify-content: space-between;
-} */

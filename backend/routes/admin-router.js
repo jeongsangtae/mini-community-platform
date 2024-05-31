@@ -41,6 +41,7 @@ router.get("/admin/posts", async (req, res) => {
 
   try {
     const token = req.cookies.accessToken;
+
     if (!token) {
       throw new Error("로그인하지 않은 사용자");
     }
@@ -84,19 +85,17 @@ router.get("/admin/posts/:postId", async (req, res) => {
 router.delete("/admin/posts/:postId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
+  console.log(othersData);
+
   if (!othersData) {
     return res.status(401).json({ message: "jwt error" });
   }
 
   let postId = parseInt(req.params.postId);
 
-  // console.log(postId);
-
   const post = await db.getDb().collection("posts").findOne({ postId: postId });
 
-  // console.log(post);
-
-  if (post.email === othersData.email) {
+  if (post) {
     await db.getDb().collection("replies").deleteMany({ post_id: post._id });
 
     await db.getDb().collection("comments").deleteMany({ post_id: post._id });
@@ -125,9 +124,6 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
 
   try {
     const token = req.cookies.accessToken;
-    console.log("1");
-    console.log(token);
-    console.log("---------------");
 
     if (!token) {
       throw new Error("로그인하지 않은 사용자");

@@ -40,8 +40,6 @@ const AdminComment = ({
       }
     );
 
-    console.log(postId);
-
     if (!response.ok) {
       const errorData = await response.json();
       console.log(errorData.message);
@@ -77,21 +75,17 @@ const AdminComment = ({
           }`}
         >
           <p>{name}</p>
-          {email === authCtx.userInfo?.email && (
-            <div>
-              <button type="button" onClick={commentEditToggleHandler}>
-                &#9998;
-              </button>
-              <button type="button" onClick={commentDeleteHandler}>
-                &times;
-              </button>
-            </div>
-          )}
+
+          <div>
+            <button type="button" onClick={commentDeleteHandler}>
+              &times;
+            </button>
+          </div>
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>
 
-        {authCtx.isLoggedIn && (
+        {/* {authCtx.isLoggedIn && (
           <button
             type="button"
             onClick={replyToggleHandler}
@@ -101,7 +95,7 @@ const AdminComment = ({
           >
             답글쓰기
           </button>
-        )}
+        )} */}
 
         <AdminReplies
           commentId={commentId}
