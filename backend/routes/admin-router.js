@@ -221,4 +221,12 @@ router.delete("/admin/posts/:postId/reply", async (req, res) => {
   }
 });
 
+router.get("/admin/users", async (req, res) => {
+  const users = await db.getDb().collection("users").find().toArray();
+
+  console.log(users);
+
+  res.status(200).json({ users });
+});
+
 module.exports = router;

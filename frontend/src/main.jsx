@@ -28,7 +28,9 @@ import AdminPostDetailsPage, {
   action as adminPostDeleteAction,
 } from "./pages/AdminPostDetailsPage";
 // import AdminCommentsLayout from "./pages/AdminCommentsPage";
-import AdminUsersPage from "./pages/AdminUsersPage";
+import AdminUsersPage, {
+  loader as adminUsersLoader,
+} from "./pages/AdminUsersPage";
 import AdminHomePage from "./pages/AdminHomePage";
 
 const router = createBrowserRouter([
@@ -125,6 +127,7 @@ const router = createBrowserRouter([
       // },
       {
         path: "users",
+        loader: adminUsersLoader,
         element: (
           <AdminAuthentication>
             <AdminUsersPage />
