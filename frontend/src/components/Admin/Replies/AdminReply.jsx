@@ -1,19 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import AuthContext from "../../../store/auth-context";
 import classes from "./AdminReply.module.css";
 
-const AdminReply = ({
-  replyId,
-  name,
-  email,
-  content,
-  date,
-  commentId,
-  onDeleteReplyData,
-  onEditReplyData,
-}) => {
+const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
   const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
 

@@ -1,19 +1,14 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
-import { FaRegAddressCard } from "react-icons/fa";
-import { MoreVertical, User } from "react-feather";
+import { LuLogOut } from "react-icons/lu";
+import { User } from "react-feather";
 
-// import Login from "../Users/Login";
-// import Signup from "../Users/Signup";
 import AuthContext from "../../../store/auth-context";
 import Chat from "../../Chat/Chat";
 
 import classes from "./AdminMainHeader.module.css";
 
 const AdminMainHeader = () => {
-  // const [openLoginModal, setOnLoginModal] = useState(false);
-
   const authCtx = useContext(AuthContext);
 
   const navLinkClass = ({ isActive }) => {
@@ -21,11 +16,6 @@ const AdminMainHeader = () => {
       ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
       : `${classes.button} ${classes[authCtx.themeClass]}`;
   };
-
-  // const loginToggleHandler = () => {
-  //   setOnLoginModal(!openLoginModal);
-  //   setOnSignupModal(false);
-  // };
 
   return (
     <>
@@ -47,12 +37,6 @@ const AdminMainHeader = () => {
                   게시글<span></span>
                 </div>
               </NavLink>
-
-              {/* <NavLink to="/admin/comments" className={navLinkClass}>
-                <div>
-                  댓글<span></span>
-                </div>
-              </NavLink> */}
 
               <NavLink to="/admin/users" className={navLinkClass}>
                 <div>
@@ -76,15 +60,6 @@ const AdminMainHeader = () => {
                     classes[authCtx.themeClass]
                   }`}
                 >
-                  {/* <NavLink
-                    to="/profile"
-                    className={`${classes.button} ${
-                      classes["dropdown-button"]
-                    } ${classes[authCtx.themeClass]}`}
-                  >
-                    <LuUserCircle2 className={classes["dropdown-icon"]} />
-                    {authCtx.userInfo?.name}
-                  </NavLink> */}
                   <button
                     className={`${classes.button} ${
                       classes["dropdown-button"]
@@ -127,16 +102,6 @@ const AdminMainHeader = () => {
           </>
         )}
       </header>
-      {/* {!authCtx.isLoggedIn && (
-        <>         
-          {openLoginModal && (
-            <Login
-              onLoginToggle={loginToggleHandler}
-              onSignupToggle={signupToggleHandler}
-            />
-          )}
-        </>
-      )} */}
       <Chat />
     </>
   );

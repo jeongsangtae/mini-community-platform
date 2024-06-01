@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import AuthContext from "../../../store/auth-context";
@@ -8,24 +8,15 @@ import classes from "./AdminComment.module.css";
 const AdminComment = ({
   commentId,
   name,
-  email,
   content,
   date,
   onDeleteCommentData,
-  onEditCommentData,
   onRepliesValue,
 }) => {
   const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
 
   const [replyToggle, setReplyToggle] = useState(false);
-
-  // console.log(repliesCount);
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   setLoggedIn(authCtx.isLoggedIn);
-  // }, [authCtx]);
 
   const commentDeleteHandler = async () => {
     const postId = post.postId;
@@ -58,9 +49,6 @@ const AdminComment = ({
     onRepliesValue(length);
   };
 
-  // console.log(email);
-  // console.log(authCtx.userInfo.email);
-
   return (
     <>
       <li className={classes.comment}>
@@ -79,18 +67,6 @@ const AdminComment = ({
         </div>
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>
-
-        {/* {authCtx.isLoggedIn && (
-          <button
-            type="button"
-            onClick={replyToggleHandler}
-            className={`${classes["reply-button"]} ${
-              classes[authCtx.themeClass]
-            }`}
-          >
-            답글쓰기
-          </button>
-        )} */}
 
         <AdminReplies
           commentId={commentId}

@@ -191,8 +191,3 @@
 .actions.dark-mode button:hover {
   background-color: rgb(25, 25, 25);
 }
-
-/* .opacity {
-  pointer-events: none;
-  opacity: 0.5;
-} */

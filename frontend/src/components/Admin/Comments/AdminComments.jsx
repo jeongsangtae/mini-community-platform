@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
-// import CommentForm from "./CommentForm";
+
 import AuthContext from "../../../store/auth-context";
 import AdminComment from "./AdminComment";
 import classes from "./AdminComments.module.css";
@@ -11,7 +11,6 @@ const AdminComments = () => {
 
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
-  // const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,34 +28,9 @@ const AdminComments = () => {
 
       const resData = await response.json();
       setComments(resData.comments);
-      // console.log(resData.userData);
-      // setUserData(resData.userData);
     };
     fetchData();
   }, []);
-
-  // const addComment = (newComment) => {
-  //   console.log(newComment);
-  //   console.log(comments);
-  //   setComments((prevComments) => [...prevComments, newComment]);
-  //   console.log(comments);
-  // };
-
-  const editComment = (editComment) => {
-    setComments((prevComments) => {
-      return prevComments.map((comment) => {
-        if (comment._id === editComment._id) {
-          return {
-            ...comment,
-            content: editComment.content,
-            date: editComment.date,
-          };
-        }
-        return comment;
-      });
-    });
-    console.log(comments);
-  };
 
   const deleteComment = (commentId) => {
     setComments((prevComments) =>
@@ -75,10 +49,7 @@ const AdminComments = () => {
       <p className={classes["total-comment"]}>
         댓글 <span>{comments.length + totalReplies}</span>
       </p>
-      {/* <CreateComment
-        method="POST"
-        onAddCommentData={addComment}
-      /> */}
+
       {comments.length > 0 && (
         <ul className={`${classes.comments} ${classes[authCtx.themeClass]}`}>
           {comments.map((comment) => {
@@ -91,7 +62,6 @@ const AdminComments = () => {
                 content={comment.content}
                 date={comment.date}
                 onDeleteCommentData={deleteComment}
-                onEditCommentData={editComment}
                 onRepliesValue={totalRepliesHandler}
               />
             );

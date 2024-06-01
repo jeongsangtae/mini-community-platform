@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
+import { useRouteLoaderData, useSubmit } from "react-router-dom";
 import { MoreVertical } from "react-feather";
 
 import AdminComments from "../Comments/AdminComments";
@@ -59,7 +59,6 @@ const AdminPostDetails = () => {
 
         <div className={classes["post-wrap"]}>
           <div className={`${classes.title} ${classes[authCtx.themeClass]}`}>
-            {/* <p>제목</p> */}
             <span>제목</span>
             <p>{post.title}</p>
           </div>
@@ -80,7 +79,6 @@ const AdminPostDetails = () => {
               <div
                 className={`${classes.dropdown} ${classes[authCtx.themeClass]}`}
               >
-                {/* <Link to="edit">수정하기</Link> */}
                 <button type="button" onClick={postDeleteHandler}>
                   삭제하기
                 </button>
@@ -104,7 +102,6 @@ const AdminPostDetails = () => {
         ></p>
 
         <div className={actionsButtonClass}>
-          {/* <Link to="edit">수정</Link> */}
           <button type="button" onClick={postDeleteHandler}>
             삭제
           </button>
