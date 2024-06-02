@@ -222,7 +222,12 @@ router.delete("/admin/posts/:postId/reply", async (req, res) => {
 });
 
 router.get("/admin/users", async (req, res) => {
-  const users = await db.getDb().collection("users").find().toArray();
+  // const users = await db.getDb().collection("users").find().toArray();
+  const users = await db
+    .getDb()
+    .collection("users")
+    .find({ email: { $ne: "admin@admin.com" } })
+    .toArray();
 
   console.log(users);
 

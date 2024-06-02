@@ -4,8 +4,7 @@ import { LuLogOut } from "react-icons/lu";
 import { User } from "react-feather";
 
 import AuthContext from "../../../store/auth-context";
-import Chat from "../../Chat/Chat";
-
+import AdminChat from "../Chat/AdminChat";
 import classes from "./AdminMainHeader.module.css";
 
 const AdminMainHeader = () => {
@@ -102,7 +101,7 @@ const AdminMainHeader = () => {
           </>
         )}
       </header>
-      <Chat />
+      <AdminChat />
     </>
   );
 };
