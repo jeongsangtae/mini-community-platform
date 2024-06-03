@@ -1,0 +1,27 @@
+.userWrapper {
+  padding: 0 5rem;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+}
+
+.user p {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: black;
+}
+
+.underline {
+  content: "";
+  margin: 1rem 5rem;
+  height: 1px;
+  background-color: rgb(224, 224, 224);
+}
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
+}

@@ -8,7 +8,7 @@
   background-color: var(--dark-mode-background-color);
 }
 
-.board-container {
+.users-container {
   padding: 5rem 10rem;
 }
 
@@ -33,11 +33,7 @@
   color: white;
 }
 
-/* .posts-item.dark-mode p {
-  color: white;
-} */
-
-.posts {
+.users {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -45,21 +41,14 @@
   padding: 0;
 }
 
-.no-posts {
+.no-users {
   text-align: center;
   color: black;
   margin: 5.75rem 0;
 }
 
-.no-posts.dark-mode {
+.no-users.dark-mode {
   color: white;
-}
-
-.last-menu {
-  display: flex;
-  justify-content: end;
-  margin: 0 5rem;
-  padding: 0;
 }
 
 .underline {
@@ -71,31 +60,4 @@
 
 .underline.dark-mode {
   background-color: rgb(68, 68, 68);
-}
-
-.add {
-  padding: 0.5rem 1.5rem;
-  color: black;
-  background-color: transparent;
-  border-radius: 2px;
-  text-decoration: none;
-  border: 1px solid rgb(68, 68, 68);
-  transition: all 0.3s ease;
-}
-
-.add:hover {
-  background-color: rgb(237, 237, 237);
-}
-
-.add.dark-mode {
-  color: white;
-}
-
-.add.dark-mode:hover {
-  background-color: rgb(25, 25, 25);
-}
-
-.opacity {
-  pointer-events: none;
-  opacity: 0.5;
 }

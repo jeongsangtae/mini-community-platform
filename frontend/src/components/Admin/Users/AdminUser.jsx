@@ -1,10 +1,22 @@
+import { useContext } from "react";
+
+import AuthContext from "../../../store/auth-context";
+import classes from "./AdminUser.module.css";
+
 const AdminUser = ({ email, name }) => {
+  const authCtx = useContext(AuthContext);
+
   return (
     <>
-      <li>
-        <div>{email}</div>
-        <div>{name}</div>
-      </li>
+      <div className={classes.userWrapper}>
+        <li className={`${classes.user} ${classes[authCtx.themeClass]}`}>
+          <p>
+            <div>{email}</div>
+            <div>{name}</div>
+          </p>
+        </li>
+      </div>
+      {/* <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p> */}
     </>
   );
 };
