@@ -16,6 +16,10 @@ const AdminUsers = () => {
   //   (user) => user.email !== "admin@admin.com"
   // );
 
+  const deleteUser = (userEmail) => {
+    users.filter((user) => user.email !== userEmail);
+  };
+
   return (
     <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
       {/* {filteredAdmin.length > 0 ? (
@@ -55,6 +59,7 @@ const AdminUsers = () => {
                     key={user._id}
                     email={user.email}
                     name={user.name}
+                    onDeleteUserData={deleteUser}
                   />
                 );
               })}

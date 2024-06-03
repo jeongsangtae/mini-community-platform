@@ -234,4 +234,57 @@ router.get("/admin/users", async (req, res) => {
   res.status(200).json({ users });
 });
 
+router.delete("/admin/user", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  const userEmail = req.body.email;
+
+  const user = await db
+    .getDb()
+    .collection("users")
+    .findOne({ email: userEmail });
+
+  if (user) {
+    await db.getDb().collection("replies").deleteMany({ email: user.email });
+
+    await db.getDb().collection("comments").deleteMany({ email: user.email });
+
+    const findPosts = await db
+      .getDb()
+      .collection("posts")
+      .find({ email: user.email })
+      .toArray();
+
+    if (findPosts.length > 0) {
+      const deletedPostIds = findPosts.map((post) => post.postId);
+
+      await db.getDb().collection("posts").deleteMany({ email: user.email });
+
+      for (const postId of deletedPostIds) {
+        await db
+          .getDb()
+          .collection("posts")
+          .updateMany({ postId: { $gt: postId } }, { $inc: { postId: -1 } });
+      }
+    }
+
+    // await db.getDb().collection("posts").deleteMany({ email: user.email });
+
+    // await db
+    //   .getDb()
+    //   .collection("posts")
+    //   .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
+
+    await db.getDb().collection("users").deleteOne({ email: userEmail });
+
+    res.status(200).json({ message: "Success", email: userEmail });
+  } else {
+    res.status(403).json({ message: "사용자가 없습니다." });
+  }
+});
+
 module.exports = router;
