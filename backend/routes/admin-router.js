@@ -243,16 +243,14 @@ router.delete("/admin/user", async (req, res) => {
 
   const userEmail = req.body.email;
 
+  // 삭제하려는 사용자 계정 찾기
   const user = await db
     .getDb()
     .collection("users")
     .findOne({ email: userEmail });
 
   if (user) {
-    await db.getDb().collection("replies").deleteMany({ email: user.email });
-
-    await db.getDb().collection("comments").deleteMany({ email: user.email });
-
+    // 삭제하려는 사용자가 작성한 게시글 찾기
     const findPosts = await db
       .getDb()
       .collection("posts")
@@ -260,17 +258,32 @@ router.delete("/admin/user", async (req, res) => {
       .toArray();
 
     if (findPosts.length > 0) {
-      const deletedPostIds = findPosts.map((post) => post.postId);
+      // 삭제하려는 게시글의 _id 추출
+      const deletedPostIds = findPosts.map((post) => post._id);
+      const deletedPostPostIds = findPosts.map((post) => post.postId);
+
+      // 각 게시글의 댓글과 답글 삭제
+      for (const postId of deletedPostIds) {
+        await db.getDb().collection("replies").deleteMany({ post_id: postId });
+        await db.getDb().collection("comments").deleteMany({ post_id: postId });
+      }
 
       await db.getDb().collection("posts").deleteMany({ email: user.email });
 
-      for (const postId of deletedPostIds) {
+      for (const postId of deletedPostPostIds) {
         await db
           .getDb()
           .collection("posts")
           .updateMany({ postId: { $gt: postId } }, { $inc: { postId: -1 } });
       }
     }
+
+    // if (findPosts.length > 0) {
+    //   const deletedPostIds = findPosts.map((post) => post.postId);
+
+    //   await db.getDb().collection("posts").deleteMany({ email: user.email });
+
+    // }
 
     // await db.getDb().collection("posts").deleteMany({ email: user.email });
 
@@ -281,7 +294,7 @@ router.delete("/admin/user", async (req, res) => {
 
     await db.getDb().collection("users").deleteOne({ email: userEmail });
 
-    res.status(200).json({ message: "Success", email: userEmail });
+    res.status(200).json({ message: "Success" });
   } else {
     res.status(403).json({ message: "사용자가 없습니다." });
   }
