@@ -18,21 +18,20 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
       const errorData = await response.json();
       console.log(errorData.message);
       throw json({ message: "사용자를 삭제할 수 없습니다." }, { status: 500 });
-    } else {
-      const resData = await response.json();
-      onDeleteUserData(resData.email);
-      // onDeleteUserData(email)
     }
+    // const resData = await response.json();
+    // onDeleteUserData(resData.email);
+    onDeleteUserData(email);
   };
 
   return (
     <>
       <div className={classes.userWrapper}>
         <li className={`${classes.user} ${classes[authCtx.themeClass]}`}>
-          <p>
-            <div>{email}</div>
-            <div>{name}</div>
-          </p>
+          <div>
+            <p>{email}</p>
+            <p>{name}</p>
+          </div>
           <div
             className={`${classes["delete-button"]} ${
               classes[authCtx.themeClass]

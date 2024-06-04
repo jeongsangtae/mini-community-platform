@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 
 import AdminUser from "./AdminUser";
@@ -7,17 +7,19 @@ import classes from "./AdminUsers.module.css";
 import LoadingIndicator from "../../UI/LoadingIndicator";
 
 const AdminUsers = () => {
-  const users = useLoaderData();
-  console.log(users);
+  const usersData = useLoaderData();
 
   const authCtx = useContext(AuthContext);
+
+  const [users, setUsers] = useState(usersData);
 
   // const filteredAdmin = users.filter(
   //   (user) => user.email !== "admin@admin.com"
   // );
 
   const deleteUser = (userEmail) => {
-    users.filter((user) => user.email !== userEmail);
+    const filteredUsers = users.filter((user) => user.email !== userEmail);
+    setUsers(filteredUsers);
   };
 
   return (
@@ -73,11 +75,11 @@ const AdminUsers = () => {
               >
                 사용자가 존재하지 않습니다.
               </h2>
-              <p
+              {/* <p
                 className={`${classes.underline} ${
                   classes[authCtx.themeClass]
                 }`}
-              ></p>
+              ></p> */}
             </>
           )}
           <p
