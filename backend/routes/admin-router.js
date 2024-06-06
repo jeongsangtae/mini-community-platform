@@ -250,6 +250,23 @@ router.delete("/admin/user", async (req, res) => {
     .findOne({ email: userEmail });
 
   if (user) {
+    // 삭제하려는 사용자가 작성한 댓글 찾기
+    const findComments = await db
+      .getDb()
+      .collection("comments")
+      .find({ email: user.email })
+      .toArray();
+
+    if (findComments.length > 0) {
+      // 삭제하려는 댓글 _id 추출
+      const deletedCommentIds = findComments.map((comment) => comment._id);
+
+      await db
+        .getDb()
+        .collection("replies")
+        .deleteMany({ comment_id: { $in: deletedCommentIds } });
+    }
+
     // 삭제하려는 사용자가 작성한 게시글 찾기
     const findPosts = await db
       .getDb()
@@ -258,7 +275,7 @@ router.delete("/admin/user", async (req, res) => {
       .toArray();
 
     if (findPosts.length > 0) {
-      // 삭제하려는 게시글의 _id 추출
+      // 삭제하려는 게시글 _id 추출
       const deletedPostIds = findPosts.map((post) => post._id);
       const deletedPostPostIds = findPosts.map((post) => post.postId);
 
@@ -287,21 +304,7 @@ router.delete("/admin/user", async (req, res) => {
       }
     }
 
-    // if (findPosts.length > 0) {
-    //   const deletedPostIds = findPosts.map((post) => post.postId);
-
-    //   await db.getDb().collection("posts").deleteMany({ email: user.email });
-
-    // }
-
-    // await db.getDb().collection("posts").deleteMany({ email: user.email });
-
-    // await db
-    //   .getDb()
-    //   .collection("posts")
-    //   .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
-
-    // 사용자가 작성한 모든 댓글과 답글 삭제
+    // 사용자가 작성한 모든 댓글, 답글 삭제
     await db.getDb().collection("replies").deleteMany({ email: user.email });
     await db.getDb().collection("comments").deleteMany({ email: user.email });
 
