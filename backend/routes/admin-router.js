@@ -296,12 +296,28 @@ router.delete("/admin/user", async (req, res) => {
 
       await db.getDb().collection("posts").deleteMany({ email: user.email });
 
-      for (const postId of deletedPostPostIds) {
+      // 게시글의 번호 재배열
+      const allPosts = await db
+        .getDb()
+        .collection("posts")
+        .find()
+        .sort({ postId: 1 })
+        .toArray();
+
+      for (let i = 0; i < allPosts.length; i++) {
+        const currentPost = allPosts[i];
         await db
           .getDb()
           .collection("posts")
-          .updateMany({ postId: { $gt: postId } }, { $inc: { postId: -1 } });
+          .updateOne({ _id: currentPost._id }, { $set: { postId: i + 1 } });
       }
+
+      // for (const postId of deletedPostPostIds) {
+      //   await db
+      //     .getDb()
+      //     .collection("posts")
+      //     .updateMany({ postId: { $gt: postId } }, { $inc: { postId: -1 } });
+      // }
     }
 
     // 사용자가 작성한 모든 댓글, 답글 삭제
