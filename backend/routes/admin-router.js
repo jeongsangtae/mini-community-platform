@@ -263,10 +263,19 @@ router.delete("/admin/user", async (req, res) => {
       const deletedPostPostIds = findPosts.map((post) => post.postId);
 
       // 각 게시글의 댓글과 답글 삭제
-      for (const postId of deletedPostIds) {
-        await db.getDb().collection("replies").deleteMany({ post_id: postId });
-        await db.getDb().collection("comments").deleteMany({ post_id: postId });
-      }
+      // for (const postId of deletedPostIds) {
+      //   await db.getDb().collection("replies").deleteMany({ post_id: postId });
+      //   await db.getDb().collection("comments").deleteMany({ post_id: postId });
+      // }
+
+      await db
+        .getDb()
+        .collection("replies")
+        .deleteMany({ post_id: { $in: deletedPostIds } });
+      await db
+        .getDb()
+        .collection("comments")
+        .deleteMany({ post_id: { $in: deletedPostIds } });
 
       await db.getDb().collection("posts").deleteMany({ email: user.email });
 
@@ -292,7 +301,12 @@ router.delete("/admin/user", async (req, res) => {
     //   .collection("posts")
     //   .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
 
-    await db.getDb().collection("users").deleteOne({ email: userEmail });
+    // 사용자가 작성한 모든 댓글과 답글 삭제
+    await db.getDb().collection("replies").deleteMany({ email: user.email });
+    await db.getDb().collection("comments").deleteMany({ email: user.email });
+
+    // 사용자 삭제
+    await db.getDb().collection("users").deleteOne({ email: user.email });
 
     res.status(200).json({ message: "Success" });
   } else {
