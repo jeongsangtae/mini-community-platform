@@ -227,6 +227,7 @@ router.get("/admin/users", async (req, res) => {
     .getDb()
     .collection("users")
     .find({ email: { $ne: "admin@admin.com" } })
+    .sort({ _id: -1 })
     .toArray();
 
   console.log(users);

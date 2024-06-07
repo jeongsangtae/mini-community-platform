@@ -26,11 +26,13 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
 
   return (
     <>
-      <div className={classes.userWrapper}>
+      <div className={classes["user-wrapper"]}>
         <li className={`${classes.user} ${classes[authCtx.themeClass]}`}>
-          <div>
+          <div
+            className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
+          >
             <p>{email}</p>
-            <p>{name}</p>
+            <span>{name}</span>
           </div>
           <div
             className={`${classes["delete-button"]} ${
@@ -43,7 +45,7 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
           </div>
         </li>
       </div>
-      {/* <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p> */}
+      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
     </>
   );
 };

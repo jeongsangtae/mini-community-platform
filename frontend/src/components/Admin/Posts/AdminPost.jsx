@@ -14,7 +14,7 @@ const AdminPost = ({ num, title, name, date, content, count }) => {
 
   return (
     <>
-      <div className={classes.postWrapper}>
+      <div className={classes["post-wrapper"]}>
         <li className={`${classes.post} ${classes[authCtx.themeClass]}`}>
           <div
             className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}

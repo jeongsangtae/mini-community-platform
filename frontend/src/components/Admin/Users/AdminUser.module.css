@@ -1,4 +1,4 @@
-.userWrapper {
+.user-wrapper {
   padding: 0 5rem;
 }
 
@@ -8,18 +8,66 @@
   margin-top: 0.5rem;
 }
 
-.user div {
+.user {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   text-decoration: none;
   color: black;
 }
 
-/* .delete-button {
-  margin-bottom: 1rem;
+.info-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.info-wrap.dark-mode {
+  color: white;
+}
+
+/* .info-wrap p {
+  margin-right: 1rem;
 } */
 
-/* .underline {
+.info-wrap span::before {
+  content: "●";
+  font-size: 0.5rem;
+  position: relative;
+  margin: 0 1rem;
+  color: black;
+  vertical-align: middle;
+}
+
+.info-wrap.dark-mode span::before {
+  color: white;
+}
+
+.delete-button button {
+  font: inherit;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1.5rem;
+  color: black;
+  background-color: transparent;
+  border-radius: 2px;
+  border: 1px solid rgb(68, 68, 68);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.delete-button button:hover {
+  background-color: rgb(237, 237, 237);
+}
+
+.delete-button.dark-mode button {
+  color: white;
+}
+
+.delete-button.delete-button.dark-mode button:hover {
+  background-color: rgb(25, 25, 25);
+}
+
+.underline {
   content: "";
   margin: 1rem 5rem;
   height: 1px;
@@ -28,4 +76,8 @@
 
 .underline.dark-mode {
   background-color: rgb(68, 68, 68);
-} */
+}
+
+.underline:last-child {
+  display: none;
+}
