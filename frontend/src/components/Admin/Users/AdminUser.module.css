@@ -63,7 +63,7 @@
   color: white;
 }
 
-.delete-button.delete-button.dark-mode button:hover {
+.delete-button.dark-mode button:hover {
   background-color: rgb(25, 25, 25);
 }
 

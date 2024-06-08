@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
 import AuthContext from "../../../store/auth-context";
+import DropDownMenu from "../../Layout/DropDownMenu";
 import AdminChat from "../Chat/AdminChat";
-import AdminDropDownMenu from "./AdminDropDownMenu";
 import classes from "./AdminMainHeader.module.css";
 
 const AdminMainHeader = () => {
@@ -15,9 +15,9 @@ const AdminMainHeader = () => {
       : `${classes.button} ${classes[authCtx.themeClass]}`;
   };
 
-  const dropDownButton = `${classes.button} ${classes["dropdown-button"]} ${
-    classes[authCtx.themeClass]
-  }`;
+  const dropDownButtonClassName = `${classes.button} ${
+    classes["dropdown-button"]
+  } ${classes[authCtx.themeClass]}`;
 
   return (
     <>
@@ -46,7 +46,7 @@ const AdminMainHeader = () => {
                 </div>
               </NavLink>
 
-              <AdminDropDownMenu dropDownButton={dropDownButton} />
+              <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </nav>
           </>
         )}

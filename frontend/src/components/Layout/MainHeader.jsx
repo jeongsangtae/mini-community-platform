@@ -1,8 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
-import { FaRegAddressCard } from "react-icons/fa";
-import { MoreVertical, User } from "react-feather";
 
 import Login from "../Users/Login";
 import Signup from "../Users/Signup";
@@ -10,6 +7,7 @@ import AuthContext from "../../store/auth-context";
 
 import classes from "./MainHeader.module.css";
 import Chat from "../Chat/Chat";
+import DropDownMenu from "./DropDownMenu";
 
 const MainHeader = () => {
   const [openSignupModal, setOnSignupModal] = useState(false);
@@ -84,6 +82,10 @@ const MainHeader = () => {
       : `${classes.button} ${classes[authCtx.themeClass]}`;
   };
 
+  const dropDownButtonClassName = `${classes.button} ${
+    classes["dropdown-button"]
+  } ${classes[authCtx.themeClass]}`;
+
   return (
     <>
       <header className={`${classes.header} ${classes[authCtx.themeClass]}`}>
@@ -105,94 +107,7 @@ const MainHeader = () => {
                 </div>
               </NavLink>
 
-              <div className={classes.dropdown}>
-                <div className={classes.iconWrapper}>
-                  <User
-                    className={`${classes.icon} ${classes[authCtx.themeClass]}`}
-                  />
-                  <div
-                    className={`${classes.circle} ${
-                      classes[authCtx.themeClass]
-                    }`}
-                  ></div>
-                </div>
-                <div
-                  className={`${classes["dropdown-content"]} ${
-                    classes[authCtx.themeClass]
-                  }`}
-                >
-                  <NavLink
-                    to="/profile"
-                    className={`${classes.button} ${
-                      classes["dropdown-button"]
-                    } ${classes[authCtx.themeClass]}`}
-                  >
-                    <LuUserCircle2 className={classes["dropdown-icon"]} />
-                    {authCtx.userInfo?.name}
-                  </NavLink>
-                  <button
-                    className={`${classes.button} ${
-                      classes["dropdown-button"]
-                    } ${classes[authCtx.themeClass]}`}
-                    onClick={authCtx.logout}
-                  >
-                    <LuLogOut className={classes["dropdown-icon"]} />
-                    로그아웃
-                  </button>
-                  <p
-                    className={`${classes.underline} ${
-                      classes[authCtx.themeClass]
-                    }`}
-                  ></p>
-                  <div className={classes["toggle-button"]}>
-                    <div
-                      className={`${classes["toggle-mode"]} ${
-                        classes[authCtx.themeClass]
-                      }`}
-                    >
-                      라이트 모드
-                    </div>
-                    <div className={`${classes.toggle} ${classes.normal}`}>
-                      <input
-                        id="normal"
-                        className={classes["normal-check"]}
-                        defaultChecked={authCtx.themeMode === "dark"}
-                        type="checkbox"
-                        onChange={authCtx.themeModeToggle}
-                      />
-                      <label
-                        htmlFor="normal"
-                        className={classes["toggle-item"]}
-                      ></label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* <p>
-                <button
-                  className={classes.button}
-                  onClick={accessTokenTestHandler}
-                >
-                  액세스토큰
-                </button>
-              </p> */}
-              {/* <p>
-                <button
-                  className={classes.button}
-                  onClick={authCtx.refreshToken}
-                >
-                  리프레쉬토큰
-                </button>
-              </p> */}
-              {/* <p>
-                <button
-                  className={classes.button}
-                  onClick={authCtx.refreshTokenExp}
-                >
-                  리프레쉬토큰 EXP
-                </button>
-              </p> */}
+              <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </nav>
           </>
         ) : (
@@ -210,65 +125,11 @@ const MainHeader = () => {
                 </div>
               </NavLink>
 
-              <div className={classes.dropdown}>
-                <div className={classes.iconWrapper}>
-                  <MoreVertical
-                    className={`${classes.icon} ${classes[authCtx.themeClass]}`}
-                  />
-                </div>
-                <div
-                  className={`${classes["dropdown-content"]} ${
-                    classes[authCtx.themeClass]
-                  }`}
-                >
-                  <button
-                    className={`${classes.button} ${
-                      classes["dropdown-button"]
-                    } ${classes[authCtx.themeClass]}`}
-                    onClick={signupToggleHandler}
-                  >
-                    <FaRegAddressCard className={classes["dropdown-icon"]} />
-                    {/* <LuKeyRound className={classes["dropdown-icon"]} /> */}
-                    회원가입
-                  </button>
-                  <button
-                    className={`${classes.button} ${
-                      classes["dropdown-button"]
-                    } ${classes[authCtx.themeClass]}`}
-                    onClick={loginToggleHandler}
-                  >
-                    <LuLogIn className={classes["dropdown-icon"]} />
-                    로그인
-                  </button>
-                  <p
-                    className={`${classes.underline} ${
-                      classes[authCtx.themeClass]
-                    }`}
-                  ></p>
-                  <div className={classes["toggle-button"]}>
-                    <div
-                      className={`${classes["toggle-mode"]} ${
-                        classes[authCtx.themeClass]
-                      }`}
-                    >
-                      라이트 모드
-                    </div>
-                    <div className={`${classes.toggle} ${classes.normal}`}>
-                      <input
-                        id="normal"
-                        className={classes["normal-check"]}
-                        defaultChecked={authCtx.themeMode === "dark"}
-                        type="checkbox"
-                        onChange={authCtx.themeModeToggle}
-                      />
-                      <label
-                        htmlFor="normal"
-                        className={classes["toggle-item"]}
-                      ></label>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <DropDownMenu
+                onSignupToggle={signupToggleHandler}
+                onLoginToggle={loginToggleHandler}
+                dropDownButtonClassName={dropDownButtonClassName}
+              />
             </nav>
           </>
         )}
