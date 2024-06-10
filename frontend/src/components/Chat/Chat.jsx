@@ -7,41 +7,46 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import classes from "./Chat.module.css";
 
-const Chat = () => {
+const Chat = ({ userId, userEmail }) => {
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [socket, setSocket] = useState(null);
   const [chatToggle, setChatToggle] = useState(false);
 
-  // socket.emit("message", "socket.io 체크");
-  useEffect(() => {
-    const socket = io("http://localhost:3001");
-    // socket.on("message", (msg) => {
-    //   // setMessages((prevMessages) => [...prevMessages, inputValue]);
-    //   setMessages((prevMessages) => [...prevMessages, msg]);
-    // });
+  console.log(userId);
 
-    socket.on("message", (msg) => {
+  useEffect(() => {
+    const newSocket = io("http://localhost:3001");
+
+    newSocket.on("message", (msg) => {
       console.log("서버로부터의 메시지:", msg);
     });
 
-    setSocket(socket);
+    setSocket(newSocket);
 
     return () => {
-      socket.disconnect();
+      newSocket.disconnect();
     };
   }, []);
 
-  const sendMessage = () => {
-    // if (inputValue.trim() !== "") {
-    //   socket.emit("message", inputValue);
-    //   // setMessages([...messages, inputValue]);
-    //   setInputValue("");
-    // }
-
-    if (socket) {
-      socket.emit("clientMessage", inputValue);
+  const sendMessage = async () => {
+    const response = await fetch("http://localhost:3000/chat/" + userId, {
+      method: "POST",
+      body: JSON.stringify({ message, userEmail }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    if (!response.ok) {
+      // throw json({ message: "메시지를 전송할 수 없습니다." }, { status: 500 });
+      throw new Error("메시지를 전송할 수 없습니다.");
+    } else {
+      const resData = await response.json();
+      console.log(resData.newChat);
     }
+    // if (socket) {
+    //   socket.emit("clientMessage", inputValue);
+    // }
   };
 
   const chatToggleHandler = () => {
@@ -68,8 +73,8 @@ const Chat = () => {
         </ul>
         <input
           type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
         <button onClick={sendMessage}>Send</button>
       </div>

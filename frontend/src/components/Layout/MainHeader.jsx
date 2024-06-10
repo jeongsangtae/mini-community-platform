@@ -109,6 +109,7 @@ const MainHeader = () => {
 
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </nav>
+            <Chat userId={user._id} userEmail={user.email} />
           </>
         ) : (
           <>
@@ -150,7 +151,6 @@ const MainHeader = () => {
           )}
         </>
       )}
-      <Chat />
     </>
   );
 };
