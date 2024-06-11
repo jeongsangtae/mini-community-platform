@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import AuthContext from "../../store/auth-context";
-import Chat from "../Chat/Chat";
+import Chats from "../Chats/Chats";
 import classes from "./MainContent.module.css";
 
 const MainContent = () => {

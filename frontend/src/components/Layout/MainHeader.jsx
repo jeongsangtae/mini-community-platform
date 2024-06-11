@@ -6,7 +6,7 @@ import Signup from "../Users/Signup";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./MainHeader.module.css";
-import Chat from "../Chat/Chat";
+import Chats from "../Chats/Chats";
 import DropDownMenu from "./DropDownMenu";
 
 const MainHeader = () => {
@@ -112,7 +112,7 @@ const MainHeader = () => {
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </nav>
             {/* <Chat userId={user._id} userEmail={user.email} /> */}
-            <Chat
+            <Chats
               userId={authCtx.userInfo?._id}
               userEmail={authCtx.userInfo?.email}
             />

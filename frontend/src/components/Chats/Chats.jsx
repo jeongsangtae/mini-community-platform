@@ -5,9 +5,10 @@ import { BsChatFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 
-import classes from "./Chat.module.css";
+import classes from "./Chats.module.css";
+import Chat from "./Chat";
 
-const Chat = ({ userId, userEmail }) => {
+const Chats = ({ userId, userEmail }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -58,25 +59,31 @@ const Chat = ({ userId, userEmail }) => {
     : `${classes["chat-container"]} ${classes.close}`;
 
   return (
-    <div className={classes.chat}>
+    <div className={classes.chats}>
       {/* {chatToggle && ( */}
       {/* <div className={classes["chat-container"]}> */}
       <div
-        className={`${classes["chat-container"]} ${
+        className={`${classes["chats-container"]} ${
           chatToggle ? `${classes.open}` : `${classes.close}`
         }`}
       >
         <ul>
           {messages.map((message, index) => (
-            <li key={index}>{message}</li>
+            // <li key={index}>{message}</li>
+            <Chat key={index} message={message} />
           ))}
         </ul>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button onClick={sendMessage}>Send</button>
+        <div className={classes["input-container"]}>
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+
+          <button onClick={sendMessage} className={classes["send-button"]}>
+            Send
+          </button>
+        </div>
       </div>
       {/* )} */}
       <div className={classes["chat-icon"]}>
@@ -108,4 +115,4 @@ const Chat = ({ userId, userEmail }) => {
   );
 };
 
-export default Chat;
+export default Chats;
