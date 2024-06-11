@@ -14,7 +14,7 @@ const Chat = ({ userId, userEmail }) => {
   const [socket, setSocket] = useState(null);
   const [chatToggle, setChatToggle] = useState(false);
 
-  console.log(userId);
+  console.log(userId, userEmail);
 
   useEffect(() => {
     const newSocket = io("http://localhost:3001");
