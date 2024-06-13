@@ -3,6 +3,9 @@ const path = require("path");
 const express = require("express");
 const dotenv = require("dotenv");
 
+const http = require("http"); // http 모듈 추가
+const { Server } = require("socket.io"); // socket.io 추가
+
 const db = require("./data/database");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
@@ -63,18 +66,55 @@ app.use((error, req, res, next) => {
   res.status(500).render("500");
 });
 
+// 서버 설정
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+// Socket.io 설정
+io.on("connection", (socket) => {
+  console.log("클라이언트가 연결되었습니다:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("클라이언트가 연결이 끊어졌습니다:", socket.id);
+  });
+
+  socket.on("testMessage", (msg) => {
+    console.log("클라이언트로부터의 메시지:", msg);
+    // 클라이언트에게 응답 전송
+    socket.emit("serverResponse", msg);
+  });
+
+  // 필요한 이벤트 핸들러를 여기에 추가하세요
+});
+
 // MongoDB 설정
 db.connectToDatabase()
   .then(() => {
-    app.listen(3000);
-    // console.log("데이터베이스에 연결되었습니다.");
+    server.listen(3000); // app.listen 대신 server.listen 사용
+    console.log("서버가 실행되었습니다. 포트: 3000");
   })
   .catch((error) => {
     console.log("데이터베이스에 연결하지 못했습니다.");
     console.log(error);
   });
 
-console.log("run server");
+// MongoDB 설정
+// db.connectToDatabase()
+//   .then(() => {
+//     app.listen(3000);
+//   })
+//   .catch((error) => {
+//     console.log("데이터베이스에 연결하지 못했습니다.");
+//     console.log(error);
+//   });
+
+// console.log("run server");
 
 // const { Server } = require("socket.io");
 

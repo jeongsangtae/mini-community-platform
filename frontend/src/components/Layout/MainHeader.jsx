@@ -111,7 +111,7 @@ const MainHeader = () => {
 
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </nav>
-            {/* <Chat userId={user._id} userEmail={user.email} /> */}
+            {/* <Chats userId={user?._id} userEmail={user?.email} /> */}
             <Chats
               userId={authCtx.userInfo?._id}
               userEmail={authCtx.userInfo?.email}
