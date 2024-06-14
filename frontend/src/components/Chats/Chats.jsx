@@ -28,9 +28,9 @@ const Chats = ({ userId, userEmail }) => {
       console.log("서버에 연결되었습니다:", newSocket.id);
     });
 
-    newSocket.on("newMessage", (newMsg) => {
-      setMessages((prevMsg) => [...prevMsg, newMsg]);
-      console.log("input 메시지 : ", newMsg.message);
+    newSocket.on("newMessage", (newMessage) => {
+      setMessages((prevMsg) => [...prevMsg, newMessage]);
+      console.log("input 메시지 : ", newMessage.content);
     });
 
     setSocket(newSocket);
@@ -83,7 +83,7 @@ const Chats = ({ userId, userEmail }) => {
       >
         <ul>
           {messages.map((message) => (
-            <Chat key={message._id} message={message.message} />
+            <Chat key={message._id} message={message.content} />
           ))}
         </ul>
         <div className={classes["input-container"]}>

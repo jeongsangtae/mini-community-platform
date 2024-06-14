@@ -29,10 +29,10 @@ router.post("/chat/:userId", async (req, res) => {
 
   userId = new ObjectId(userId);
 
-  const newChat = {
+  const newMessage = {
     user_id: userId,
     email: userEmail,
-    message: messageInput,
+    content: messageInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
       .toString()
@@ -42,14 +42,14 @@ router.post("/chat/:userId", async (req, res) => {
       .padStart(2, "0")}`,
   };
 
-  await db.getDb().collection("userChat").insertOne(newChat);
+  await db.getDb().collection("userChat").insertOne(newMessage);
 
   const io = req.app.get("io");
-  io.emit("newMessage", newChat);
+  io.emit("newMessage", newMessage);
 
-  console.log("input 메시지 : ", newChat.message);
+  console.log("input 메시지 : ", newMessage.message);
 
-  res.status(200).json({ newChat });
+  res.status(200).json({ newMessage });
 });
 
 module.exports = router;
