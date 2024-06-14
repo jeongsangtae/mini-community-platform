@@ -17,10 +17,9 @@ const Chats = ({ userId, userEmail }) => {
   const [chatToggle, setChatToggle] = useState(false);
 
   console.log(userId, userEmail);
+  console.log(messages);
 
   useEffect(() => {
-    // const newSocket = io("http://localhost:3001");
-
     const newSocket = io("http://localhost:3000", {
       withCredentials: true, // CORS 설정
     });
@@ -29,13 +28,9 @@ const Chats = ({ userId, userEmail }) => {
       console.log("서버에 연결되었습니다:", newSocket.id);
     });
 
-    // newSocket.on("message", (msg) => {
-    //   console.log("서버로부터의 메시지:", msg);
-    // });
-
-    newSocket.on("serverResponse", (msg) => {
-      console.log("서버로부터의 메시지:", msg);
-      setServerMessage(msg); // 서버의 응답 메시지를 상태로 저장
+    newSocket.on("newMessage", (newMsg) => {
+      setMessages((prevMsg) => [...prevMsg, newMsg]);
+      console.log("input 메시지 : ", newMsg.message);
     });
 
     setSocket(newSocket);
@@ -45,29 +40,29 @@ const Chats = ({ userId, userEmail }) => {
     };
   }, []);
 
-  // const sendMessage = async () => {
-  //   const response = await fetch("http://localhost:3000/chat/" + userId, {
-  //     method: "POST",
-  //     body: JSON.stringify({ message, userEmail }),
-  //     headers: { "Content-Type": "application/json" },
-  //     credentials: "include",
-  //   });
-  //   if (!response.ok) {
-  //     throw new Error("메시지를 전송할 수 없습니다.");
-  //   } else {
-  //     const resData = await response.json();
-  //     console.log(resData.newChat);
-  //   }
-  //   // if (socket) {
-  //   //   socket.emit("clientMessage", inputValue);
-  //   // }
-  // };
-
-  const testButton = () => {
-    if (socket) {
-      socket.emit("testMessage", "테스트 메시지"); // 서버로 메시지 전송
+  const sendMessage = async () => {
+    const response = await fetch("http://localhost:3000/chat/" + userId, {
+      method: "POST",
+      body: JSON.stringify({ message, userEmail }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error("메시지를 전송할 수 없습니다.");
+    } else {
+      const resData = await response.json();
+      console.log(resData.newChat);
     }
+    // if (socket) {
+    //   socket.emit("clientMessage", inputValue);
+    // }
   };
+
+  // const testButton = () => {
+  //   if (socket) {
+  //     socket.emit("testMessage", "테스트 메시지"); // 서버로 메시지 전송
+  //   }
+  // };
 
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
@@ -87,22 +82,20 @@ const Chats = ({ userId, userEmail }) => {
         }`}
       >
         <ul>
-          {messages.map((message, index) => (
-            // <li key={index}>{message}</li>
-            <Chat key={index} message={message} />
+          {messages.map((message) => (
+            <Chat key={message._id} message={message.message} />
           ))}
         </ul>
         <div className={classes["input-container"]}>
-          {/* <input
+          <input
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-          /> */}
+          />
 
-          {/* <button onClick={sendMessage} className={classes["send-button"]}>
+          <button onClick={sendMessage} className={classes["send-button"]}>
             Send
-          </button> */}
-          <button onClick={testButton}>Socket.io 테스트</button>
+          </button>
         </div>
       </div>
       {/* )} */}

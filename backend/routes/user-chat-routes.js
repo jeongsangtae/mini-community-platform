@@ -44,6 +44,11 @@ router.post("/chat/:userId", async (req, res) => {
 
   await db.getDb().collection("userChat").insertOne(newChat);
 
+  const io = req.app.get("io");
+  io.emit("newMessage", newChat);
+
+  console.log("input 메시지 : ", newChat.message);
+
   res.status(200).json({ newChat });
 });
 

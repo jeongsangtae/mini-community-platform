@@ -76,6 +76,9 @@ const io = new Server(server, {
   },
 });
 
+// Socket.io 객체를 Express 앱 객체에 저장
+app.set("io", io);
+
 // Socket.io 설정
 io.on("connection", (socket) => {
   console.log("클라이언트가 연결되었습니다:", socket.id);
@@ -84,13 +87,11 @@ io.on("connection", (socket) => {
     console.log("클라이언트가 연결이 끊어졌습니다:", socket.id);
   });
 
-  socket.on("testMessage", (msg) => {
-    console.log("클라이언트로부터의 메시지:", msg);
-    // 클라이언트에게 응답 전송
-    socket.emit("serverResponse", msg);
-  });
-
-  // 필요한 이벤트 핸들러를 여기에 추가하세요
+  // socket.on("testMessage", (msg) => {
+  //   console.log("클라이언트로부터의 메시지:", msg);
+  //   // 클라이언트에게 응답 전송
+  //   socket.emit("serverResponse", msg);
+  // });
 });
 
 // MongoDB 설정

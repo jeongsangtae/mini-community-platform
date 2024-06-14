@@ -1,12 +1,9 @@
 import classes from "./Chat.module.css";
 
-const Chat = () => {
+const Chat = ({ message }) => {
   return (
     <div className={classes.chat}>
-      <li>abc</li>
-      <li>abc</li>
-      <li>abc</li>
-      <li>abc</li>
+      <li>{message}</li>
     </div>
   );
 };

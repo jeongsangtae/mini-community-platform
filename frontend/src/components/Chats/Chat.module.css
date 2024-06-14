@@ -1,5 +1,5 @@
 .chat {
   padding: 10px;
   border-bottom: 1px solid #ccc;
-  word-break: break-word;
+  /* word-break: break-word; */
 }
