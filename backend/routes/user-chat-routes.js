@@ -15,6 +15,26 @@ const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
+router.get("/chat/:userId", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ message: "jwt error" });
+  }
+
+  let userId = req.params.userId;
+
+  userId = new ObjectId(userId);
+
+  const messages = await db
+    .getDb()
+    .collection("userChat")
+    .find({ user_id: userId })
+    .toArray();
+
+  res.status(200).json({ messages });
+});
+
 router.post("/chat/:userId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -44,6 +64,7 @@ router.post("/chat/:userId", async (req, res) => {
 
   await db.getDb().collection("userChat").insertOne(newMessage);
 
+  // socket.io를 통해 메시지를 브로드캐스트
   const io = req.app.get("io");
   io.emit("newMessage", newMessage);
 

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
-// import { IoIosClose } from "react-icons/io";
-import { MdCancel } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 
 import classes from "./Chats.module.css";
@@ -10,7 +8,6 @@ import Chat from "./Chat";
 
 const Chats = ({ userId, userEmail }) => {
   const [message, setMessage] = useState("");
-  const [serverMessage, setServerMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [socket, setSocket] = useState(null);
@@ -20,6 +17,19 @@ const Chats = ({ userId, userEmail }) => {
   console.log(messages);
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      const response = await fetch("http://localhost:3000/chat/" + userId, {
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("메시지를 불러올 수 없습니다.");
+      }
+      const resData = await response.json();
+      setMessages(resData.messages);
+    };
+
+    fetchMessages();
+
     const newSocket = io("http://localhost:3000", {
       withCredentials: true, // CORS 설정
     });
@@ -53,16 +63,7 @@ const Chats = ({ userId, userEmail }) => {
       const resData = await response.json();
       console.log(resData.newChat);
     }
-    // if (socket) {
-    //   socket.emit("clientMessage", inputValue);
-    // }
   };
-
-  // const testButton = () => {
-  //   if (socket) {
-  //     socket.emit("testMessage", "테스트 메시지"); // 서버로 메시지 전송
-  //   }
-  // };
 
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
