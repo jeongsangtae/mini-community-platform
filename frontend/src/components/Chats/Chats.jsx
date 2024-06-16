@@ -16,7 +16,13 @@ const Chats = ({ userId, userEmail }) => {
   console.log(userId, userEmail);
   console.log(messages);
 
+  // 저장된 기존 메시지 불러오기
   useEffect(() => {
+    if (!userId) {
+      console.error("userId가 정의되지 않았습니다.");
+      return;
+    }
+
     const fetchMessages = async () => {
       const response = await fetch("http://localhost:3000/chat/" + userId, {
         credentials: "include",
@@ -29,7 +35,10 @@ const Chats = ({ userId, userEmail }) => {
     };
 
     fetchMessages();
+  }, [userId]);
 
+  // WebSocket 연결 및 실시간 메시지 수신
+  useEffect(() => {
     const newSocket = io("http://localhost:3000", {
       withCredentials: true, // CORS 설정
     });
@@ -61,7 +70,7 @@ const Chats = ({ userId, userEmail }) => {
       throw new Error("메시지를 전송할 수 없습니다.");
     } else {
       const resData = await response.json();
-      console.log(resData.newChat);
+      console.log(resData.newMessage);
     }
   };
 
@@ -69,9 +78,9 @@ const Chats = ({ userId, userEmail }) => {
     setChatToggle(!chatToggle);
   };
 
-  const chatContainerToggleClass = chatToggle
-    ? `${classes["chat-container"]} ${classes.open}`
-    : `${classes["chat-container"]} ${classes.close}`;
+  // const chatContainerToggleClass = chatToggle
+  //   ? `${classes["chat-container"]} ${classes.open}`
+  //   : `${classes["chat-container"]} ${classes.close}`;
 
   return (
     <div className={classes.chats}>
