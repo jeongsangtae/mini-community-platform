@@ -68,7 +68,7 @@ router.post("/chat/:userId", async (req, res) => {
   const io = req.app.get("io");
   io.emit("newMessage", newMessage);
 
-  console.log("input 메시지 : ", newMessage.content);
+  console.log("사용자 input 메시지: ", newMessage.content);
 
   res.status(200).json({ newMessage });
 });

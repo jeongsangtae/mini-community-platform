@@ -11,6 +11,7 @@ const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
 const adminRoutes = require("./routes/admin-router");
 const userChatRoutes = require("./routes/user-chat-routes");
+const adminChatRoutes = require("./routes/admin-chat-routes");
 
 const app = express();
 const cors = require("cors");
@@ -56,6 +57,7 @@ app.use(boardRoutes);
 app.use(userRoutes);
 app.use(adminRoutes);
 app.use(userChatRoutes);
+app.use(adminChatRoutes);
 
 app.use((req, res, next) => {
   res.status(404).render("404");

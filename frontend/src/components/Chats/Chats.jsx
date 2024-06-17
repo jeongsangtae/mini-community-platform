@@ -9,7 +9,6 @@ import Chat from "./Chat";
 const Chats = ({ userId, userEmail }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState("");
   const [socket, setSocket] = useState(null);
   const [chatToggle, setChatToggle] = useState(false);
 
@@ -49,7 +48,7 @@ const Chats = ({ userId, userEmail }) => {
 
     newSocket.on("newMessage", (newMessage) => {
       setMessages((prevMsg) => [...prevMsg, newMessage]);
-      console.log("input 메시지 : ", newMessage.content);
+      console.log("사용자 input 메시지: ", newMessage.content);
     });
 
     setSocket(newSocket);

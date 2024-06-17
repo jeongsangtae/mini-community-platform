@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 
 import Login from "../Users/Login";
 import Signup from "../Users/Signup";
+import DropDownMenu from "./DropDownMenu";
+import Chats from "../Chats/Chats";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./MainHeader.module.css";
-import Chats from "../Chats/Chats";
-import DropDownMenu from "./DropDownMenu";
 
 const MainHeader = () => {
   const [openSignupModal, setOnSignupModal] = useState(false);
