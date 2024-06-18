@@ -82,21 +82,31 @@ const AdminChats = ({ adminId, adminEmail }) => {
   return (
     <div className={classes.chat}>
       <div
-        className={`${classes["chat-container"]} ${
+        className={`${classes["chats-container"]} ${
           chatToggle ? `${classes.open}` : `${classes.close}`
         }`}
       >
-        <ul>
+        <ul className={classes["admin-messages-container"]}>
           {messages.map((message) => (
-            <AdminChat key={message._id} message={message.content} />
+            <AdminChat
+              key={message._id}
+              message={message.content}
+              date={message.date}
+            />
           ))}
         </ul>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button onClick={sendMessage}>Send</button>
+
+        <div className={classes["input-container"]}>
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+
+          <button onClick={sendMessage} className={classes["send-button"]}>
+            Send
+          </button>
+        </div>
       </div>
       <div className={classes["chat-icon"]}>
         {!chatToggle ? (
