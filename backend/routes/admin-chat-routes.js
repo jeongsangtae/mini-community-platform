@@ -15,6 +15,26 @@ const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
+router.get("/admin/chat/:adminId", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ messages: "jwt error" });
+  }
+
+  let adminId = req.params.adminId;
+
+  adminId = new ObjectId(adminId);
+
+  const messages = await db
+    .getDb()
+    .collection("adminChat")
+    .find({ admin_id: adminId })
+    .toArray();
+
+  res.status(200).json({ messages });
+});
+
 router.post("/admin/chat/:adminId", async (req, res) => {
   const othersData = await accessToken(req, res);
 

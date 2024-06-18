@@ -15,6 +15,30 @@ const AdminChats = ({ adminId, adminEmail }) => {
   console.log(adminId, adminEmail);
 
   useEffect(() => {
+    if (!adminId) {
+      console.error("adminId가 정의되지 않았습니다.");
+      return;
+    }
+
+    const fetchMessages = async () => {
+      const response = await fetch(
+        "http://localhost:3000/admin/chat/" + adminId,
+        {
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("메시지를 불러올 수 없습니다.");
+      }
+      const resData = await response.json();
+      setMessages(resData.messages);
+    };
+
+    fetchMessages();
+  }, [adminId]);
+
+  useEffect(() => {
     const newSocket = io("http://localhost:3000", { withCredentials: true });
 
     newSocket.on("connect", () => {

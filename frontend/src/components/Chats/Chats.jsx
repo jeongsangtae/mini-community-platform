@@ -26,6 +26,7 @@ const Chats = ({ userId, userEmail }) => {
       const response = await fetch("http://localhost:3000/chat/" + userId, {
         credentials: "include",
       });
+
       if (!response.ok) {
         throw new Error("메시지를 불러올 수 없습니다.");
       }
