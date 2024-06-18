@@ -91,9 +91,13 @@ const Chats = ({ userId, userEmail }) => {
           chatToggle ? `${classes.open}` : `${classes.close}`
         }`}
       >
-        <ul>
+        <ul className={classes["user-messages-container"]}>
           {messages.map((message) => (
-            <Chat key={message._id} message={message.content} />
+            <Chat
+              key={message._id}
+              message={message.content}
+              date={message.date}
+            />
           ))}
         </ul>
         <div className={classes["input-container"]}>
