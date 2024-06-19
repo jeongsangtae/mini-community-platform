@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
@@ -11,6 +11,10 @@ const Chats = ({ userId, userEmail }) => {
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
   const [chatToggle, setChatToggle] = useState(false);
+
+  const messagesEndRef = useRef(null);
+
+  console.log(messagesEndRef);
 
   console.log(userId, userEmail);
   console.log(messages);
@@ -59,6 +63,11 @@ const Chats = ({ userId, userEmail }) => {
     };
   }, []);
 
+  // 새로운 메시지가 추가되었을 때, 스크롤이 자동으로 최신 메시지로 이동
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const sendMessage = async () => {
     const response = await fetch("http://localhost:3000/chat/" + userId, {
       method: "POST",
@@ -72,6 +81,10 @@ const Chats = ({ userId, userEmail }) => {
       const resData = await response.json();
       console.log(resData.newMessage);
     }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const chatToggleHandler = () => {
@@ -99,6 +112,7 @@ const Chats = ({ userId, userEmail }) => {
               date={message.date}
             />
           ))}
+          <div ref={messagesEndRef} />
         </ul>
         <div className={classes["input-container"]}>
           <input
