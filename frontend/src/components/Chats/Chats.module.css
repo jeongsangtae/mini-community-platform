@@ -196,19 +196,45 @@
 .input-container input {
   flex: 1;
   padding: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  border: none;
+  border-top: 1px solid rgb(133, 133, 133);
 }
 
-.send-button {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+.input-container input::placeholder {
+  color: rgb(94, 88, 88);
 }
 
-.chats-container button {
-  padding: 0.625rem;
+.input-container input:focus {
+  outline: none;
+}
+
+.input-container input:focus::placeholder {
+  color: rgb(121, 121, 121);
+}
+
+.input-container .input-error {
+  border-top: 1px solid red;
+}
+
+.input-container .input-error::placeholder {
+  color: red;
+}
+
+.input-container .input-error:focus::placeholder {
+  color: rgb(253, 71, 71);
+}
+
+.input-container button {
+  padding: 0.45rem;
   border: none;
   background-color: rgb(105, 105, 105);
   color: white;
   cursor: pointer;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.input-container button:hover {
 }
 
 .chat-icon {

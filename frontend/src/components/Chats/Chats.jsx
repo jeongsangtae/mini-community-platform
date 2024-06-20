@@ -10,6 +10,7 @@ const Chats = ({ userId, userEmail }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [error, setError] = useState(false);
   const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
 
@@ -71,6 +72,11 @@ const Chats = ({ userId, userEmail }) => {
   }, [messages]);
 
   const sendMessage = async () => {
+    if (message.trim() === "") {
+      setError(true);
+      return;
+    }
+
     const response = await fetch("http://localhost:3000/chat/" + userId, {
       method: "POST",
       body: JSON.stringify({ message, userEmail }),
@@ -84,6 +90,7 @@ const Chats = ({ userId, userEmail }) => {
       console.log(resData.newMessage);
     }
     setMessage("");
+    setError(false);
   };
 
   const scrollToBottom = () => {
@@ -110,13 +117,19 @@ const Chats = ({ userId, userEmail }) => {
     }
   };
 
+  const inputChangeHandler = (event) => {
+    // setMessage(event.target.value);
+    // if (error) {
+    //   setError(false);
+    // }
+    if (setMessage(event.target.value) !== "") {
+      setError(false);
+    }
+  };
+
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
   };
-
-  // const chatContainerToggleClass = chatToggle
-  //   ? `${classes["chat-container"]} ${classes.open}`
-  //   : `${classes["chat-container"]} ${classes.close}`;
 
   return (
     <div className={classes.chats}>
@@ -153,11 +166,14 @@ const Chats = ({ userId, userEmail }) => {
           <input
             type="text"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            // onChange={(e) => setMessage(e.target.value)}
+            onChange={inputChangeHandler}
+            placeholder="메시지를 입력해주세요."
+            className={error ? classes["input-error"] : ""}
           />
 
           <button onClick={sendMessage} className={classes["send-button"]}>
-            Send
+            전송
           </button>
         </div>
       </div>
