@@ -10,8 +10,10 @@ const Chats = ({ userId, userEmail }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
 
+  const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   console.log(messagesEndRef);
@@ -81,10 +83,31 @@ const Chats = ({ userId, userEmail }) => {
       const resData = await response.json();
       console.log(resData.newMessage);
     }
+    setMessage("");
   };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToNewMessages = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    setShowNewMessageButton(false); // 버튼 숨기기
+  };
+
+  const handleScroll = () => {
+    const chatContainer = chatContainerRef.current;
+    console.log(`scrollTop: ${chatContainer.scrollTop}`);
+    console.log(`clientHeight: ${chatContainer.clientHeight}`);
+    console.log(`scrollHeight: ${chatContainer.scrollHeight}`);
+    if (
+      chatContainer.scrollTop + chatContainer.clientHeight <
+      chatContainer.scrollHeight
+    ) {
+      setShowNewMessageButton(true);
+    } else {
+      setShowNewMessageButton(false);
+    }
   };
 
   const chatToggleHandler = () => {
@@ -104,7 +127,11 @@ const Chats = ({ userId, userEmail }) => {
           chatToggle ? `${classes.open}` : `${classes.close}`
         }`}
       >
-        <ul className={classes["user-messages-container"]}>
+        <ul
+          className={classes["user-messages-container"]}
+          ref={chatContainerRef}
+          onScroll={handleScroll}
+        >
           {messages.map((message) => (
             <Chat
               key={message._id}
@@ -114,6 +141,14 @@ const Chats = ({ userId, userEmail }) => {
           ))}
           <div ref={messagesEndRef} />
         </ul>
+        {showNewMessageButton && (
+          <button
+            onClick={scrollToNewMessages}
+            className={classes["new-message-button"]}
+          >
+            새로운 메시지
+          </button>
+        )}
         <div className={classes["input-container"]}>
           <input
             type="text"
