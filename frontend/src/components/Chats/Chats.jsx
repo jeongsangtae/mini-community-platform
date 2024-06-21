@@ -131,14 +131,23 @@ const Chats = ({ userId, userEmail }) => {
     setChatToggle(!chatToggle);
   };
 
+  const chatsContainerClassName = error
+    ? `${classes["chats-container"]} ${classes.error} ${
+        chatToggle ? `${classes.open}` : `${classes.close}`
+      }`
+    : `${classes["chats-container"]} ${
+        chatToggle ? `${classes.open}` : `${classes.close}`
+      }`;
+
   return (
     <div className={classes.chats}>
       {/* {chatToggle && ( */}
       {/* <div className={classes["chat-container"]}> */}
       <div
-        className={`${classes["chats-container"]} ${
-          chatToggle ? `${classes.open}` : `${classes.close}`
-        }`}
+        // className={`${classes["chats-container"]} ${
+        //   chatToggle ? `${classes.open}` : `${classes.close}`
+        // }`}
+        className={chatsContainerClassName}
       >
         <ul
           className={classes["user-messages-container"]}

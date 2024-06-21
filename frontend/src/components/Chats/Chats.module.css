@@ -65,13 +65,19 @@
   right: 0;
   width: 300px;
   height: 30rem;
+  /* background-color: rgb(189, 189, 189); */
   background-color: white;
   border-radius: 0.5rem;
+  border: 1px solid rgb(133, 133, 133);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
+}
+
+.chats-container.error {
+  border: 1px solid red;
 }
 
 .chats-container.open {
@@ -182,7 +188,15 @@
 }
 
 .new-message-button {
-  margin-bottom: 2rem;
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  background-color: rgb(119, 119, 119);
+  border: none;
+  border-radius: 0.5rem;
+  width: 75%;
 }
 
 .input-container {
@@ -228,13 +242,15 @@
 .input-container button {
   padding: 0.45rem;
   border: none;
-  background-color: rgb(105, 105, 105);
+  /* background-color: rgb(105, 105, 105); */
+  background-color: rgb(30, 30, 30);
   color: white;
   cursor: pointer;
   border-bottom-right-radius: 0.5rem;
 }
 
 .input-container button:hover {
+  background-color: rgb(25, 25, 25);
 }
 
 .chat-icon {
