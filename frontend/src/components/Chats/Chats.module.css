@@ -76,8 +76,8 @@
   margin-bottom: 0.5rem;
 }
 
-.chats-container.error {
-  border: 1px solid red;
+.chats-container.dark-mode {
+  background-color: rgb(30, 30, 30);
 }
 
 .chats-container.open {
@@ -192,8 +192,10 @@
   bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
-  color: white;
-  background-color: rgb(119, 119, 119);
+  color: rgb(255, 255, 255);
+  /* background-color: rgba(86, 182, 182, 0.8);*/
+  /* background-color: rgb(226, 169, 169); */
+  background-color: rgba(119, 119, 119, 0.8);
   border: none;
   border-radius: 0.5rem;
   width: 75%;
@@ -205,6 +207,7 @@
   display: flex;
   width: 100%;
   align-items: center;
+  border-top: 1px solid rgb(133, 133, 133);
 }
 
 .input-container input {
@@ -212,11 +215,15 @@
   padding: 0.5rem;
   border-bottom-left-radius: 0.5rem;
   border: none;
-  border-top: 1px solid rgb(133, 133, 133);
+  border-right: 1px solid rgb(133, 133, 133);
+  /* 다크 모드 input 색 */
+  background-color: white;
+  color: black;
 }
 
-.input-container input::placeholder {
-  color: rgb(94, 88, 88);
+.input-container.dark-mode input {
+  background-color: rgb(54, 54, 54);
+  color: white;
 }
 
 .input-container input:focus {
@@ -224,10 +231,10 @@
 }
 
 .input-container input:focus::placeholder {
-  color: rgb(121, 121, 121);
+  color: rgb(94, 88, 88);
 }
 
-.input-container .input-error {
+/* .input-container .input-error {
   border-top: 1px solid red;
 }
 
@@ -237,20 +244,34 @@
 
 .input-container .input-error:focus::placeholder {
   color: rgb(253, 71, 71);
-}
+} */
 
 .input-container button {
   padding: 0.45rem;
   border: none;
-  /* background-color: rgb(105, 105, 105); */
-  background-color: rgb(30, 30, 30);
-  color: white;
+  color: black;
+  background-color: transparent;
   cursor: pointer;
   border-bottom-right-radius: 0.5rem;
 }
 
 .input-container button:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+.input-container.dark-mode button {
+  color: white;
+  /* background-color: rgb(105, 105, 105); */
+  /* background-color: rgb(30, 30, 30); */
+}
+
+.input-container.dark-mode button:hover {
   background-color: rgb(25, 25, 25);
+}
+
+.opacity {
+  pointer-events: none;
+  opacity: 0.3;
 }
 
 .chat-icon {

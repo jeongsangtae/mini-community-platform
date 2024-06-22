@@ -6,7 +6,8 @@
 }
 
 .chat-bubble {
-  background-color: rgb(250, 255, 0);
+  /* background-color: rgb(250, 255, 0); */
+  background-color: rgb(161, 224, 248);
   border-radius: 1rem;
   border-top-right-radius: 0px;
   padding: 0.25rem 0.75rem;
@@ -15,9 +16,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.chat-bubble.dark-mode {
+  background-color: rgb(95, 95, 95);
+}
+
 .message {
   font-size: 0.8rem;
   color: rgb(51, 51, 51);
+}
+
+.message.dark-mode {
+  color: white;
 }
 
 .date {

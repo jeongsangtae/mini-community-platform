@@ -1,26 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
-import classes from "./Chats.module.css";
+import AuthContext from "../../store/auth-context";
 import Chat from "./Chat";
+import classes from "./Chats.module.css";
 
 const Chats = ({ userId, userEmail }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
-  const [error, setError] = useState(false);
+  const [emptyInput, setEmptyInput] = useState(true);
   const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
 
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const authCtx = useContext(AuthContext);
 
-  console.log(messagesEndRef);
+  // console.log(messagesEndRef);
 
-  console.log(userId, userEmail);
-  console.log(messages);
+  // console.log(userId, userEmail);
+  // console.log(messages);
+  console.log(emptyInput);
 
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
@@ -73,7 +76,7 @@ const Chats = ({ userId, userEmail }) => {
 
   const sendMessage = async () => {
     if (message.trim() === "") {
-      setError(true);
+      setEmptyInput(true);
       return;
     }
 
@@ -90,7 +93,7 @@ const Chats = ({ userId, userEmail }) => {
       console.log(resData.newMessage);
     }
     setMessage("");
-    setError(false);
+    setEmptyInput(true);
   };
 
   const scrollToBottom = () => {
@@ -118,36 +121,21 @@ const Chats = ({ userId, userEmail }) => {
   };
 
   const inputChangeHandler = (event) => {
-    // setMessage(event.target.value);
-    // if (error) {
-    //   setError(false);
-    // }
-    if (setMessage(event.target.value) !== "") {
-      setError(false);
-    }
+    const value = event.target.value;
+    setMessage(value);
+    setEmptyInput(value.trim() === "");
   };
 
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
   };
 
-  const chatsContainerClassName = error
-    ? `${classes["chats-container"]} ${classes.error} ${
-        chatToggle ? `${classes.open}` : `${classes.close}`
-      }`
-    : `${classes["chats-container"]} ${
-        chatToggle ? `${classes.open}` : `${classes.close}`
-      }`;
-
   return (
     <div className={classes.chats}>
-      {/* {chatToggle && ( */}
-      {/* <div className={classes["chat-container"]}> */}
       <div
-        // className={`${classes["chats-container"]} ${
-        //   chatToggle ? `${classes.open}` : `${classes.close}`
-        // }`}
-        className={chatsContainerClassName}
+        className={`${classes["chats-container"]} ${
+          classes[authCtx.themeClass]
+        } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         <ul
           className={classes["user-messages-container"]}
@@ -171,22 +159,27 @@ const Chats = ({ userId, userEmail }) => {
             새로운 메시지
           </button>
         )}
-        <div className={classes["input-container"]}>
+        <div
+          className={`${classes["input-container"]} ${
+            classes[authCtx.themeClass]
+          }`}
+        >
           <input
             type="text"
             value={message}
-            // onChange={(e) => setMessage(e.target.value)}
             onChange={inputChangeHandler}
             placeholder="메시지를 입력해주세요."
-            className={error ? classes["input-error"] : ""}
           />
 
-          <button onClick={sendMessage} className={classes["send-button"]}>
+          <button
+            onClick={sendMessage}
+            className={emptyInput ? `${classes.opacity}` : ""}
+          >
             전송
           </button>
         </div>
       </div>
-      {/* )} */}
+
       <div className={classes["chat-icon"]}>
         {!chatToggle ? (
           <BsChatFill
@@ -199,18 +192,6 @@ const Chats = ({ userId, userEmail }) => {
             className={classes["arrow-down"]}
           />
         )}
-        {/* <BsChatFill
-           onClick={chatToggleHandler}
-           className={`${classes["chat-fill"]} ${
-            chatToggle ? `${classes.hide}` : `${classes.show}`
-          }`}
-        />
-         <IoIosArrowDown
-           onClick={chatToggleHandler}
-           className={`${classes["arrow-down"]} ${
-             chatToggle ? `${classes.show}` : `${classes.hide}`
-           }`}
-         /> */}
       </div>
     </div>
   );
