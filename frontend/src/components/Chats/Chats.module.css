@@ -216,7 +216,6 @@
   border-bottom-left-radius: 0.5rem;
   border: none;
   border-right: 1px solid rgb(133, 133, 133);
-  /* 다크 모드 input 색 */
   background-color: white;
   color: black;
 }

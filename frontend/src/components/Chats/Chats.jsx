@@ -23,7 +23,7 @@ const Chats = ({ userId, userEmail }) => {
 
   // console.log(userId, userEmail);
   // console.log(messages);
-  console.log(emptyInput);
+  // console.log(emptyInput);
 
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
@@ -71,7 +71,13 @@ const Chats = ({ userId, userEmail }) => {
 
   // 새로운 메시지가 추가되었을 때, 스크롤이 자동으로 최신 메시지로 이동
   useEffect(() => {
-    scrollToBottom();
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+    if (scrollTop >= 0) {
+      setShowNewMessageButton(true);
+      // scrollToBottom();
+    } else if (scrollTop + scrollHeight === clientHeight) {
+      scrollToBottom();
+    }
   }, [messages]);
 
   const sendMessage = async () => {
@@ -97,23 +103,22 @@ const Chats = ({ userId, userEmail }) => {
   };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView();
   };
 
   const scrollToNewMessages = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView();
     setShowNewMessageButton(false); // 버튼 숨기기
   };
 
   const handleScroll = () => {
-    const chatContainer = chatContainerRef.current;
-    console.log(`scrollTop: ${chatContainer.scrollTop}`);
-    console.log(`clientHeight: ${chatContainer.clientHeight}`);
-    console.log(`scrollHeight: ${chatContainer.scrollHeight}`);
-    if (
-      chatContainer.scrollTop + chatContainer.clientHeight <
-      chatContainer.scrollHeight
-    ) {
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+    // console.log(scrollTop, scrollHeight, clientHeight);
+    // console.log(scrollTop + clientHeight >= scrollHeight);
+    console.log(`scrollTop: ${scrollTop}`);
+    console.log(`clientHeight: ${clientHeight}`);
+    console.log(`scrollHeight: ${scrollHeight}`);
+    if (scrollTop + clientHeight < scrollHeight) {
       setShowNewMessageButton(true);
     } else {
       setShowNewMessageButton(false);
