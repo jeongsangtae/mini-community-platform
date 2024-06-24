@@ -201,6 +201,21 @@
   width: 75%;
 }
 
+.bottom-button {
+  position: absolute;
+  bottom: 3rem;
+  /* left: 83%; */
+  right: 5%;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  color: white;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .input-container {
   position: fixed;
   bottom: 0;

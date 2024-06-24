@@ -13,6 +13,7 @@ const Chats = ({ userId, userEmail }) => {
   const [socket, setSocket] = useState(null);
   const [emptyInput, setEmptyInput] = useState(true);
   const [showNewMessageButton, setShowNewMessageButton] = useState(false);
+  const [toBottomButton, setToBottomButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
 
   const chatContainerRef = useRef(null);
@@ -76,10 +77,11 @@ const Chats = ({ userId, userEmail }) => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
     // 오차를 줄이기 위해서 -1 사용
     if (scrollTop + clientHeight >= scrollHeight - 1) {
-      setShowNewMessageButton(false);
-      scrollToBottom();
+      // setShowNewMessageButton(false);
+      setToBottomButton(false);
+      scrollToBottomHandler();
     } else {
-      scrollToBottom();
+      scrollToBottomHandler();
     }
   }, [messages]);
 
@@ -105,7 +107,7 @@ const Chats = ({ userId, userEmail }) => {
     setEmptyInput(true);
   };
 
-  const scrollToBottom = () => {
+  const scrollToBottomHandler = () => {
     messagesEndRef.current?.scrollIntoView();
   };
 
@@ -122,9 +124,11 @@ const Chats = ({ userId, userEmail }) => {
 
     // 오차를 줄이기 위해 -1을 사용
     if (scrollTop + clientHeight >= scrollHeight - 1) {
-      setShowNewMessageButton(false);
+      setToBottomButton(false);
+      // setShowNewMessageButton(false);
     } else {
-      setShowNewMessageButton(true);
+      setToBottomButton(true);
+      // setShowNewMessageButton(true);
     }
   };
 
@@ -166,6 +170,12 @@ const Chats = ({ userId, userEmail }) => {
           >
             새로운 메시지
           </button>
+        )}
+        {toBottomButton && (
+          <IoIosArrowDown
+            onClick={scrollToBottomHandler}
+            className={classes["bottom-button"]}
+          />
         )}
         <div
           className={`${classes["input-container"]} ${
