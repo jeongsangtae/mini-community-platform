@@ -25,6 +25,8 @@ const Chats = ({ userId, userEmail }) => {
   // console.log(messages);
   // console.log(emptyInput);
 
+  console.log(showNewMessageButton);
+
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
     if (!userId) {
@@ -72,10 +74,11 @@ const Chats = ({ userId, userEmail }) => {
   // 새로운 메시지가 추가되었을 때, 스크롤이 자동으로 최신 메시지로 이동
   useEffect(() => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-    if (scrollTop >= 0) {
-      setShowNewMessageButton(true);
-      // scrollToBottom();
-    } else if (scrollTop + scrollHeight === clientHeight) {
+    // 오차를 줄이기 위해서 -1 사용
+    if (scrollTop + clientHeight >= scrollHeight - 1) {
+      setShowNewMessageButton(false);
+      scrollToBottom();
+    } else {
       scrollToBottom();
     }
   }, [messages]);
@@ -113,15 +116,15 @@ const Chats = ({ userId, userEmail }) => {
 
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-    // console.log(scrollTop, scrollHeight, clientHeight);
-    // console.log(scrollTop + clientHeight >= scrollHeight);
-    console.log(`scrollTop: ${scrollTop}`);
-    console.log(`clientHeight: ${clientHeight}`);
-    console.log(`scrollHeight: ${scrollHeight}`);
-    if (scrollTop + clientHeight < scrollHeight) {
-      setShowNewMessageButton(true);
-    } else {
+    // console.log(`scrollTop: ${scrollTop}`);
+    // console.log(`clientHeight: ${clientHeight}`);
+    // console.log(`scrollHeight: ${scrollHeight}`);
+
+    // 오차를 줄이기 위해 -1을 사용
+    if (scrollTop + clientHeight >= scrollHeight - 1) {
       setShowNewMessageButton(false);
+    } else {
+      setShowNewMessageButton(true);
     }
   };
 
