@@ -85,6 +85,14 @@ app.set("io", io);
 io.on("connection", (socket) => {
   console.log("클라이언트가 연결되었습니다:", socket.id);
 
+  socket.on("joinRoom", ({ userId, userType }) => {
+    const roomId = `room-${userId}`;
+    socket.join(roomId);
+    console.log(
+      `사용자 _id: ${userId}, 사용자 type: ${userType}, 방 번호: ${roomId}`
+    );
+  });
+
   socket.on("disconnect", () => {
     console.log("클라이언트가 연결이 끊어졌습니다:", socket.id);
   });

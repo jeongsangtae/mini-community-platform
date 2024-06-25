@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLoaderData } from "react-router-dom";
 
 import DropDownMenu from "../../Layout/DropDownMenu";
 import AdminChats from "../Chat/AdminChats";
@@ -8,10 +8,12 @@ import AuthContext from "../../../store/auth-context";
 import classes from "./AdminMainHeader.module.css";
 
 const AdminMainHeader = () => {
+  const usersData = useLoaderData();
   const authCtx = useContext(AuthContext);
 
   console.log(authCtx.userInfo);
   console.log(authCtx.userInfo?._id);
+  console.log(usersData);
 
   const navLinkClass = ({ isActive }) => {
     return isActive

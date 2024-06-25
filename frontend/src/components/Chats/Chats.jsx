@@ -25,6 +25,7 @@ const Chats = ({ userId, userEmail }) => {
   // console.log(userId, userEmail);
   // console.log(messages);
   // console.log(emptyInput);
+  console.log(authCtx.userInfo?._id);
 
   console.log(showNewMessageButton);
 
@@ -58,6 +59,7 @@ const Chats = ({ userId, userEmail }) => {
 
     newSocket.on("connect", () => {
       console.log("서버에 연결되었습니다:", newSocket.id);
+      newSocket.emit("joinRoom", { userId, userType: "user" });
     });
 
     newSocket.on("newMessage", (newMessage) => {
@@ -70,7 +72,7 @@ const Chats = ({ userId, userEmail }) => {
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [userId]);
 
   // 새로운 메시지가 추가되었을 때, 스크롤이 자동으로 최신 메시지로 이동
   useEffect(() => {
@@ -86,14 +88,27 @@ const Chats = ({ userId, userEmail }) => {
   }, [messages]);
 
   const sendMessage = async () => {
+    if (!userId) {
+      console.error("userId가 정의되지 않았습니다.");
+      return;
+    }
+
     if (message.trim() === "") {
       setEmptyInput(true);
       return;
     }
 
+    const newMessage = {
+      userId: authCtx.userInfo._id,
+      userEmail,
+      content: message,
+      userType: "user",
+    };
+
     const response = await fetch("http://localhost:3000/chat/" + userId, {
       method: "POST",
-      body: JSON.stringify({ message, userEmail }),
+      // body: JSON.stringify({ message, userEmail }),
+      body: JSON.stringify(newMessage),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });

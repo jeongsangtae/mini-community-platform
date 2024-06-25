@@ -42,15 +42,15 @@ router.post("/chat/:userId", async (req, res) => {
     return res.status(401).json({ message: "jwt error" });
   }
 
-  let userId = req.params.userId;
+  const userId = req.params.userId;
   const userEmail = req.body.userEmail;
-  const messageInput = req.body.message;
+  const messageInput = req.body.content;
   let date = new Date();
 
-  userId = new ObjectId(userId);
+  // userId = new ObjectId(userId);
 
   const newMessage = {
-    user_id: userId,
+    user_id: new ObjectId(userId),
     email: userEmail,
     content: messageInput,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
@@ -66,7 +66,9 @@ router.post("/chat/:userId", async (req, res) => {
 
   // socket.io를 통해 메시지를 브로드캐스트
   const io = req.app.get("io");
-  io.emit("newMessage", newMessage);
+  const roomId = `room-${userId}`;
+  io.to(roomId).emit("newMessage", newMessage);
+  // io.emit("newMessage", newMessage);
 
   console.log("사용자 input 메시지: ", newMessage.content);
 

@@ -90,6 +90,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
+    loader: adminUsersLoader,
     element: <AdminRootLayout />,
     children: [
       {
