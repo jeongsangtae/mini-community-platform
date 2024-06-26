@@ -19,7 +19,9 @@ import SignupSuccessPage from "./pages/SignupSuccessPage";
 import Authentication from "./components/Users/Authentication";
 import NotFound from "./components/Users/NotFound";
 import AdminAuthentication from "./components/Admin/Auth/AdminAuthentication";
-import AdminRootLayout from "./pages/AdminRootLayout";
+import AdminRootLayout, {
+  loader as adminUsersLoader,
+} from "./pages/AdminRootLayout";
 import AdminPostsPage, {
   loader as adminPostsLoader,
 } from "./pages/AdminPostsPage";
@@ -28,9 +30,7 @@ import AdminPostDetailsPage, {
   action as adminPostDeleteAction,
 } from "./pages/AdminPostDetailsPage";
 // import AdminCommentsLayout from "./pages/AdminCommentsPage";
-import AdminUsersPage, {
-  loader as adminUsersLoader,
-} from "./pages/AdminUsersPage";
+import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminHomePage from "./pages/AdminHomePage";
 
 const router = createBrowserRouter([
@@ -90,6 +90,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
+    id: "users-data",
     loader: adminUsersLoader,
     element: <AdminRootLayout />,
     children: [
@@ -128,7 +129,6 @@ const router = createBrowserRouter([
       // },
       {
         path: "users",
-        loader: adminUsersLoader,
         element: (
           <AdminAuthentication>
             <AdminUsersPage />

@@ -11,8 +11,8 @@ const AdminMainHeader = () => {
   const usersData = useLoaderData();
   const authCtx = useContext(AuthContext);
 
-  console.log(authCtx.userInfo);
-  console.log(authCtx.userInfo?._id);
+  // console.log(authCtx.userInfo);
+  // console.log(authCtx.userInfo?._id);
   console.log(usersData);
 
   const navLinkClass = ({ isActive }) => {

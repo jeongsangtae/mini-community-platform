@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useRouteLoaderData } from "react-router-dom";
 
 import AdminUser from "./AdminUser";
 import AuthContext from "../../../store/auth-context";
@@ -7,15 +7,31 @@ import classes from "./AdminUsers.module.css";
 import LoadingIndicator from "../../UI/LoadingIndicator";
 
 const AdminUsers = () => {
-  const usersData = useLoaderData();
+  const usersData = useRouteLoaderData("users-data");
 
   const authCtx = useContext(AuthContext);
 
   const [users, setUsers] = useState(usersData);
 
+  console.log(usersData);
+  console.log(users);
+
   // const filteredAdmin = users.filter(
   //   (user) => user.email !== "admin@admin.com"
   // );
+
+  // 사용자 삭제된 후에 페이지 이동하고 다시 확인 했을 때, 사용자가 그대로 남아있는 것처럼 보이는 것을 방지하기 위한 코드
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch("http://localhost:3000/admin/users", {
+        credentials: "include",
+      });
+      const resData = await response.json();
+      setUsers(resData.users);
+    };
+
+    fetchUsers();
+  }, []);
 
   const deleteUser = (userEmail) => {
     const filteredUsers = users.filter((user) => user.email !== userEmail);
