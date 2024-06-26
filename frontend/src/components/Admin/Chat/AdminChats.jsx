@@ -6,13 +6,13 @@ import { IoIosArrowDown } from "react-icons/io";
 import classes from "./AdminChats.module.css";
 import AdminChat from "./AdminChat";
 
-const AdminChats = ({ adminId, adminEmail }) => {
+const AdminChats = ({ adminId, adminEmail, usersData }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
   const [chatToggle, setChatToggle] = useState(false);
 
-  console.log(adminId, adminEmail);
+  console.log(adminId, adminEmail, usersData);
 
   useEffect(() => {
     if (!adminId) {
@@ -57,12 +57,40 @@ const AdminChats = ({ adminId, adminEmail }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!socket || !usersData) return;
+
+    if (usersData.length > 0) {
+      const testUserId = usersData[0]._id; // 또는 다른 방식으로 선택된 사용자의 ID를 가져와야 합니다.
+      joinUserRoom(testUserId);
+    }
+  }, [socket, usersData]);
+
+  const joinUserRoom = (userId) => {
+    if (!socket) {
+      console.error("Socket이 초기화되지 않았습니다.");
+      return;
+    }
+
+    const roomId = `room-${userId}`;
+    socket.emit("joinRoom", { userId, userType: "admin" });
+    console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
+  };
+
   const sendMessage = async () => {
+    const testNewMessage = {
+      userId: usersData[0]._id,
+      adminEmail,
+      content: message,
+      userType: "admin",
+    };
+
     const response = await fetch(
       "http://localhost:3000/admin/chat/" + adminId,
       {
         method: "POST",
-        body: JSON.stringify({ message, adminEmail }),
+        // body: JSON.stringify({ message, adminEmail }),
+        body: JSON.stringify(testNewMessage),
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       }

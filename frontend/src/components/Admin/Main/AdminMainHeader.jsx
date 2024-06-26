@@ -6,6 +6,7 @@ import AdminChats from "../Chat/AdminChats";
 import AuthContext from "../../../store/auth-context";
 
 import classes from "./AdminMainHeader.module.css";
+import AdminUserList from "../Chat/AdminUserList";
 
 const AdminMainHeader = () => {
   const usersData = useLoaderData();
@@ -57,9 +58,15 @@ const AdminMainHeader = () => {
           </>
         )}
       </header>
+      {/* <AdminUserList
+        adminId={authCtx.userInfo?._id}
+        adminEmail={authCtx.userInfo?.email}
+        usersData={usersData}
+      /> */}
       <AdminChats
         adminId={authCtx.userInfo?._id}
         adminEmail={authCtx.userInfo?.email}
+        usersData={usersData}
       />
     </>
   );

@@ -43,8 +43,9 @@ router.post("/admin/chat/:adminId", async (req, res) => {
   }
 
   let adminId = req.params.adminId;
+  const testUserId = req.body.userId;
   const adminEmail = req.body.adminEmail;
-  const messageInput = req.body.message;
+  const messageInput = req.body.content;
   let date = new Date();
 
   adminId = new ObjectId(adminId);
@@ -65,7 +66,9 @@ router.post("/admin/chat/:adminId", async (req, res) => {
   await db.getDb().collection("adminChat").insertOne(newMessage);
 
   const io = req.app.get("io");
-  io.emit("newMessage", newMessage);
+  const roomId = `room-${testUserId}`;
+  io.to(roomId).emit("newMessage", newMessage);
+  // io.emit("newMessage", newMessage);
 
   console.log("관리자 input 메시지: ", newMessage.content);
 
