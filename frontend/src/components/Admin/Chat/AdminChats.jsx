@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
+import AuthContext from "../../../store/auth-context";
 import classes from "./AdminChats.module.css";
 import AdminChat from "./AdminChat";
 
@@ -10,7 +11,13 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [emptyInput, setEmptyInput] = useState(true);
+  const [toBottomButton, setToBottomButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
+
+  const chatContainerRef = useRef(null);
+  const messagesEndRef = useRef(null);
+  const authCtx = useContext(AuthContext);
 
   console.log(adminId, adminEmail, usersData);
 
@@ -61,7 +68,7 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
     if (!socket || !usersData) return;
 
     if (usersData.length > 0) {
-      const testUserId = usersData[0]._id; // 또는 다른 방식으로 선택된 사용자의 ID를 가져와야 합니다.
+      const testUserId = usersData[0]._id;
       joinUserRoom(testUserId);
     }
   }, [socket, usersData]);
@@ -77,7 +84,29 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
     console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
   };
 
+  useEffect(() => {
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+    // 오차를 줄이기 위해서 -1 사용
+    if (scrollTop + clientHeight >= scrollHeight - 1) {
+      // setShowNewMessageButton(false);
+      setToBottomButton(false);
+      scrollToBottomHandler();
+    } else {
+      scrollToBottomHandler();
+    }
+  }, [messages]);
+
   const sendMessage = async () => {
+    if (!adminId) {
+      console.error("adminId가 정의되지 않았습니다.");
+      return;
+    }
+
+    if (message.trim() === "") {
+      setEmptyInput(true);
+      return;
+    }
+
     const testNewMessage = {
       userId: usersData[0]._id,
       adminEmail,
@@ -101,6 +130,29 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
       const resData = await response.json();
       console.log(resData.newMessage);
     }
+    setMessage("");
+    setEmptyInput(true);
+  };
+
+  const scrollToBottomHandler = () => {
+    messagesEndRef.current?.scrollIntoView();
+  };
+
+  const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+
+    // 오차를 줄이기 위해 -1을 사용
+    if (scrollTop + clientHeight >= scrollHeight - 1) {
+      setToBottomButton(false);
+    } else {
+      setToBottomButton(true);
+    }
+  };
+
+  const inputChangeHandler = (event) => {
+    const value = event.target.value;
+    setMessage(value);
+    setEmptyInput(value.trim() === "");
   };
 
   const chatToggleHandler = () => {
@@ -111,10 +163,14 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
     <div className={classes.chat}>
       <div
         className={`${classes["chats-container"]} ${
-          chatToggle ? `${classes.open}` : `${classes.close}`
-        }`}
+          classes[authCtx.themeClass]
+        } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
-        <ul className={classes["admin-messages-container"]}>
+        <ul
+          className={classes["admin-messages-container"]}
+          ref={chatContainerRef}
+          onScroll={handleScroll}
+        >
           {messages.map((message) => (
             <AdminChat
               key={message._id}
@@ -122,20 +178,37 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
               date={message.date}
             />
           ))}
+          <div ref={messagesEndRef} />
         </ul>
 
-        <div className={classes["input-container"]}>
+        {toBottomButton && (
+          <IoIosArrowDown
+            onClick={scrollToBottomHandler}
+            className={classes["bottom-button"]}
+          />
+        )}
+
+        <div
+          className={`${classes["input-container"]} ${
+            classes[authCtx.themeClass]
+          }`}
+        >
           <input
             type="text"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={inputChangeHandler}
+            placeholder="메시지를 입력해주세요."
           />
 
-          <button onClick={sendMessage} className={classes["send-button"]}>
-            Send
+          <button
+            onClick={sendMessage}
+            className={emptyInput ? `${classes.opacity}` : ""}
+          >
+            전송
           </button>
         </div>
       </div>
+
       <div className={classes["chat-icon"]}>
         {!chatToggle ? (
           <BsChatFill
