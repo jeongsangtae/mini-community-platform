@@ -28,8 +28,9 @@ router.get("/chat/:userId", async (req, res) => {
 
   const messages = await db
     .getDb()
-    .collection("userChat")
+    .collection("chatMessages")
     .find({ user_id: userId })
+    .sort({ date: 1 })
     .toArray();
 
   res.status(200).json({ messages });
@@ -42,9 +43,17 @@ router.post("/chat/:userId", async (req, res) => {
     return res.status(401).json({ message: "jwt error" });
   }
 
+  console.log(req.body);
+
+  const { userEmail, content, userType } = req.body;
+
   const userId = req.params.userId;
-  const userEmail = req.body.userEmail;
-  const messageInput = req.body.content;
+  // const userEmail = req.body.userEmail;
+  // const messageInput = req.body.content;
+  // const userType = req.body.userType;
+
+  console.log(content);
+
   let date = new Date();
 
   // userId = new ObjectId(userId);
@@ -52,7 +61,8 @@ router.post("/chat/:userId", async (req, res) => {
   const newMessage = {
     user_id: new ObjectId(userId),
     email: userEmail,
-    content: messageInput,
+    content: content,
+    userType: userType,
     date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
       .getHours()
       .toString()
@@ -62,7 +72,9 @@ router.post("/chat/:userId", async (req, res) => {
       .padStart(2, "0")}`,
   };
 
-  await db.getDb().collection("userChat").insertOne(newMessage);
+  // await db.getDb().collection("userChat").insertOne(newMessage);
+  // await db.getDb().collection("adminChat").insertOne(newMessage);
+  await db.getDb().collection("chatMessages").insertOne(newMessage);
 
   // socket.io를 통해 메시지를 브로드캐스트
   const io = req.app.get("io");

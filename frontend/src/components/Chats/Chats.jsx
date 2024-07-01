@@ -23,7 +23,7 @@ const Chats = ({ userId, userEmail }) => {
   // console.log(messagesEndRef);
 
   // console.log(userId, userEmail);
-  // console.log(messages);
+  console.log(messages);
   // console.log(emptyInput);
   console.log(authCtx.userInfo?._id);
 
@@ -174,6 +174,7 @@ const Chats = ({ userId, userEmail }) => {
               key={message._id}
               message={message.content}
               date={message.date}
+              userType={message.userType}
             />
           ))}
           <div ref={messagesEndRef} />

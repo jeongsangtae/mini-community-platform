@@ -3,11 +3,15 @@ import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import classes from "./Chat.module.css";
 
-const Chat = ({ message, date }) => {
+const Chat = ({ message, date, userType }) => {
   const authCtx = useContext(AuthContext);
 
   return (
-    <li className={classes["chat-container"]}>
+    <li
+      className={`${classes["chat-container"]} ${
+        userType === "user" ? classes["user-message"] : classes["admin-message"]
+      }`}
+    >
       <div
         className={`${classes["chat-bubble"]} ${classes[authCtx.themeClass]}`}
       >

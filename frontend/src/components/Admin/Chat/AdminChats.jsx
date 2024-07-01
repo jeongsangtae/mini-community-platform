@@ -176,6 +176,7 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
               key={message._id}
               message={message.content}
               date={message.date}
+              userType={message.userType}
             />
           ))}
           <div ref={messagesEndRef} />
