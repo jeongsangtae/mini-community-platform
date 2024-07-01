@@ -15,7 +15,7 @@ const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
-router.get("/admin/chat/:adminId", async (req, res) => {
+router.get("/admin/chat/:adminId/:userId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
   if (!othersData) {
@@ -23,13 +23,15 @@ router.get("/admin/chat/:adminId", async (req, res) => {
   }
 
   let adminId = req.params.adminId;
+  let userId = req.params.userId;
 
   adminId = new ObjectId(adminId);
+  userId = new ObjectId(userId);
 
   const messages = await db
     .getDb()
     .collection("chatMessages")
-    .find({ admin_id: adminId })
+    .find({ user_id: userId })
     .toArray();
 
   res.status(200).json({ messages });

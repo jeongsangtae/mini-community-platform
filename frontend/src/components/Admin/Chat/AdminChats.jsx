@@ -27,9 +27,15 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
       return;
     }
 
+    if (!usersData) {
+      console.error("adminId가 정의되지 않았습니다.");
+      return;
+    }
+
     const fetchMessages = async () => {
+      const userId = usersData[0]._id;
       const response = await fetch(
-        "http://localhost:3000/admin/chat/" + adminId,
+        "http://localhost:3000/admin/chat/" + adminId + "/" + userId,
         {
           credentials: "include",
         }
