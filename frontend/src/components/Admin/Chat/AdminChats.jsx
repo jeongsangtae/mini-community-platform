@@ -12,6 +12,7 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
   const [emptyInput, setEmptyInput] = useState(true);
+  const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [toBottomButton, setToBottomButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
 
@@ -93,12 +94,17 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
   useEffect(() => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
     // 오차를 줄이기 위해서 -1 사용
-    if (scrollTop + clientHeight >= scrollHeight - 1) {
-      // setShowNewMessageButton(false);
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    const latestMessage = messages[messages.length - 1];
+
+    if (isAtBottom || latestMessage?.userType === "admin") {
+      setShowNewMessageButton(false);
       setToBottomButton(false);
       scrollToBottomHandler();
-    } else {
-      scrollToBottomHandler();
+    } else if (latestMessage?.userType === "user") {
+      setToBottomButton(false);
+      setShowNewMessageButton(true);
+      // scrollToBottomHandler();
     }
   }, [messages]);
 
@@ -144,13 +150,20 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
     messagesEndRef.current?.scrollIntoView();
   };
 
+  const scrollToNewMessages = () => {
+    messagesEndRef.current?.scrollIntoView();
+    setShowNewMessageButton(false); // 버튼 숨기기
+  };
+
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
 
     // 오차를 줄이기 위해 -1을 사용
-    if (scrollTop + clientHeight >= scrollHeight - 1) {
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    if (isAtBottom) {
       setToBottomButton(false);
-    } else {
+      setShowNewMessageButton(false);
+    } else if (!isAtBottom && !showNewMessageButton) {
       setToBottomButton(true);
     }
   };
@@ -187,6 +200,15 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
           ))}
           <div ref={messagesEndRef} />
         </ul>
+
+        {showNewMessageButton && (
+          <button
+            onClick={scrollToNewMessages}
+            className={classes["new-message-button"]}
+          >
+            새로운 메시지
+          </button>
+        )}
 
         {toBottomButton && (
           <IoIosArrowDown

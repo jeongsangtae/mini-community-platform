@@ -32,6 +32,7 @@ router.get("/admin/chat/:adminId/:userId", async (req, res) => {
     .getDb()
     .collection("chatMessages")
     .find({ user_id: userId })
+    .sort({ date: 1 })
     .toArray();
 
   res.status(200).json({ messages });

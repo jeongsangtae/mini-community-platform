@@ -27,8 +27,6 @@ const Chats = ({ userId, userEmail }) => {
   // console.log(emptyInput);
   console.log(authCtx.userInfo?._id);
 
-  console.log(showNewMessageButton);
-
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
     if (!userId) {
@@ -78,12 +76,38 @@ const Chats = ({ userId, userEmail }) => {
   useEffect(() => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
     // 오차를 줄이기 위해서 -1 사용
-    if (scrollTop + clientHeight >= scrollHeight - 1) {
-      // setShowNewMessageButton(false);
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    const latestMessage = messages[messages.length - 1];
+
+    console.log("scrollTop:", scrollTop);
+    console.log("clientHeight:", clientHeight);
+    console.log("scrollHeight:", scrollHeight);
+    console.log("isAtBottom:", isAtBottom);
+
+    // if (isAtBottom) {
+    //   console.log("스크롤이 맨 밑에 있습니다.");
+    //   setShowNewMessageButton(false);
+    //   setToBottomButton(false);
+    //   scrollToBottomHandler();
+    // } else if (latestMessage?.userType === "user") {
+    //   console.log("사용자 채팅이 추가되었습니다.");
+    //   setShowNewMessageButton(false);
+    //   setToBottomButton(false);
+    //   scrollToBottomHandler();
+    // } else if (latestMessage?.userType === "admin") {
+    //   console.log("관리자 채팅이 추가되었습니다.");
+    //   setToBottomButton(false);
+    //   setShowNewMessageButton(true);
+    // }
+
+    if (isAtBottom || latestMessage?.userType === "user") {
+      setShowNewMessageButton(false);
       setToBottomButton(false);
       scrollToBottomHandler();
-    } else {
-      scrollToBottomHandler();
+    } else if (latestMessage?.userType === "admin") {
+      // scrollToBottomHandler();
+      setToBottomButton(false);
+      setShowNewMessageButton(true);
     }
   }, [messages]);
 
@@ -137,13 +161,16 @@ const Chats = ({ userId, userEmail }) => {
     // console.log(`clientHeight: ${clientHeight}`);
     // console.log(`scrollHeight: ${scrollHeight}`);
 
+    // console.log(scrollTop + clientHeight >= scrollHeight - 1);
+
     // 오차를 줄이기 위해 -1을 사용
-    if (scrollTop + clientHeight >= scrollHeight - 1) {
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+    if (isAtBottom) {
       setToBottomButton(false);
-      // setShowNewMessageButton(false);
-    } else {
+      setShowNewMessageButton(false);
+    } else if (!isAtBottom && !showNewMessageButton) {
       setToBottomButton(true);
-      // setShowNewMessageButton(true);
     }
   };
 
@@ -179,6 +206,7 @@ const Chats = ({ userId, userEmail }) => {
           ))}
           <div ref={messagesEndRef} />
         </ul>
+
         {showNewMessageButton && (
           <button
             onClick={scrollToNewMessages}
@@ -187,12 +215,14 @@ const Chats = ({ userId, userEmail }) => {
             새로운 메시지
           </button>
         )}
+
         {toBottomButton && (
           <IoIosArrowDown
             onClick={scrollToBottomHandler}
             className={classes["bottom-button"]}
           />
         )}
+
         <div
           className={`${classes["input-container"]} ${
             classes[authCtx.themeClass]
