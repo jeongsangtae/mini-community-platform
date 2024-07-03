@@ -93,18 +93,25 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
 
   useEffect(() => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-    // 오차를 줄이기 위해서 -1 사용
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    const nearBottom = scrollTop + clientHeight >= scrollHeight - 100;
     const latestMessage = messages[messages.length - 1];
 
-    if (isAtBottom || latestMessage?.userType === "admin") {
+    if (isAtBottom) {
+      setShowNewMessageButton(false);
+      setToBottomButton(false);
+      scrollToBottomHandler();
+    } else if (latestMessage?.userType === "admin") {
+      setShowNewMessageButton(false);
+      setToBottomButton(false);
+      scrollToBottomHandler();
+    } else if (nearBottom && latestMessage?.userType === "user") {
       setShowNewMessageButton(false);
       setToBottomButton(false);
       scrollToBottomHandler();
     } else if (latestMessage?.userType === "user") {
-      setToBottomButton(false);
       setShowNewMessageButton(true);
-      // scrollToBottomHandler();
+      setToBottomButton(false);
     }
   }, [messages]);
 
@@ -160,6 +167,7 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
 
     // 오차를 줄이기 위해 -1을 사용
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
     if (isAtBottom) {
       setToBottomButton(false);
       setShowNewMessageButton(false);

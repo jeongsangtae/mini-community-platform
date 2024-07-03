@@ -149,9 +149,9 @@ const Chats = ({ userId, userEmail }) => {
 
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-    console.log(`scrollTop: ${scrollTop}`);
-    console.log(`clientHeight: ${clientHeight}`);
-    console.log(`scrollHeight: ${scrollHeight}`);
+    // console.log(`scrollTop: ${scrollTop}`);
+    // console.log(`clientHeight: ${clientHeight}`);
+    // console.log(`scrollHeight: ${scrollHeight}`);
 
     // console.log(scrollTop + clientHeight >= scrollHeight - 1);
 
