@@ -7,7 +7,7 @@ import AuthContext from "../../../store/auth-context";
 import classes from "./AdminChats.module.css";
 import AdminChat from "./AdminChat";
 
-const AdminChats = ({ adminId, adminEmail, usersData }) => {
+const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -20,7 +20,7 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
   const messagesEndRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
-  console.log(adminId, adminEmail, usersData);
+  console.log(chatRoomId);
 
   useEffect(() => {
     if (!adminId) {
@@ -28,13 +28,19 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
       return;
     }
 
-    if (!usersData) {
-      console.error("adminId가 정의되지 않았습니다.");
+    // if (!usersData) {
+    //   console.error("adminId가 정의되지 않았습니다.");
+    //   return;
+    // }
+
+    if (!userId) {
+      console.error("userId가 정의되지 않았습니다.");
       return;
     }
 
     const fetchMessages = async () => {
-      const userId = usersData[0]._id;
+      // const userId = usersData[0]._id;
+      const userId = chatRoomId;
       const response = await fetch(
         "http://localhost:3000/admin/chat/" + adminId + "/" + userId,
         {
@@ -72,13 +78,13 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
   }, []);
 
   useEffect(() => {
-    if (!socket || !usersData) return;
+    if (!socket || !chatRoomId) return;
 
-    if (usersData.length > 0) {
-      const testUserId = usersData[0]._id;
+    if (chatRoomId) {
+      const testUserId = chatRoomId;
       joinUserRoom(testUserId);
     }
-  }, [socket, usersData]);
+  }, [socket, chatRoomId]);
 
   const joinUserRoom = (userId) => {
     if (!socket) {
@@ -127,7 +133,7 @@ const AdminChats = ({ adminId, adminEmail, usersData }) => {
     }
 
     const testNewMessage = {
-      userId: usersData[0]._id,
+      userId: chatRoomId,
       adminEmail,
       content: message,
       userType: "admin",

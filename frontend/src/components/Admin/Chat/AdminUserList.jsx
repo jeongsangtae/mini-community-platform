@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
+import AdminUserItem from "./AdminUserItem";
 import classes from "./AdminUserList.module.css";
 
 const AdminUserList = ({ adminId, adminEmail, usersData }) => {
@@ -48,10 +49,18 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         }`}
       >
         <ul>
-          {usersData.map((user) => (
-            <button key={user._id} onClick={() => joinUserRoom(user._id)}>
-              {user.email}
-            </button>
+          {usersData.map((userData) => (
+            // <button key={user._id} onClick={() => joinUserRoom(user._id)}>
+            //   {user.email}
+            // </button>
+            <AdminUserItem
+              key={userData._id}
+              userId={userData._id}
+              name={userData.name}
+              email={userData.email}
+              adminiId={adminId}
+              adminEmail={adminEmail}
+            />
           ))}
         </ul>
       </div>

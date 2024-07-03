@@ -58,16 +58,16 @@ const AdminMainHeader = () => {
           </>
         )}
       </header>
-      {/* <AdminUserList
-        adminId={authCtx.userInfo?._id}
-        adminEmail={authCtx.userInfo?.email}
-        usersData={usersData}
-      /> */}
-      <AdminChats
+      <AdminUserList
         adminId={authCtx.userInfo?._id}
         adminEmail={authCtx.userInfo?.email}
         usersData={usersData}
       />
+      {/* <AdminChats
+        adminId={authCtx.userInfo?._id}
+        adminEmail={authCtx.userInfo?.email}
+        usersData={usersData}
+      /> */}
     </>
   );
 };
