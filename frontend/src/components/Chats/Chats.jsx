@@ -77,37 +77,29 @@ const Chats = ({ userId, userEmail }) => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
     // 오차를 줄이기 위해서 -1 사용
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    // 스크롤이 거의 아래에 있을 때를 구하는 내용
+    const nearBottom = scrollTop + clientHeight >= scrollHeight - 100;
     const latestMessage = messages[messages.length - 1];
 
-    console.log("scrollTop:", scrollTop);
-    console.log("clientHeight:", clientHeight);
-    console.log("scrollHeight:", scrollHeight);
-    console.log("isAtBottom:", isAtBottom);
-
-    // if (isAtBottom) {
-    //   console.log("스크롤이 맨 밑에 있습니다.");
-    //   setShowNewMessageButton(false);
-    //   setToBottomButton(false);
-    //   scrollToBottomHandler();
-    // } else if (latestMessage?.userType === "user") {
-    //   console.log("사용자 채팅이 추가되었습니다.");
-    //   setShowNewMessageButton(false);
-    //   setToBottomButton(false);
-    //   scrollToBottomHandler();
-    // } else if (latestMessage?.userType === "admin") {
-    //   console.log("관리자 채팅이 추가되었습니다.");
-    //   setToBottomButton(false);
-    //   setShowNewMessageButton(true);
-    // }
-
-    if (isAtBottom || latestMessage?.userType === "user") {
+    if (isAtBottom) {
+      // 스크롤이 맨 아래에 있는 경우
+      setShowNewMessageButton(false);
+      setToBottomButton(false);
+      scrollToBottomHandler();
+    } else if (latestMessage?.userType === "user") {
+      // 사용자가 작성한 메시지가 추가된 경우
+      setShowNewMessageButton(false);
+      setToBottomButton(false);
+      scrollToBottomHandler();
+    } else if (nearBottom && latestMessage?.userType === "admin") {
+      // 스크롤이 거의 아래에 있는 경우
       setShowNewMessageButton(false);
       setToBottomButton(false);
       scrollToBottomHandler();
     } else if (latestMessage?.userType === "admin") {
-      // scrollToBottomHandler();
-      setToBottomButton(false);
+      // 관리자가 작성한 메시지가 추가된 경우
       setShowNewMessageButton(true);
+      setToBottomButton(false);
     }
   }, [messages]);
 
@@ -157,9 +149,9 @@ const Chats = ({ userId, userEmail }) => {
 
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-    // console.log(`scrollTop: ${scrollTop}`);
-    // console.log(`clientHeight: ${clientHeight}`);
-    // console.log(`scrollHeight: ${scrollHeight}`);
+    console.log(`scrollTop: ${scrollTop}`);
+    console.log(`clientHeight: ${clientHeight}`);
+    console.log(`scrollHeight: ${scrollHeight}`);
 
     // console.log(scrollTop + clientHeight >= scrollHeight - 1);
 
