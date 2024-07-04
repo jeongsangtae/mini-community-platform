@@ -1,22 +1,14 @@
-import { useState } from "react";
-import AdminChats from "./AdminChats";
-
-const AdminUserItem = ({ userId, name, email, adminId, adminEmail }) => {
-  const [userChatRoom, setUserChatRoom] = useState(false);
-
-  const userChatRoomMoveHandler = () => {
-    setUserChatRoom(true);
+const AdminUserItem = ({ userId, name, email, selectUser }) => {
+  const clickHandler = () => {
+    selectUser(userId);
   };
 
   return (
     <li>
-      <button onClick={userChatRoomMoveHandler}>
+      <button onClick={clickHandler}>
         <div>{name}</div>
         <div>{email}</div>
       </button>
-      {userChatRoom && (
-        <AdminChats userId={userId} adminId={adminId} adminEmail={adminEmail} />
-      )}
     </li>
   );
 };

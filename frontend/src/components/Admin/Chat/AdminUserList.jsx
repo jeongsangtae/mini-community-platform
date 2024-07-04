@@ -5,10 +5,12 @@ import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
 import AdminUserItem from "./AdminUserItem";
+import AdminChats from "./AdminChats";
 import classes from "./AdminUserList.module.css";
 
 const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [chatToggle, setChatToggle] = useState(false);
+  const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
 
   console.log(usersData);
 
@@ -41,6 +43,10 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
   };
 
+  const chatRoomMoveHandler = (userId) => {
+    setSelectUserChatRoom(userId);
+  };
+
   return (
     <div className={classes.chat}>
       <div
@@ -58,12 +64,20 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
               userId={userData._id}
               name={userData.name}
               email={userData.email}
-              adminiId={adminId}
-              adminEmail={adminEmail}
+              selectUser={chatRoomMoveHandler}
             />
           ))}
         </ul>
       </div>
+
+      {selectUserChatRoom && (
+        <AdminChats
+          userId={selectUserChatRoom}
+          adminId={adminId}
+          adminEmail={adminEmail}
+        />
+      )}
+
       <div className={classes["chat-icon"]}>
         {!chatToggle ? (
           <BsChatFill

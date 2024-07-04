@@ -20,6 +20,7 @@ const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
   const messagesEndRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
+  // console.log(adminId);
   console.log(chatRoomId);
 
   useEffect(() => {
@@ -33,8 +34,8 @@ const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
     //   return;
     // }
 
-    if (!userId) {
-      console.error("userId가 정의되지 않았습니다.");
+    if (!chatRoomId) {
+      console.error("chatRoomId가 정의되지 않았습니다.");
       return;
     }
 
