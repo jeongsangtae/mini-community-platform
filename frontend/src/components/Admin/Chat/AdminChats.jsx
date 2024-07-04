@@ -7,7 +7,13 @@ import AuthContext from "../../../store/auth-context";
 import classes from "./AdminChats.module.css";
 import AdminChat from "./AdminChat";
 
-const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
+const AdminChats = ({
+  adminId,
+  adminEmail,
+  usersData,
+  userId: chatRoomId,
+  chatRoomToggle,
+}) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -57,7 +63,7 @@ const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
     };
 
     fetchMessages();
-  }, [adminId]);
+  }, [adminId, chatRoomId]);
 
   useEffect(() => {
     const newSocket = io("http://localhost:3000", { withCredentials: true });
@@ -76,14 +82,14 @@ const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [chatRoomId]);
 
   useEffect(() => {
     if (!socket || !chatRoomId) return;
 
     if (chatRoomId) {
-      const testUserId = chatRoomId;
-      joinUserRoom(testUserId);
+      const userId = chatRoomId;
+      joinUserRoom(userId);
     }
   }, [socket, chatRoomId]);
 
@@ -198,7 +204,7 @@ const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
       <div
         className={`${classes["chats-container"]} ${
           classes[authCtx.themeClass]
-        } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
+        } ${chatRoomToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         <ul
           className={classes["admin-messages-container"]}
@@ -253,7 +259,7 @@ const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
         </div>
       </div>
 
-      <div className={classes["chat-icon"]}>
+      {/* <div className={classes["chat-icon"]}>
         {!chatToggle ? (
           <BsChatFill
             onClick={chatToggleHandler}
@@ -265,7 +271,7 @@ const AdminChats = ({ adminId, adminEmail, usersData, userId: chatRoomId }) => {
             className={classes["arrow-down"]}
           />
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

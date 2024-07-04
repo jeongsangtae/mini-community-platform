@@ -10,6 +10,7 @@ import classes from "./AdminUserList.module.css";
 
 const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [chatToggle, setChatToggle] = useState(false);
+  const [userChatRoomToggle, setUserChatRoomToggle] = useState(false);
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
 
   console.log(usersData);
@@ -37,14 +38,19 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     setChatToggle(!chatToggle);
   };
 
-  const joinUserRoom = (userId) => {
-    const roomId = `room-${userId}`;
-    socket.emit("joinRoom", { userId, userType: "admin" });
-    console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
+  const userChatRoomToggleHandler = () => {
+    setUserChatRoomToggle(!userChatRoomToggle);
   };
 
   const chatRoomMoveHandler = (userId) => {
     setSelectUserChatRoom(userId);
+    userChatRoomToggleHandler();
+  };
+
+  const joinUserRoom = (userId) => {
+    const roomId = `room-${userId}`;
+    socket.emit("joinRoom", { userId, userType: "admin" });
+    console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
   };
 
   return (
@@ -70,11 +76,12 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         </ul>
       </div>
 
-      {selectUserChatRoom && (
+      {userChatRoomToggleHandler && (
         <AdminChats
           userId={selectUserChatRoom}
           adminId={adminId}
           adminEmail={adminEmail}
+          chatRoomToggle={userChatRoomToggle}
         />
       )}
 
