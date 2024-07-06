@@ -60,11 +60,8 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
           chatToggle ? `${classes.open}` : `${classes.close}`
         }`}
       >
-        <ul>
+        <ul className={classes["user-item"]}>
           {usersData.map((userData) => (
-            // <button key={user._id} onClick={() => joinUserRoom(user._id)}>
-            //   {user.email}
-            // </button>
             <AdminUserItem
               key={userData._id}
               userId={userData._id}
@@ -76,7 +73,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         </ul>
       </div>
 
-      {userChatRoomToggleHandler && (
+      {userChatRoomToggle && (
         <AdminChats
           userId={selectUserChatRoom}
           adminId={adminId}

@@ -82,7 +82,7 @@ const AdminChats = ({
     return () => {
       newSocket.disconnect();
     };
-  }, [chatRoomId]);
+  }, []);
 
   useEffect(() => {
     if (!socket || !chatRoomId) return;
