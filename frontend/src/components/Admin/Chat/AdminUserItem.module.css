@@ -1,6 +1,6 @@
 .item-container {
   list-style: none;
-  margin: 0.5rem;
+  /* margin: 0.5rem; */
   width: 100%;
 }
 
@@ -8,32 +8,43 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
+  background-color: transparent;
+  border: none;
   border-radius: 5px;
-  padding: 0.625rem;
+  padding: 0.75rem;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
   width: 100%;
   box-sizing: border-box;
 }
 
-.item-select-button:hover {
-  background-color: #e2e6ea;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.item-select-button.dark-mode {
+  background-color: transparent;
 }
 
-.select-button div {
-  margin: 2px 0;
+.item-select-button:hover {
+  background-color: rgb(240, 240, 240);
 }
+
+.item-select-button.dark-mode:hover {
+  background-color: rgb(35, 35, 35);
+  /* background-color: rgb(25, 25, 25); */
+}
+
+/* .item-select-button div {
+  margin: 0.15rem 0;
+} */
 
 .user-name {
   font-weight: bold;
   font-size: 1.2em;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
+}
+
+.user-name.dark-mode {
+  color: white;
 }
 
 .user-email {
-  color: #6c757d;
   font-size: 0.9em;
+  color: rgb(110, 110, 110);
 }

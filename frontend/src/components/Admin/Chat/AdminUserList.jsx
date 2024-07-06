@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { io } from "socket.io-client";
 
 import { BsChatFill } from "react-icons/bs";
@@ -6,12 +6,15 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import AdminUserItem from "./AdminUserItem";
 import AdminChats from "./AdminChats";
+import AuthContext from "../../../store/auth-context";
 import classes from "./AdminUserList.module.css";
 
 const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [chatToggle, setChatToggle] = useState(false);
   const [userChatRoomToggle, setUserChatRoomToggle] = useState(false);
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
+
+  const authCtx = useContext(AuthContext);
 
   console.log(usersData);
 
@@ -57,8 +60,8 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     <div className={classes.chat}>
       <div
         className={`${classes["user-list-container"]} ${
-          chatToggle ? `${classes.open}` : `${classes.close}`
-        }`}
+          classes[authCtx.themeClass]
+        } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         <ul className={classes["user-item"]}>
           {usersData.map((userData) => (
