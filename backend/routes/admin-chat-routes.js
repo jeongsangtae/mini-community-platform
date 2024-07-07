@@ -15,6 +15,48 @@ const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
+router.get("/admin/chat/:userId", async (req, res) => {
+  const othersData = await accessToken(req, res);
+
+  if (!othersData) {
+    return res.status(401).json({ messages: "jwt error" });
+  }
+
+  let userId = req.params.userId;
+
+  userId = new ObjectId(userId);
+
+  // const lastMessage = await db
+  //   .getDb()
+  //   .collection("chatMessages")
+  //   .find({ user_id: userId })
+  //   .sort({ date: -1 })
+  //   .limit(1)
+  //   .toArray();
+
+  console.log("사용자 id");
+  console.log(userId);
+
+  const lastMessage = await db
+    .getDb()
+    .collection("chatMessages")
+    .find({ user_id: userId })
+    .sort({ date: -1 })
+    .limit(1)
+    .toArray();
+
+  // const lastMessage = await db
+  //   .getDb()
+  //   .collection("chatMessages")
+  //   .findOne({ user_id: userId }, { sort: { date: -1 } });
+
+  console.log("마지막 메시지");
+  console.log(lastMessage);
+
+  // res.status(200).json({ message: lastMessage[0] });
+  res.status(200).json({ message: lastMessage });
+});
+
 router.get("/admin/chat/:adminId/:userId", async (req, res) => {
   const othersData = await accessToken(req, res);
 

@@ -13,6 +13,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [chatToggle, setChatToggle] = useState(false);
   const [userChatRoomToggle, setUserChatRoomToggle] = useState(false);
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
+  const [lastMessageData, setLastMessageData] = useState(null);
 
   const authCtx = useContext(AuthContext);
 
@@ -37,6 +38,24 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "http://localhost:3000/admin/chat/" + userId,
+        {
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("메시지를 불러올 수 없습니다.");
+      }
+      const resData = await response.json();
+      console.log(resData);
+      setLastMessageData(resData.message);
+    };
+    fetchData();
+  }, []);
+
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
   };
@@ -50,11 +69,11 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     userChatRoomToggleHandler();
   };
 
-  const joinUserRoom = (userId) => {
-    const roomId = `room-${userId}`;
-    socket.emit("joinRoom", { userId, userType: "admin" });
-    console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
-  };
+  // const joinUserRoom = (userId) => {
+  //   const roomId = `room-${userId}`;
+  //   socket.emit("joinRoom", { userId, userType: "admin" });
+  //   console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
+  // };
 
   return (
     <div className={classes.chat}>

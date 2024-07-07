@@ -17,10 +17,6 @@
   box-sizing: border-box;
 }
 
-.item-select-button.dark-mode {
-  background-color: transparent;
-}
-
 .item-select-button:hover {
   background-color: rgb(240, 240, 240);
 }
