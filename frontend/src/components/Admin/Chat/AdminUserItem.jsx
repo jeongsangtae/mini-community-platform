@@ -7,15 +7,11 @@ const AdminUserItem = ({
   userId,
   name,
   email,
-  lastMessage,
-  lastDate,
+  lastMessageContent,
+  lastMessageDate,
   selectUser,
 }) => {
   const authCtx = useContext(AuthContext);
-
-  console.log(userId, name, email);
-
-  console.log(lastMessage, lastDate);
 
   const clickHandler = () => {
     selectUser(userId);
@@ -31,18 +27,36 @@ const AdminUserItem = ({
           classes[authCtx.themeClass]
         }`}
       >
-        <div
-          className={`${classes["user-name"]} ${classes[authCtx.themeClass]}`}
-        >
-          {name}
+        <div className={classes["item-left"]}>
+          <div
+            className={`${classes["user-name"]} ${classes[authCtx.themeClass]}`}
+          >
+            {name}
+          </div>
+          <div
+            className={`${classes["user-email"]} ${
+              classes[authCtx.themeClass]
+            }`}
+          >
+            {email}
+          </div>
         </div>
-        <div
-          className={`${classes["user-email"]} ${classes[authCtx.themeClass]}`}
-        >
-          {email}
+        <div className={classes["item-right"]}>
+          <div
+            className={`${classes["last-message-content"]} ${
+              classes[authCtx.themeClass]
+            }`}
+          >
+            {lastMessageContent}
+          </div>
+          <div
+            className={`${classes["last-message-date"]} ${
+              classes[authCtx.themeClass]
+            }`}
+          >
+            {lastMessageDate}
+          </div>
         </div>
-        <div>{lastMessage}</div>
-        <div>{lastDate}</div>
       </button>
     </li>
   );

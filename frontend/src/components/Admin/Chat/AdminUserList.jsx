@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import { io } from "socket.io-client";
 
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
@@ -19,25 +18,6 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
 
   console.log(usersData);
   console.log(updatedUsersData);
-
-  useEffect(() => {
-    const newSocket = io("http://localhost:3000", { withCredentials: true });
-
-    newSocket.on("connect", () => {
-      console.log("서버에 연결되었습니다.", newSocket.id);
-    });
-
-    // newSocket.on("newMessage", (newMessage) => {
-    //   setMessages((prevMsg) => [...prevMsg, newMessage]);
-    //   console.log("관리자 input 메시지: ", newMessage.content);
-    // });
-
-    // setSocket(newSocket);
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
 
   useEffect(() => {
     const fetchLastMessages = async () => {
@@ -63,7 +43,11 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
       setUpdatedUsersData(usersWithMessages);
     };
     fetchLastMessages();
-  }, []);
+
+    // const interval = setInterval(fetchLastMessages, 5000);
+
+    // return () => clearInterval(interval);
+  }, [usersData]);
 
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
@@ -78,12 +62,6 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     userChatRoomToggleHandler();
   };
 
-  // const joinUserRoom = (userId) => {
-  //   const roomId = `room-${userId}`;
-  //   socket.emit("joinRoom", { userId, userType: "admin" });
-  //   console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
-  // };
-
   return (
     <div className={classes.chat}>
       <div
@@ -92,23 +70,14 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         <ul className={classes["user-item"]}>
-          {/* {usersData.map((userData) => (
-            <AdminUserItem
-              key={userData._id}
-              userId={userData._id}
-              name={userData.name}
-              email={userData.email}
-              selectUser={chatRoomMoveHandler}
-            />
-          ))} */}
           {updatedUsersData.map((userData) => (
             <AdminUserItem
               key={userData._id}
               userId={userData._id}
               name={userData.name}
               email={userData.email}
-              lastMessage={userData.lastMessage?.content}
-              lastDate={userData.lastMessage?.date}
+              lastMessageContent={userData.lastMessage?.content}
+              lastMessageDate={userData.lastMessage?.date}
               selectUser={chatRoomMoveHandler}
             />
           ))}
