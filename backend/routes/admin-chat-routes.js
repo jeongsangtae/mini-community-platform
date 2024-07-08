@@ -37,18 +37,18 @@ router.get("/admin/chat/:userId", async (req, res) => {
   console.log("사용자 id");
   console.log(userId);
 
-  const lastMessage = await db
-    .getDb()
-    .collection("chatMessages")
-    .find({ user_id: userId })
-    .sort({ date: -1 })
-    .limit(1)
-    .toArray();
-
   // const lastMessage = await db
   //   .getDb()
   //   .collection("chatMessages")
-  //   .findOne({ user_id: userId }, { sort: { date: -1 } });
+  //   .find({ user_id: userId })
+  //   .sort({ date: -1 })
+  //   .limit(1)
+  //   .toArray();
+
+  const lastMessage = await db
+    .getDb()
+    .collection("chatMessages")
+    .findOne({ user_id: userId }, { sort: { date: -1 } });
 
   console.log("마지막 메시지");
   console.log(lastMessage);

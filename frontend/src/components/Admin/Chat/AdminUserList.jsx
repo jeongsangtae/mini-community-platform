@@ -13,11 +13,12 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [chatToggle, setChatToggle] = useState(false);
   const [userChatRoomToggle, setUserChatRoomToggle] = useState(false);
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
-  const [lastMessageData, setLastMessageData] = useState(null);
+  const [updatedUsersData, setUpdatedUsersData] = useState([]);
 
   const authCtx = useContext(AuthContext);
 
   console.log(usersData);
+  console.log(updatedUsersData);
 
   useEffect(() => {
     const newSocket = io("http://localhost:3000", { withCredentials: true });
@@ -39,21 +40,29 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "http://localhost:3000/admin/chat/" + userId,
-        {
-          credentials: "include",
+    const fetchLastMessages = async () => {
+      const combineUserData = usersData.map(async (user) => {
+        const response = await fetch(
+          "http://localhost:3000/admin/chat/" + user._id,
+          {
+            credentials: "include",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("메시지를 불러올 수 없습니다.");
         }
-      );
-      if (!response.ok) {
-        throw new Error("메시지를 불러올 수 없습니다.");
-      }
-      const resData = await response.json();
-      console.log(resData);
-      setLastMessageData(resData.message);
+
+        const resData = await response.json();
+        return { ...user, lastMessage: resData.message };
+      });
+
+      const usersWithMessages = await Promise.all(combineUserData);
+
+      console.log(usersWithMessages);
+
+      setUpdatedUsersData(usersWithMessages);
     };
-    fetchData();
+    fetchLastMessages();
   }, []);
 
   const chatToggleHandler = () => {
@@ -83,12 +92,23 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         <ul className={classes["user-item"]}>
-          {usersData.map((userData) => (
+          {/* {usersData.map((userData) => (
             <AdminUserItem
               key={userData._id}
               userId={userData._id}
               name={userData.name}
               email={userData.email}
+              selectUser={chatRoomMoveHandler}
+            />
+          ))} */}
+          {updatedUsersData.map((userData) => (
+            <AdminUserItem
+              key={userData._id}
+              userId={userData._id}
+              name={userData.name}
+              email={userData.email}
+              lastMessage={userData.lastMessage?.content}
+              lastDate={userData.lastMessage?.date}
               selectUser={chatRoomMoveHandler}
             />
           ))}

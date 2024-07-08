@@ -3,8 +3,19 @@ import { useContext } from "react";
 import AuthContext from "../../../store/auth-context";
 import classes from "./AdminUserItem.module.css";
 
-const AdminUserItem = ({ userId, name, email, selectUser }) => {
+const AdminUserItem = ({
+  userId,
+  name,
+  email,
+  lastMessage,
+  lastDate,
+  selectUser,
+}) => {
   const authCtx = useContext(AuthContext);
+
+  console.log(userId, name, email);
+
+  console.log(lastMessage, lastDate);
 
   const clickHandler = () => {
     selectUser(userId);
@@ -30,8 +41,8 @@ const AdminUserItem = ({ userId, name, email, selectUser }) => {
         >
           {email}
         </div>
-        {/* <div>{lastMessageData?.date}</div> */}
-        {/* <div>{lastMessageData?.content}</div> */}
+        <div>{lastMessage}</div>
+        <div>{lastDate}</div>
       </button>
     </li>
   );
