@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { io } from "socket.io-client";
-import { BsChatFill } from "react-icons/bs";
-import { IoIosArrowDown } from "react-icons/io";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { IoIosArrowDown, IoMdArrowBack, IoIosArrowBack } from "react-icons/io";
 
 import AuthContext from "../../../store/auth-context";
 import classes from "./AdminChats.module.css";
@@ -10,9 +10,11 @@ import AdminChat from "./AdminChat";
 const AdminChats = ({
   adminId,
   adminEmail,
-  usersData,
+  // usersData,
   userId: chatRoomId,
+  userName,
   chatRoomToggle,
+  chatRoomClose,
 }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -28,6 +30,8 @@ const AdminChats = ({
 
   // console.log(adminId);
   console.log(chatRoomId);
+  // console.log(usersData);
+  console.log(userName);
 
   useEffect(() => {
     if (!adminId) {
@@ -206,6 +210,14 @@ const AdminChats = ({
           classes[authCtx.themeClass]
         } ${chatRoomToggle ? `${classes.open}` : `${classes.close}`}`}
       >
+        <div
+          className={`${classes["chat-room-header"]} ${
+            classes[authCtx.themeClass]
+          }`}
+        >
+          <FaArrowLeftLong onClick={chatRoomClose} />
+          <div>{userName}</div>
+        </div>
         <ul
           className={classes["admin-messages-container"]}
           ref={chatContainerRef}

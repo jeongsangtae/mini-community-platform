@@ -12,6 +12,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [chatToggle, setChatToggle] = useState(false);
   const [userChatRoomToggle, setUserChatRoomToggle] = useState(false);
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
+  const [selectChatRoomUserName, setSelectChatRoomUserName] = useState("");
   const [updatedUsersData, setUpdatedUsersData] = useState([]);
 
   const userListContainerRef = useRef(null);
@@ -58,8 +59,9 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     setUserChatRoomToggle(!userChatRoomToggle);
   };
 
-  const chatRoomMoveHandler = (userId) => {
+  const chatRoomMoveHandler = (userId, name) => {
     setSelectUserChatRoom(userId);
+    setSelectChatRoomUserName(name);
     userChatRoomToggleHandler();
   };
 
@@ -88,9 +90,12 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
       {userChatRoomToggle && (
         <AdminChats
           userId={selectUserChatRoom}
+          userName={selectChatRoomUserName}
           adminId={adminId}
           adminEmail={adminEmail}
           chatRoomToggle={userChatRoomToggle}
+          chatRoomClose={userChatRoomToggleHandler}
+          // usersData={usersData}
         />
       )}
 

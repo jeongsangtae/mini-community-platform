@@ -14,7 +14,7 @@ const AdminUserItem = ({
   const authCtx = useContext(AuthContext);
 
   const clickHandler = () => {
-    selectUser(userId);
+    selectUser(userId, name);
   };
 
   return (
