@@ -33,14 +33,9 @@ const AdminUserItem = ({
           >
             {name}
           </div>
-          <div
-            className={`${classes["user-email"]} ${
-              classes[authCtx.themeClass]
-            }`}
-          >
-            {email}
-          </div>
+          <div className={classes["user-email"]}>{email}</div>
         </div>
+
         <div className={classes["item-right"]}>
           <div
             className={`${classes["last-message-content"]} ${
@@ -49,13 +44,7 @@ const AdminUserItem = ({
           >
             {lastMessageContent}
           </div>
-          <div
-            className={`${classes["last-message-date"]} ${
-              classes[authCtx.themeClass]
-            }`}
-          >
-            {lastMessageDate}
-          </div>
+          <div className={classes["last-message-date"]}>{lastMessageDate}</div>
         </div>
       </button>
     </li>

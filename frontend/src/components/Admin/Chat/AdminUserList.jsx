@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
@@ -14,6 +14,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
   const [updatedUsersData, setUpdatedUsersData] = useState([]);
 
+  const userListContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
   console.log(usersData);
@@ -69,7 +70,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
           classes[authCtx.themeClass]
         } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
-        <ul className={classes["user-item"]}>
+        <ul className={classes["user-item"]} ref={userListContainerRef}>
           {updatedUsersData.map((userData) => (
             <AdminUserItem
               key={userData._id}
