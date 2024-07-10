@@ -17,7 +17,7 @@
   background-color: white;
   border-radius: 0.5rem;
   border: 1px solid rgb(133, 133, 133);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -63,11 +63,13 @@
 
 @keyframes chat-container-slide-up {
   0% {
-    transform: translateY(50%);
+    transform: translateY(10%);
+    height: 0;
     opacity: 0;
   }
   100% {
     transform: translateY(0);
+    height: 30rem;
     opacity: 1;
   }
 }
@@ -75,10 +77,12 @@
 @keyframes chat-container-slide-down {
   0% {
     transform: translateY(0);
+    height: 30rem;
     opacity: 1;
   }
   100% {
-    transform: translateY(50%);
+    transform: translateY(10%);
+    height: 0;
     opacity: 0;
   }
 }

@@ -87,17 +87,15 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         </ul>
       </div>
 
-      {userChatRoomToggle && (
-        <AdminChats
-          userId={selectUserChatRoom}
-          userName={selectChatRoomUserName}
-          adminId={adminId}
-          adminEmail={adminEmail}
-          chatRoomToggle={userChatRoomToggle}
-          chatRoomClose={userChatRoomToggleHandler}
-          // usersData={usersData}
-        />
-      )}
+      <AdminChats
+        userId={selectUserChatRoom}
+        userName={selectChatRoomUserName}
+        adminId={adminId}
+        adminEmail={adminEmail}
+        chatRoomToggle={userChatRoomToggle}
+        chatRoomClose={userChatRoomToggleHandler}
+        // usersData={usersData}
+      />
 
       <div className={classes["chat-icon"]}>
         {!chatToggle ? (
