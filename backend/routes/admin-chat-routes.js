@@ -87,10 +87,9 @@ router.post("/admin/chat/:adminId", async (req, res) => {
     return res.status(401).json({ messages: "jwt error" });
   }
 
-  const { adminEmail, content, userType } = req.body;
+  const { userId, userName, adminEmail, content, userType } = req.body;
 
   let adminId = req.params.adminId;
-  const testUserId = req.body.userId;
   // const adminEmail = req.body.adminEmail;
   // const messageInput = req.body.content;
   let date = new Date();
@@ -98,7 +97,8 @@ router.post("/admin/chat/:adminId", async (req, res) => {
   adminId = new ObjectId(adminId);
 
   const newMessage = {
-    user_id: new ObjectId(testUserId),
+    user_id: new ObjectId(userId),
+    user_name: userName,
     admin_id: adminId,
     email: adminEmail,
     content: content,
@@ -116,7 +116,7 @@ router.post("/admin/chat/:adminId", async (req, res) => {
   await db.getDb().collection("chatMessages").insertOne(newMessage);
 
   const io = req.app.get("io");
-  const roomId = `room-${testUserId}`;
+  const roomId = `room-${userId}`;
   io.to(roomId).emit("newMessage", newMessage);
   // io.emit("newMessage", newMessage);
 

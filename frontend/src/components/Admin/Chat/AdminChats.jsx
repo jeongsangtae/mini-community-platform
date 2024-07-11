@@ -145,6 +145,7 @@ const AdminChats = ({
 
     const testNewMessage = {
       userId: chatRoomId,
+      userName,
       adminEmail,
       content: message,
       userType: "admin",

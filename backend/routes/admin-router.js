@@ -321,6 +321,12 @@ router.delete("/admin/user", async (req, res) => {
       // }
     }
 
+    // 사용자와 관리자가 나눈 모든 채팅 삭제
+    await db
+      .getDb()
+      .collection("chatMessages")
+      .deleteMany({ user_id: user._id });
+
     // 사용자가 작성한 모든 댓글, 답글 삭제
     await db.getDb().collection("replies").deleteMany({ email: user.email });
     await db.getDb().collection("comments").deleteMany({ email: user.email });
