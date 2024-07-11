@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 
 import { BsChatFill } from "react-icons/bs";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 
 import AdminUserItem from "./AdminUserItem";
 import AdminChats from "./AdminChats";
@@ -66,6 +66,10 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     userChatRoomToggleHandler();
   };
 
+  const filteredUsers = updatedUsersData.filter((userData) =>
+    userData.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className={classes.chat}>
       <div
@@ -73,29 +77,30 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
           classes[authCtx.themeClass]
         } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
-        <input
-          type="text"
-          className={classes["search-input"]}
-          placeholder="사용자를 찾아보세요"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className={classes["search-container"]}>
+          <IoIosSearch className={classes["search-icon"]} />
+          <input
+            type="text"
+            className={`${classes["search-input"]} ${
+              classes[authCtx.themeClass]
+            }`}
+            placeholder="사용자 검색"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
         <ul className={classes["user-item"]} ref={userListContainerRef}>
-          {updatedUsersData
-            .filter((userData) =>
-              userData.name.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .map((userData) => (
-              <AdminUserItem
-                key={userData._id}
-                userId={userData._id}
-                name={userData.name}
-                email={userData.email}
-                lastMessageContent={userData.lastMessage?.content}
-                lastMessageDate={userData.lastMessage?.date}
-                selectUser={chatRoomMoveHandler}
-              />
-            ))}
+          {filteredUsers.map((userData) => (
+            <AdminUserItem
+              key={userData._id}
+              userId={userData._id}
+              name={userData.name}
+              email={userData.email}
+              lastMessageContent={userData.lastMessage?.content}
+              lastMessageDate={userData.lastMessage?.date}
+              selectUser={chatRoomMoveHandler}
+            />
+          ))}
         </ul>
       </div>
 
