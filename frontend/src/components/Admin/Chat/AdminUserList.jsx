@@ -14,6 +14,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
   const [selectChatRoomUserName, setSelectChatRoomUserName] = useState("");
   const [updatedUsersData, setUpdatedUsersData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const userListContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
@@ -72,18 +73,29 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
           classes[authCtx.themeClass]
         } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
+        <input
+          type="text"
+          className={classes["search-input"]}
+          placeholder="사용자를 찾아보세요"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <ul className={classes["user-item"]} ref={userListContainerRef}>
-          {updatedUsersData.map((userData) => (
-            <AdminUserItem
-              key={userData._id}
-              userId={userData._id}
-              name={userData.name}
-              email={userData.email}
-              lastMessageContent={userData.lastMessage?.content}
-              lastMessageDate={userData.lastMessage?.date}
-              selectUser={chatRoomMoveHandler}
-            />
-          ))}
+          {updatedUsersData
+            .filter((userData) =>
+              userData.name.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .map((userData) => (
+              <AdminUserItem
+                key={userData._id}
+                userId={userData._id}
+                name={userData.name}
+                email={userData.email}
+                lastMessageContent={userData.lastMessage?.content}
+                lastMessageDate={userData.lastMessage?.date}
+                selectUser={chatRoomMoveHandler}
+              />
+            ))}
         </ul>
       </div>
 
