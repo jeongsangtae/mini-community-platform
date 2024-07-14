@@ -17,13 +17,14 @@ const Posts = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchData = async (pageNumber) => {
+  const fetchData = async (pageNumber, searchQuery = "") => {
     authCtx.setIsLoading(true);
     // setTimeout(async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/posts?page=${pageNumber}`
+        `http://localhost:3000/posts?page=${pageNumber}&search=${searchQuery}`
       );
       const resData = await response.json();
       return resData;
@@ -33,8 +34,8 @@ const Posts = () => {
     // }, 2000);
   };
 
-  const paginationFetchData = async (pageNumber) => {
-    const resData = await fetchData(pageNumber);
+  const paginationFetchData = async (pageNumber, searchQuery = "") => {
+    const resData = await fetchData(pageNumber, searchQuery);
     setPosts(resData.posts);
     setTotalPages(resData.totalPages);
     setFirstPageGroup(resData.firstPageGroup);
@@ -42,14 +43,26 @@ const Posts = () => {
   };
 
   const onPageChange = (pageNum) => {
-    navigate(`/posts?page=${pageNum}`);
+    const params = new URLSearchParams(location.search);
+    const search = params.get("search") || "";
+    navigate(`/posts?page=${pageNum}&search=${search}`);
     console.log(pageNum);
     setPage(pageNum);
   };
 
+  const searchHandler = () => {
+    navigate(`/posts?page=1&search=${searchTerm}`);
+    setPage(1);
+  };
+
   useEffect(() => {
-    paginationFetchData(page);
-  }, [page]);
+    const params = new URLSearchParams(location.search);
+    const search = params.get("search") || "";
+    const page = parseInt(params.get("page")) || 1;
+    setSearchTerm(search);
+    setPage(page);
+    paginationFetchData(page, search);
+  }, [location.search]);
 
   const postAddButtonClass = authCtx.isLoggedIn
     ? `${classes.add} ${classes[authCtx.themeClass]}`
@@ -124,6 +137,20 @@ const Posts = () => {
           <div
             className={`${classes["last-menu"]} ${classes[authCtx.themeClass]}`}
           >
+            <div
+              className={`${classes["search-container"]} ${
+                classes[authCtx.themeClass]
+              }`}
+            >
+              <input
+                type="text"
+                className={classes["search-input"]}
+                placeholder="게시글 검색..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button onClick={searchHandler}>검색</button>
+            </div>
             <Link to="create-post" className={postAddButtonClass}>
               글쓰기
             </Link>
