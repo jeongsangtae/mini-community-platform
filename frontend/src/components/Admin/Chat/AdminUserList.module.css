@@ -96,17 +96,17 @@
 
 .search-input:focus {
   /* focus 테두리 거리 조절 없는 상태 */
-  outline: none;
-  border-color: rgb(133, 133, 133);
+  /* outline: none;
+  border-color: rgb(133, 133, 133); */
 
   /* box-shadow를 통한 focus 테두리 조절 */
   /* outline: none;
   border-color: transparent;
-  box-shadow: 0 0 0 1px rgb(136, 136, 136); */
+  box-shadow: 0 0 0 1px rgb(133, 133, 133); */
 
   /* focus 테두리 2px 조절 및 추가 조절 가능 */
-  /* outline: 1px solid rgb(136, 136, 136);
-  outline-offset: 2px; */
+  outline: 1px solid rgb(133, 133, 133);
+  outline-offset: 2px;
 }
 
 .search-input:focus::placeholder {

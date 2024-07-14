@@ -13,7 +13,7 @@
 
 .chat-bubble {
   /* background-color: rgb(250, 255, 0); */
-  background-color: rgb(161, 224, 248);
+  background-color: rgb(116, 190, 219);
   border-radius: 1rem;
   border-top-right-radius: 0px;
   padding: 0.25rem 0.75rem;
@@ -27,7 +27,7 @@
 }
 
 .user-message .chat-bubble {
-  background-color: rgb(27, 190, 255);
+  background-color: rgb(161, 224, 248);
   border-top-left-radius: 0;
   border-top-right-radius: 1rem;
 }

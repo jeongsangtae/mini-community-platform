@@ -30,7 +30,6 @@ const AdminChats = ({
 
   // console.log(adminId);
   console.log(chatRoomId);
-  // console.log(usersData);
   console.log(userName);
 
   useEffect(() => {
@@ -50,7 +49,6 @@ const AdminChats = ({
     }
 
     const fetchMessages = async () => {
-      // const userId = usersData[0]._id;
       const userId = chatRoomId;
       const response = await fetch(
         "http://localhost:3000/admin/chat/" + adminId + "/" + userId,
@@ -143,7 +141,7 @@ const AdminChats = ({
       return;
     }
 
-    const testNewMessage = {
+    const newMessage = {
       userId: chatRoomId,
       userName,
       adminEmail,
@@ -155,8 +153,7 @@ const AdminChats = ({
       "http://localhost:3000/admin/chat/" + adminId,
       {
         method: "POST",
-        // body: JSON.stringify({ message, adminEmail }),
-        body: JSON.stringify(testNewMessage),
+        body: JSON.stringify(newMessage),
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       }
@@ -271,20 +268,6 @@ const AdminChats = ({
           </button>
         </div>
       </div>
-
-      {/* <div className={classes["chat-icon"]}>
-        {!chatToggle ? (
-          <BsChatFill
-            onClick={chatToggleHandler}
-            className={classes["chat-fill"]}
-          />
-        ) : (
-          <IoIosArrowDown
-            onClick={chatToggleHandler}
-            className={classes["arrow-down"]}
-          />
-        )}
-      </div> */}
     </div>
   );
 };
