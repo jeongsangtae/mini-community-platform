@@ -15,13 +15,26 @@ router.get("/", (req, res) => {
 
 router.get("/posts", async (req, res) => {
   const page = parseInt(req.query.page) || 1;
+  const search = req.query.search || ""; // 검색어를 쿼리 파라미터에서 가져옴
   const pageSize = 5;
   const pageButtonSize = 5;
+
+  // 검색어가 있을 경우 필터링 조건을 추가
+
+  const filter = search
+    ? {
+        $or: [
+          { title: { $regex: search, $options: "i" } }, // 제목에서 검색어 찾기 (대소문자 구분 없음)
+          { content: { $regex: search, $options: "i" } }, // 내용에서 검색어 찾기 (대소문자 구분 없음)
+          { name: { $regex: search, $options: "i" } }, // 작성자 이름에서 검색어 찾기 (대소문자 구분 없음)
+        ],
+      }
+    : {};
 
   const posts = await db
     .getDb()
     .collection("posts")
-    .find({})
+    .find(filter)
     .sort({ postId: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
