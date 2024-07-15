@@ -18,13 +18,22 @@ const Posts = () => {
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchField, setSearchField] = useState("title");
 
-  const fetchData = async (pageNumber, searchQuery = "") => {
+  const selectOptions = ["제목", "내용", "이름"];
+
+  const fetchData = async (pageNumber, searchTerm = "", searchField = "") => {
     authCtx.setIsLoading(true);
     // setTimeout(async () => {
     try {
+      const searchParams = new URLSearchParams({
+        page: pageNumber,
+        search: searchTerm,
+        field: searchField,
+      }).toString();
+
       const response = await fetch(
-        `http://localhost:3000/posts?page=${pageNumber}&search=${searchQuery}`
+        `http://localhost:3000/posts?${searchParams}`
       );
       const resData = await response.json();
       return resData;
@@ -34,8 +43,8 @@ const Posts = () => {
     // }, 2000);
   };
 
-  const paginationFetchData = async (pageNumber, searchQuery = "") => {
-    const resData = await fetchData(pageNumber, searchQuery);
+  const paginationFetchData = async (pageNumber) => {
+    const resData = await fetchData(pageNumber, searchTerm, searchField);
     setPosts(resData.posts);
     setTotalPages(resData.totalPages);
     setFirstPageGroup(resData.firstPageGroup);
@@ -43,25 +52,31 @@ const Posts = () => {
   };
 
   const onPageChange = (pageNum) => {
-    const params = new URLSearchParams(location.search);
-    const search = params.get("search") || "";
-    navigate(`/posts?page=${pageNum}&search=${search}`);
+    navigate(
+      `/posts?page=${pageNum}&search=${searchTerm}&field=${searchField}`
+    );
     console.log(pageNum);
     setPage(pageNum);
   };
 
   const searchHandler = () => {
-    navigate(`/posts?page=1&search=${searchTerm}`);
     setPage(1);
+    navigate(`/posts?page=1&search=${searchTerm}&field=${searchField}`);
+  };
+
+  const fieldChangeHandler = (event) => {
+    setSearchField(event.target.value);
   };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const search = params.get("search") || "";
     const page = parseInt(params.get("page")) || 1;
+    const field = params.get("field") || "title";
     setSearchTerm(search);
     setPage(page);
-    paginationFetchData(page, search);
+    setSearchField(field);
+    paginationFetchData(page);
   }, [location.search]);
 
   const postAddButtonClass = authCtx.isLoggedIn
@@ -90,17 +105,6 @@ const Posts = () => {
           <p
             className={`${classes.underline} ${classes[authCtx.themeClass]}`}
           ></p>
-
-          {/* <div
-            className={`${classes["posts-item"]} ${
-              classes[authCtx.themeClass]
-            }`}
-          >
-            <p>번호</p>
-            <p>제목</p>
-            <p>글쓴이</p>
-            <p>날짜</p>
-          </div> */}
 
           {posts.length > 0 ? (
             <ul className={classes.posts}>
@@ -142,6 +146,14 @@ const Posts = () => {
                 classes[authCtx.themeClass]
               }`}
             >
+              <select value={searchField} onChange={fieldChangeHandler}>
+                {selectOptions.map((selectOption, index) => (
+                  <option key={index} value={selectOption}>
+                    {selectOption}
+                  </option>
+                ))}
+              </select>
+
               <input
                 type="text"
                 className={classes["search-input"]}
