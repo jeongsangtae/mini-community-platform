@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import Post from "./Post";
 import Pagination from "./PagiNation";
@@ -10,6 +10,7 @@ import classes from "./Posts.module.css";
 
 const Posts = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const authCtx = useContext(AuthContext);
 
   const [posts, setPosts] = useState([]);
@@ -26,7 +27,11 @@ const Posts = () => {
     { display: "이름", value: "name" },
   ];
 
-  const fetchData = async (pageNumber, searchTerm = "", searchField = "") => {
+  const fetchData = async (
+    pageNumber,
+    searchTerm = "",
+    searchField = "title"
+  ) => {
     authCtx.setIsLoading(true);
     // setTimeout(async () => {
     try {
@@ -56,16 +61,18 @@ const Posts = () => {
   };
 
   const onPageChange = (pageNum) => {
-    navigate(
-      `/posts?page=${pageNum}&search=${searchTerm}&field=${searchField}`
-    );
+    // navigate(
+    //   `/posts?page=${pageNum}&search=${searchTerm}&field=${searchField}`
+    // );
+    setSearchParams({ page: pageNum, search: searchTerm, field: searchField });
     console.log(pageNum);
     setPage(pageNum);
   };
 
   const searchHandler = () => {
+    // navigate(`/posts?page=1&search=${searchTerm}&field=${searchField}`);
+    setSearchParams({ page: 1, search: searchTerm, field: searchField });
     setPage(1);
-    navigate(`/posts?page=1&search=${searchTerm}&field=${searchField}`);
   };
 
   const fieldChangeHandler = (event) => {
@@ -73,15 +80,16 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const search = params.get("search") || "";
-    const page = parseInt(params.get("page")) || 1;
-    const field = params.get("field") || "title";
+    // const params = new URLSearchParams(location.search);
+    const search = searchParams.get("search") || "";
+    const pageNumber = parseInt(searchParams.get("page")) || 1;
+    const field = searchParams.get("field") || "title";
+
     setSearchTerm(search);
-    setPage(page);
+    setPage(pageNumber);
     setSearchField(field);
     paginationFetchData(page);
-  }, [location.search]);
+  }, [searchParams]);
 
   const postAddButtonClass = authCtx.isLoggedIn
     ? `${classes.add} ${classes[authCtx.themeClass]}`
