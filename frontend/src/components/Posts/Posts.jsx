@@ -20,7 +20,11 @@ const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("title");
 
-  const selectOptions = ["제목", "내용", "이름"];
+  const selectOptions = [
+    { display: "제목", value: "title" },
+    { display: "내용", value: "content" },
+    { display: "이름", value: "name" },
+  ];
 
   const fetchData = async (pageNumber, searchTerm = "", searchField = "") => {
     authCtx.setIsLoading(true);
@@ -147,9 +151,9 @@ const Posts = () => {
               }`}
             >
               <select value={searchField} onChange={fieldChangeHandler}>
-                {selectOptions.map((selectOption, index) => (
-                  <option key={index} value={selectOption}>
-                    {selectOption}
+                {selectOptions.map((option, index) => (
+                  <option key={index} value={option.value}>
+                    {option.display}
                   </option>
                 ))}
               </select>

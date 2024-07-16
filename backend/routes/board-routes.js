@@ -31,23 +31,12 @@ router.get("/posts", async (req, res) => {
   } else if (search) {
     filter = {
       $or: [
-        { title: { $regex: search, $options: "i" } }, // 제목에서 검색어 찾기 (대소문자 구분 없음)
-        { content: { $regex: search, $options: "i" } }, // 내용에서 검색어 찾기 (대소문자 구분 없음)
-        { name: { $regex: search, $options: "i" } }, // 작성자 이름에서 검색어 찾기 (대소문자 구분 없음)
+        { title: { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+        { name: { $regex: search, $options: "i" } },
       ],
     };
   }
-
-  // 검색어가 있을 경우 필터링 조건을 추가
-  // const filter = search
-  //   ? {
-  //       $or: [
-  //         { title: { $regex: search, $options: "i" } }, // 제목에서 검색어 찾기 (대소문자 구분 없음)
-  //         { content: { $regex: search, $options: "i" } }, // 내용에서 검색어 찾기 (대소문자 구분 없음)
-  //         { name: { $regex: search, $options: "i" } }, // 작성자 이름에서 검색어 찾기 (대소문자 구분 없음)
-  //       ],
-  //     }
-  //   : {};
 
   const posts = await db
     .getDb()
