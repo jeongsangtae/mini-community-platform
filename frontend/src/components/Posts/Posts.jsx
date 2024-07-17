@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import Post from "./Post";
 import Pagination from "./PagiNation";
@@ -9,10 +9,9 @@ import AuthContext from "../../store/auth-context";
 import classes from "./Posts.module.css";
 
 const Posts = () => {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const authCtx = useContext(AuthContext);
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -41,10 +40,17 @@ const Posts = () => {
         field: searchField,
       }).toString();
 
+      console.log("fetch 함수 데이터 가져오기:", {
+        pageNumber,
+        searchTerm,
+        searchField,
+      });
+
       const response = await fetch(
         `http://localhost:3000/posts?${searchParams}`
       );
       const resData = await response.json();
+      console.log("resData 가져오기:", resData);
       return resData;
     } finally {
       authCtx.setIsLoading(false);
@@ -52,8 +58,11 @@ const Posts = () => {
     // }, 2000);
   };
 
-  const paginationFetchData = async (pageNumber) => {
+  const paginationFetchData = async (pageNumber, searchTerm, searchField) => {
     const resData = await fetchData(pageNumber, searchTerm, searchField);
+
+    console.log("게시글 데이터 가져오기:", resData);
+
     setPosts(resData.posts);
     setTotalPages(resData.totalPages);
     setFirstPageGroup(resData.firstPageGroup);
@@ -71,8 +80,8 @@ const Posts = () => {
 
   const searchHandler = () => {
     // navigate(`/posts?page=1&search=${searchTerm}&field=${searchField}`);
-    setSearchParams({ page: 1, search: searchTerm, field: searchField });
     setPage(1);
+    setSearchParams({ page: 1, search: searchTerm, field: searchField });
   };
 
   const fieldChangeHandler = (event) => {
@@ -85,10 +94,12 @@ const Posts = () => {
     const pageNumber = parseInt(searchParams.get("page")) || 1;
     const field = searchParams.get("field") || "title";
 
+    console.log("현재 Params:", { search, pageNumber, field });
+
     setSearchTerm(search);
     setPage(pageNumber);
     setSearchField(field);
-    paginationFetchData(page);
+    paginationFetchData(pageNumber, search, field);
   }, [searchParams]);
 
   const postAddButtonClass = authCtx.isLoggedIn

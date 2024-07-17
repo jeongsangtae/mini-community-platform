@@ -20,6 +20,8 @@ router.get("/posts", async (req, res) => {
   const pageSize = 5;
   const pageButtonSize = 5;
 
+  console.log("백엔드 요청 파라미터:", { page, search, fields });
+
   let filter = {};
 
   if (search && fields.length) {
