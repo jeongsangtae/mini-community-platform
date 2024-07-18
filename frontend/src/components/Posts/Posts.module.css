@@ -89,9 +89,138 @@
 
 .last-menu {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
   margin: 0 5rem;
   padding: 0;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+
+.search-field select {
+  background-color: transparent;
+  border: 1px solid rgb(180, 180, 180);
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  padding: 0.25rem;
+  padding-right: 1rem;
+  outline: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 100%;
+}
+
+.search-field.dark-mode select {
+  border: 1px solid rgb(90, 90, 90);
+  border-right: none;
+  color: white;
+}
+
+.search-field select:focus {
+  border-color: rgb(133, 133, 133);
+}
+
+.search-field option {
+  padding: 0.25rem;
+}
+
+.search-field.dark-mode option {
+  background-color: var(--dark-mode-background-color);
+  color: white;
+}
+
+.search-term-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* padding: 0.25rem; */
+  padding: 0 0.5rem;
+  border: 1px solid rgb(180, 180, 180);
+  border-radius: 0 2px 2px 0;
+  height: 100%;
+}
+
+.search-term-container.dark-mode {
+  border: 1px solid rgb(90, 90, 90);
+}
+
+.search-term-container:focus-within {
+  border-color: rgb(133, 133, 133);
+}
+
+.search-term-icon {
+  position: absolute;
+  right: 0.5rem;
+  color: rgb(133, 133, 133);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.search-term-icon:hover {
+  color: rgb(90, 90, 90);
+}
+
+.search-term-icon.dark-mode:hover {
+  color: rgb(180, 180, 180);
+}
+
+.search-term-input {
+  padding: 0 1.5rem 0 0;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: 1px solid transparent;
+  line-height: 1.5;
+}
+
+.search-term-input.dark-mode {
+  color: white;
+}
+
+.search-term-input:focus {
+  outline: none;
+}
+
+.search-term-input::placeholder {
+  opacity: 0.5;
+}
+
+.search-button {
+  margin-left: 0.25rem;
+  padding: 0.5rem 1.5rem;
+  color: black;
+  background-color: transparent;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1px solid rgb(68, 68, 68);
+  transition: all 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: rgb(237, 237, 237);
+}
+
+.search-button.dark-mode {
+  color: white;
+}
+
+.search-button.dark-mode:hover {
+  background-color: rgb(25, 25, 25);
 }
 
 .underline {
