@@ -54,6 +54,7 @@ router.get("/posts", async (req, res) => {
     .getDb()
     .collection("posts")
     .countDocuments(filter);
+
   const totalPages = Math.ceil(countPosts / pageSize);
 
   const firstPageGroup =
@@ -91,9 +92,14 @@ router.get("/posts", async (req, res) => {
   } catch (error) {
     console.error(error);
     // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
-    res
-      .status(200)
-      .json({ posts, page, totalPages, firstPageGroup, lastPageGroup });
+    res.status(200).json({
+      posts,
+      countPosts,
+      page,
+      totalPages,
+      firstPageGroup,
+      lastPageGroup,
+    });
   }
 
   // try {

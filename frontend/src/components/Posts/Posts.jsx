@@ -13,12 +13,15 @@ const Posts = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
+  const [countPosts, setCountPosts] = useState(0);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [firstPageGroup, setFirstPageGroup] = useState(1);
   const [lastPageGroup, setLastPageGroup] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("title");
+
+  console.log(countPosts);
 
   const selectOptions = [
     { display: "제목", value: "title" },
@@ -67,6 +70,8 @@ const Posts = () => {
     setTotalPages(resData.totalPages);
     setFirstPageGroup(resData.firstPageGroup);
     setLastPageGroup(resData.lastPageGroup);
+    setCountPosts(resData.countPosts);
+    console.log(countPosts);
   };
 
   const onPageChange = (pageNum) => {
@@ -119,7 +124,7 @@ const Posts = () => {
           <div
             className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
           >
-            <p>{posts.length}개의 글</p>
+            <p>{countPosts}개의 글</p>
             <Link to="create-post" className={postAddButtonClass}>
               글쓰기
             </Link>
