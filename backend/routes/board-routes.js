@@ -83,6 +83,7 @@ router.get("/posts", async (req, res) => {
 
     res.status(200).json({
       posts,
+      countPosts,
       page,
       totalPages,
       firstPageGroup,
