@@ -145,40 +145,46 @@ const AdminPosts = () => {
                 classes[authCtx.themeClass]
               }`}
             >
-              <div
-                className={`${classes["search-field"]} ${
+              <select
+                value={searchField}
+                onChange={fieldChangeHandler}
+                className={`${classes["search-field-select"]} ${
                   classes[authCtx.themeClass]
                 }`}
               >
-                <select value={searchField} onChange={fieldChangeHandler}>
-                  {selectOptions.map((option, index) => (
-                    <option key={index} value={option.value}>
-                      {option.display}
-                    </option>
-                  ))}
-                </select>
+                {selectOptions.map((option, index) => (
+                  <option
+                    key={index}
+                    value={option.value}
+                    className={`${classes["search-field-option"]} ${
+                      classes[authCtx.themeClass]
+                    }`}
+                  >
+                    {option.display}
+                  </option>
+                ))}
+              </select>
 
-                <div
-                  className={`${classes["search-term-container"]} ${
+              <div
+                className={`${classes["search-term-container"]} ${
+                  classes[authCtx.themeClass]
+                }`}
+              >
+                <input
+                  type="text"
+                  className={`${classes["search-term-input"]} ${
                     classes[authCtx.themeClass]
                   }`}
-                >
-                  <input
-                    type="text"
-                    className={`${classes["search-term-input"]} ${
-                      classes[authCtx.themeClass]
-                    }`}
-                    placeholder="게시글 검색"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <IoIosSearch
-                    onClick={searchHandler}
-                    className={`${classes["search-term-icon"]} ${
-                      classes[authCtx.themeClass]
-                    }`}
-                  />
-                </div>
+                  placeholder="게시글 검색"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <IoIosSearch
+                  onClick={searchHandler}
+                  className={`${classes["search-term-icon"]} ${
+                    classes[authCtx.themeClass]
+                  }`}
+                />
               </div>
             </div>
           </div>
