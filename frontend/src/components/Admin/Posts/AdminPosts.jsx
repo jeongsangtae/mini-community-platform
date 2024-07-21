@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
 
 import AdminPost from "./AdminPost";
+import AdminSearch from "./AdminSearch";
 import Pagination from "../../Posts/PagiNation";
 import LoadingIndicator from "../../UI/LoadingIndicator";
 import AuthContext from "../../../store/auth-context";
@@ -20,12 +20,6 @@ const AdminPosts = () => {
   const [lastPageGroup, setLastPageGroup] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("title");
-
-  const selectOptions = [
-    { display: "제목", value: "title" },
-    { display: "내용", value: "content" },
-    { display: "이름", value: "name" },
-  ];
 
   const fetchData = async (
     pageNumber,
@@ -52,6 +46,7 @@ const AdminPosts = () => {
 
   const paginationFetchData = async (pageNumber, searchTerm, searchField) => {
     const resData = await fetchData(pageNumber, searchTerm, searchField);
+
     setPosts(resData.posts);
     setTotalPages(resData.totalPages);
     setFirstPageGroup(resData.firstPageGroup);
@@ -65,12 +60,8 @@ const AdminPosts = () => {
   };
 
   const searchHandler = () => {
-    setPage(1);
     setSearchParams({ page: 1, search: searchTerm, field: searchField });
-  };
-
-  const fieldChangeHandler = (event) => {
-    setSearchField(event.target.value);
+    setPage(1);
   };
 
   useEffect(() => {
@@ -140,53 +131,13 @@ const AdminPosts = () => {
           <div
             className={`${classes["last-menu"]} ${classes[authCtx.themeClass]}`}
           >
-            <div
-              className={`${classes["search-container"]} ${
-                classes[authCtx.themeClass]
-              }`}
-            >
-              <select
-                value={searchField}
-                onChange={fieldChangeHandler}
-                className={`${classes["search-field-select"]} ${
-                  classes[authCtx.themeClass]
-                }`}
-              >
-                {selectOptions.map((option, index) => (
-                  <option
-                    key={index}
-                    value={option.value}
-                    className={`${classes["search-field-option"]} ${
-                      classes[authCtx.themeClass]
-                    }`}
-                  >
-                    {option.display}
-                  </option>
-                ))}
-              </select>
-
-              <div
-                className={`${classes["search-term-container"]} ${
-                  classes[authCtx.themeClass]
-                }`}
-              >
-                <input
-                  type="text"
-                  className={`${classes["search-term-input"]} ${
-                    classes[authCtx.themeClass]
-                  }`}
-                  placeholder="게시글 검색"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <IoIosSearch
-                  onClick={searchHandler}
-                  className={`${classes["search-term-icon"]} ${
-                    classes[authCtx.themeClass]
-                  }`}
-                />
-              </div>
-            </div>
+            <AdminSearch
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              searchField={searchField}
+              setSearchField={setSearchField}
+              onSearch={searchHandler}
+            />
           </div>
 
           <Pagination
