@@ -52,32 +52,6 @@ const MainHeader = () => {
     setOnSignupModal(false);
   };
 
-  // const logoutHandler = async () => {
-  //   const response = await fetch("http://localhost:3000/logout", {
-  //     method: "POST",
-  //     body: JSON.stringify(),
-  //     headers: { "Content-Type": "application/json" },
-  //     credentials: "include",
-  //   });
-
-  //   if (response.ok) {
-  //     authCtx.logout();
-  //     console.log(authCtx.isLoggedIn);
-  //   }
-  // };
-
-  // const accessTokenTestHandler = async () => {
-  //   await fetch("http://localhost:3000/accessToken", {
-  //     credentials: "include",
-  //   });
-  // };
-
-  // const refreshTokenTestHandler = async () => {
-  //   await fetch("http://localhost:3000/refreshToken", {
-  //     credentials: "include",
-  //   });
-  // };
-
   const navLinkClass = ({ isActive }) => {
     return isActive
       ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
@@ -94,53 +68,37 @@ const MainHeader = () => {
         <h1 className={`${classes.logo} ${classes[authCtx.themeClass]}`}>
           커뮤니티 게시판
         </h1>
-        {authCtx.isLoggedIn ? (
-          <>
-            <nav className={classes.navbutton}>
-              <NavLink to="/" className={navLinkClass} end>
-                <div>
-                  홈<span></span>
-                </div>
-              </NavLink>
+        <nav className={classes.navbutton}>
+          <NavLink to="/" className={navLinkClass} end>
+            <div>
+              홈<span></span>
+            </div>
+          </NavLink>
 
-              <NavLink to="/posts" className={navLinkClass} end>
-                <div>
-                  게시판<span></span>
-                </div>
-              </NavLink>
+          <NavLink to="/posts" className={navLinkClass} end>
+            <div>
+              게시판<span></span>
+            </div>
+          </NavLink>
 
+          {authCtx.isLoggedIn ? (
+            <>
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
-            </nav>
-            {/* <Chats userId={user?._id} userEmail={user?.email} /> */}
-            <Chats
-              userId={authCtx.userInfo?._id}
-              userEmail={authCtx.userInfo?.email}
-            />
-          </>
-        ) : (
-          <>
-            <nav className={classes.navbutton}>
-              <NavLink to="/" className={navLinkClass} end>
-                <div>
-                  홈<span></span>
-                </div>
-              </NavLink>
-
-              <NavLink to="/posts" className={navLinkClass} end>
-                <div>
-                  게시판<span></span>
-                </div>
-              </NavLink>
-
-              <DropDownMenu
-                onSignupToggle={signupToggleHandler}
-                onLoginToggle={loginToggleHandler}
-                dropDownButtonClassName={dropDownButtonClassName}
+              <Chats
+                userId={authCtx.userInfo?._id}
+                userEmail={authCtx.userInfo?.email}
               />
-            </nav>
-          </>
-        )}
+            </>
+          ) : (
+            <DropDownMenu
+              onSignupToggle={signupToggleHandler}
+              onLoginToggle={loginToggleHandler}
+              dropDownButtonClassName={dropDownButtonClassName}
+            />
+          )}
+        </nav>
       </header>
+
       {!authCtx.isLoggedIn && (
         <>
           {openSignupModal && (
