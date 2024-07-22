@@ -14,8 +14,6 @@ const PostDetails = () => {
 
   const [dropdownToggle, setDropdownToggle] = useState(false);
 
-  console.log(post);
-
   if (!post) {
     return <LoadingIndicator />;
   }
@@ -59,7 +57,6 @@ const PostDetails = () => {
 
         <div className={classes["post-wrap"]}>
           <div className={`${classes.title} ${classes[authCtx.themeClass]}`}>
-            {/* <p>제목</p> */}
             <span>제목</span>
             <p>{post.title}</p>
           </div>
@@ -80,12 +77,8 @@ const PostDetails = () => {
               <div
                 className={`${classes.dropdown} ${classes[authCtx.themeClass]}`}
               >
-                <Link to="edit">
-                  {/* <div>수정하기</div> */}
-                  수정하기
-                </Link>
+                <Link to="edit">수정하기</Link>
                 <button type="button" onClick={postDeleteHandler}>
-                  {/* <div>삭제하기</div> */}
                   삭제하기
                 </button>
               </div>

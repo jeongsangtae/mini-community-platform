@@ -59,13 +59,6 @@ const Profile = () => {
             {authCtx.userInfo?.name}
           </h1>
 
-          {/* <div className={classes["posts-item"]}>
-            <p>번호</p>
-            <p>제목</p>
-            <p>글쓴이</p>
-            <p>날짜</p>
-          </div> */}
-
           <div
             className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
           >

@@ -40,10 +40,6 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
       console.log(errorData);
       return null;
     } else {
-      // const resData = await response.json();
-      // console.log(resData);
-      // console.log(resData.accessToken);
-      // console.log(resData.refreshToken);
       console.log("로그인 성공");
       await authCtx.login();
       console.log(authCtx.isLoggedIn);
@@ -69,7 +65,6 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
             value={loginData.email}
             onChange={inputChangeHandler}
             placeholder="이메일"
-            // autocomplete="off"
           />
           <FaUser className={classes.icon} />
         </div>
@@ -97,7 +92,6 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
           </p>
         )}
 
-        {/* <div className={classes.actions}> */}
         <button
           type="submit"
           className={`${classes["login-button"]} ${
@@ -106,8 +100,6 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
         >
           로그인
         </button>
-        {/* <button onClick={onLoginToggle}>취소</button> */}
-        {/* </div> */}
       </form>
 
       <div className={`${classes.link} ${classes[authCtx.themeClass]}`}>

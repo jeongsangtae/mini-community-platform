@@ -27,7 +27,6 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
           className={`${classes.form} ${classes[authCtx.themeClass]}`}
         >
           <div>
-            {/* <label htmlFor="title">제목</label> */}
             <input
               required
               type="text"
@@ -38,7 +37,6 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
             />
           </div>
           <div>
-            {/* <label htmlFor="name">작성자</label> */}
             {postData ? <p>{postData.name}</p> : <p>{userData?.name}</p>}
           </div>
           <div>
@@ -68,12 +66,6 @@ export const action = async ({ request, params }) => {
   console.log(method);
   const formData = await request.formData();
   const postData = Object.fromEntries(formData);
-
-  // const postData = {
-  //   title: formData.get("title"),
-  //   name: formData.get("name"),
-  //   content: formData.get("content"),
-  // };
 
   const postId = params.postId;
 

@@ -11,26 +11,6 @@ const Authentication = ({ children }) => {
 
   return (
     <>
-      {/* {authCtx.isLoggedIn ? (
-        postData.email === authCtx.userInfo?.email ? (
-          children
-        ) : (
-          <NoAccess
-            message={{
-              title: "접근 권한이 없습니다",
-              description: "해당 작업을 수행할 권한이 없습니다.",
-            }}
-          />
-        )
-      ) : (
-        <NoAccess
-          message={{
-            title: "로그인이 필요합니다",
-            description: "로그인 하지 않은 사용자는 접근할 수 없습니다.",
-          }}
-        />
-      )} */}
-
       {authCtx.isLoggedIn ? (
         postData ? (
           postData.email === authCtx.userInfo?.email ? (
