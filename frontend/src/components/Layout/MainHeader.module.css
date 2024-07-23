@@ -38,7 +38,6 @@
   flex-direction: row;
   margin-right: 15rem;
   align-items: center;
-  /* margin-top: 0.5rem; */
 }
 
 .button {
@@ -57,15 +56,6 @@
   line-height: 1.5;
   min-width: 4.5rem;
   transition: color 0.3s ease;
-  /* display: inline-flex; */
-  /* background-color: rgb(128, 118, 118); */
-  /* font-weight: bold; */
-  /* border-radius: 4px; */
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
-  /* padding: 0.75rem; */
-  /* margin-right: 1rem; */
-  /* max-width: 200px; */
-  /* margin-top: 0.3rem; */
 }
 
 .button:hover {
@@ -79,8 +69,6 @@
 
 .button.dark-mode:hover {
   color: white;
-  /* background-color: rgb(50, 50, 50); */
-  /* border-radius: 15px; */
 }
 
 .button:hover span {
@@ -111,16 +99,6 @@
   background-color: red;
   border-radius: 50%;
 }
-
-/* .active span::after {
-  content: "";
-  position: absolute;
-  top: 65%;
-  width: 5px;
-  height: 5px;
-  background-color: red;
-  border-radius: 50%;
-} */
 
 .dropdown-button {
   display: flex;

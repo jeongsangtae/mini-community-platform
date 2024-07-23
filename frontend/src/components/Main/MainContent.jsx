@@ -1,7 +1,6 @@
 import { useContext } from "react";
 
 import AuthContext from "../../store/auth-context";
-import Chats from "../Chats/Chats";
 import classes from "./MainContent.module.css";
 
 const MainContent = () => {
@@ -17,7 +16,6 @@ const MainContent = () => {
       <p className={`${classes.subtitle} ${classes[authCtx.themeClass]}`}>
         미니 커뮤니티 플랫폼
       </p>
-      {/* <Chat /> */}
     </div>
   );
 };

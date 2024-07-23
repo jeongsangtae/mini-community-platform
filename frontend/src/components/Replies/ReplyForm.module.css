@@ -1,14 +1,4 @@
 .reply-form {
-  /* display: inline;
-  margin-bottom: 1rem;
-  margin-left: 0.5rem;
-  border: none;
-  background-color: white;
-  font-size: 0.8rem;
-  color: rgb(196, 181, 181);
-  color: rgb(139, 128, 128);
-  cursor: pointer; */
-
   display: flex;
   width: 95%;
   margin: 0.5rem auto 0 auto;

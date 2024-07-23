@@ -1,14 +1,4 @@
 .comment-form {
-  /* display: inline;
-  margin-bottom: 1rem;
-  margin-left: 0.5rem;
-  border: none;
-  background-color: white;
-  font-size: 0.8rem;
-  color: rgb(196, 181, 181);
-  color: rgb(139, 128, 128);
-  cursor: pointer; */
-
   display: flex;
   width: 95%;
   margin: 0.5rem auto 0 auto;
@@ -57,34 +47,20 @@
   color: rgb(94, 88, 88);
 }
 
-/* .comment-button {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0.5rem;
-} */
-
 .comment-form button {
-  /* display: flex;
-  justify-content: flex-end;
-  margin-top: 0.5rem; */
   margin-top: 0.5rem;
   align-self: flex-end;
   border-radius: 2px;
   padding: 0.25rem 0.5rem;
   margin-right: 0.25rem;
-  /* color: rgb(170, 170, 170); */
   color: black;
   background-color: transparent;
-  /* border: 1px solid rgb(210, 210, 210); */
-  /* border: 1px solid rgb(190, 190, 190); */
   border: 1px solid rgb(68, 68, 68);
-
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .comment-form button:hover {
-  /* color: rgb(121, 121, 121); */
   background-color: rgb(237, 237, 237);
 }
 

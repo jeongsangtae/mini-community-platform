@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
-// import CommentForm from "./CommentForm";
+
 import AuthContext from "../../store/auth-context";
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
@@ -12,7 +12,6 @@ const Comments = () => {
 
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
-  // const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,17 +29,12 @@ const Comments = () => {
 
       const resData = await response.json();
       setComments(resData.comments);
-      // console.log(resData.userData);
-      // setUserData(resData.userData);
     };
     fetchData();
   }, []);
 
   const addComment = (newComment) => {
-    console.log(newComment);
-    console.log(comments);
     setComments((prevComments) => [...prevComments, newComment]);
-    console.log(comments);
   };
 
   const editComment = (editComment) => {
@@ -56,15 +50,12 @@ const Comments = () => {
         return comment;
       });
     });
-    console.log(comments);
   };
 
   const deleteComment = (commentId) => {
     setComments((prevComments) =>
       prevComments.filter((comment) => comment._id !== commentId)
     );
-    console.log(commentId);
-    console.log(comments);
   };
 
   const totalRepliesHandler = (repliesValue) => {

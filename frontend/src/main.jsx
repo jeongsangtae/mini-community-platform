@@ -119,14 +119,6 @@ const router = createBrowserRouter([
         loader: adminPostDetailsLoader,
         action: adminPostDeleteAction,
       },
-      // {
-      //   path: "comments",
-      //   element: (
-      //     <AdminAuthentication>
-      //       <AdminCommentsLayout />
-      //     </AdminAuthentication>
-      //   ),
-      // },
       {
         path: "users",
         element: (

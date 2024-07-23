@@ -37,8 +37,6 @@ const CreateComment = ({ method, onAddCommentData }) => {
       }
     );
 
-    console.log(method);
-
     if (!response.ok) {
       throw json({ message: "Could not save comment." }, { status: 500 });
     } else {
@@ -46,8 +44,6 @@ const CreateComment = ({ method, onAddCommentData }) => {
       onAddCommentData(resData.newComment);
       setComment("");
     }
-
-    console.log(comment);
 
     return redirect("/posts/" + postId);
   };

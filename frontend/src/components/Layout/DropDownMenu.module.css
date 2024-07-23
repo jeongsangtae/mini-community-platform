@@ -76,7 +76,6 @@
 }
 
 .toggle-button {
-  /* background: #a5fbf7; */
   flex: 1 1 calc(100% / 3);
   min-height: 5vh;
   display: flex;

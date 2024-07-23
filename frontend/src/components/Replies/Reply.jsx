@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import ReplyForm from "./ReplyForm";
@@ -11,7 +11,6 @@ const Reply = ({
   email,
   content,
   date,
-  commentId,
   onDeleteReplyData,
   onEditReplyData,
 }) => {
@@ -19,7 +18,6 @@ const Reply = ({
   const authCtx = useContext(AuthContext);
 
   const [replyEditToggle, setReplyEditToggle] = useState(false);
-  // const [loggedIn, setLoggedIn] = useState(false);
 
   const replyDeleteHandler = async () => {
     const postId = post.postId;
@@ -38,19 +36,13 @@ const Reply = ({
       console.log(errorData.message);
       throw json({ message: "Could not delete reply." }, { status: 500 });
     } else {
-      console.log(replyId);
       onDeleteReplyData(replyId);
-      console.log("Delete reply");
     }
   };
 
   const replyEditToggleHandler = () => {
     setReplyEditToggle(!replyEditToggle);
   };
-
-  // useEffect(() => {
-  //   setLoggedIn(authCtx.isLoggedIn);
-  // }, [authCtx]);
 
   return (
     <>

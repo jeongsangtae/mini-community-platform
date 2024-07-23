@@ -44,17 +44,6 @@ const ReplyForm = ({
       requestBody.replyId = replyData.replyId;
     }
 
-    // let requestBody = {
-    //   content: reply,
-    //   ...(method === "POST" && { commentId: commentId }),
-    //   ...(method === "PATCH" && { replyId: replyData.replyId }),
-    // };
-
-    // let requestBody = {
-    //   content: reply,
-    //   ...(method === "POST" ? { commentId: commentId } : { replyId: replyData.replyId }),
-    // };
-
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/replies",
       {
@@ -72,7 +61,6 @@ const ReplyForm = ({
     } else if (response.ok && method === "POST") {
       const resData = await response.json();
       onAddReplyData(resData.newReply);
-      console.log(resData.newReply);
     } else if (response.ok && method === "PATCH") {
       const resData = await response.json();
       onEditReplyData(resData.editReply);

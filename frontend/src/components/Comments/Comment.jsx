@@ -1,10 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import EditComment from "./EditComment";
 import Replies from "../Replies/Replies";
 import AuthContext from "../../store/auth-context";
 
-// import CommentForm from "./CommentForm";
 import classes from "./Comment.module.css";
 
 const Comment = ({
@@ -23,13 +22,6 @@ const Comment = ({
   const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
 
-  // console.log(repliesCount);
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   setLoggedIn(authCtx.isLoggedIn);
-  // }, [authCtx]);
-
   const commentDeleteHandler = async () => {
     const postId = post.postId;
     const response = await fetch(
@@ -42,16 +34,12 @@ const Comment = ({
       }
     );
 
-    console.log(postId);
-
     if (!response.ok) {
       const errorData = await response.json();
       console.log(errorData.message);
       throw json({ message: "Could not delete comment." }, { status: 500 });
     } else {
-      console.log(commentId);
       onDeleteCommentData(commentId);
-      console.log("Delete comment");
     }
   };
 
@@ -66,9 +54,6 @@ const Comment = ({
   const repliesLengthHandler = (length) => {
     onRepliesValue(length);
   };
-
-  // console.log(email);
-  // console.log(authCtx.userInfo.email);
 
   return (
     <>
@@ -90,6 +75,7 @@ const Comment = ({
             </div>
           )}
         </div>
+
         <p className={classes.content}>{content}</p>
         <p className={classes.date}>{date}</p>
 

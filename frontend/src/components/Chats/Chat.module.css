@@ -1,7 +1,6 @@
 .chat-container {
   display: flex;
   margin: 0.75rem 0;
-  /* align-items: flex-end; */
 }
 
 .user-message {
@@ -13,7 +12,6 @@
 }
 
 .chat-bubble {
-  /* background-color: rgb(250, 255, 0); */
   background-color: rgb(116, 190, 219);
   border-radius: 1rem;
   border-top-right-radius: 0px;

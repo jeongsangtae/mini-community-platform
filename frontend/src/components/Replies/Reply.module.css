@@ -22,22 +22,16 @@
 .reply-user-edit {
   display: flex;
   margin-top: 1rem;
-  /* margin-right: 2rem; */
   align-items: center;
   justify-content: space-between;
 }
 
 .reply-user-edit p {
-  /* margin: 0;
-  display: block;
-  width: 100%;
-  margin-bottom: 0.5rem; */
   font-weight: bold;
 }
 
 .reply-user-edit button {
   border: none;
-  /* background: rgb(87, 80, 80); */
   background: none;
   color: rgb(105, 105, 105);
   padding: 0 0.3rem;
@@ -45,7 +39,6 @@
   cursor: pointer;
   margin-right: 0.3rem;
   border-radius: 2px;
-  /* line-height: 1.5; */
 }
 
 .reply-user-edit button:nth-of-type(2) {
@@ -56,8 +49,6 @@
 .reply-user-edit button:hover {
   cursor: pointer;
   color: black;
-  /* color: rgb(97, 84, 84); */
-  /* background-color: rgb(40, 40, 40); */
   border-radius: 2px;
 }
 

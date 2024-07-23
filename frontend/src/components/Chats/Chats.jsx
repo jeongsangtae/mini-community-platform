@@ -20,13 +20,6 @@ const Chats = ({ userId, userEmail }) => {
   const messagesEndRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
-  // console.log(messagesEndRef);
-
-  // console.log(userId, userEmail);
-  console.log(messages);
-  // console.log(emptyInput);
-  console.log(authCtx.userInfo?._id);
-
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
     if (!userId) {
@@ -123,7 +116,6 @@ const Chats = ({ userId, userEmail }) => {
 
     const response = await fetch("http://localhost:3000/chat/" + userId, {
       method: "POST",
-      // body: JSON.stringify({ message, userEmail }),
       body: JSON.stringify(newMessage),
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -149,11 +141,6 @@ const Chats = ({ userId, userEmail }) => {
 
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-    // console.log(`scrollTop: ${scrollTop}`);
-    // console.log(`clientHeight: ${clientHeight}`);
-    // console.log(`scrollHeight: ${scrollHeight}`);
-
-    // console.log(scrollTop + clientHeight >= scrollHeight - 1);
 
     // 오차를 줄이기 위해 -1을 사용
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;

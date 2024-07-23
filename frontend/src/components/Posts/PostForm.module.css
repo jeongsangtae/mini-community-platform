@@ -2,8 +2,6 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  /* overflow: auto; */
-  /* z-index: -1; */
 }
 
 .background.dark-mode {
@@ -45,12 +43,6 @@
   color: white;
   border: 1px solid rgb(68, 68, 68);
 }
-
-/* .form label {
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
-  border: 0;
-} */
 
 .form.dark-mode p {
   color: white;
@@ -112,7 +104,6 @@
 
 .actions.dark-mode button {
   color: white;
-  /* background: rgb(87, 80, 80); */
 }
 
 .actions.dark-mode button:hover {

@@ -1,54 +1,3 @@
-/* .chat-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  right: 1.5%;
-  bottom: 2%;
-  width: 48px;
-  height: 48px;
-  background-color: black;
-  border-radius: 50%;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 1000;
-  transition: transform 0.2s ease-in-out;
-}
-
-.chat-icon svg {
-  width: 24px;
-  height: 24px;
-  color: white;
-  transition: all 0.3s ease;
-}
-
-.chat-container {
-  position: fixed;
-  right: 1.5%;
-  bottom: 8%;
-  width: 300px;
-  height: 30rem;
-  background-color: rgb(105, 105, 105);
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  overflow-y: auto;
-}
-
-.chat-close-icon {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.chat-close-icon svg {
-  cursor: pointer;
-}
-
-.chat-close-icon svg:hover {
-  color: rgb(35, 35, 35);
-} */
-
 .chats {
   position: fixed;
   right: 1.5%;
@@ -65,7 +14,6 @@
   right: 0;
   width: 300px;
   height: 30rem;
-  /* background-color: rgb(189, 189, 189); */
   background-color: white;
   border-radius: 0.5rem;
   border: 1px solid rgb(133, 133, 133);
@@ -119,46 +67,12 @@
   }
 }
 
-/* .chat-container ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.chat-container input {
-  width: calc(100% - 50px);
-  padding: 10px;
-  border: none;
-  border-top: 1px solid #ccc;
-} */
-
-/* .input-container {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 25px;
-  box-sizing: border-box;
-  align-items: center;
-} */
-
 .user-messages-container {
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
-  /* margin: 0; */
   height: 90%;
   overflow-y: auto;
-  /* height: 500px; */
-  /* align-items: flex-end; */
-  /* justify-content: flex-end; */
-  /* transform: translateX(50%);
-  animation: fadeInright 1s ease-in-out forwards;
-  animation-delay: 2s; */
 }
 
 /* 스크롤바 설정 */
@@ -195,8 +109,6 @@
   left: 50%;
   transform: translateX(-50%);
   color: rgb(255, 255, 255);
-  /* background-color: rgba(86, 182, 182, 0.8);*/
-  /* background-color: rgb(226, 169, 169); */
   background-color: rgba(119, 119, 119, 0.8);
   border: none;
   border-radius: 0.5rem;
@@ -250,18 +162,6 @@
   color: rgb(94, 88, 88);
 }
 
-/* .input-container .input-error {
-  border-top: 1px solid red;
-}
-
-.input-container .input-error::placeholder {
-  color: red;
-}
-
-.input-container .input-error:focus::placeholder {
-  color: rgb(253, 71, 71);
-} */
-
 .input-container button {
   padding: 0.45rem;
   border: none;
@@ -277,8 +177,6 @@
 
 .input-container.dark-mode button {
   color: white;
-  /* background-color: rgb(105, 105, 105); */
-  /* background-color: rgb(30, 30, 30); */
 }
 
 .input-container.dark-mode button:hover {
