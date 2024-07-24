@@ -1,12 +1,10 @@
 .item-container {
   list-style: none;
-  /* margin: 0.5rem; */
   width: 100%;
 }
 
 .item-select-button {
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
@@ -24,12 +22,7 @@
 
 .item-select-button.dark-mode:hover {
   background-color: rgb(35, 35, 35);
-  /* background-color: rgb(25, 25, 25); */
 }
-
-/* .item-select-button div {
-  margin: 0.15rem 0;
-} */
 
 .item-left {
   display: flex;

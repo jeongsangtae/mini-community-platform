@@ -14,8 +14,6 @@ const AdminPostDetails = () => {
 
   const [dropdownToggle, setDropdownToggle] = useState(false);
 
-  console.log(post);
-
   if (!post) {
     return <LoadingIndicator />;
   }

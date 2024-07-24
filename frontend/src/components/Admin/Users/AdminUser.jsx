@@ -19,8 +19,6 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
       console.log(errorData.message);
       throw json({ message: "사용자를 삭제할 수 없습니다." }, { status: 500 });
     }
-    // const resData = await response.json();
-    // onDeleteUserData(resData.email);
     onDeleteUserData(email);
   };
 

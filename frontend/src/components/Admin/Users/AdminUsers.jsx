@@ -13,13 +13,6 @@ const AdminUsers = () => {
 
   const [users, setUsers] = useState(usersData);
 
-  console.log(usersData);
-  console.log(users);
-
-  // const filteredAdmin = users.filter(
-  //   (user) => user.email !== "admin@admin.com"
-  // );
-
   // 사용자 삭제된 후에 페이지 이동하고 다시 확인 했을 때, 사용자가 그대로 남아있는 것처럼 보이는 것을 방지하기 위한 코드
   useEffect(() => {
     const fetchUsers = async () => {
@@ -40,17 +33,6 @@ const AdminUsers = () => {
 
   return (
     <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
-      {/* {filteredAdmin.length > 0 ? (
-        <ul>
-          {filteredAdmin.map((user) => {
-            return (
-              <AdminUser key={user._id} email={user.email} name={user.name} />
-            );
-          })}
-        </ul>
-      ) : (
-        <></>
-      )} */}
       {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
@@ -91,11 +73,6 @@ const AdminUsers = () => {
               >
                 사용자가 존재하지 않습니다.
               </h2>
-              {/* <p
-                className={`${classes.underline} ${
-                  classes[authCtx.themeClass]
-                }`}
-              ></p> */}
             </>
           )}
           <p

@@ -36,8 +36,6 @@ const AdminComments = () => {
     setComments((prevComments) =>
       prevComments.filter((comment) => comment._id !== commentId)
     );
-    console.log(commentId);
-    console.log(comments);
   };
 
   const totalRepliesHandler = (repliesValue) => {

@@ -26,10 +26,6 @@
   color: white;
 }
 
-/* .info-wrap p {
-  margin-right: 1rem;
-} */
-
 .info-wrap span::before {
   content: "●";
   font-size: 0.5rem;

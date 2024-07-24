@@ -100,16 +100,6 @@
   border-radius: 50%;
 }
 
-/* .active span::after {
-  content: "";
-  position: absolute;
-  top: 65%;
-  width: 5px;
-  height: 5px;
-  background-color: red;
-  border-radius: 50%;
-} */
-
 .dropdown-button {
   display: flex;
   align-items: center;

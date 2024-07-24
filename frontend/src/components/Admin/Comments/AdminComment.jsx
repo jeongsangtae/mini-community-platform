@@ -35,9 +35,7 @@ const AdminComment = ({
       console.log(errorData.message);
       throw json({ message: "댓글을 삭제할 수 없습니다." }, { status: 500 });
     } else {
-      console.log(commentId);
       onDeleteCommentData(commentId);
-      console.log("Delete comment");
     }
   };
 

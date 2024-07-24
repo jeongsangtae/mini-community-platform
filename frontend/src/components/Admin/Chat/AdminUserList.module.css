@@ -123,21 +123,6 @@
   overflow-y: auto;
 }
 
-/* .user-item .underline {
-  height: 1px;
-  width: 100%;
-  margin: 0;
-  background-color: rgb(224, 224, 224);
-}
-
-.user-item .underline.dark-mode {
-  background-color: rgb(68, 68, 68);
-}
-
-.user-item .underline:last-child {
-  display: none;
-} */
-
 /* 스크롤바 설정 */
 .user-item::-webkit-scrollbar {
   width: 0.5rem;

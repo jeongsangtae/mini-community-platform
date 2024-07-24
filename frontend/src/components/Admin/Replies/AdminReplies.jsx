@@ -11,8 +11,6 @@ const AdminReplies = ({ commentId, repliesLength }) => {
 
   const [replies, setReplies] = useState([]);
 
-  console.log(commentId);
-
   useEffect(() => {
     const fetchData = async () => {
       const postId = post.postId;
@@ -40,8 +38,6 @@ const AdminReplies = ({ commentId, repliesLength }) => {
     setReplies((prevReplies) =>
       prevReplies.filter((reply) => reply._id !== replyId)
     );
-    console.log(replyId);
-    console.log(replies);
   };
 
   return (

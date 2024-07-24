@@ -25,9 +25,7 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
       console.log(errorData.message);
       throw json({ message: "Could not delete reply." }, { status: 500 });
     } else {
-      console.log(replyId);
       onDeleteReplyData(replyId);
-      console.log("Delete reply");
     }
   };
 

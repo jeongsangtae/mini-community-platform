@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { io } from "socket.io-client";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { IoIosArrowDown, IoMdArrowBack, IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
 import AuthContext from "../../../store/auth-context";
-import classes from "./AdminChats.module.css";
 import AdminChat from "./AdminChat";
+import classes from "./AdminChats.module.css";
 
 const AdminChats = ({
   adminId,
   adminEmail,
-  // usersData,
   userId: chatRoomId,
   userName,
   chatRoomToggle,
@@ -27,10 +26,6 @@ const AdminChats = ({
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
   const authCtx = useContext(AuthContext);
-
-  // console.log(adminId);
-  console.log(chatRoomId);
-  console.log(userName);
 
   useEffect(() => {
     if (!adminId) {
@@ -195,10 +190,6 @@ const AdminChats = ({
     const value = event.target.value;
     setMessage(value);
     setEmptyInput(value.trim() === "");
-  };
-
-  const chatToggleHandler = () => {
-    setChatToggle(!chatToggle);
   };
 
   return (

@@ -19,9 +19,6 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const userListContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
-  console.log(usersData);
-  console.log(updatedUsersData);
-
   useEffect(() => {
     const fetchLastMessages = async () => {
       const combineUserData = usersData.map(async (user) => {
@@ -41,15 +38,9 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
 
       const usersWithMessages = await Promise.all(combineUserData);
 
-      console.log(usersWithMessages);
-
       setUpdatedUsersData(usersWithMessages);
     };
     fetchLastMessages();
-
-    // const interval = setInterval(fetchLastMessages, 5000);
-
-    // return () => clearInterval(interval);
   }, [usersData]);
 
   const chatToggleHandler = () => {
@@ -89,6 +80,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+
         <ul className={classes["user-item"]} ref={userListContainerRef}>
           {filteredUsers.map((userData) => (
             <AdminUserItem
@@ -111,7 +103,6 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         adminEmail={adminEmail}
         chatRoomToggle={userChatRoomToggle}
         chatRoomClose={userChatRoomToggleHandler}
-        // usersData={usersData}
       />
 
       <div className={classes["chat-icon"]}>
