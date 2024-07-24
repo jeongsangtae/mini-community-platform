@@ -1,9 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const dotenv = require("dotenv");
-
-// dotenv.config();
 
 const db = require("../data/database");
 const {
@@ -13,8 +10,6 @@ const {
 } = require("../middlewares/jwt-auth");
 
 const router = express.Router();
-
-// router.use("/login", jwtAuth);
 
 // 가입한 이메일, 패스워드를 mongodb에 저장
 // 패스워드는 bcrypt를 통해서 hash되며, 안전하게 저장
@@ -74,7 +69,6 @@ router.post("/signup", async (req, res) => {
   console.log(result);
 
   res.status(200).json({ message: "Success" });
-  // res.status(500).send("Internal Server Error");
 });
 
 router.post("/login", async (req, res) => {
@@ -86,8 +80,6 @@ router.post("/login", async (req, res) => {
     .getDb()
     .collection("users")
     .findOne({ email: loginEmail });
-
-  console.log(existingLoginUser);
 
   // 이메일이 존재하지 않거나 비밀번호가 일치하지 않는 경우
   if (!existingLoginUser) {
@@ -111,8 +103,6 @@ router.post("/login", async (req, res) => {
       return;
     }
   }
-
-  // console.log(existingLoginUser);
 
   if (existingLoginUser) {
     try {
@@ -161,14 +151,11 @@ router.post("/login", async (req, res) => {
         accessToken,
         refreshToken,
       });
-      console.log(userRole);
     } catch (error) {
       res.status(500).json(error);
     }
   }
 });
-
-// router.get("/accessToken", accessToken);
 
 router.get("/accessToken", async (req, res) => {
   const responseData = await accessToken(req, res);
@@ -197,8 +184,6 @@ router.get("/refreshTokenExp", async (req, res) => {
     return res.status(401).json({ message: "jwt error" });
   }
 
-  console.log(responseData);
-
   res.status(200).json(responseData);
 });
 
@@ -214,7 +199,6 @@ router.get("/login/success", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
   try {
-    // res.cookie("accessToken", "");
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
     res.status(200).json("로그아웃 성공");
@@ -244,8 +228,6 @@ router.get("/profile", async (req, res) => {
     .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
     .toArray();
 
-  console.log(posts);
-
   const countPosts = await db.getDb().collection("posts").countDocuments({});
   const totalPages = Math.ceil(countPosts / pageSize);
 
@@ -265,13 +247,5 @@ router.get("/profile", async (req, res) => {
     responseData,
   });
 });
-
-// router.post("/logout", (req, res) => {
-//   req.session.user = null;
-//   req.session.isAuthenticated = false;
-//   res
-//     .status(200)
-//     .json({ message: "Success", isAuthenticated: req.session.isAuthenticated });
-// });
 
 module.exports = router;

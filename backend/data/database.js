@@ -13,7 +13,6 @@ const connectToDatabase = async () => {
 const getDb = () => {
   if (!database) {
     throw { message: "데이터베이스 연결이 설정되지 않았습니다" };
-    // throw new Error("데이터베이스 연결이 설정되지 않았습니다");
   }
   return database;
 };

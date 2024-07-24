@@ -1,15 +1,9 @@
 const express = require("express");
 const mongodb = require("mongodb");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const db = require("../data/database");
 
-const {
-  accessToken,
-  refreshToken,
-  refreshTokenExp,
-} = require("../middlewares/jwt-auth");
+const { accessToken } = require("../middlewares/jwt-auth");
 
 const ObjectId = mongodb.ObjectId;
 
@@ -26,34 +20,11 @@ router.get("/admin/chat/:userId", async (req, res) => {
 
   userId = new ObjectId(userId);
 
-  // const lastMessage = await db
-  //   .getDb()
-  //   .collection("chatMessages")
-  //   .find({ user_id: userId })
-  //   .sort({ date: -1 })
-  //   .limit(1)
-  //   .toArray();
-
-  console.log("사용자 id");
-  console.log(userId);
-
-  // const lastMessage = await db
-  //   .getDb()
-  //   .collection("chatMessages")
-  //   .find({ user_id: userId })
-  //   .sort({ date: -1 })
-  //   .limit(1)
-  //   .toArray();
-
   const lastMessage = await db
     .getDb()
     .collection("chatMessages")
     .findOne({ user_id: userId }, { sort: { date: -1 } });
 
-  console.log("마지막 메시지");
-  console.log(lastMessage);
-
-  // res.status(200).json({ message: lastMessage[0] });
   res.status(200).json({ message: lastMessage });
 });
 
@@ -90,8 +61,6 @@ router.post("/admin/chat/:adminId", async (req, res) => {
   const { userId, userName, adminEmail, content, userType } = req.body;
 
   let adminId = req.params.adminId;
-  // const adminEmail = req.body.adminEmail;
-  // const messageInput = req.body.content;
   let date = new Date();
 
   adminId = new ObjectId(adminId);
@@ -112,15 +81,11 @@ router.post("/admin/chat/:adminId", async (req, res) => {
       .padStart(2, "0")}`,
   };
 
-  // await db.getDb().collection("adminChat").insertOne(newMessage);
   await db.getDb().collection("chatMessages").insertOne(newMessage);
 
   const io = req.app.get("io");
   const roomId = `room-${userId}`;
   io.to(roomId).emit("newMessage", newMessage);
-  // io.emit("newMessage", newMessage);
-
-  console.log("관리자 input 메시지: ", newMessage.content);
 
   res.status(200).json({ newMessage });
 });

@@ -1,14 +1,9 @@
 const express = require("express");
 const mongodb = require("mongodb");
-// const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const db = require("../data/database");
-const {
-  accessToken,
-  refreshToken,
-  refreshTokenExp,
-} = require("../middlewares/jwt-auth");
+const { accessToken } = require("../middlewares/jwt-auth");
 
 const ObjectId = mongodb.ObjectId;
 
@@ -88,21 +83,18 @@ router.get("/admin/posts", async (req, res) => {
       totalPages,
       firstPageGroup,
       lastPageGroup,
-      userData: othersData,
+      // userData: othersData,
     });
   } catch (error) {
-    console.error(error);
     // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
-    res
-      .status(200)
-      .json({
-        posts,
-        countPosts,
-        page,
-        totalPages,
-        firstPageGroup,
-        lastPageGroup,
-      });
+    res.status(200).json({
+      posts,
+      countPosts,
+      page,
+      totalPages,
+      firstPageGroup,
+      lastPageGroup,
+    });
   }
 });
 
@@ -116,8 +108,6 @@ router.get("/admin/posts/:postId", async (req, res) => {
 
 router.delete("/admin/posts/:postId", async (req, res) => {
   const othersData = await accessToken(req, res);
-
-  console.log(othersData);
 
   if (!othersData) {
     return res.status(401).json({ message: "jwt error" });
@@ -178,7 +168,6 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
 
     res.status(200).json({ comments, userData: othersData });
   } catch (error) {
-    console.error(error);
     // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
     res.status(200).json({ comments });
   }
@@ -254,15 +243,12 @@ router.delete("/admin/posts/:postId/reply", async (req, res) => {
 });
 
 router.get("/admin/users", async (req, res) => {
-  // const users = await db.getDb().collection("users").find().toArray();
   const users = await db
     .getDb()
     .collection("users")
     .find({ email: { $ne: "admin@admin.com" } })
     .sort({ _id: -1 })
     .toArray();
-
-  console.log(users);
 
   res.status(200).json({ users });
 });
@@ -310,14 +296,15 @@ router.delete("/admin/user", async (req, res) => {
     if (findPosts.length > 0) {
       // 삭제하려는 게시글 _id 추출
       const deletedPostIds = findPosts.map((post) => post._id);
-      const deletedPostPostIds = findPosts.map((post) => post.postId);
 
       // 각 게시글의 댓글과 답글 삭제
+      // 두 번의 DB 호출로, 배열의 길이에 비례해서 DB 호출 횟수가 증가함
       // for (const postId of deletedPostIds) {
       //   await db.getDb().collection("replies").deleteMany({ post_id: postId });
       //   await db.getDb().collection("comments").deleteMany({ post_id: postId });
       // }
 
+      // $in 연산자를 통해서 한 번의 호출로 문서를 한 번에 삭제
       await db
         .getDb()
         .collection("replies")
@@ -344,13 +331,6 @@ router.delete("/admin/user", async (req, res) => {
           .collection("posts")
           .updateOne({ _id: currentPost._id }, { $set: { postId: i + 1 } });
       }
-
-      // for (const postId of deletedPostPostIds) {
-      //   await db
-      //     .getDb()
-      //     .collection("posts")
-      //     .updateMany({ postId: { $gt: postId } }, { $inc: { postId: -1 } });
-      // }
     }
 
     // 사용자와 관리자가 나눈 모든 채팅 삭제

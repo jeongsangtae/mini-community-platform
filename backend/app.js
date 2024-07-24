@@ -19,12 +19,6 @@ const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
-// app.use(express.static(path.join(__dirname, "/frontend/public")));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "frontend", "public", "index.html"));
-// });
-
 // 캐시 제어 헤더
 // app.use(function (req, res, next) {
 //   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -94,7 +88,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("클라이언트가 연결이 끊어졌습니다:", socket.id);
+    console.log("클라이언트 연결이 끊어졌습니다:", socket.id);
   });
 
   // socket.on("testMessage", (msg) => {
@@ -126,14 +120,3 @@ db.connectToDatabase()
 //   });
 
 // console.log("run server");
-
-// const { Server } = require("socket.io");
-
-// const io = new Server({ cors: "http://localhost:5173" });
-
-// io.on("connection", (socket) => {
-//   console.log("socket 연결", socket.id);
-//   console.log("");
-// });
-
-// io.listen(3001);
