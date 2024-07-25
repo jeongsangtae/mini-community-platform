@@ -32,10 +32,7 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
   }, []);
 
   const addReply = (newReply) => {
-    console.log(newReply);
-    console.log(replies);
     setReplies((prevReplies) => [...prevReplies, newReply]);
-    console.log(replies);
   };
 
   const editReply = (editReply) => {
@@ -47,15 +44,12 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
         return reply;
       });
     });
-    console.log(replies);
   };
 
   const deleteReply = (replyId) => {
     setReplies((prevReplies) =>
       prevReplies.filter((reply) => reply._id !== replyId)
     );
-    console.log(replyId);
-    console.log(replies);
   };
 
   return (

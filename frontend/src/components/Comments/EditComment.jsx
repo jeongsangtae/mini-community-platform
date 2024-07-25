@@ -46,8 +46,6 @@ const EditComment = ({
       }
     );
 
-    console.log(method);
-
     if (!response.ok) {
       const errorData = await response.json();
       console.log(errorData.message);
@@ -57,8 +55,6 @@ const EditComment = ({
       onEditCommentData(resData.editComment);
       onCommentToggle();
     }
-
-    console.log(comment);
 
     return redirect("/posts/" + postId);
   };

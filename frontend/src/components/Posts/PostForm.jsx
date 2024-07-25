@@ -63,7 +63,6 @@ export default PostForm;
 
 export const action = async ({ request, params }) => {
   const method = await request.method;
-  console.log(method);
   const formData = await request.formData();
   const postData = Object.fromEntries(formData);
 

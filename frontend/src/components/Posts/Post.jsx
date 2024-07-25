@@ -21,7 +21,7 @@ const Post = ({ num, title, name, date, content, count }) => {
         credentials: "include",
       });
     } catch (error) {
-      console.log("조회수 상승 에러");
+      console.error("조회수 상승 에러", error);
     }
   };
 

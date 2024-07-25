@@ -7,7 +7,6 @@ import NoAccess from "./NoAccess";
 const Authentication = ({ children }) => {
   const authCtx = useContext(AuthContext);
   const postData = useRouteLoaderData("post-detail");
-  console.log(postData);
 
   return (
     <>

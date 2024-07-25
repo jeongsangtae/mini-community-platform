@@ -13,7 +13,6 @@ export const loader = async ({ params }) => {
     "http://localhost:3000/admin/posts/" + params.postId
   );
   const resData = await response.json();
-  console.log(params.postId);
   return resData;
 };
 
@@ -27,8 +26,6 @@ export const action = async ({ request, params }) => {
   if (!response.ok) {
     return redirect(`/admin/posts/${postId}/no-access`);
   }
-
-  console.log("action function");
 
   return redirect("/admin/posts");
 };

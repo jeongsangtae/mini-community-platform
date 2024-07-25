@@ -26,7 +26,5 @@ export const action = async ({ request, params }) => {
     return redirect(`/posts/${postId}/no-access`);
   }
 
-  console.log("action function");
-
   return redirect("/posts");
 };

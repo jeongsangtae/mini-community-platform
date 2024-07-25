@@ -29,8 +29,6 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    console.log(signupData);
-
     const response = await fetch("http://localhost:3000/signup", {
       method: "POST",
       body: JSON.stringify(signupData),

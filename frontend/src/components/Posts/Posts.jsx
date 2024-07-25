@@ -22,8 +22,6 @@ const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("title");
 
-  console.log(countPosts);
-
   const fetchData = async (
     pageNumber,
     searchTerm = "",
@@ -57,7 +55,6 @@ const Posts = () => {
     setFirstPageGroup(resData.firstPageGroup);
     setLastPageGroup(resData.lastPageGroup);
     setCountPosts(resData.countPosts);
-    console.log(countPosts);
   };
 
   const onPageChange = (pageNum) => {

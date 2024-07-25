@@ -22,8 +22,6 @@ export const AuthContextProvier = ({ children }) => {
     return storedThemeMode || "light";
   });
 
-  console.log(themeMode);
-
   const verifyUser = async (setUserInfo) => {
     try {
       const response = await fetch("http://localhost:3000/accessToken", {
@@ -34,7 +32,6 @@ export const AuthContextProvier = ({ children }) => {
       }
       const resData = await response.json();
       if (resData) {
-        console.log(resData.tokenExp);
         setUserInfo(resData);
         localStorage.setItem("role", resData.role);
       }
@@ -54,7 +51,6 @@ export const AuthContextProvier = ({ children }) => {
       }
       const resData = await response.json();
       if (resData) {
-        console.log(resData);
         const now = Math.floor(new Date().getTime() / 1000);
         const expirationTime = Math.ceil(now + 60 * 60);
         localStorage.setItem("isLoggedIn", "1");
@@ -74,7 +70,6 @@ export const AuthContextProvier = ({ children }) => {
         throw new Error("쿠키에 JWT 토큰 없음");
       }
       const resData = await response.json();
-      console.log(resData.tokenExp);
       if (resData) {
         localStorage.setItem("refreshTokenExp", resData.tokenExp);
       }
@@ -96,14 +91,14 @@ export const AuthContextProvier = ({ children }) => {
           localStorage.getItem("refreshTokenExp")
         );
 
-        console.log(now);
-        console.log(storedExpirationTime);
-        console.log(refreshTokenExpirationTime);
+        // console.log(now);
+        // console.log(storedExpirationTime);
+        // console.log(refreshTokenExpirationTime);
 
-        console.log(
-          now >= storedExpirationTime && refreshTokenExpirationTime > now
-        );
-        console.log(now >= refreshTokenExpirationTime);
+        // console.log(
+        //   now >= storedExpirationTime && refreshTokenExpirationTime > now
+        // );
+        // console.log(now >= refreshTokenExpirationTime);
 
         if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
           refreshTokenHandler();
@@ -129,44 +124,9 @@ export const AuthContextProvier = ({ children }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const storedThemeMode = localStorage.getItem("themeMode");
-  //   if (storedThemeMode) {
-  //     setThemeMode(storedThemeMode);
-  //   } else {
-  //     setThemeMode("light");
-  //     localStorage.setItem("themeMode", "light");
-  //   }
-  // }, []);
-
   useEffect(() => {
     localStorage.setItem("themeMode", themeMode);
   }, [themeMode]);
-
-  // useEffect(() => {
-  //   const storedThemeMode = localStorage.getItem("themeMode");
-
-  //   setThemeMode(storedThemeMode || "light");
-
-  //   localStorage.setItem("themeMode", themeMode);
-  // }, [themeMode]);
-
-  // useEffect(() => {
-  //   verifyUser(setUserInfo);
-  //   const storedExpirationTime = localStorage.getItem("expirationTime");
-  //   const now = new Date().getTime();
-  //   if (now > storedExpirationTime) {
-  //     localStorage.removeItem("isLoggedIn");
-  //     localStorage.removeItem("expirationTime");
-  //     setIsLoggedIn(false);
-  //   } else {
-  //     setIsLoggedIn(true);
-  //   }
-  //   const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
-  //   if (storedUserLoggedInInformation === "1") {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, []);
 
   const loginHandler = async () => {
     const now = Math.floor(new Date().getTime() / 1000);
@@ -176,25 +136,7 @@ export const AuthContextProvier = ({ children }) => {
     setIsLoggedIn(true);
 
     await verifyUser(setUserInfo);
-    // console.log(localStorage.getItem("role"));
     refreshTokenExpHandler();
-
-    // const role = localStorage.getItem("role");
-    // console.log(role);
-    // if (role === "admin") {
-    //   window.location.href = "/admin";
-    // }
-    // setTimeout(() => {
-    //   localStorage.removeItem("isLoggedIn");
-    //   localStorage.removeItem("expirationTime");
-    //   setIsLoggedIn(false);
-    //   setUserInfo(null);
-    // }, 60 * 5 * 1000);
-
-    // console.log(now);
-    // console.log(expirationTime);
-    // console.log(new Date(now).toString());
-    // console.log(new Date(expirationTime).toString());
   };
 
   const logoutHandler = async () => {
@@ -207,7 +149,6 @@ export const AuthContextProvier = ({ children }) => {
 
     if (response.ok) {
       const role = localStorage.getItem("role");
-      console.log(role);
       if (role === "admin") {
         window.location.href = "/";
       }

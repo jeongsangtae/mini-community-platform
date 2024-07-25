@@ -41,7 +41,6 @@ const Profile = () => {
 
   const onPageChange = (pageNum) => {
     navigate(`/profile?page=${pageNum}`);
-    console.log(pageNum);
     setPage(pageNum);
   };
 

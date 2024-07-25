@@ -27,7 +27,6 @@ const MainHeader = () => {
         }
         const resData = await response.json();
         setUser(resData);
-        console.log(resData);
       } catch (error) {
         console.error("로그인 유지 불가능", error);
       }

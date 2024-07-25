@@ -37,16 +37,13 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
       const errorData = await response.json();
       setError(true);
       setErrorMessage(errorData.message);
-      console.log(errorData);
       return null;
     } else {
       console.log("로그인 성공");
       await authCtx.login();
-      console.log(authCtx.isLoggedIn);
       onLoginToggle();
     }
     const role = localStorage.getItem("role");
-    console.log(role);
     if (role === "admin") {
       navigate("/admin");
     }
