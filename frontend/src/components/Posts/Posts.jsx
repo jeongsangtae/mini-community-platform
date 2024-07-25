@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import Post from "./Post";

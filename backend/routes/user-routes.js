@@ -215,20 +215,39 @@ router.get("/profile", async (req, res) => {
   }
 
   const page = parseInt(req.query.page) || 1;
+  const search = req.query.search || "";
+  const fields = (req.query.field || "").split(",");
   const pageSize = 5;
   const pageButtonSize = 5;
+
+  let filter = { email: responseData.email };
+
+  if (search && fields.length) {
+    filter.$or = fields.map((field) => ({
+      [field]: { $regex: search, $options: "i" }, // 선택된 필드에서 검색어 찾기 (대소문자 구분 없음)
+    }));
+  } else if (search) {
+    filter.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { content: { $regex: search, $options: "i" } },
+      { name: { $regex: search, $options: "i" } },
+    ];
+  }
 
   const posts = await db
     .getDb()
     .collection("posts")
-    .find({ email: responseData.email })
+    .find(filter)
     .sort({ postId: -1 })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
     .toArray();
 
-  const countPosts = await db.getDb().collection("posts").countDocuments({});
+  const countPosts = await db
+    .getDb()
+    .collection("posts")
+    .countDocuments(filter);
   const totalPages = Math.ceil(countPosts / pageSize);
 
   const firstPageGroup =
@@ -240,6 +259,7 @@ router.get("/profile", async (req, res) => {
 
   res.status(200).json({
     posts,
+    countPosts,
     page,
     totalPages,
     firstPageGroup,

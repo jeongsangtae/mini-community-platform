@@ -54,6 +54,15 @@
   color: white;
 }
 
+.last-menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  margin: 1.5rem 5rem 2.25rem 5rem;
+  padding: 0;
+}
+
 .underline {
   content: "";
   margin: 1rem 5rem;
