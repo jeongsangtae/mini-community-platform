@@ -159,6 +159,17 @@ const Chats = ({ userId, userEmail }) => {
     setEmptyInput(value.trim() === "");
   };
 
+  // const handleKeyPress = (event) => {
+  //   if (event.key === "Enter") {
+  //     if (event.shiftKey) {
+  //       setMessage((prevMessage) => prevMessage + "\n");
+  //     } else {
+  //       event.preventDefault();
+  //       sendMessage();
+  //     }
+  //   }
+  // };
+
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
   };
@@ -207,19 +218,27 @@ const Chats = ({ userId, userEmail }) => {
             classes[authCtx.themeClass]
           }`}
         >
-          <input
+          <textarea
             type="text"
             value={message}
             onChange={inputChangeHandler}
+            rows="3"
+            // onKeyPress={handleKeyPress}
             placeholder="메시지를 입력해주세요."
           />
 
-          <button
-            onClick={sendMessage}
-            className={emptyInput ? `${classes.opacity}` : ""}
+          <div
+            className={`${classes["button-container"]} ${
+              classes[authCtx.themeClass]
+            }`}
           >
-            전송
-          </button>
+            <button
+              onClick={sendMessage}
+              className={emptyInput ? `${classes.opacity}` : ""}
+            >
+              전송
+            </button>
+          </div>
         </div>
       </div>
 

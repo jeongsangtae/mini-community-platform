@@ -131,61 +131,88 @@
 }
 
 .input-container {
-  position: fixed;
-  bottom: 0;
   display: flex;
+  flex-direction: column;
   width: 100%;
   align-items: center;
+  /* position: fixed; */
+  /* bottom: 0; */
   border-top: 1px solid rgb(133, 133, 133);
+  padding: 0.5rem;
+  background-color: white;
+  /* border-bottom-left-radius: 0.5rem; */
+  /* border-bottom-right-radius: 0.5rem; */
 }
 
-.input-container input {
-  flex: 1;
+.input-container.dark-mode {
+  background-color: rgb(54, 54, 54);
+}
+
+.input-container textarea {
+  width: 100%;
+  /* flex: 1; */
   padding: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
   border: none;
-  border-right: 1px solid rgb(133, 133, 133);
+  /* border-bottom-left-radius: 0.5rem; */
+  /* border-right: 1px solid rgb(133, 133, 133); */
   background-color: white;
   color: black;
+  resize: none;
+  overflow: hidden;
+  height: auto;
+  min-height: 3rem;
+  max-height: 6rem;
 }
 
-.input-container.dark-mode input {
+.input-container.dark-mode textarea {
   background-color: rgb(54, 54, 54);
   color: white;
 }
 
-.input-container input:focus {
+.input-container textarea:focus {
   outline: none;
 }
 
-.input-container input:focus::placeholder {
+.input-container textarea:focus::placeholder {
   color: rgb(94, 88, 88);
 }
 
-.input-container button {
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.button-container button {
   padding: 0.45rem;
   border: none;
   color: black;
-  background-color: transparent;
+  background-color: rgb(220, 220, 220);
   cursor: pointer;
-  border-bottom-right-radius: 0.5rem;
+  border-radius: 2px;
+  /* border-bottom-right-radius: 0.5rem; */
 }
 
-.input-container button:hover {
-  background-color: rgb(230, 230, 230);
+.button-container.dark-mode button {
+  background-color: rgb(40, 40, 40);
 }
 
-.input-container.dark-mode button {
+.button-container button:hover {
+  background-color: rgb(210, 210, 210);
+}
+
+.button-container.dark-mode button {
   color: white;
 }
 
-.input-container.dark-mode button:hover {
-  background-color: rgb(25, 25, 25);
+.button-container.dark-mode button:hover {
+  background-color: rgb(30, 30, 30);
 }
 
 .opacity {
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .chat-icon {
