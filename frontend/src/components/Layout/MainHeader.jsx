@@ -74,7 +74,7 @@ const MainHeader = () => {
             </div>
           </NavLink>
 
-          {authCtx.isLoggedIn ? (
+          {authCtx.isLoggedIn && authCtx.userInfo?.role === "user" ? (
             <>
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
               <Chats

@@ -11,6 +11,9 @@ const AdminMainHeader = () => {
   const usersData = useLoaderData();
   const authCtx = useContext(AuthContext);
 
+  console.log(authCtx.userInfo);
+  console.log(authCtx.userInfo?.role);
+
   const navLinkClass = ({ isActive }) => {
     return isActive
       ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
@@ -27,7 +30,7 @@ const AdminMainHeader = () => {
         <h1 className={`${classes.logo} ${classes[authCtx.themeClass]}`}>
           커뮤니티 게시판
         </h1>
-        {authCtx.isLoggedIn && (
+        {authCtx.isLoggedIn && authCtx.userInfo?.role === "admin" && (
           <>
             <nav className={classes.navbutton}>
               <NavLink to="/admin" className={navLinkClass} end>
@@ -50,14 +53,14 @@ const AdminMainHeader = () => {
 
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </nav>
+            <AdminUserList
+              adminId={authCtx.userInfo?._id}
+              adminEmail={authCtx.userInfo?.email}
+              usersData={usersData}
+            />
           </>
         )}
       </header>
-      <AdminUserList
-        adminId={authCtx.userInfo?._id}
-        adminEmail={authCtx.userInfo?.email}
-        usersData={usersData}
-      />
     </>
   );
 };
