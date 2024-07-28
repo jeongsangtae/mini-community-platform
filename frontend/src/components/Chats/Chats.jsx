@@ -15,6 +15,7 @@ const Chats = ({ userId, userEmail }) => {
   const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [toBottomButton, setToBottomButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
+  const [textareaHeight, setTextareaHeight] = useState(32); // 초기 높이 설정
 
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -97,6 +98,15 @@ const Chats = ({ userId, userEmail }) => {
     }
   }, [messages]);
 
+  // 채팅 입력창이 늘어날 때, 채팅 내용이 보여지는 컨테이너가 줄어드는 내용
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    if (chatContainer) {
+      chatContainer.style.height = `calc(100% - ${textareaHeight + 16}px)`;
+      scrollToBottomHandler();
+    }
+  }, [textareaHeight]);
+
   const sendMessage = async () => {
     if (!userId) {
       console.error("userId가 정의되지 않았습니다.");
@@ -129,6 +139,7 @@ const Chats = ({ userId, userEmail }) => {
     }
     setMessage("");
     setEmptyInput(true);
+    setTextareaHeight(32);
     textareaRef.current.style.height = "auto";
     // textareaRef.current.style.height = "24px";
   };
@@ -166,7 +177,14 @@ const Chats = ({ userId, userEmail }) => {
     const textarea = textareaRef.current;
     setMessage(event.target.value);
     textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
+    const newHeight = textarea.scrollHeight;
+    textarea.style.height = `${newHeight}px`;
+    if (newHeight <= 160) {
+      textarea.style.height = `${newHeight}px`;
+      setTextareaHeight(newHeight); // 새로운 높이 설정
+    } else {
+      textarea.style.height = "160px";
+    }
     setEmptyInput(event.target.value.trim() === "");
   };
 
@@ -177,10 +195,6 @@ const Chats = ({ userId, userEmail }) => {
     }
   };
 
-  // const chatToggleHandler = () => {
-  //   setChatToggle(!chatToggle);
-  // };
-
   // 채팅창을 다시 토글했을 때, 제일 밑으로 이동하는 버튼이 안보이게 구성
   const chatToggleHandler = () => {
     setChatToggle((prevToggle) => !prevToggle);
@@ -190,6 +204,10 @@ const Chats = ({ userId, userEmail }) => {
       }, 0); // Open 할 때 scrollToBottomHandler 호출
     }
   };
+
+  // const chatToggleHandler = () => {
+  //   setChatToggle(!chatToggle);
+  // };
 
   return (
     <div className={classes.chats}>

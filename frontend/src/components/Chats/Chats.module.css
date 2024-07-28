@@ -71,8 +71,11 @@
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
+  padding-bottom: 0;
   height: 90%;
   overflow-y: auto;
+  /* flex: 1; */
+  /* margin-bottom: 1.3rem; */
 }
 
 /* 스크롤바 설정 */
@@ -143,13 +146,15 @@
   flex: 1;
   /* font-size: 0.9rem; */
   padding: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+  /* border-bottom-left-radius: 0.5rem; */
   border: none;
   resize: none;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-y: auto;
   border-right: 1px solid rgb(133, 133, 133);
   background-color: white;
   color: black;
+  max-height: 9.4rem;
 }
 
 .input-container.dark-mode textarea {
