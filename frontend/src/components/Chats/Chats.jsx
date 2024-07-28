@@ -18,6 +18,7 @@ const Chats = ({ userId, userEmail }) => {
 
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
   // 저장된 기존 메시지 불러오기
@@ -128,6 +129,8 @@ const Chats = ({ userId, userEmail }) => {
     }
     setMessage("");
     setEmptyInput(true);
+    textareaRef.current.style.height = "auto";
+    // textareaRef.current.style.height = "24px";
   };
 
   const scrollToBottomHandler = () => {
@@ -153,25 +156,39 @@ const Chats = ({ userId, userEmail }) => {
     }
   };
 
-  const inputChangeHandler = (event) => {
-    const value = event.target.value;
-    setMessage(value);
-    setEmptyInput(value.trim() === "");
-  };
-
-  // const handleKeyPress = (event) => {
-  //   if (event.key === "Enter") {
-  //     if (event.shiftKey) {
-  //       setMessage((prevMessage) => prevMessage + "\n");
-  //     } else {
-  //       event.preventDefault();
-  //       sendMessage();
-  //     }
-  //   }
+  // const inputChangeHandler = (event) => {
+  //   const value = event.target.value;
+  //   setMessage(value);
+  //   setEmptyInput(value.trim() === "");
   // };
 
+  const inputChangeHandler = (event) => {
+    const textarea = textareaRef.current;
+    setMessage(event.target.value);
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+    setEmptyInput(event.target.value.trim() === "");
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  };
+
+  // const chatToggleHandler = () => {
+  //   setChatToggle(!chatToggle);
+  // };
+
+  // 채팅창을 다시 토글했을 때, 제일 밑으로 이동하는 버튼이 안보이게 구성
   const chatToggleHandler = () => {
-    setChatToggle(!chatToggle);
+    setChatToggle((prevToggle) => !prevToggle);
+    if (!chatToggle) {
+      setTimeout(() => {
+        scrollToBottomHandler();
+      }, 0); // Open 할 때 scrollToBottomHandler 호출
+    }
   };
 
   return (
@@ -222,23 +239,25 @@ const Chats = ({ userId, userEmail }) => {
             type="text"
             value={message}
             onChange={inputChangeHandler}
-            rows="3"
+            rows="1"
             // onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
             placeholder="메시지를 입력해주세요."
+            ref={textareaRef}
           />
 
-          <div
+          {/* <div
             className={`${classes["button-container"]} ${
               classes[authCtx.themeClass]
             }`}
+          > */}
+          <button
+            onClick={sendMessage}
+            className={emptyInput ? `${classes.opacity}` : ""}
           >
-            <button
-              onClick={sendMessage}
-              className={emptyInput ? `${classes.opacity}` : ""}
-            >
-              전송
-            </button>
-          </div>
+            전송
+          </button>
+          {/* </div> */}
         </div>
       </div>
 

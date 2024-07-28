@@ -131,37 +131,25 @@
 }
 
 .input-container {
+  position: fixed;
+  bottom: 0;
   display: flex;
-  flex-direction: column;
   width: 100%;
   align-items: center;
-  /* position: fixed; */
-  /* bottom: 0; */
   border-top: 1px solid rgb(133, 133, 133);
-  padding: 0.5rem;
-  background-color: white;
-  /* border-bottom-left-radius: 0.5rem; */
-  /* border-bottom-right-radius: 0.5rem; */
-}
-
-.input-container.dark-mode {
-  background-color: rgb(54, 54, 54);
 }
 
 .input-container textarea {
-  width: 100%;
-  /* flex: 1; */
+  flex: 1;
+  /* font-size: 0.9rem; */
   padding: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   border: none;
-  /* border-bottom-left-radius: 0.5rem; */
-  /* border-right: 1px solid rgb(133, 133, 133); */
-  background-color: white;
-  color: black;
   resize: none;
   overflow: hidden;
-  height: auto;
-  min-height: 3rem;
-  max-height: 6rem;
+  border-right: 1px solid rgb(133, 133, 133);
+  background-color: white;
+  color: black;
 }
 
 .input-container.dark-mode textarea {
@@ -177,42 +165,30 @@
   color: rgb(94, 88, 88);
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  padding: 0.5rem 0;
-}
-
-.button-container button {
+.input-container button {
   padding: 0.45rem;
   border: none;
   color: black;
-  background-color: rgb(220, 220, 220);
+  background-color: transparent;
   cursor: pointer;
-  border-radius: 2px;
-  /* border-bottom-right-radius: 0.5rem; */
+  border-bottom-right-radius: 0.5rem;
 }
 
-.button-container.dark-mode button {
-  background-color: rgb(40, 40, 40);
+.input-container button:hover {
+  background-color: rgb(230, 230, 230);
 }
 
-.button-container button:hover {
-  background-color: rgb(210, 210, 210);
-}
-
-.button-container.dark-mode button {
+.input-container.dark-mode button {
   color: white;
 }
 
-.button-container.dark-mode button:hover {
-  background-color: rgb(30, 30, 30);
+.input-container.dark-mode button:hover {
+  background-color: rgb(25, 25, 25);
 }
 
 .opacity {
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .chat-icon {
