@@ -22,6 +22,8 @@ const Chats = ({ userId, userEmail }) => {
   const textareaRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
+  // const lineHeight = 16;
+
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
     if (!userId) {
@@ -102,7 +104,9 @@ const Chats = ({ userId, userEmail }) => {
   useEffect(() => {
     const chatContainer = chatContainerRef.current;
     if (chatContainer) {
+      console.log("Previous chatContainer height:", chatContainer.style.height);
       chatContainer.style.height = `calc(100% - ${textareaHeight + 16}px)`;
+      console.log("Updated chatContainer height:", chatContainer.style.height);
       scrollToBottomHandler();
     }
   }, [textareaHeight]);
@@ -178,11 +182,14 @@ const Chats = ({ userId, userEmail }) => {
     setMessage(event.target.value);
     textarea.style.height = "auto";
     const newHeight = textarea.scrollHeight;
+    console.log("textarea scrollHeight:", newHeight);
     textarea.style.height = `${newHeight}px`;
+    // if (newHeight <= lineHeight * 10) {
     if (newHeight <= 160) {
       textarea.style.height = `${newHeight}px`;
       setTextareaHeight(newHeight); // 새로운 높이 설정
     } else {
+      // textarea.style.height = `${lineHeight * 10}px`;
       textarea.style.height = "160px";
     }
     setEmptyInput(event.target.value.trim() === "");
@@ -262,6 +269,7 @@ const Chats = ({ userId, userEmail }) => {
             onKeyDown={handleKeyPress}
             placeholder="메시지를 입력해주세요."
             ref={textareaRef}
+            // style={{ lineHeight: `${lineHeight}px` }}
           />
 
           {/* <div
