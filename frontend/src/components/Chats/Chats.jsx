@@ -20,6 +20,7 @@ const Chats = ({ userId, userEmail }) => {
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
+  const buttonsContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
   // const lineHeight = 16;
@@ -103,11 +104,17 @@ const Chats = ({ userId, userEmail }) => {
   // 채팅 입력창이 늘어날 때, 채팅 내용이 보여지는 컨테이너가 줄어드는 내용
   useEffect(() => {
     const chatContainer = chatContainerRef.current;
+    const buttonsContainer = buttonsContainerRef.current;
+    // const textarea = textareaRef.current;
+
     if (chatContainer) {
-      console.log("Previous chatContainer height:", chatContainer.style.height);
       chatContainer.style.height = `calc(100% - ${textareaHeight + 16}px)`;
-      console.log("Updated chatContainer height:", chatContainer.style.height);
       scrollToBottomHandler();
+    }
+
+    if (buttonsContainer) {
+      // const textareaHeight = textarea.clientHeight;
+      buttonsContainer.style.bottom = `${textareaHeight + 10}px`;
     }
   }, [textareaHeight]);
 
@@ -182,7 +189,6 @@ const Chats = ({ userId, userEmail }) => {
     setMessage(event.target.value);
     textarea.style.height = "auto";
     const newHeight = textarea.scrollHeight;
-    console.log("textarea scrollHeight:", newHeight);
     textarea.style.height = `${newHeight}px`;
     // if (newHeight <= lineHeight * 10) {
     if (newHeight <= 160) {
@@ -239,21 +245,23 @@ const Chats = ({ userId, userEmail }) => {
           <div ref={messagesEndRef} />
         </ul>
 
-        {showNewMessageButton && (
-          <button
-            onClick={scrollToNewMessages}
-            className={classes["new-message-button"]}
-          >
-            새로운 메시지
-          </button>
-        )}
+        <div className={classes["buttons-container"]} ref={buttonsContainerRef}>
+          {showNewMessageButton && (
+            <button
+              onClick={scrollToNewMessages}
+              className={classes["new-message-button"]}
+            >
+              새로운 메시지
+            </button>
+          )}
 
-        {toBottomButton && (
-          <IoIosArrowDown
-            onClick={scrollToBottomHandler}
-            className={classes["bottom-button"]}
-          />
-        )}
+          {toBottomButton && (
+            <IoIosArrowDown
+              onClick={scrollToBottomHandler}
+              className={classes["bottom-button"]}
+            />
+          )}
+        </div>
 
         <div
           className={`${classes["input-container"]} ${
