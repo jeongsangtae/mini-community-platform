@@ -29,11 +29,11 @@
 }
 
 .chats-container.open {
-  animation: chats-container-slide-up 0.3s ease-out forwards;
+  animation: chats-container-slide-up 0.2s ease-out forwards;
 }
 
 .chats-container.close {
-  animation: chats-container-slide-down 0.3s ease-out forwards;
+  animation: chats-container-slide-down 0.2s ease-out forwards;
 }
 
 @keyframes chats-container-slide-up {
@@ -179,7 +179,13 @@
   color: rgb(94, 88, 88);
 }
 
-.input-container button {
+.button-container {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.button-container button {
   padding: 0.45rem;
   border: none;
   color: black;
@@ -188,15 +194,15 @@
   border-bottom-right-radius: 0.5rem;
 }
 
-.input-container button:hover {
+.button-container button:hover {
   background-color: rgb(230, 230, 230);
 }
 
-.input-container.dark-mode button {
+.button-container.dark-mode button {
   color: white;
 }
 
-.input-container.dark-mode button:hover {
+.button-container.dark-mode button:hover {
   background-color: rgb(25, 25, 25);
 }
 

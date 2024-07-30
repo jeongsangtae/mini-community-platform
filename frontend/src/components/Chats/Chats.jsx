@@ -280,18 +280,18 @@ const Chats = ({ userId, userEmail }) => {
             // style={{ lineHeight: `${lineHeight}px` }}
           />
 
-          {/* <div
+          <div
             className={`${classes["button-container"]} ${
               classes[authCtx.themeClass]
             }`}
-          > */}
-          <button
-            onClick={sendMessage}
-            className={emptyInput ? `${classes.opacity}` : ""}
           >
-            전송
-          </button>
-          {/* </div> */}
+            <button
+              onClick={sendMessage}
+              className={emptyInput ? `${classes.opacity}` : ""}
+            >
+              전송
+            </button>
+          </div>
         </div>
       </div>
 
