@@ -195,29 +195,41 @@
 
 .input-container button {
   padding: 0.45rem;
+  margin: 0.5rem;
   border: none;
-  color: black;
-  background-color: transparent;
+  color: rgb(60, 60, 60);
+  background-color: rgb(220, 220, 220);
   cursor: pointer;
   align-self: flex-end;
+  border-radius: 4px;
+  /* background-color: transparent; */
   /* border-bottom-right-radius: 0.5rem; */
 }
 
 .input-container button:hover {
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(210, 210, 210);
+  /* background-color: rgb(230, 230, 230); */
 }
 
 .input-container.dark-mode button {
+  background-color: rgb(43, 43, 43);
   color: white;
 }
 
 .input-container.dark-mode button:hover {
-  background-color: rgb(25, 25, 25);
+  background-color: rgb(35, 35, 35);
+  /* background-color: rgb(25, 25, 25); */
 }
 
-.opacity {
+.input-container button.invisible {
   pointer-events: none;
-  opacity: 0.3;
+  color: rgb(200, 200, 200);
+  background-color: rgb(230, 230, 230);
+}
+
+.input-container button.invisible.dark-mode {
+  color: rgb(94, 94, 94);
+  background-color: rgb(50, 50, 50);
 }
 
 .chat-icon {

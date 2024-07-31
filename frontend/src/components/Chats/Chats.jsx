@@ -108,13 +108,13 @@ const Chats = ({ userId, userEmail }) => {
     // const textarea = textareaRef.current;
 
     if (chatContainer) {
-      chatContainer.style.height = `calc(100% - ${textareaHeight + 48}px)`;
+      chatContainer.style.height = `calc(100% - ${textareaHeight + 64}px)`;
       scrollToBottomHandler();
     }
 
     if (buttonsContainer) {
       // const textareaHeight = textarea.clientHeight;
-      buttonsContainer.style.bottom = `${textareaHeight + 40}px`;
+      buttonsContainer.style.bottom = `${textareaHeight + 56}px`;
     }
   }, [textareaHeight]);
 
@@ -291,7 +291,11 @@ const Chats = ({ userId, userEmail }) => {
           > */}
           <button
             onClick={sendMessage}
-            className={emptyInput ? `${classes.opacity}` : ""}
+            className={
+              emptyInput
+                ? `${classes.invisible} ${classes[authCtx.themeClass]}`
+                : ""
+            }
           >
             전송
           </button>
