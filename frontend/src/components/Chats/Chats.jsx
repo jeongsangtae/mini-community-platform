@@ -108,13 +108,13 @@ const Chats = ({ userId, userEmail }) => {
     // const textarea = textareaRef.current;
 
     if (chatContainer) {
-      chatContainer.style.height = `calc(100% - ${textareaHeight + 16}px)`;
+      chatContainer.style.height = `calc(100% - ${textareaHeight + 48}px)`;
       scrollToBottomHandler();
     }
 
     if (buttonsContainer) {
       // const textareaHeight = textarea.clientHeight;
-      buttonsContainer.style.bottom = `${textareaHeight + 10}px`;
+      buttonsContainer.style.bottom = `${textareaHeight + 40}px`;
     }
   }, [textareaHeight]);
 
@@ -187,16 +187,20 @@ const Chats = ({ userId, userEmail }) => {
   const inputChangeHandler = (event) => {
     const textarea = textareaRef.current;
     setMessage(event.target.value);
-    textarea.style.height = "auto";
-    const newHeight = textarea.scrollHeight;
+
+    textarea.style.height = "auto"; // 높이를 초기화하여 scrollHeight 값을 올바르게 계산
+    const newHeight = textarea.scrollHeight; // 새로운 높이 계산
     textarea.style.height = `${newHeight}px`;
     // if (newHeight <= lineHeight * 10) {
-    if (newHeight <= 160) {
+    console.log(newHeight);
+
+    // 최대 높이를 설정하고 그 이상은 스크롤
+    if (newHeight <= 112) {
       textarea.style.height = `${newHeight}px`;
       setTextareaHeight(newHeight); // 새로운 높이 설정
     } else {
       // textarea.style.height = `${lineHeight * 10}px`;
-      textarea.style.height = "160px";
+      textarea.style.height = "112px";
     }
     setEmptyInput(event.target.value.trim() === "");
   };
@@ -280,18 +284,18 @@ const Chats = ({ userId, userEmail }) => {
             // style={{ lineHeight: `${lineHeight}px` }}
           />
 
-          <div
+          {/* <div
             className={`${classes["button-container"]} ${
               classes[authCtx.themeClass]
             }`}
+          > */}
+          <button
+            onClick={sendMessage}
+            className={emptyInput ? `${classes.opacity}` : ""}
           >
-            <button
-              onClick={sendMessage}
-              className={emptyInput ? `${classes.opacity}` : ""}
-            >
-              전송
-            </button>
-          </div>
+            전송
+          </button>
+          {/* </div> */}
         </div>
       </div>
 

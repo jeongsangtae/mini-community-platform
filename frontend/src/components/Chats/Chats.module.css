@@ -75,7 +75,7 @@
   overflow-y: auto;
   /* height: 90%; */
   /* flex: 1; */
-  /* margin-bottom: 1.3rem; */
+  /* margin-bottom: 4rem; */
 }
 
 /* 스크롤바 설정 */
@@ -118,7 +118,7 @@
 
 .new-message-button {
   position: absolute;
-  bottom: 0.2rem;
+  bottom: 0.4rem;
   left: 50%;
   transform: translateX(-42.5%);
   color: rgb(255, 255, 255);
@@ -147,23 +147,31 @@
   position: fixed;
   bottom: 0;
   display: flex;
+  flex-direction: column;
   width: 100%;
   align-items: center;
   border-top: 1px solid rgb(133, 133, 133);
+  /* overflow: visible; */
+}
+
+.input-container.dark-mode {
+  background-color: rgb(54, 54, 54);
 }
 
 .input-container textarea {
-  flex: 1;
+  /* flex: 1; */
+  flex-grow: 1;
   padding: 0.5rem;
   border: none;
   resize: none;
-  /* overflow: hidden; */
+  width: 100%;
   overflow-y: auto;
-  border-right: 1px solid rgb(133, 133, 133);
   background-color: white;
   color: black;
-  /* max-height: 10rem; */
   line-height: 1rem;
+  /* border-right: 1px solid rgb(133, 133, 133); */
+  /* overflow: hidden; */
+  /* max-height: 10rem; */
 }
 
 .input-container.dark-mode textarea {
@@ -179,30 +187,31 @@
   color: rgb(94, 88, 88);
 }
 
-.button-container {
+/* .button-container {
   position: absolute;
   right: 0;
   bottom: 0;
-}
+} */
 
-.button-container button {
+.input-container button {
   padding: 0.45rem;
   border: none;
   color: black;
   background-color: transparent;
   cursor: pointer;
-  border-bottom-right-radius: 0.5rem;
+  align-self: flex-end;
+  /* border-bottom-right-radius: 0.5rem; */
 }
 
-.button-container button:hover {
+.input-container button:hover {
   background-color: rgb(230, 230, 230);
 }
 
-.button-container.dark-mode button {
+.input-container.dark-mode button {
   color: white;
 }
 
-.button-container.dark-mode button:hover {
+.input-container.dark-mode button:hover {
   background-color: rgb(25, 25, 25);
 }
 
