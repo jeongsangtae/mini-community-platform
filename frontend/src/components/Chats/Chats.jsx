@@ -205,7 +205,7 @@ const Chats = ({ userId, userEmail }) => {
     setEmptyInput(event.target.value.trim() === "");
   };
 
-  const handleKeyPress = (event) => {
+  const keyPressHandler = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       sendMessage();
@@ -278,7 +278,7 @@ const Chats = ({ userId, userEmail }) => {
             onChange={inputChangeHandler}
             rows="1"
             // onKeyPress={handleKeyPress}
-            onKeyDown={handleKeyPress}
+            onKeyDown={keyPressHandler}
             placeholder="메시지를 입력해주세요."
             ref={textareaRef}
             // style={{ lineHeight: `${lineHeight}px` }}

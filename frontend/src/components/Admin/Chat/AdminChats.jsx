@@ -22,9 +22,12 @@ const AdminChats = ({
   const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [toBottomButton, setToBottomButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
+  const [textareaHeight, setTextareaHeight] = useState(32);
 
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
+  const buttonsContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
@@ -125,6 +128,20 @@ const AdminChats = ({
     }
   }, [messages]);
 
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    const buttonsContainer = buttonsContainerRef.current;
+
+    if (chatContainer) {
+      chatContainer.style.height = `calc(100% - ${textareaHeight + 92}px)`;
+      scrollToBottomHandler();
+    }
+
+    if (buttonsContainer) {
+      buttonsContainer.style.bottom = `${textareaHeight + 56}px`;
+    }
+  }, [textareaHeight]);
+
   const sendMessage = async () => {
     if (!adminId) {
       console.error("adminId가 정의되지 않았습니다.");
@@ -161,6 +178,8 @@ const AdminChats = ({
     }
     setMessage("");
     setEmptyInput(true);
+    setTextareaHeight(32);
+    textareaRef.current.style.height = "auto";
   };
 
   const scrollToBottomHandler = () => {
@@ -187,9 +206,28 @@ const AdminChats = ({
   };
 
   const inputChangeHandler = (event) => {
-    const value = event.target.value;
-    setMessage(value);
-    setEmptyInput(value.trim() === "");
+    const textarea = textareaRef.current;
+    setMessage(event.target.value);
+
+    textarea.style.height = "auto";
+
+    const newHeight = textarea.scrollHeight;
+    textarea.style.height = `${newHeight}px`;
+
+    if (newHeight <= 112) {
+      textarea.style.height = `${newHeight}px`;
+      setTextareaHeight(newHeight);
+    } else {
+      textarea.style.height = "112px";
+    }
+    setEmptyInput(event.target.value.trim() === "");
+  };
+
+  const keyPressHandler = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
   };
 
   return (
@@ -223,37 +261,46 @@ const AdminChats = ({
           <div ref={messagesEndRef} />
         </ul>
 
-        {showNewMessageButton && (
-          <button
-            onClick={scrollToNewMessages}
-            className={classes["new-message-button"]}
-          >
-            새로운 메시지
-          </button>
-        )}
+        <div className={classes["buttons-container"]} ref={buttonsContainerRef}>
+          {showNewMessageButton && (
+            <button
+              onClick={scrollToNewMessages}
+              className={classes["new-message-button"]}
+            >
+              새로운 메시지
+            </button>
+          )}
 
-        {toBottomButton && (
-          <IoIosArrowDown
-            onClick={scrollToBottomHandler}
-            className={classes["bottom-button"]}
-          />
-        )}
+          {toBottomButton && (
+            <IoIosArrowDown
+              onClick={scrollToBottomHandler}
+              className={classes["bottom-button"]}
+            />
+          )}
+        </div>
 
         <div
           className={`${classes["input-container"]} ${
             classes[authCtx.themeClass]
           }`}
         >
-          <input
+          <textarea
             type="text"
             value={message}
             onChange={inputChangeHandler}
+            rows="1"
+            onKeyDown={keyPressHandler}
             placeholder="메시지를 입력해주세요."
+            ref={textareaRef}
           />
 
           <button
             onClick={sendMessage}
-            className={emptyInput ? `${classes.opacity}` : ""}
+            className={
+              emptyInput
+                ? `${classes.invisible} ${classes[authCtx.themeClass]}`
+                : ""
+            }
           >
             전송
           </button>
