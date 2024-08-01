@@ -105,15 +105,27 @@ const Chats = ({ userId, userEmail }) => {
   useEffect(() => {
     const chatContainer = chatContainerRef.current;
     const buttonsContainer = buttonsContainerRef.current;
-    // const textarea = textareaRef.current;
 
     if (chatContainer) {
       chatContainer.style.height = `calc(100% - ${textareaHeight + 64}px)`;
-      scrollToBottomHandler();
+
+      // getComputedStyle을 사용하여 실제 높이 가져오기
+      // const computedStyle = window.getComputedStyle(chatContainer);
+      // const computedHeight = parseFloat(computedStyle.height);
+
+      // const { scrollTop, scrollHeight } = chatContainer;
+
+      // const isAtBottom = scrollTop + computedHeight >= scrollHeight - 50;
+
+      const { scrollTop, scrollHeight, clientHeight } = chatContainer;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
+
+      if (isAtBottom) {
+        scrollToBottomHandler();
+      }
     }
 
     if (buttonsContainer) {
-      // const textareaHeight = textarea.clientHeight;
       buttonsContainer.style.bottom = `${textareaHeight + 56}px`;
     }
   }, [textareaHeight]);

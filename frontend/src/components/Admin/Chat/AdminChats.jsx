@@ -134,7 +134,13 @@ const AdminChats = ({
 
     if (chatContainer) {
       chatContainer.style.height = `calc(100% - ${textareaHeight + 92}px)`;
-      scrollToBottomHandler();
+
+      const { scrollTop, scrollHeight, clientHeight } = chatContainer;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
+
+      if (isAtBottom) {
+        scrollToBottomHandler();
+      }
     }
 
     if (buttonsContainer) {
