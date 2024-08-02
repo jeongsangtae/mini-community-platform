@@ -23,8 +23,6 @@ const Chats = ({ userId, userEmail }) => {
   const buttonsContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
-  // const lineHeight = 16;
-
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
     if (!userId) {
@@ -109,14 +107,6 @@ const Chats = ({ userId, userEmail }) => {
     if (chatContainer) {
       chatContainer.style.height = `calc(100% - ${textareaHeight + 64}px)`;
 
-      // getComputedStyle을 사용하여 실제 높이 가져오기
-      // const computedStyle = window.getComputedStyle(chatContainer);
-      // const computedHeight = parseFloat(computedStyle.height);
-
-      // const { scrollTop, scrollHeight } = chatContainer;
-
-      // const isAtBottom = scrollTop + computedHeight >= scrollHeight - 50;
-
       const { scrollTop, scrollHeight, clientHeight } = chatContainer;
       const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
 
@@ -164,7 +154,6 @@ const Chats = ({ userId, userEmail }) => {
     setEmptyInput(true);
     setTextareaHeight(32);
     textareaRef.current.style.height = "auto";
-    // textareaRef.current.style.height = "24px";
   };
 
   const scrollToBottomHandler = () => {
@@ -190,12 +179,6 @@ const Chats = ({ userId, userEmail }) => {
     }
   };
 
-  // const inputChangeHandler = (event) => {
-  //   const value = event.target.value;
-  //   setMessage(value);
-  //   setEmptyInput(value.trim() === "");
-  // };
-
   const inputChangeHandler = (event) => {
     const textarea = textareaRef.current;
     setMessage(event.target.value);
@@ -203,7 +186,6 @@ const Chats = ({ userId, userEmail }) => {
     textarea.style.height = "auto"; // 높이를 초기화하여 scrollHeight 값을 올바르게 계산
     const newHeight = textarea.scrollHeight; // 새로운 높이 계산
     textarea.style.height = `${newHeight}px`;
-    // if (newHeight <= lineHeight * 10) {
     console.log(newHeight);
 
     // 최대 높이를 설정하고 그 이상은 스크롤
@@ -211,7 +193,6 @@ const Chats = ({ userId, userEmail }) => {
       textarea.style.height = `${newHeight}px`;
       setTextareaHeight(newHeight); // 새로운 높이 설정
     } else {
-      // textarea.style.height = `${lineHeight * 10}px`;
       textarea.style.height = "112px";
     }
     setEmptyInput(event.target.value.trim() === "");
@@ -233,10 +214,6 @@ const Chats = ({ userId, userEmail }) => {
       }, 0); // Open 할 때 scrollToBottomHandler 호출
     }
   };
-
-  // const chatToggleHandler = () => {
-  //   setChatToggle(!chatToggle);
-  // };
 
   return (
     <div className={classes.chats}>
@@ -289,18 +266,11 @@ const Chats = ({ userId, userEmail }) => {
             value={message}
             onChange={inputChangeHandler}
             rows="1"
-            // onKeyPress={handleKeyPress}
             onKeyDown={keyPressHandler}
             placeholder="메시지를 입력해주세요."
             ref={textareaRef}
-            // style={{ lineHeight: `${lineHeight}px` }}
           />
 
-          {/* <div
-            className={`${classes["button-container"]} ${
-              classes[authCtx.themeClass]
-            }`}
-          > */}
           <button
             onClick={sendMessage}
             className={
@@ -311,7 +281,6 @@ const Chats = ({ userId, userEmail }) => {
           >
             전송
           </button>
-          {/* </div> */}
         </div>
       </div>
 
