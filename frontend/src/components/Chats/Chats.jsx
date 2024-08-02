@@ -6,6 +6,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import AuthContext from "../../store/auth-context";
 import Chat from "./Chat";
 import classes from "./Chats.module.css";
+import ChatInput from "./ChatInput";
 
 const Chats = ({ userId, userEmail }) => {
   const [message, setMessage] = useState("");
@@ -22,6 +23,8 @@ const Chats = ({ userId, userEmail }) => {
   const textareaRef = useRef(null);
   const buttonsContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
+
+  console.log(emptyInput);
 
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
@@ -179,31 +182,31 @@ const Chats = ({ userId, userEmail }) => {
     }
   };
 
-  const inputChangeHandler = (event) => {
-    const textarea = textareaRef.current;
-    setMessage(event.target.value);
+  // const inputChangeHandler = (event) => {
+  //   const textarea = textareaRef.current;
+  //   setMessage(event.target.value);
 
-    textarea.style.height = "auto"; // 높이를 초기화하여 scrollHeight 값을 올바르게 계산
-    const newHeight = textarea.scrollHeight; // 새로운 높이 계산
-    textarea.style.height = `${newHeight}px`;
-    console.log(newHeight);
+  //   textarea.style.height = "auto"; // 높이를 초기화하여 scrollHeight 값을 올바르게 계산
+  //   const newHeight = textarea.scrollHeight; // 새로운 높이 계산
+  //   textarea.style.height = `${newHeight}px`;
+  //   console.log(newHeight);
 
-    // 최대 높이를 설정하고 그 이상은 스크롤
-    if (newHeight <= 112) {
-      textarea.style.height = `${newHeight}px`;
-      setTextareaHeight(newHeight); // 새로운 높이 설정
-    } else {
-      textarea.style.height = "112px";
-    }
-    setEmptyInput(event.target.value.trim() === "");
-  };
+  //   // 최대 높이를 설정하고 그 이상은 스크롤
+  //   if (newHeight <= 112) {
+  //     textarea.style.height = `${newHeight}px`;
+  //     setTextareaHeight(newHeight); // 새로운 높이 설정
+  //   } else {
+  //     textarea.style.height = "112px";
+  //   }
+  //   setEmptyInput(event.target.value.trim() === "");
+  // };
 
-  const keyPressHandler = (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      sendMessage();
-    }
-  };
+  // const keyPressHandler = (event) => {
+  //   if (event.key === "Enter" && !event.shiftKey) {
+  //     event.preventDefault();
+  //     sendMessage();
+  //   }
+  // };
 
   // 채팅창을 다시 토글했을 때, 제일 밑으로 이동하는 버튼이 안보이게 구성
   const chatToggleHandler = () => {
@@ -256,7 +259,17 @@ const Chats = ({ userId, userEmail }) => {
           )}
         </div>
 
-        <div
+        <ChatInput
+          message={message}
+          setMessage={setMessage}
+          onSendMessage={sendMessage}
+          textareaRef={textareaRef}
+          emptyInput={emptyInput}
+          setEmptyInput={setEmptyInput}
+          setTextareaHeight={setTextareaHeight}
+        />
+
+        {/* <div
           className={`${classes["input-container"]} ${
             classes[authCtx.themeClass]
           }`}
@@ -275,13 +288,13 @@ const Chats = ({ userId, userEmail }) => {
             onClick={sendMessage}
             className={
               emptyInput
-                ? `${classes.invisible} ${classes[authCtx.themeClass]}`
+                ? `${classes.disable} ${classes[authCtx.themeClass]}`
                 : ""
             }
           >
             전송
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div className={classes["chat-icon"]}>

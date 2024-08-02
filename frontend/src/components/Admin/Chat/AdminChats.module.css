@@ -221,13 +221,13 @@
   background-color: rgb(35, 35, 35);
 }
 
-.input-container button.invisible {
+.input-container button.disable {
   pointer-events: none;
   color: rgb(200, 200, 200);
   background-color: rgb(230, 230, 230);
 }
 
-.input-container button.invisible.dark-mode {
+.input-container button.disable.dark-mode {
   color: rgb(94, 94, 94);
   background-color: rgb(50, 50, 50);
 }

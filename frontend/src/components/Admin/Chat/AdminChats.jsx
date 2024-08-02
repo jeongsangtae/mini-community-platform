@@ -304,7 +304,7 @@ const AdminChats = ({
             onClick={sendMessage}
             className={
               emptyInput
-                ? `${classes.invisible} ${classes[authCtx.themeClass]}`
+                ? `${classes.disable} ${classes[authCtx.themeClass]}`
                 : ""
             }
           >
