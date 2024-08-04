@@ -36,11 +36,6 @@ const AdminChats = ({
       return;
     }
 
-    // if (!usersData) {
-    //   console.error("adminId가 정의되지 않았습니다.");
-    //   return;
-    // }
-
     if (!chatRoomId) {
       console.error("chatRoomId가 정의되지 않았습니다.");
       return;
@@ -148,7 +143,7 @@ const AdminChats = ({
     }
   }, [textareaHeight]);
 
-  const sendMessage = async () => {
+  const sendMessageHandler = async () => {
     if (!adminId) {
       console.error("adminId가 정의되지 않았습니다.");
       return;
@@ -192,12 +187,12 @@ const AdminChats = ({
     messagesEndRef.current?.scrollIntoView();
   };
 
-  const scrollToNewMessages = () => {
+  const scrollToNewMessagesHandler = () => {
     messagesEndRef.current?.scrollIntoView();
     setShowNewMessageButton(false); // 버튼 숨기기
   };
 
-  const handleScroll = () => {
+  const scrollHandler = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
 
     // 오차를 줄이기 위해 -1을 사용
@@ -232,7 +227,7 @@ const AdminChats = ({
   const keyPressHandler = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      sendMessage();
+      sendMessageHandler();
     }
   };
 
@@ -254,7 +249,7 @@ const AdminChats = ({
         <ul
           className={classes["admin-messages-container"]}
           ref={chatContainerRef}
-          onScroll={handleScroll}
+          onScroll={scrollHandler}
         >
           {messages.map((message) => (
             <AdminChat
@@ -270,7 +265,7 @@ const AdminChats = ({
         <div className={classes["buttons-container"]} ref={buttonsContainerRef}>
           {showNewMessageButton && (
             <button
-              onClick={scrollToNewMessages}
+              onClick={scrollToNewMessagesHandler}
               className={classes["new-message-button"]}
             >
               새로운 메시지
@@ -301,7 +296,7 @@ const AdminChats = ({
           />
 
           <button
-            onClick={sendMessage}
+            onClick={sendMessageHandler}
             className={
               emptyInput
                 ? `${classes.disable} ${classes[authCtx.themeClass]}`

@@ -24,8 +24,6 @@ const Chats = ({ userId, userEmail }) => {
   const buttonsContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
 
-  console.log(emptyInput);
-
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
     if (!userId) {
@@ -123,7 +121,7 @@ const Chats = ({ userId, userEmail }) => {
     }
   }, [textareaHeight]);
 
-  const sendMessage = async () => {
+  const sendMessageHandler = async () => {
     if (!userId) {
       console.error("userId가 정의되지 않았습니다.");
       return;
@@ -163,12 +161,12 @@ const Chats = ({ userId, userEmail }) => {
     messagesEndRef.current?.scrollIntoView();
   };
 
-  const scrollToNewMessages = () => {
+  const scrollToNewMessagesHandler = () => {
     messagesEndRef.current?.scrollIntoView();
     setShowNewMessageButton(false); // 버튼 숨기기
   };
 
-  const handleScroll = () => {
+  const scrollHandler = () => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
 
     // 오차를 줄이기 위해 -1을 사용
@@ -228,7 +226,7 @@ const Chats = ({ userId, userEmail }) => {
         <ul
           className={classes["user-messages-container"]}
           ref={chatContainerRef}
-          onScroll={handleScroll}
+          onScroll={scrollHandler}
         >
           {messages.map((message) => (
             <Chat
@@ -244,7 +242,7 @@ const Chats = ({ userId, userEmail }) => {
         <div className={classes["buttons-container"]} ref={buttonsContainerRef}>
           {showNewMessageButton && (
             <button
-              onClick={scrollToNewMessages}
+              onClick={scrollToNewMessagesHandler}
               className={classes["new-message-button"]}
             >
               새로운 메시지
@@ -262,7 +260,7 @@ const Chats = ({ userId, userEmail }) => {
         <ChatInput
           message={message}
           setMessage={setMessage}
-          onSendMessage={sendMessage}
+          onSendMessage={sendMessageHandler}
           textareaRef={textareaRef}
           emptyInput={emptyInput}
           setEmptyInput={setEmptyInput}
