@@ -5,6 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import AuthContext from "../../store/auth-context";
 import useChatScroll from "./hooks/useChatScroll";
+import useAutosizeChatHeight from "./hooks/useAutosizeChatHeight";
 import Chat from "./Chat";
 import classes from "./Chats.module.css";
 import ChatInput from "./ChatInput";
@@ -14,15 +15,10 @@ const Chats = ({ userId, userEmail }) => {
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
   const [emptyInput, setEmptyInput] = useState(true);
-  // const [showNewMessageButton, setShowNewMessageButton] = useState(false);
-  // const [toBottomButton, setToBottomButton] = useState(false);
   const [chatToggle, setChatToggle] = useState(false);
-  const [textareaHeight, setTextareaHeight] = useState(32); // 초기 높이 설정
 
-  // const chatContainerRef = useRef(null);
-  // const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
-  const buttonsContainerRef = useRef(null);
+
   const authCtx = useContext(AuthContext);
 
   const {
@@ -34,6 +30,11 @@ const Chats = ({ userId, userEmail }) => {
     scrollToNewMessagesHandler,
     scrollHandler,
   } = useChatScroll(messages, chatToggle);
+
+  const { setTextareaHeight, buttonsContainerRef } = useAutosizeChatHeight(
+    chatContainerRef,
+    scrollToBottomHandler
+  );
 
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
@@ -80,58 +81,6 @@ const Chats = ({ userId, userEmail }) => {
     };
   }, [userId]);
 
-  // 새로운 메시지가 추가되었을 때, 스크롤이 자동으로 최신 메시지로 이동
-  // useEffect(() => {
-  //   const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-  //   // 오차를 줄이기 위해서 -1 사용
-  //   const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-  //   // 스크롤이 거의 아래에 있을 때를 구하는 내용
-  //   const nearBottom = scrollTop + clientHeight >= scrollHeight - 100;
-  //   const latestMessage = messages[messages.length - 1];
-
-  //   if (isAtBottom) {
-  //     // 스크롤이 맨 아래에 있는 경우
-  //     setShowNewMessageButton(false);
-  //     setToBottomButton(false);
-  //     scrollToBottomHandler();
-  //   } else if (latestMessage?.userType === "user") {
-  //     // 사용자가 작성한 메시지가 추가된 경우
-  //     setShowNewMessageButton(false);
-  //     setToBottomButton(false);
-  //     scrollToBottomHandler();
-  //   } else if (nearBottom && latestMessage?.userType === "admin") {
-  //     // 스크롤이 거의 아래에 있는 경우
-  //     setShowNewMessageButton(false);
-  //     setToBottomButton(false);
-  //     scrollToBottomHandler();
-  //   } else if (latestMessage?.userType === "admin") {
-  //     // 관리자가 작성한 메시지가 추가된 경우
-  //     setShowNewMessageButton(true);
-  //     setToBottomButton(false);
-  //   }
-  // }, [messages]);
-
-  // 채팅 입력창이 늘어날 때, 채팅 내용이 보여지는 컨테이너가 줄어드는 내용
-  useEffect(() => {
-    const chatContainer = chatContainerRef.current;
-    const buttonsContainer = buttonsContainerRef.current;
-
-    if (chatContainer) {
-      chatContainer.style.height = `calc(100% - ${textareaHeight + 64}px)`;
-
-      const { scrollTop, scrollHeight, clientHeight } = chatContainer;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
-
-      if (isAtBottom) {
-        scrollToBottomHandler();
-      }
-    }
-
-    if (buttonsContainer) {
-      buttonsContainer.style.bottom = `${textareaHeight + 56}px`;
-    }
-  }, [textareaHeight]);
-
   const sendMessageHandler = async () => {
     if (!userId) {
       console.error("userId가 정의되지 않았습니다.");
@@ -167,29 +116,6 @@ const Chats = ({ userId, userEmail }) => {
     setTextareaHeight(32);
     textareaRef.current.style.height = "auto";
   };
-
-  // const scrollToBottomHandler = () => {
-  //   messagesEndRef.current?.scrollIntoView();
-  // };
-
-  // const scrollToNewMessagesHandler = () => {
-  //   messagesEndRef.current?.scrollIntoView();
-  //   setShowNewMessageButton(false); // 버튼 숨기기
-  // };
-
-  // const scrollHandler = () => {
-  //   const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-
-  //   // 오차를 줄이기 위해 -1을 사용
-  //   const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-
-  //   if (isAtBottom) {
-  //     setToBottomButton(false);
-  //     setShowNewMessageButton(false);
-  //   } else if (!isAtBottom && !showNewMessageButton) {
-  //     setToBottomButton(true);
-  //   }
-  // };
 
   // 채팅창을 다시 토글했을 때, 제일 밑으로 이동하는 버튼이 안보이게 구성
   const chatToggleHandler = () => {

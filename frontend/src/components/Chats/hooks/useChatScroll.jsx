@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const useChatScroll = (messages, chatToggle) => {
   const chatContainerRef = useRef(null);
@@ -7,15 +7,13 @@ const useChatScroll = (messages, chatToggle) => {
   const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [toBottomButton, setToBottomButton] = useState(false);
 
-  console.log(chatContainerRef.current);
-
   // 새로운 메시지가 추가되었을 때, 스크롤이 자동으로 최신 메시지로 이동
   useEffect(() => {
     const chatContainer = chatContainerRef.current;
 
     if (!chatContainer) return;
 
-    console.log(chatContainer);
+    // console.log(chatContainer);
 
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
     // 오차를 줄이기 위해서 -1 사용
