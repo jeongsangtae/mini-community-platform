@@ -4,8 +4,11 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoIosArrowDown } from "react-icons/io";
 
 import AuthContext from "../../../store/auth-context";
+import useChatScroll from "../../Chats/hooks/useChatScroll";
+import useAutosizeChatHeight from "../../Chats/hooks/useAutosizeChatHeight";
 import AdminChat from "./AdminChat";
 import classes from "./AdminChats.module.css";
+import ChatInput from "../../Chats/ChatInput";
 
 const AdminChats = ({
   adminId,
@@ -19,16 +22,32 @@ const AdminChats = ({
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
   const [emptyInput, setEmptyInput] = useState(true);
-  const [showNewMessageButton, setShowNewMessageButton] = useState(false);
-  const [toBottomButton, setToBottomButton] = useState(false);
-  const [chatToggle, setChatToggle] = useState(false);
-  const [textareaHeight, setTextareaHeight] = useState(32);
+  // const [showNewMessageButton, setShowNewMessageButton] = useState(false);
+  // const [toBottomButton, setToBottomButton] = useState(false);
+  // const [chatToggle, setChatToggle] = useState(false);
+  // const [textareaHeight, setTextareaHeight] = useState(32);
 
-  const chatContainerRef = useRef(null);
-  const messagesEndRef = useRef(null);
+  // const chatContainerRef = useRef(null);
+  // const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
-  const buttonsContainerRef = useRef(null);
+  // const buttonsContainerRef = useRef(null);
   const authCtx = useContext(AuthContext);
+
+  const {
+    chatContainerRef,
+    messagesEndRef,
+    showNewMessageButton,
+    toBottomButton,
+    scrollToBottomHandler,
+    scrollToNewMessagesHandler,
+    scrollHandler,
+  } = useChatScroll(messages, { user: "admin", admin: "user" });
+
+  const { setTextareaHeight, buttonsContainerRef } = useAutosizeChatHeight(
+    chatContainerRef,
+    scrollToBottomHandler,
+    { chatContainerHeight: 92 }
+  );
 
   useEffect(() => {
     if (!adminId) {
@@ -99,49 +118,49 @@ const AdminChats = ({
     console.log(`관리자가 방 ${roomId}에 입장하였습니다.`);
   };
 
-  useEffect(() => {
-    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-    const nearBottom = scrollTop + clientHeight >= scrollHeight - 100;
-    const latestMessage = messages[messages.length - 1];
+  // useEffect(() => {
+  //   const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+  //   const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+  //   const nearBottom = scrollTop + clientHeight >= scrollHeight - 100;
+  //   const latestMessage = messages[messages.length - 1];
 
-    if (isAtBottom) {
-      setShowNewMessageButton(false);
-      setToBottomButton(false);
-      scrollToBottomHandler();
-    } else if (latestMessage?.userType === "admin") {
-      setShowNewMessageButton(false);
-      setToBottomButton(false);
-      scrollToBottomHandler();
-    } else if (nearBottom && latestMessage?.userType === "user") {
-      setShowNewMessageButton(false);
-      setToBottomButton(false);
-      scrollToBottomHandler();
-    } else if (latestMessage?.userType === "user") {
-      setShowNewMessageButton(true);
-      setToBottomButton(false);
-    }
-  }, [messages]);
+  //   if (isAtBottom) {
+  //     setShowNewMessageButton(false);
+  //     setToBottomButton(false);
+  //     scrollToBottomHandler();
+  //   } else if (latestMessage?.userType === "admin") {
+  //     setShowNewMessageButton(false);
+  //     setToBottomButton(false);
+  //     scrollToBottomHandler();
+  //   } else if (nearBottom && latestMessage?.userType === "user") {
+  //     setShowNewMessageButton(false);
+  //     setToBottomButton(false);
+  //     scrollToBottomHandler();
+  //   } else if (latestMessage?.userType === "user") {
+  //     setShowNewMessageButton(true);
+  //     setToBottomButton(false);
+  //   }
+  // }, [messages]);
 
-  useEffect(() => {
-    const chatContainer = chatContainerRef.current;
-    const buttonsContainer = buttonsContainerRef.current;
+  // useEffect(() => {
+  //   const chatContainer = chatContainerRef.current;
+  //   const buttonsContainer = buttonsContainerRef.current;
 
-    if (chatContainer) {
-      chatContainer.style.height = `calc(100% - ${textareaHeight + 92}px)`;
+  //   if (chatContainer) {
+  //     chatContainer.style.height = `calc(100% - ${textareaHeight + 92}px)`;
 
-      const { scrollTop, scrollHeight, clientHeight } = chatContainer;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
+  //     const { scrollTop, scrollHeight, clientHeight } = chatContainer;
+  //     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
 
-      if (isAtBottom) {
-        scrollToBottomHandler();
-      }
-    }
+  //     if (isAtBottom) {
+  //       scrollToBottomHandler();
+  //     }
+  //   }
 
-    if (buttonsContainer) {
-      buttonsContainer.style.bottom = `${textareaHeight + 56}px`;
-    }
-  }, [textareaHeight]);
+  //   if (buttonsContainer) {
+  //     buttonsContainer.style.bottom = `${textareaHeight + 56}px`;
+  //   }
+  // }, [textareaHeight]);
 
   const sendMessageHandler = async () => {
     if (!adminId) {
@@ -183,53 +202,53 @@ const AdminChats = ({
     textareaRef.current.style.height = "auto";
   };
 
-  const scrollToBottomHandler = () => {
-    messagesEndRef.current?.scrollIntoView();
-  };
+  // const scrollToBottomHandler = () => {
+  //   messagesEndRef.current?.scrollIntoView();
+  // };
 
-  const scrollToNewMessagesHandler = () => {
-    messagesEndRef.current?.scrollIntoView();
-    setShowNewMessageButton(false); // 버튼 숨기기
-  };
+  // const scrollToNewMessagesHandler = () => {
+  //   messagesEndRef.current?.scrollIntoView();
+  //   setShowNewMessageButton(false); // 버튼 숨기기
+  // };
 
-  const scrollHandler = () => {
-    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+  // const scrollHandler = () => {
+  //   const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
 
-    // 오차를 줄이기 위해 -1을 사용
-    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+  //   // 오차를 줄이기 위해 -1을 사용
+  //   const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
 
-    if (isAtBottom) {
-      setToBottomButton(false);
-      setShowNewMessageButton(false);
-    } else if (!isAtBottom && !showNewMessageButton) {
-      setToBottomButton(true);
-    }
-  };
+  //   if (isAtBottom) {
+  //     setToBottomButton(false);
+  //     setShowNewMessageButton(false);
+  //   } else if (!isAtBottom && !showNewMessageButton) {
+  //     setToBottomButton(true);
+  //   }
+  // };
 
-  const inputChangeHandler = (event) => {
-    const textarea = textareaRef.current;
-    setMessage(event.target.value);
+  // const inputChangeHandler = (event) => {
+  //   const textarea = textareaRef.current;
+  //   setMessage(event.target.value);
 
-    textarea.style.height = "auto";
+  //   textarea.style.height = "auto";
 
-    const newHeight = textarea.scrollHeight;
-    textarea.style.height = `${newHeight}px`;
+  //   const newHeight = textarea.scrollHeight;
+  //   textarea.style.height = `${newHeight}px`;
 
-    if (newHeight <= 112) {
-      textarea.style.height = `${newHeight}px`;
-      setTextareaHeight(newHeight);
-    } else {
-      textarea.style.height = "112px";
-    }
-    setEmptyInput(event.target.value.trim() === "");
-  };
+  //   if (newHeight <= 112) {
+  //     textarea.style.height = `${newHeight}px`;
+  //     setTextareaHeight(newHeight);
+  //   } else {
+  //     textarea.style.height = "112px";
+  //   }
+  //   setEmptyInput(event.target.value.trim() === "");
+  // };
 
-  const keyPressHandler = (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      sendMessageHandler();
-    }
-  };
+  // const keyPressHandler = (event) => {
+  //   if (event.key === "Enter" && !event.shiftKey) {
+  //     event.preventDefault();
+  //     sendMessageHandler();
+  //   }
+  // };
 
   return (
     <div className={classes.chat}>
@@ -280,7 +299,17 @@ const AdminChats = ({
           )}
         </div>
 
-        <div
+        <ChatInput
+          message={message}
+          setMessage={setMessage}
+          onSendMessage={sendMessageHandler}
+          textareaRef={textareaRef}
+          emptyInput={emptyInput}
+          setEmptyInput={setEmptyInput}
+          setTextareaHeight={setTextareaHeight}
+        />
+
+        {/* <div
           className={`${classes["input-container"]} ${
             classes[authCtx.themeClass]
           }`}
@@ -305,7 +334,7 @@ const AdminChats = ({
           >
             전송
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
