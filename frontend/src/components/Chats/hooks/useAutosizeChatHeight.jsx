@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 
-const useAutosizeChatHeight = (chatContainerRef, scrollToBottomHandler) => {
+const useAutosizeChatHeight = (
+  chatContainerRef,
+  scrollToBottomHandler,
+  offset = { chatContainerHeight: 64 }
+) => {
   const [textareaHeight, setTextareaHeight] = useState(32); // 초기 높이 설정
 
   const buttonsContainerRef = useRef(null);
@@ -11,7 +15,9 @@ const useAutosizeChatHeight = (chatContainerRef, scrollToBottomHandler) => {
     const buttonsContainer = buttonsContainerRef.current;
 
     if (chatContainer) {
-      chatContainer.style.height = `calc(100% - ${textareaHeight + 64}px)`;
+      chatContainer.style.height = `calc(100% - ${
+        textareaHeight + offset.chatContainerHeight
+      }px)`;
 
       const { scrollTop, scrollHeight, clientHeight } = chatContainer;
       const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
@@ -27,7 +33,6 @@ const useAutosizeChatHeight = (chatContainerRef, scrollToBottomHandler) => {
   }, [textareaHeight]);
 
   return {
-    textareaHeight,
     setTextareaHeight,
     buttonsContainerRef,
   };

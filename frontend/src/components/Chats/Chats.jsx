@@ -29,11 +29,12 @@ const Chats = ({ userId, userEmail }) => {
     scrollToBottomHandler,
     scrollToNewMessagesHandler,
     scrollHandler,
-  } = useChatScroll(messages, chatToggle);
+  } = useChatScroll(messages, chatToggle, { user: "user", admin: "admin" });
 
   const { setTextareaHeight, buttonsContainerRef } = useAutosizeChatHeight(
     chatContainerRef,
-    scrollToBottomHandler
+    scrollToBottomHandler,
+    { chatContainerHeight: 64 }
   );
 
   // 저장된 기존 메시지 불러오기

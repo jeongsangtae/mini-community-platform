@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 
-const useChatScroll = (messages, chatToggle) => {
+const useChatScroll = (
+  messages,
+  chatToggle,
+  userTypes = { user: "user", admin: "admin" }
+) => {
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
@@ -27,17 +31,17 @@ const useChatScroll = (messages, chatToggle) => {
       setShowNewMessageButton(false);
       setToBottomButton(false);
       scrollToBottomHandler();
-    } else if (latestMessage?.userType === "user") {
+    } else if (latestMessage?.userType === userTypes.user) {
       // 사용자가 작성한 메시지가 추가된 경우
       setShowNewMessageButton(false);
       setToBottomButton(false);
       scrollToBottomHandler();
-    } else if (nearBottom && latestMessage?.userType === "admin") {
+    } else if (nearBottom && latestMessage?.userType === userTypes.admin) {
       // 스크롤이 거의 아래에 있는 경우
       setShowNewMessageButton(false);
       setToBottomButton(false);
       scrollToBottomHandler();
-    } else if (latestMessage?.userType === "admin") {
+    } else if (latestMessage?.userType === userTypes.admin) {
       // 관리자가 작성한 메시지가 추가된 경우
       setShowNewMessageButton(true);
       setToBottomButton(false);
