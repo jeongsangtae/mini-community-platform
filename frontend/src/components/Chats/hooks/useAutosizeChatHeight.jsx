@@ -9,6 +9,8 @@ const useAutosizeChatHeight = (
 
   const buttonsContainerRef = useRef(null);
 
+  console.log(offset.chatContainerHeight);
+
   // 채팅 입력창이 늘어날 때, 채팅 내용이 보여지는 컨테이너가 줄어드는 내용
   useEffect(() => {
     const chatContainer = chatContainerRef.current;

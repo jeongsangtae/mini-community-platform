@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 
 const useChatScroll = (
   messages,
-  chatToggle,
   userTypes = { user: "user", admin: "admin" }
 ) => {
+  console.log(userTypes.user, userTypes.admin);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
@@ -47,12 +47,6 @@ const useChatScroll = (
       setToBottomButton(false);
     }
   }, [messages]);
-
-  useEffect(() => {
-    if (chatToggle) {
-      scrollToBottomHandler();
-    }
-  }, [chatToggle]);
 
   const scrollToBottomHandler = () => {
     messagesEndRef.current?.scrollIntoView();
