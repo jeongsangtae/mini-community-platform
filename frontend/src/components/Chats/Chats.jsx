@@ -29,7 +29,7 @@ const Chats = ({ userId, userEmail }) => {
     scrollToBottomHandler,
     scrollToNewMessagesHandler,
     scrollHandler,
-  } = useChatScroll(messages, { user: "user", admin: "admin" });
+  } = useChatScroll(messages, { self: "user", other: "admin" });
 
   const { setTextareaHeight, buttonsContainerRef } = useAutosizeChatHeight(
     chatContainerRef,
