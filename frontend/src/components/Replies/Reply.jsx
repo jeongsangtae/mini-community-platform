@@ -45,38 +45,34 @@ const Reply = ({
   };
 
   return (
-    <>
-      <li className={classes.reply}>
-        <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p>
-        <div
-          className={`${classes["reply-user-edit"]} ${
-            classes[authCtx.themeClass]
-          }`}
-        >
-          <p>{name}</p>
-          {email === authCtx.userInfo?.email && (
-            <div>
-              <button onClick={replyEditToggleHandler}>&#9998;</button>
-              <button type="button" onClick={replyDeleteHandler}>
-                &times;
-              </button>
-            </div>
-          )}
-        </div>
-        <p className={classes.content}>{content}</p>
-        <p className={classes.date}>{date}</p>
-        {replyEditToggle && (
-          <ReplyForm
-            method="PATCH"
-            replyData={{ content, replyId }}
-            onEditReplyData={onEditReplyData}
-            onReplyToggle={replyEditToggleHandler}
-          />
+    <li className={classes.reply}>
+      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <div
+        className={`${classes["reply-user-edit"]} ${
+          classes[authCtx.themeClass]
+        }`}
+      >
+        <p>{name}</p>
+        {email === authCtx.userInfo?.email && (
+          <div>
+            <button onClick={replyEditToggleHandler}>&#9998;</button>
+            <button type="button" onClick={replyDeleteHandler}>
+              &times;
+            </button>
+          </div>
         )}
-      </li>
-    </>
+      </div>
+      <p className={classes.content}>{content}</p>
+      <p className={classes.date}>{date}</p>
+      {replyEditToggle && (
+        <ReplyForm
+          method="PATCH"
+          replyData={{ content, replyId }}
+          onEditReplyData={onEditReplyData}
+          onReplyToggle={replyEditToggleHandler}
+        />
+      )}
+    </li>
   );
 };
 

@@ -23,28 +23,26 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
   };
 
   return (
-    <>
-      <div className={classes["user-wrapper"]}>
-        <li className={`${classes.user} ${classes[authCtx.themeClass]}`}>
-          <div
-            className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
-          >
-            <p>{email}</p>
-            <span>{name}</span>
-          </div>
-          <div
-            className={`${classes["delete-button"]} ${
-              classes[authCtx.themeClass]
-            }`}
-          >
-            <button type="button" onClick={userDeleteHandler}>
-              삭제
-            </button>
-          </div>
-        </li>
+    <li className={classes["user-wrapper"]}>
+      <div className={`${classes.user} ${classes[authCtx.themeClass]}`}>
+        <div
+          className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
+        >
+          <p>{email}</p>
+          <span>{name}</span>
+        </div>
+        <div
+          className={`${classes["delete-button"]} ${
+            classes[authCtx.themeClass]
+          }`}
+        >
+          <button type="button" onClick={userDeleteHandler}>
+            삭제
+          </button>
+        </div>
       </div>
       <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
-    </>
+    </li>
   );
 };
 

@@ -1,5 +1,6 @@
 .user-wrapper {
   padding: 0 5rem;
+  list-style: none;
 }
 
 .user {
@@ -63,17 +64,16 @@
   background-color: rgb(25, 25, 25);
 }
 
-.underline {
+.user-wrapper .underline {
   content: "";
-  margin: 1rem 5rem;
   height: 1px;
   background-color: rgb(224, 224, 224);
 }
 
-.underline.dark-mode {
+.user-wrapper .underline.dark-mode {
   background-color: rgb(68, 68, 68);
 }
 
-.underline:last-child {
+.user-wrapper:last-child .underline {
   display: none;
 }

@@ -48,36 +48,32 @@ const AdminComment = ({
   };
 
   return (
-    <>
-      <li className={classes.comment}>
-        <div
-          className={`${classes["comment-user-edit"]} ${
-            classes[authCtx.themeClass]
-          }`}
-        >
-          <p>{name}</p>
+    <li className={classes.comment}>
+      <div
+        className={`${classes["comment-user-edit"]} ${
+          classes[authCtx.themeClass]
+        }`}
+      >
+        <p>{name}</p>
 
-          <div>
-            <button type="button" onClick={commentDeleteHandler}>
-              &times;
-            </button>
-          </div>
+        <div>
+          <button type="button" onClick={commentDeleteHandler}>
+            &times;
+          </button>
         </div>
-        <p className={classes.content}>{content}</p>
-        <p className={classes.date}>{date}</p>
+      </div>
+      <p className={classes.content}>{content}</p>
+      <p className={classes.date}>{date}</p>
 
-        <AdminReplies
-          commentId={commentId}
-          replyToggle={replyToggle}
-          onReplyToggle={replyToggleHandler}
-          repliesLength={repliesLengthHandler}
-        />
+      <AdminReplies
+        commentId={commentId}
+        replyToggle={replyToggle}
+        onReplyToggle={replyToggleHandler}
+        repliesLength={repliesLengthHandler}
+      />
 
-        <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p>
-      </li>
-    </>
+      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+    </li>
   );
 };
 

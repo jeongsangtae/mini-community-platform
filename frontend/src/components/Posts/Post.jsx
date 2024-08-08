@@ -26,33 +26,31 @@ const Post = ({ num, title, name, date, content, count }) => {
   };
 
   return (
-    <>
-      <div className={classes.postWrapper}>
-        <li className={`${classes.post} ${classes[authCtx.themeClass]}`}>
-          <div
-            className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
-          >
-            <p>{num}</p>
-            <span>{name}</span>
-            <span>{date}</span>
-            <span>조회 {count}</span>
-          </div>
+    <li className={classes["post-wrapper"]}>
+      <div className={`${classes.post} ${classes[authCtx.themeClass]}`}>
+        <div
+          className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
+        >
+          <p>{num}</p>
+          <span>{name}</span>
+          <span>{date}</span>
+          <span>조회 {count}</span>
+        </div>
 
-          <Link to={`/posts/${num.toString()}`} onClick={postCountHandler}>
-            <div className={classes.title}>
-              <span>제목</span>
-              <p>{title}</p>
-            </div>
-            <div className={classes.content}>
-              <p>
-                {truncatedText} {moreLines && "..."}
-              </p>
-            </div>
-          </Link>
-        </li>
+        <Link to={`/posts/${num.toString()}`} onClick={postCountHandler}>
+          <div className={classes.title}>
+            <span>제목</span>
+            <p>{title}</p>
+          </div>
+          <div className={classes.content}>
+            <p>
+              {truncatedText} {moreLines && "..."}
+            </p>
+          </div>
+        </Link>
       </div>
       <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
-    </>
+    </li>
   );
 };
 

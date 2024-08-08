@@ -30,28 +30,24 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
   };
 
   return (
-    <>
-      <li className={classes.reply}>
-        <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p>
-        <div
-          className={`${classes["reply-user-edit"]} ${
-            classes[authCtx.themeClass]
-          }`}
-        >
-          <p>{name}</p>
+    <li className={classes.reply}>
+      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <div
+        className={`${classes["reply-user-edit"]} ${
+          classes[authCtx.themeClass]
+        }`}
+      >
+        <p>{name}</p>
 
-          <div>
-            <button type="button" onClick={replyDeleteHandler}>
-              &times;
-            </button>
-          </div>
+        <div>
+          <button type="button" onClick={replyDeleteHandler}>
+            &times;
+          </button>
         </div>
-        <p className={classes.content}>{content}</p>
-        <p className={classes.date}>{date}</p>
-      </li>
-    </>
+      </div>
+      <p className={classes.content}>{content}</p>
+      <p className={classes.date}>{date}</p>
+    </li>
   );
 };
 
