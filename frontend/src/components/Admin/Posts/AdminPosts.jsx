@@ -54,7 +54,7 @@ const AdminPosts = () => {
     setCountPosts(resData.countPosts);
   };
 
-  const onPageChange = (pageNum) => {
+  const pageChangeHandler = (pageNum) => {
     setSearchParams({ page: pageNum, search: searchTerm, field: searchField });
     setPage(pageNum);
   };
@@ -145,7 +145,7 @@ const AdminPosts = () => {
             totalPages={totalPages}
             firstPageGroup={firstPageGroup}
             lastPageGroup={lastPageGroup}
-            onPageChange={onPageChange}
+            onPageChange={pageChangeHandler}
           />
         </div>
       )}

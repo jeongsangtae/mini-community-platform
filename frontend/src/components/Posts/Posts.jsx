@@ -5,7 +5,6 @@ import Post from "./Post";
 import Pagination from "./PagiNation";
 import Search from "./Search";
 import LoadingIndicator from "../UI/LoadingIndicator";
-// import { PostsSkeleton } from "../UI/SkeletonUI";
 import AuthContext from "../../store/auth-context";
 import classes from "./Posts.module.css";
 
@@ -57,7 +56,7 @@ const Posts = () => {
     setCountPosts(resData.countPosts);
   };
 
-  const onPageChange = (pageNum) => {
+  const pageChangeHandler = (pageNum) => {
     setSearchParams({ page: pageNum, search: searchTerm, field: searchField });
     setPage(pageNum);
   };
@@ -157,7 +156,7 @@ const Posts = () => {
             totalPages={totalPages}
             firstPageGroup={firstPageGroup}
             lastPageGroup={lastPageGroup}
-            onPageChange={onPageChange}
+            onPageChange={pageChangeHandler}
           />
         </div>
       )}

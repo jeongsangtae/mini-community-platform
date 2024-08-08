@@ -27,7 +27,7 @@ const AdminPostDetails = () => {
     setDropdownToggle(!dropdownToggle);
   };
 
-  const dropdownClose = () => {
+  const dropdownCloseHandler = () => {
     setDropdownToggle(false);
   };
 
@@ -44,7 +44,7 @@ const AdminPostDetails = () => {
   return (
     <div
       className={`${classes.background} ${classes[authCtx.themeClass]}`}
-      onClick={dropdownClose}
+      onClick={dropdownCloseHandler}
     >
       <div
         className={`${classes["post-container"]} ${
