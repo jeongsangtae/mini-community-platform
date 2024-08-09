@@ -5,11 +5,9 @@ const useAutosizeChatHeight = (
   scrollToBottomHandler,
   offset = { chatContainerHeight: 64 }
 ) => {
-  const [textareaHeight, setTextareaHeight] = useState(32); // 초기 높이 설정
+  const [textareaHeight, setTextareaHeight] = useState(32);
 
   const buttonsContainerRef = useRef(null);
-
-  console.log(offset.chatContainerHeight);
 
   // 채팅 입력창이 늘어날 때, 채팅 내용이 보여지는 컨테이너가 줄어드는 내용
   useEffect(() => {
@@ -17,6 +15,7 @@ const useAutosizeChatHeight = (
     const buttonsContainer = buttonsContainerRef.current;
 
     if (chatContainer) {
+      // 텍스트 입력창 높이에 따라 채팅 컨테이너 높이 조정
       chatContainer.style.height = `calc(100% - ${
         textareaHeight + offset.chatContainerHeight
       }px)`;
@@ -30,6 +29,7 @@ const useAutosizeChatHeight = (
     }
 
     if (buttonsContainer) {
+      // 텍스트 입력창 높이에 따라 버튼 컨테이너 위치를 조정
       buttonsContainer.style.bottom = `${textareaHeight + 56}px`;
     }
   }, [textareaHeight]);

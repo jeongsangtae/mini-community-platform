@@ -56,62 +56,58 @@ const Comment = ({
   };
 
   return (
-    <>
-      <li className={classes.comment}>
-        <div
-          className={`${classes["comment-user-edit"]} ${
+    <li className={classes.comment}>
+      <div
+        className={`${classes["comment-user-edit"]} ${
+          classes[authCtx.themeClass]
+        }`}
+      >
+        <p>{name}</p>
+        {email === authCtx.userInfo?.email && (
+          <div>
+            <button type="button" onClick={commentEditToggleHandler}>
+              &#9998;
+            </button>
+            <button type="button" onClick={commentDeleteHandler}>
+              &times;
+            </button>
+          </div>
+        )}
+      </div>
+
+      <p className={classes.content}>{content}</p>
+      <p className={classes.date}>{date}</p>
+
+      {authCtx.isLoggedIn && (
+        <button
+          type="button"
+          onClick={replyToggleHandler}
+          className={`${classes["reply-button"]} ${
             classes[authCtx.themeClass]
           }`}
         >
-          <p>{name}</p>
-          {email === authCtx.userInfo?.email && (
-            <div>
-              <button type="button" onClick={commentEditToggleHandler}>
-                &#9998;
-              </button>
-              <button type="button" onClick={commentDeleteHandler}>
-                &times;
-              </button>
-            </div>
-          )}
-        </div>
+          답글쓰기
+        </button>
+      )}
 
-        <p className={classes.content}>{content}</p>
-        <p className={classes.date}>{date}</p>
-
-        {authCtx.isLoggedIn && (
-          <button
-            type="button"
-            onClick={replyToggleHandler}
-            className={`${classes["reply-button"]} ${
-              classes[authCtx.themeClass]
-            }`}
-          >
-            답글쓰기
-          </button>
-        )}
-
-        {commentEditToggle && (
-          <EditComment
-            method="PATCH"
-            commentData={{ content, commentId }}
-            onEditCommentData={onEditCommentData}
-            onCommentToggle={commentEditToggleHandler}
-          />
-        )}
-
-        <Replies
-          commentId={commentId}
-          replyToggle={replyToggle}
-          onReplyToggle={replyToggleHandler}
-          repliesLength={repliesLengthHandler}
+      {commentEditToggle && (
+        <EditComment
+          method="PATCH"
+          commentData={{ content, commentId }}
+          onEditCommentData={onEditCommentData}
+          onCommentToggle={commentEditToggleHandler}
         />
+      )}
 
-        <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p>
-      </li>
-    </>
+      <Replies
+        commentId={commentId}
+        replyToggle={replyToggle}
+        onReplyToggle={replyToggleHandler}
+        repliesLength={repliesLengthHandler}
+      />
+
+      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+    </li>
   );
 };
 

@@ -70,6 +70,7 @@ const Chats = ({ userId, userEmail }) => {
       newSocket.emit("joinRoom", { userId, userType: "user" });
     });
 
+    // 서버로부터 새로운 메시지를 받을 때마다 메시지 목록에 추가
     newSocket.on("newMessage", (newMessage) => {
       setMessages((prevMsg) => [...prevMsg, newMessage]);
       console.log("사용자 input 메시지: ", newMessage.content);
@@ -77,11 +78,13 @@ const Chats = ({ userId, userEmail }) => {
 
     setSocket(newSocket);
 
+    // 컴포넌트가 언마운트될 때 WebSocket 연결 해제
     return () => {
       newSocket.disconnect();
     };
   }, [userId]);
 
+  // 메시지 전송 핸들러
   const sendMessageHandler = async () => {
     if (!userId) {
       console.error("userId가 정의되지 않았습니다.");
@@ -100,6 +103,7 @@ const Chats = ({ userId, userEmail }) => {
       userType: "user",
     };
 
+    // 서버로 메시지를 POST 요청으로 전송
     const response = await fetch("http://localhost:3000/chat/" + userId, {
       method: "POST",
       body: JSON.stringify(newMessage),
@@ -112,13 +116,15 @@ const Chats = ({ userId, userEmail }) => {
       const resData = await response.json();
       console.log(resData.newMessage);
     }
+
+    // 전송 후 입력 필드와 높이 초기화
     setMessage("");
     setEmptyInput(true);
     setTextareaHeight(32);
     textareaRef.current.style.height = "auto";
   };
 
-  // 채팅창을 다시 토글했을 때, 제일 밑으로 이동하는 버튼이 안보이게 구성
+  // 채팅창을 열고 닫을 때, 제일 밑으로 스크롤을 이동하고 버튼 숨김
   const chatToggleHandler = () => {
     setChatToggle((prevToggle) => !prevToggle);
     if (!chatToggle) {

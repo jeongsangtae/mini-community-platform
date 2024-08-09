@@ -18,21 +18,24 @@ const ChatInput = ({
     const textarea = textareaRef.current;
     setMessage(event.target.value);
 
-    textarea.style.height = "auto"; // 높이를 초기화하여 scrollHeight 값을 올바르게 계산
+    // 높이를 초기화하여 scrollHeight 값을 올바르게 계산
+    textarea.style.height = "auto";
     const newHeight = textarea.scrollHeight; // 새로운 높이 계산
     textarea.style.height = `${newHeight}px`;
-    console.log(newHeight);
 
-    // 최대 높이를 설정하고 그 이상은 스크롤
+    // 텍스트 입력창의 최대 높이를 설정하고, 그 이상은 스크롤 사용
     if (newHeight <= 112) {
       textarea.style.height = `${newHeight}px`;
-      setTextareaHeight(newHeight); // 새로운 높이 설정
+      setTextareaHeight(newHeight); // 부모 컴포넌트에 높이 업데이트
     } else {
       textarea.style.height = "112px";
     }
+
+    // 입력된 값이 공백인지 확인하여 전송 버튼 활성화/비활성화
     setEmptyInput(event.target.value.trim() === "");
   };
 
+  // Enter 키를 누르고 Shift 키가 함께 눌리지 않는 경우 메시지 전송
   const keyPressHandler = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
