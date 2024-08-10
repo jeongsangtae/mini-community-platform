@@ -13,9 +13,11 @@ const Comments = () => {
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
 
+  // 컴포넌트가 마운트될 때 댓글 데이터를 서버에서 가져오는 useEffect
   useEffect(() => {
     const fetchData = async () => {
       const postId = post.postId;
+
       // 서버에서 특정 게시물에 대한 댓글을 가져오는 API 호출
       const response = await fetch(
         "http://localhost:3000/posts/" + postId + "/comments",
@@ -29,7 +31,6 @@ const Comments = () => {
       }
 
       const resData = await response.json();
-      // 가져온 댓글 데이터를 상태로 설정
       setComments(resData.comments);
     };
     fetchData();

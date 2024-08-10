@@ -16,6 +16,7 @@ const MainHeader = () => {
 
   const authCtx = useContext(AuthContext);
 
+  // 컴포넌트가 마운트될 때 로그인 유지 상태를 확인하는 내용
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,6 +46,7 @@ const MainHeader = () => {
     setOnSignupModal(false);
   };
 
+  // 네비게이션 링크의 활성화 상태에 따라 클래스 설정
   const navLinkClass = ({ isActive }) => {
     return isActive
       ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
@@ -74,6 +76,7 @@ const MainHeader = () => {
             </div>
           </NavLink>
 
+          {/* 로그인 상태 및 사용자 역할에 따라 다른 메뉴와 채팅 기능 표시 */}
           {authCtx.isLoggedIn && authCtx.userInfo?.role === "user" ? (
             <>
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
@@ -92,6 +95,7 @@ const MainHeader = () => {
         </nav>
       </header>
 
+      {/* 로그인되지 않은 경우 회원가입 및 로그인 모달 표시 */}
       {!authCtx.isLoggedIn && (
         <>
           {openSignupModal && (

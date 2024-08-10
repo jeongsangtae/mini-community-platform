@@ -19,8 +19,11 @@ const Reply = ({
 
   const [replyEditToggle, setReplyEditToggle] = useState(false);
 
+  // 답글을 삭제하는 함수
   const replyDeleteHandler = async () => {
     const postId = post.postId;
+
+    // 답글 삭제 요청
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/reply",
       {
@@ -36,6 +39,7 @@ const Reply = ({
       console.log(errorData.message);
       throw json({ message: "Could not delete reply." }, { status: 500 });
     } else {
+      // 답글 삭제가 성공했을 때 상위 컴포넌트에 알림
       onDeleteReplyData(replyId);
     }
   };
@@ -54,8 +58,11 @@ const Reply = ({
       >
         <p>{name}</p>
         {email === authCtx.userInfo?.email && (
+          // 사용자가 작성한 답글만 수정 및 삭제 버튼 표시
           <div>
-            <button onClick={replyEditToggleHandler}>&#9998;</button>
+            <button type="button" onClick={replyEditToggleHandler}>
+              &#9998;
+            </button>
             <button type="button" onClick={replyDeleteHandler}>
               &times;
             </button>
@@ -64,6 +71,7 @@ const Reply = ({
       </div>
       <p className={classes.content}>{content}</p>
       <p className={classes.date}>{date}</p>
+
       {replyEditToggle && (
         <ReplyForm
           method="PATCH"

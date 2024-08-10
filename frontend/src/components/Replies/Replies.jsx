@@ -12,9 +12,12 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
 
   const [replies, setReplies] = useState([]);
 
+  // 컴포넌트가 마운트될 때 답글 데이터를 서버에서 가져오는 useEffect
   useEffect(() => {
     const fetchData = async () => {
       const postId = post.postId;
+
+      // 서버에서 특정 게시물의 특정 댓글에 대한 답글을 가져오는 API 호출
       const response = await fetch(
         "http://localhost:3000/posts/" + postId + "/" + commentId + "/replies"
       );
@@ -25,7 +28,7 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
 
       const resData = await response.json();
       setReplies(resData.replies);
-      repliesLength(resData.replies.length);
+      repliesLength(resData.replies.length); // 답글의 수를 부모 컴포넌트에 전달
     };
 
     fetchData();
@@ -54,6 +57,7 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
 
   return (
     <>
+      {/* 답글 작성 폼을 조건부로 렌더링 */}
       {replyToggle && (
         <ReplyForm
           method="POST"
@@ -62,11 +66,13 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
           onReplyToggle={onReplyToggle}
         />
       )}
+      {/* 답글이 있는 경우, 밑줄을 렌더링 */}
       {replies.length > 0 && (
         <p
           className={`${classes.underline} ${classes[authCtx.themeClass]}`}
         ></p>
       )}
+      {/* 답글이 있을 경우에만 렌더링 */}
       {replies.length > 0 && (
         <ul>
           {replies.map((reply) => {
