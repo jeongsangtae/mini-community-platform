@@ -10,23 +10,29 @@ const CreateComment = ({ method, onAddCommentData }) => {
   const authCtx = useContext(AuthContext);
 
   const [comment, setComment] = useState("");
+
+  // 댓글 입력에 대한 최대 길이 설정
   const maxLength = 300;
 
+  // 댓글 입력 함수, 최대 길이를 초과하지 않도록 설정
   const commentInputHandler = (event) => {
     if (event.target.value.length <= maxLength) {
       setComment(event.target.value);
     }
   };
 
+  // 입력한 댓글 제출 함수로 서버에 댓글을 전송하고 응답 처리
   const submitHandler = async (event) => {
     event.preventDefault();
 
     const postId = post.postId;
 
+    // 서버에 보낼 요청 데이터
     let requestBody = {
       content: comment,
     };
 
+    // 댓글 저장 요청
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/comments",
       {

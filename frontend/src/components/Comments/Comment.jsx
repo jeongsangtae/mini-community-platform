@@ -22,8 +22,11 @@ const Comment = ({
   const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
 
+  // 댓글을 삭제하는 함수
   const commentDeleteHandler = async () => {
     const postId = post.postId;
+
+    // 댓글 삭제 요청
     const response = await fetch(
       "http://localhost:3000/posts/" + postId + "/comment",
       {
@@ -39,6 +42,7 @@ const Comment = ({
       console.log(errorData.message);
       throw json({ message: "Could not delete comment." }, { status: 500 });
     } else {
+      // 댓글 삭제가 성공했을 때 상위 컴포넌트에 알림 (상태 끌어올리기)
       onDeleteCommentData(commentId);
     }
   };
@@ -51,6 +55,7 @@ const Comment = ({
     setReplyToggle(!replyToggle);
   };
 
+  // 답글 수를 상위 컴포넌트에 전달하는 함수
   const repliesLengthHandler = (length) => {
     onRepliesValue(length);
   };
@@ -64,6 +69,7 @@ const Comment = ({
       >
         <p>{name}</p>
         {email === authCtx.userInfo?.email && (
+          // 사용자가 작성한 댓글만 수정 및 삭제 버튼 표시
           <div>
             <button type="button" onClick={commentEditToggleHandler}>
               &#9998;
@@ -79,6 +85,7 @@ const Comment = ({
       <p className={classes.date}>{date}</p>
 
       {authCtx.isLoggedIn && (
+        // 로그인한 사용자만 답글 버튼 표시
         <button
           type="button"
           onClick={replyToggleHandler}

@@ -15,6 +15,7 @@ const EditComment = ({
   const authCtx = useContext(AuthContext);
 
   const [comment, setComment] = useState("");
+
   const maxLength = 300;
 
   const commentInputHandler = (event) => {
@@ -26,6 +27,7 @@ const EditComment = ({
   const submitHandler = async (event) => {
     event.preventDefault();
 
+    // 공백인 경우 기존 댓글 내용 유지
     let contentTrimConfrim =
       comment.trim() !== "" ? comment : commentData.content;
 
@@ -59,6 +61,7 @@ const EditComment = ({
     return redirect("/posts/" + postId);
   };
 
+  // 사용자가 로그인하지 않은 경우 수정 창을 닫음
   useEffect(() => {
     if (authCtx.isLoggedIn === false) {
       onCommentToggle();
