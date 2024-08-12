@@ -9,7 +9,7 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
   const navigate = useNavigate();
 
   const closeHandler = () => {
-    navigate(-1);
+    navigate(-1); // 현재 페이지에서 이전 페이지로 이동
   };
 
   return (
@@ -33,10 +33,12 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
               id="title"
               name="title"
               placeholder="제목을 입력해 주세요"
+              // 편집 시 기존 제목 표시, 새 게시글 작성 시 빈 입력란
               defaultValue={postData ? postData.title : ""}
             />
           </div>
           <div>
+            {/* 게시물 작성자 이름 표시 (편집 시 기존 작성자, 새로운 작성 시 현재 사용자) */}
             {postData ? <p>{postData.name}</p> : <p>{userData?.name}</p>}
           </div>
           <div>
@@ -44,6 +46,7 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
               required
               name="content"
               placeholder="내용 입력"
+              // 편집 시 기존 내용 표시, 새 게시물 작성 시 빈 텍스트
               defaultValue={postData ? postData.content : ""}
             />
           </div>
@@ -61,15 +64,19 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
 
 export default PostForm;
 
+// 게시글 Form action 함수 내용
 export const action = async ({ request, params }) => {
-  const method = await request.method;
-  const formData = await request.formData();
-  const postData = Object.fromEntries(formData);
+  const method = await request.method; // HTTP 메서드 (POST 또는 PATCH) 가져오기
+  const formData = await request.formData(); // form 데이터 가져오기
+  const postData = Object.fromEntries(formData); // form 데이터를 객체로 변환
 
+  // URL 매개변수에서 게시글 ID 가져옴 (편집 시에만 사용)
   const postId = params.postId;
 
+  // 기본 URL
   let url = "http://localhost:3000/posts";
 
+  // 게시글 수정 시 사용되는 URL
   if (method === "PATCH") {
     url = "http://localhost:3000/posts/" + postId + "/edit";
   }

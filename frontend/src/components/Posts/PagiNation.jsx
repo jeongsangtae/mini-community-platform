@@ -21,10 +21,12 @@ const Pagination = ({
     onPageChange(pageNum);
   };
 
+  // 페이지 이동 버튼을 렌더링하는 함수
   const pageMove = (condition, label, clickEvent) => {
     return condition && <button onClick={clickEvent}>{label}</button>;
   };
 
+  // 현재 페이지 그룹의 페이지 번호들을 생성
   const pageNumber = Array.from(
     { length: lastPageGroup - firstPageGroup + 1 },
     (_, index) => {
@@ -35,7 +37,7 @@ const Pagination = ({
           onClick={() => pageChangeHandler(pageNumber)}
           className={
             pageNumber === page
-              ? `${classes.on} ${classes[authCtx.themeClass]}`
+              ? `${classes.on} ${classes[authCtx.themeClass]}` // 현재 페이지를 강조 표시
               : ""
           }
         >
@@ -47,6 +49,7 @@ const Pagination = ({
 
   return (
     <>
+      {/* 페이지가 1보다 많을 때만 페이지네이션 렌더링 */}
       {totalPages > 1 && (
         <div className={`${classes.pagination} ${classes[authCtx.themeClass]}`}>
           {pageMove(firstPage, firstPageButton, () => pageChangeHandler(1))}

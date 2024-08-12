@@ -11,7 +11,10 @@ import classes from "./Posts.module.css";
 const Posts = () => {
   const authCtx = useContext(AuthContext);
 
+  // URL 쿼리 매개변수(searchParams)를 관리
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // 게시글 관련 상태 관리
   const [posts, setPosts] = useState([]);
   const [countPosts, setCountPosts] = useState(0);
   const [page, setPage] = useState(1);
@@ -21,12 +24,13 @@ const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("title");
 
+  // 서버에서 게시글 데이터 가져오기
   const fetchData = async (
     pageNumber,
     searchTerm = "",
     searchField = "title"
   ) => {
-    authCtx.setIsLoading(true);
+    authCtx.setIsLoading(true); // 로딩 상태 시작
     // setTimeout(async () => {
     try {
       const searchParams = new URLSearchParams({
@@ -41,11 +45,12 @@ const Posts = () => {
       const resData = await response.json();
       return resData;
     } finally {
-      authCtx.setIsLoading(false);
+      authCtx.setIsLoading(false); // 로딩 상태 종료
     }
     // }, 2000);
   };
 
+  // 페이지 변경 시 새로운 데이터 가져옴
   const paginationFetchData = async (pageNumber, searchTerm, searchField) => {
     const resData = await fetchData(pageNumber, searchTerm, searchField);
 
@@ -56,16 +61,19 @@ const Posts = () => {
     setCountPosts(resData.countPosts);
   };
 
+  // 페이지 변경 함수
   const pageChangeHandler = (pageNum) => {
     setSearchParams({ page: pageNum, search: searchTerm, field: searchField });
     setPage(pageNum);
   };
 
+  // 검색 함수
   const searchHandler = () => {
     setSearchParams({ page: 1, search: searchTerm, field: searchField });
     setPage(1);
   };
 
+  // 컴포넌트가 마운트될 때와 searchParams가 변경될 때 데이터 가져옴
   useEffect(() => {
     const pageNumber = parseInt(searchParams.get("page")) || 1;
     const search = searchParams.get("search") || "";
@@ -77,6 +85,7 @@ const Posts = () => {
     paginationFetchData(pageNumber, search, field);
   }, [searchParams]);
 
+  // 로그인 여부에 따라 다르게 표시되는 "글쓰기" 버튼 클래스
   const postAddButtonClass = authCtx.isLoggedIn
     ? `${classes.add} ${classes[authCtx.themeClass]}`
     : `${classes.add} ${classes[authCtx.themeClass]} ${classes.opacity}`;
@@ -84,7 +93,7 @@ const Posts = () => {
   return (
     <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
       {authCtx.isLoading ? (
-        <LoadingIndicator />
+        <LoadingIndicator /> // 로딩 중일 때 표시
       ) : (
         <div className={classes["board-container"]}>
           <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
@@ -94,6 +103,7 @@ const Posts = () => {
           <div
             className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
           >
+            {/* 전체 게시글 갯수를 보여줌 */}
             <p>{countPosts}개의 글</p>
             <Link to="create-post" className={postAddButtonClass}>
               글쓰기
@@ -122,6 +132,7 @@ const Posts = () => {
             </ul>
           ) : (
             <>
+              {/* 게시글이 없는 경우에만 표시 */}
               <h2
                 className={`${classes["no-posts"]} ${
                   classes[authCtx.themeClass]

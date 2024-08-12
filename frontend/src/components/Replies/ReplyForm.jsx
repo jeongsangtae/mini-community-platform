@@ -26,7 +26,7 @@ const ReplyForm = ({
     }
   };
 
-  // 폼 제출 시 호줄되는 함수 (새 답글 등록 또는 기존 답글 수정)
+  // 폼 제출 시 호출되는 함수 (새 답글 등록 또는 기존 답글 수정)
   const submitHandler = async (event) => {
     event.preventDefault();
 

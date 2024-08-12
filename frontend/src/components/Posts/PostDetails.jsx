@@ -14,23 +14,28 @@ const PostDetails = () => {
 
   const [dropdownToggle, setDropdownToggle] = useState(false);
 
+  // 게시글 로드가 완료되지 않은 경우 로딩 표시
   if (!post) {
     return <LoadingIndicator />;
   }
 
+  // 게시글 삭제 함수
   const postDeleteHandler = () => {
     submit(null, { method: "delete" });
   };
 
   const dropdownButtonHandler = (event) => {
+    // 상위 요소로 이벤트가 전파되는 것을 방지
     event.stopPropagation();
     setDropdownToggle(!dropdownToggle);
   };
 
+  // 드롭다운 메뉴 외부 클릭 시 닫히는 함수
   const dropdownCloseHandler = () => {
     setDropdownToggle(false);
   };
 
+  // 게시글 작성자와 현재 사용자가 동일할 경우에만 활성화되는 버튼 스타일
   const actionsButtonClass =
     post.email === authCtx.userInfo?.email
       ? `${classes.actions} ${classes[authCtx.themeClass]}`
