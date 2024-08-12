@@ -8,6 +8,7 @@ const CreatePostPage = () => {
 
   return (
     <>
+      {/* HTTP 메서드로 "post"를 전송, 로그인한 사용자 정보 전달 */}
       <PostForm
         method="post"
         userData={authCtx.userInfo}

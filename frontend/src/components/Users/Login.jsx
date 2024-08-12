@@ -18,14 +18,17 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // 입력 필드가 변경될 때마다 상태 업데이트
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
     setLoginData({ ...loginData, [name]: value });
   };
 
+  // 로그인 폼 제출 시 호출되는 함수
   const submitHandler = async (event) => {
     event.preventDefault();
 
+    // 서버로 로그인 요청을 보내는 API
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       body: JSON.stringify(loginData),
@@ -43,9 +46,10 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
       await authCtx.login();
       onLoginToggle();
     }
+    // 사용자의 역할에 따라 다른 페이지로 리다이렉트
     const role = localStorage.getItem("role");
     if (role === "admin") {
-      navigate("/admin");
+      navigate("/admin"); // 관리자일 경우 관리자 페이지로 이동
     }
   };
 
@@ -79,6 +83,7 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
           <FaLock className={classes.icon} />
         </div>
 
+        {/* 오류 메시지 표시 */}
         {error && (
           <p
             className={`${classes["error-message"]} ${
@@ -99,6 +104,7 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
         </button>
       </form>
 
+      {/* 회원가입 모달로 전환하는 내용 */}
       <div className={`${classes.link} ${classes[authCtx.themeClass]}`}>
         <button className={classes.signup} onClick={onSignupToggle}>
           회원가입 하러가기

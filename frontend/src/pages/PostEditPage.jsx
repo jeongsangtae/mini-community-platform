@@ -7,6 +7,7 @@ const PostEditPage = () => {
 
   return (
     <>
+      {/* HTTP 메서드로 "patch"를 전송, 로그인한 사용자 정보 전달 */}
       <PostForm
         method="patch"
         postData={postData}

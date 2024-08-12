@@ -15,6 +15,7 @@ const Authentication = ({ children }) => {
           postData.email === authCtx.userInfo?.email ? (
             children // 로그인을 했고, postData가 존재하고 이메일이 일치할 때
           ) : (
+            // 이메일이 일치하지 않으면 접근 권한 없음
             <NoAccess
               message={{
                 title: "접근 권한이 없습니다",
@@ -26,6 +27,7 @@ const Authentication = ({ children }) => {
           children // 로그인을 했지만 postData가 존재하지 않을 때
         )
       ) : (
+        // 사용자가 로그인하지 않은 경우
         <NoAccess
           message={{
             title: "로그인이 필요합니다",
