@@ -29,21 +29,21 @@ import AdminPostDetailsPage, {
   loader as adminPostDetailsLoader,
   action as adminPostDeleteAction,
 } from "./pages/AdminPostDetailsPage";
-// import AdminCommentsLayout from "./pages/AdminCommentsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminHomePage from "./pages/AdminHomePage";
 
+// 라우터 설정: 각 경로에 대한 컴포넌트, 로더, 액션 등을 정의
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
-    // errorElement: <NotFound />,
+    element: <RootLayout />, // 메인 레이아웃 컴포넌트
+    // errorElement: <NotFound />,  // 주석 처리된 오류 페이지 (필요시 활성화)
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage /> }, // 홈 페이지
       {
         path: "posts",
-        element: <PostsPage />,
-        loader: postsLoader,
+        element: <PostsPage />, // 게시글 목록 페이지
+        loader: postsLoader, // 게시글 데이터를 가져오는 loader
       },
       {
         path: "posts/create-post",
@@ -51,18 +51,18 @@ const router = createBrowserRouter([
           <Authentication>
             <CreatePostPage />
           </Authentication>
-        ),
-        action: postFormAction,
+        ), // 인증이 필요한 게시글 생성 페이지
+        action: postFormAction, // 게시글 생성, 편집 action
       },
       {
         path: "posts/:postId",
-        id: "post-detail",
-        loader: postDetailsLoader,
+        id: "post-detail", // 게시글 세부 페이지의 useRouteLoaderData에 사용될 routeId 내용
+        loader: postDetailsLoader, // 게시글 세부 정보 loader
         children: [
           {
             index: true,
-            element: <PostDetailsPage />,
-            action: postDeleteAction,
+            element: <PostDetailsPage />, // 게시글 세부 정보 페이지
+            action: postDeleteAction, // 게시글 삭제 action
           },
           {
             path: "edit",
@@ -70,29 +70,28 @@ const router = createBrowserRouter([
               <Authentication>
                 <PostEditPage />
               </Authentication>
-            ),
-            action: postFormAction,
+            ), // 인증이 필요한 게시글 편집 페이지
+            action: postFormAction, // 게시글 편집 action
           },
-          { path: "no-access", element: <Authentication /> },
+          { path: "no-access", element: <Authentication /> }, // 접근 권한 없음 페이지
         ],
       },
-      { path: "signup-success", element: <SignupSuccessPage /> },
+      { path: "signup-success", element: <SignupSuccessPage /> }, // 회원가입 성공 페이지
       {
         path: "profile",
         element: (
           <Authentication>
             <ProfilePage />
           </Authentication>
-        ),
+        ), // 인증이 필요한 프로필 페이지
       },
-      // { path: "no-access", element: <Authentication /> },
     ],
   },
   {
     path: "/admin",
-    id: "users-data",
-    loader: adminUsersLoader,
-    element: <AdminRootLayout />,
+    id: "users-data", // 관리자 페이지의 채팅, 사용자 페이지 useRouteLoaderData에 사용될 routeId 내용
+    loader: adminUsersLoader, // 관리자 페이지에서 사용자 데이터를 가져오는 loader
+    element: <AdminRootLayout />, // 관리자 페이지 레이아웃 컴포넌트
     children: [
       {
         index: true,
@@ -101,7 +100,7 @@ const router = createBrowserRouter([
           <AdminAuthentication>
             <AdminHomePage />
           </AdminAuthentication>
-        ),
+        ), // 인증이 필요한 관리자 홈 페이지
       },
       {
         path: "posts",
@@ -109,15 +108,15 @@ const router = createBrowserRouter([
           <AdminAuthentication>
             <AdminPostsPage />
           </AdminAuthentication>
-        ),
-        loader: adminPostsLoader,
+        ), // 인증이 필요한 관리자 게시글 페이지
+        loader: adminPostsLoader, // 관리자 페이지에서 게시글 데이터를 가져오는 로더
       },
       {
         path: "posts/:postId",
-        id: "admin-post-detail",
-        element: <AdminPostDetailsPage />,
-        loader: adminPostDetailsLoader,
-        action: adminPostDeleteAction,
+        id: "admin-post-detail", // 관리자 페이지의 게시글 세부 페이지 useRouteLoaderData에 사용될 routeId 내용
+        element: <AdminPostDetailsPage />, // 관리자 페이지에서 게시글 세부 정보 가져옴
+        loader: adminPostDetailsLoader, // 관리자 페이지에서 게시글 세부 정보를 가져오는 loader
+        action: adminPostDeleteAction, // 관리자 페이지에서 게시글 삭제 action
       },
       {
         path: "users",
@@ -125,13 +124,14 @@ const router = createBrowserRouter([
           <AdminAuthentication>
             <AdminUsersPage />
           </AdminAuthentication>
-        ),
+        ), // 인증이 필요한 관리자 사용자 페이지
       },
     ],
   },
-  { path: "*", element: <NotFound /> },
+  { path: "*", element: <NotFound /> }, // 404 페이지 (경로가 없을 때 표시)
 ]);
 
+// React 앱의 진입점: 루트 엘리먼트를 생성하고, AuthContextProvider로 앱을 감쌈
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvier>
     <RouterProvider router={router} />
