@@ -18,8 +18,11 @@ const AdminComment = ({
 
   const [replyToggle, setReplyToggle] = useState(false);
 
+  // 댓글을 삭제하는 함수
   const commentDeleteHandler = async () => {
     const postId = post.postId;
+
+    // 댓글 삭제 요청
     const response = await fetch(
       "http://localhost:3000/admin/posts/" + postId + "/comment",
       {
@@ -43,6 +46,7 @@ const AdminComment = ({
     setReplyToggle(!replyToggle);
   };
 
+  // 답글 수를 상위 컴포넌트에 전달하는 함수
   const repliesLengthHandler = (length) => {
     onRepliesValue(length);
   };

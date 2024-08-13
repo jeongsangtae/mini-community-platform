@@ -46,8 +46,8 @@ const Post = ({ num, title, name, date, content, count }) => {
             <p>{title}</p>
           </div>
           <div className={classes.content}>
+            {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
             <p>
-              {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
               {truncatedText} {moreLines && "..."}
             </p>
           </div>

@@ -8,8 +8,11 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
   const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
 
+  // 답글을 삭제하는 함수
   const replyDeleteHandler = async () => {
     const postId = post.postId;
+
+    // 답글 삭제 요청
     const response = await fetch(
       "http://localhost:3000/admin/posts/" + postId + "/reply",
       {
