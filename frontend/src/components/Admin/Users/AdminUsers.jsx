@@ -13,20 +13,25 @@ const AdminUsers = () => {
 
   const [users, setUsers] = useState(usersData);
 
-  // 사용자 삭제된 후에 페이지 이동하고 다시 확인 했을 때, 사용자가 그대로 남아있는 것처럼 보이는 것을 방지하기 위한 코드
+  // 사용자 목록을 새로고침하는 useEffect
+  // 사용자가 삭제된 후에도 최신 사용자 목록을 유지하기 위한 코드
   useEffect(() => {
     const fetchUsers = async () => {
+      // 최신 사용자 목록을 가져오기 위한 API 요청
       const response = await fetch("http://localhost:3000/admin/users", {
         credentials: "include",
       });
       const resData = await response.json();
+      // 가져온 사용자 목록으로 상태 업데이트
       setUsers(resData.users);
     };
 
     fetchUsers();
   }, []);
 
+  // 사용자를 삭제하는 함수
   const deleteUser = (userEmail) => {
+    // 삭제된 사용자를 목록에서 제거한 후 상태 업데이트
     const filteredUsers = users.filter((user) => user.email !== userEmail);
     setUsers(filteredUsers);
   };
@@ -44,6 +49,7 @@ const AdminUsers = () => {
           <div
             className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
           >
+            {/* 사용자 수를 보여줌 */}
             <p>{users.length}명의 사용자</p>
           </div>
 
@@ -51,6 +57,7 @@ const AdminUsers = () => {
             className={`${classes.underline} ${classes[authCtx.themeClass]}`}
           ></p>
 
+          {/* 사용자 목록을 렌더링하거나, 사용자가 없는 경우 메시지를 표시 */}
           {users.length > 0 ? (
             <ul className={classes.users}>
               {users.map((user) => {

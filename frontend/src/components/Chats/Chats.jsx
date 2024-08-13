@@ -21,6 +21,7 @@ const Chats = ({ userId, userEmail }) => {
 
   const authCtx = useContext(AuthContext);
 
+  // 커스텀 훅을 사용하여 채팅 스크롤 관리
   const {
     chatContainerRef,
     messagesEndRef,
@@ -31,6 +32,7 @@ const Chats = ({ userId, userEmail }) => {
     scrollHandler,
   } = useChatScroll(messages, { self: "user", other: "admin" });
 
+  // 커스텀 훅을 사용하여 채팅 입력창의 크기 자동 조절
   const { setTextareaHeight, buttonsContainerRef } = useAutosizeChatHeight(
     chatContainerRef,
     scrollToBottomHandler,
@@ -84,7 +86,7 @@ const Chats = ({ userId, userEmail }) => {
     };
   }, [userId]);
 
-  // 메시지 전송 핸들러
+  // 메시지 전송 함수
   const sendMessageHandler = async () => {
     if (!userId) {
       console.error("userId가 정의되지 않았습니다.");

@@ -14,6 +14,7 @@ const AdminMainHeader = () => {
   console.log(authCtx.userInfo);
   console.log(authCtx.userInfo?.role);
 
+  // 네비게이션 링크의 활성화 상태에 따라 클래스 설정
   const navLinkClass = ({ isActive }) => {
     return isActive
       ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
@@ -30,6 +31,8 @@ const AdminMainHeader = () => {
         <h1 className={`${classes.logo} ${classes[authCtx.themeClass]}`}>
           커뮤니티 게시판
         </h1>
+
+        {/* 관리자로 로그인된 경우에만 네비게이션 메뉴와 사용자 목록을 표시 */}
         {authCtx.isLoggedIn && authCtx.userInfo?.role === "admin" && (
           <>
             <nav className={classes.navbutton}>
@@ -53,6 +56,8 @@ const AdminMainHeader = () => {
 
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </nav>
+
+            {/* 관리자가 접근할 수 있는 사용자 목록 및 채팅 기능 */}
             <AdminUserList
               adminId={authCtx.userInfo?._id}
               adminEmail={authCtx.userInfo?.email}

@@ -10,8 +10,9 @@ const AdminAuthentication = ({ children }) => {
     <>
       {authCtx.isLoggedIn ? (
         localStorage.getItem("role") === "admin" ? (
-          children
+          children // 로그인을 했고, 로컬 스토리지에 저장된 role 항목이 admin일 때
         ) : (
+          // 로컬 스토리지에 저장된 role 항목이 user일 경우 접근 권한 없음
           <NoAccess
             message={{
               title: "접근 권한이 없습니다",
@@ -20,6 +21,7 @@ const AdminAuthentication = ({ children }) => {
           />
         )
       ) : (
+        // 사용자가 로그인하지 않은 경우
         <NoAccess
           message={{
             title: "로그인이 필요합니다",
