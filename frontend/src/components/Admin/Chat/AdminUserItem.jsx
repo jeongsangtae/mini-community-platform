@@ -15,7 +15,7 @@ const AdminUserItem = ({
 
   // 사용자 항목을 클릭했을 때 호출되는 함수
   const clickHandler = () => {
-    // 선택된 ㄴ사용자의 ID와 이름을 selectUser 함수로 전달
+    // 선택된 사용자의 ID와 이름을 selectUser 함수로 전달
     selectUser(userId, name);
   };
 

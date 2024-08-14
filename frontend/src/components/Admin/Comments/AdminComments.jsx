@@ -17,7 +17,7 @@ const AdminComments = () => {
     const fetchData = async () => {
       const postId = post.postId;
 
-      // 서버에서 특정 게시물에 대한 댓글을 가져오는 API 호출
+      // 서버에서 특정 게시글에 대한 댓글을 가져오는 API 호출
       const response = await fetch(
         "http://localhost:3000/admin/posts/" + postId + "/comments",
         {

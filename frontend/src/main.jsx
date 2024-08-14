@@ -32,7 +32,7 @@ import AdminPostDetailsPage, {
 import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminHomePage from "./pages/AdminHomePage";
 
-// 라우터 설정: 각 경로에 대한 컴포넌트, 로더, 액션 등을 정의
+// 라우터 설정: 각 경로에 대한 컴포넌트, loader, action 등을 정의
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,8 +51,8 @@ const router = createBrowserRouter([
           <Authentication>
             <CreatePostPage />
           </Authentication>
-        ), // 인증이 필요한 게시글 생성 페이지
-        action: postFormAction, // 게시글 생성, 편집 action
+        ), // 인증이 필요한 게시글 추가 페이지
+        action: postFormAction, // 게시글 추가, 수정 action
       },
       {
         path: "posts/:postId",
@@ -70,8 +70,8 @@ const router = createBrowserRouter([
               <Authentication>
                 <PostEditPage />
               </Authentication>
-            ), // 인증이 필요한 게시글 편집 페이지
-            action: postFormAction, // 게시글 편집 action
+            ), // 인증이 필요한 게시글 수정 페이지
+            action: postFormAction, // 게시글 수정 action
           },
           { path: "no-access", element: <Authentication /> }, // 접근 권한 없음 페이지
         ],

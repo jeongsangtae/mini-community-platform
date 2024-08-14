@@ -46,7 +46,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     fetchLastMessages();
   }, [usersData]);
 
-  // 채팅 창 토글 핸들러
+  // 채팅 토글 핸들러
   const chatToggleHandler = () => {
     setChatToggle(!chatToggle);
   };
@@ -56,7 +56,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
     setUserChatRoomToggle(!userChatRoomToggle);
   };
 
-  // 특정 사용자 채빙방으로 이동하는 함수
+  // 특정 사용자 채팅방으로 이동하는 함수
   const chatRoomMoveHandler = (userId, name) => {
     setSelectUserChatRoom(userId);
     setSelectChatRoomUserName(name);
@@ -116,7 +116,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         chatRoomClose={userChatRoomToggleHandler}
       />
 
-      {/* 채팅 창 토글 버튼 */}
+      {/* 채팅 토글 버튼 */}
       <div className={classes["chat-icon"]}>
         {!chatToggle ? (
           <BsChatFill

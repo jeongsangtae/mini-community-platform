@@ -126,7 +126,7 @@ export const AuthContextProvier = ({ children }) => {
     }
   }, [isLoggedIn]);
 
-  // 앱이 처음 로드될 때 로그인 상태 확인
+  // 앱이 처음 로드될 때 로그인 상태 확인하는 useEffect
   useEffect(() => {
     // 로컬 스토리지에서 로그인 상태를 불러옴
     const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
@@ -136,7 +136,7 @@ export const AuthContextProvier = ({ children }) => {
     }
   }, []);
 
-  // 테마 모드 변경 시 로컬 스토리지에 저장
+  // 테마 모드 변경 시 로컬 스토리지에 저장하는 useEffect
   useEffect(() => {
     localStorage.setItem("themeMode", themeMode);
   }, [themeMode]);

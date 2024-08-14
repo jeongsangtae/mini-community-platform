@@ -35,16 +35,15 @@ const AdminPostDetails = () => {
     setDropdownToggle(false);
   };
 
-  // 게시글 작성자와 현재 사용자가 동일할 경우에만 활성화되는 버튼 스타일
-  const actionsButtonClass =
-    post.email === authCtx.userInfo?.email
-      ? `${classes.actions} ${classes[authCtx.themeClass]}`
-      : `${classes.actions} ${classes[authCtx.themeClass]} ${classes.opacity}`;
+  // const actionsButtonClass =
+  //   post.email === authCtx.userInfo?.email
+  //     ? `${classes.actions} ${classes[authCtx.themeClass]}`
+  //     : `${classes.actions} ${classes[authCtx.themeClass]} ${classes.opacity}`;
 
-  const iconButtonClass =
-    post.email === authCtx.userInfo?.email
-      ? `${classes.icon}`
-      : `${classes.icon} ${classes.opacity}`;
+  // const iconButtonClass =
+  //   post.email === authCtx.userInfo?.email
+  //     ? `${classes.icon}`
+  //     : `${classes.icon} ${classes.opacity}`;
 
   return (
     <div
@@ -75,7 +74,7 @@ const AdminPostDetails = () => {
 
             <MoreVertical
               onClick={dropdownButtonHandler}
-              className={iconButtonClass}
+              className={classes.icon}
             />
 
             {dropdownToggle && (
@@ -104,7 +103,7 @@ const AdminPostDetails = () => {
           className={`${classes.underline} ${classes[authCtx.themeClass]}`}
         ></p>
 
-        <div className={actionsButtonClass}>
+        <div className={`${classes.actions} ${classes[authCtx.themeClass]}`}>
           <button type="button" onClick={postDeleteHandler}>
             삭제
           </button>
