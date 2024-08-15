@@ -19,6 +19,9 @@ const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
+app.use(express.json());
+app.use(cookieParser());
+
 // 캐시 제어 헤더
 // app.use(function (req, res, next) {
 //   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -26,9 +29,6 @@ dotenv.config();
 //   res.setHeader("Expires", "0");
 //   next();
 // });
-
-app.use(express.json());
-app.use(cookieParser());
 
 // CORS 헤더 연결
 // 분리된 백엔드(다른 도메인에서 실행됨)를 사용할 때 필요
@@ -40,9 +40,10 @@ app.use(cookieParser());
 // });
 
 // CORS 미들웨어를 사용해서 연결
+// CORS 설정: 클라이언트 애플리케이션에서 서버로 요청을 보낼 때, 다른 도메인 간의 요청을 허용함
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5173", // 클라이언트 도메인
     credentials: true,
   })
 );
@@ -72,13 +73,15 @@ const io = new Server(server, {
   },
 });
 
-// Socket.io 객체를 Express 앱 객체에 저장
+// Socket.io 객체를 Express 앱 객체에 저장하여 라우트 함수에서도 접근할 수 있도록 함
 app.set("io", io);
 
+// 클라이언트가 Socket.io 연결을 맺을 때 실행되는 이벤트 함수
 // Socket.io 설정
 io.on("connection", (socket) => {
   console.log("클라이언트가 연결되었습니다:", socket.id);
 
+  // 클라이언트를 특정 방에 참여시킴
   socket.on("joinRoom", ({ userId, userType }) => {
     const roomId = `room-${userId}`;
     socket.join(roomId);
@@ -87,17 +90,13 @@ io.on("connection", (socket) => {
     );
   });
 
+  // 클라이언트가 연결을 끊었을 때 실행되는 이벤트 함수
   socket.on("disconnect", () => {
     console.log("클라이언트 연결이 끊어졌습니다:", socket.id);
   });
-
-  // socket.on("testMessage", (msg) => {
-  //   console.log("클라이언트로부터의 메시지:", msg);
-  //   // 클라이언트에게 응답 전송
-  //   socket.emit("serverResponse", msg);
-  // });
 });
 
+// MongoDB에 연결한 후 서버를 시작
 // MongoDB 설정
 db.connectToDatabase()
   .then(() => {
@@ -109,7 +108,7 @@ db.connectToDatabase()
     console.log(error);
   });
 
-// MongoDB 설정
+// MongoDB 설정으로 socket.io 사용하기 전의 설정
 // db.connectToDatabase()
 //   .then(() => {
 //     app.listen(3000);

@@ -9,15 +9,17 @@ const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
+// 게시글 목록 조회 및 검색 + 페이지네이션 포함 라우트
 router.get("/admin/posts", async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const search = req.query.search || "";
-  const fields = (req.query.field || "").split(",");
-  const pageSize = 5;
-  const pageButtonSize = 5;
+  const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값 1
+  const search = req.query.search || ""; // 검색어, 기본값은 빈 문자열
+  const fields = (req.query.field || "").split(","); // 검 필드, 기본값 빈 배열
+  const pageSize = 5; // 한 페이지에 보여줄 게시글 수색
+  const pageButtonSize = 5; // 페이지 버튼 그룹 크기
 
   let filter = {};
 
+  // 특정 필드에서 검색어 필터링
   if (search && fields.length) {
     filter = {
       $or: fields.map((field) => ({
@@ -25,6 +27,7 @@ router.get("/admin/posts", async (req, res) => {
       })),
     };
   } else if (search) {
+    // 검색어만 있는 경우, 기본 필드로 검색
     filter = {
       $or: [
         { title: { $regex: search, $options: "i" } },
@@ -34,6 +37,7 @@ router.get("/admin/posts", async (req, res) => {
     };
   }
 
+  // 게시글 목록을 필터, 페이지네이션 및 정렬 기준에 따라 조회
   const posts = await db
     .getDb()
     .collection("posts")
@@ -44,13 +48,17 @@ router.get("/admin/posts", async (req, res) => {
     .project({ postId: 1, title: 1, name: 1, content: 1, date: 1, count: 1 })
     .toArray();
 
+  // 총 게시글 수
   const countPosts = await db
     .getDb()
     .collection("posts")
     .countDocuments(filter);
 
+  // 전체 게시글 수를 계산하여 페이지 수를 계산
   const totalPages = Math.ceil(countPosts / pageSize);
 
+  // 페이지네이션의 시작과 끝 페이지 번호 계산
+  // 페이지 그룹 계산
   const firstPageGroup =
     Math.ceil(page / pageButtonSize) * pageButtonSize - pageButtonSize + 1;
   const lastPageGroup = Math.min(
@@ -65,8 +73,11 @@ router.get("/admin/posts", async (req, res) => {
       throw new Error("로그인하지 않은 사용자");
     }
 
+    // 액세스 토큰 검증
     const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
     const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+    // 데이터베이스에서 사용자 정보 조회
     const loginUserDbData = await db
       .getDb()
       .collection("users")
@@ -98,6 +109,7 @@ router.get("/admin/posts", async (req, res) => {
   }
 });
 
+// 특정 게시글을 가져오는 라우트
 router.get("/admin/posts/:postId", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
@@ -106,6 +118,7 @@ router.get("/admin/posts/:postId", async (req, res) => {
   res.json(post);
 });
 
+// 특정 게시글을 삭제하는 라우트
 router.delete("/admin/posts/:postId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -118,12 +131,15 @@ router.delete("/admin/posts/:postId", async (req, res) => {
   const post = await db.getDb().collection("posts").findOne({ postId: postId });
 
   if (post) {
+    // 게시글과 관련된 댓글 및 답글 삭제
     await db.getDb().collection("replies").deleteMany({ post_id: post._id });
-
     await db.getDb().collection("comments").deleteMany({ post_id: post._id });
 
+    // 게시글 삭제
     await db.getDb().collection("posts").deleteOne({ postId: post.postId });
 
+    // postId를 재정렬하여 연속적인 숫자로 유지
+    // 게시글 삭제 후 postId 재정렬
     await db
       .getDb()
       .collection("posts")
@@ -135,6 +151,7 @@ router.delete("/admin/posts/:postId", async (req, res) => {
   }
 });
 
+// 특정 게시글에 대한 댓글을 가져오는 라우트
 router.get("/admin/posts/:postId/comments", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
@@ -173,6 +190,7 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
   }
 });
 
+// 댓글을 삭제하는 라우트
 router.delete("/admin/posts/:postId/comment", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -184,17 +202,20 @@ router.delete("/admin/posts/:postId/comment", async (req, res) => {
 
   commentId = new ObjectId(commentId);
 
+  // 해당 댓글 조회
   const comment = await db
     .getDb()
     .collection("comments")
     .findOne({ _id: commentId });
 
   if (comment) {
+    // 댓글과 관련된 답글 삭제
     await db
       .getDb()
       .collection("replies")
       .deleteMany({ comment_id: commentId });
 
+    // 댓글 삭제
     await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
     res.status(200).json({ message: "Success" });
@@ -203,11 +224,13 @@ router.delete("/admin/posts/:postId/comment", async (req, res) => {
   }
 });
 
+// 특정 댓글에 대한 답글을 가져오는 라우트
 router.get("/admin/posts/:postId/:commentId/replies", async (req, res) => {
   let commentId = req.params.commentId;
 
   commentId = new ObjectId(commentId);
 
+  // 해당 댓글의 답글 목록 조회
   const replies = await db
     .getDb()
     .collection("replies")
@@ -217,6 +240,7 @@ router.get("/admin/posts/:postId/:commentId/replies", async (req, res) => {
   res.status(200).json({ replies });
 });
 
+// 답글을 삭제하는 라우트
 router.delete("/admin/posts/:postId/reply", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -228,12 +252,14 @@ router.delete("/admin/posts/:postId/reply", async (req, res) => {
 
   replyId = new ObjectId(replyId);
 
+  // 해당 답글 조회
   const reply = await db
     .getDb()
     .collection("replies")
     .findOne({ _id: replyId });
 
   if (reply) {
+    // 답글 삭제
     await db.getDb().collection("replies").deleteOne({ _id: replyId });
 
     res.status(200).json({ message: "Success" });
@@ -242,17 +268,19 @@ router.delete("/admin/posts/:postId/reply", async (req, res) => {
   }
 });
 
+// 관리자가 모든 사용자를 조회하는 라우트
 router.get("/admin/users", async (req, res) => {
   const users = await db
     .getDb()
     .collection("users")
-    .find({ email: { $ne: "admin@admin.com" } })
+    .find({ email: { $ne: "admin@admin.com" } }) // 관리자 계정을 제외하고 찾기
     .sort({ _id: -1 })
     .toArray();
 
   res.status(200).json({ users });
 });
 
+// 특정 사용자를 삭제하는 라우트
 router.delete("/admin/user", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -297,13 +325,13 @@ router.delete("/admin/user", async (req, res) => {
       // 삭제하려는 게시글 _id 추출
       const deletedPostIds = findPosts.map((post) => post._id);
 
-      // 각 게시글의 댓글과 답글 삭제
       // 두 번의 DB 호출로, 배열의 길이에 비례해서 DB 호출 횟수가 증가함
       // for (const postId of deletedPostIds) {
       //   await db.getDb().collection("replies").deleteMany({ post_id: postId });
       //   await db.getDb().collection("comments").deleteMany({ post_id: postId });
       // }
 
+      // 사용자가 작성한 게시글에 달린 댓글과 답글 삭제
       // $in 연산자를 통해서 한 번의 호출로 문서를 한 번에 삭제
       await db
         .getDb()
@@ -339,7 +367,7 @@ router.delete("/admin/user", async (req, res) => {
       .collection("chatMessages")
       .deleteMany({ user_id: user._id });
 
-    // 사용자가 작성한 모든 댓글, 답글 삭제
+    // 사용자가 작성한 모든 댓글, 답글 삭제 (다른 사용자의 게시글에 남긴 댓글, 답글 포함)
     await db.getDb().collection("replies").deleteMany({ email: user.email });
     await db.getDb().collection("comments").deleteMany({ email: user.email });
 

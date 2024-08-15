@@ -63,7 +63,7 @@ router.post("/chat/:userId", async (req, res) => {
       .padStart(2, "0")}`, // 날짜 및 시간을 포맷팅하여 문자열로 저장
   };
 
-  // 새 메시지를 MongoDB의 chatMessages 컬렉션에 저장
+  // 새 메시지를 chatMessages 컬렉션에 저장
   await db.getDb().collection("chatMessages").insertOne(newMessage);
 
   // socket.io를 통해 새 메시지를 해당 채팅방에 브로드캐스트

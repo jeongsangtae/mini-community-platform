@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
   res.redirect("/");
 });
 
-// 게시글 목록 조회 및 검색 + 페이지네이션 포함
+// 게시글 목록 조회 및 검색 + 페이지네이션 포함 라우트
 router.get("/posts", async (req, res) => {
   const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값 1
   const search = req.query.search || ""; // 검색어를 쿼리 파라미터에서 가져옴
@@ -32,7 +32,7 @@ router.get("/posts", async (req, res) => {
       })),
     };
   } else if (search) {
-    // 필드를 지정하지 않은 경우 모든 필드에서 검색
+    // 검색어만 있는 경우, 기본 필드로 검색
     filter = {
       $or: [
         { title: { $regex: search, $options: "i" } },
@@ -73,6 +73,7 @@ router.get("/posts", async (req, res) => {
 
   try {
     const token = req.cookies.accessToken;
+
     if (!token) {
       throw new Error("로그인하지 않은 사용자");
     }
@@ -114,7 +115,7 @@ router.get("/posts", async (req, res) => {
   }
 });
 
-// 게시글 작성
+// 게시글 작성 라우트
 router.post("/posts", async (req, res) => {
   const othersData = await accessToken(req, res); // 사용자 인증 정보 확인
 
@@ -150,7 +151,7 @@ router.post("/posts", async (req, res) => {
   res.status(200).json({ message: "Success" });
 });
 
-// 특정 게시글 조회
+// 특정 게시글 조회 라우트
 router.get("/posts/:postId", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
@@ -159,7 +160,7 @@ router.get("/posts/:postId", async (req, res) => {
   res.json(post);
 });
 
-// 게시글 조회 수 증가
+// 게시글 조회 수 증가 라우트
 router.post("/posts/:postId/count", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
@@ -174,7 +175,7 @@ router.post("/posts/:postId/count", async (req, res) => {
   }
 });
 
-// 게시글 수정
+// 게시글 수정 라우트
 router.patch("/posts/:postId/edit", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -208,7 +209,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
   }
 });
 
-// 게시글 삭제
+// 게시글 삭제 라우트
 router.delete("/posts/:postId/", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -222,10 +223,10 @@ router.delete("/posts/:postId/", async (req, res) => {
   const post = await db.getDb().collection("posts").findOne({ postId: postId });
 
   if (post.email === othersData.email) {
-    // 관련 답글 삭제
+    // 게시글과 관련된 댓글 및 답글 삭제
     await db.getDb().collection("replies").deleteMany({ post_id: post._id });
-    // 관련 댓글 삭제
     await db.getDb().collection("comments").deleteMany({ post_id: post._id });
+
     // 게시글 삭제
     await db.getDb().collection("posts").deleteOne({ postId: post.postId });
 
@@ -243,7 +244,7 @@ router.delete("/posts/:postId/", async (req, res) => {
   }
 });
 
-// 특정 게시글의 댓글 목록 조회
+// 특정 게시글의 댓글 목록 조회 라우트
 router.get("/posts/:postId/comments", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
@@ -284,7 +285,7 @@ router.get("/posts/:postId/comments", async (req, res) => {
   }
 });
 
-// 댓글 작성
+// 댓글 작성 라우트
 router.post("/posts/:postId/comments", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -320,7 +321,7 @@ router.post("/posts/:postId/comments", async (req, res) => {
   res.status(200).json({ newComment });
 });
 
-// 댓글 수정
+// 댓글 수정 라우트
 router.patch("/posts/:postId/comments", async (req, res) => {
   // let postId = parseInt(req.params.postId);
   const othersData = await accessToken(req, res);
@@ -366,7 +367,7 @@ router.patch("/posts/:postId/comments", async (req, res) => {
   }
 });
 
-// 댓글 삭제
+// 댓글 삭제 라우트
 router.delete("/posts/:postId/comment", async (req, res) => {
   // let postId = parseInt(req.params.postId);
   const othersData = await accessToken(req, res);
@@ -402,7 +403,7 @@ router.delete("/posts/:postId/comment", async (req, res) => {
   }
 });
 
-// 특정 댓글의 답글 목록 조회
+// 특정 댓글의 답글 목록 조회 라우트
 router.get("/posts/:postId/:commentId/replies", async (req, res) => {
   let commentId = req.params.commentId;
 
@@ -418,7 +419,7 @@ router.get("/posts/:postId/:commentId/replies", async (req, res) => {
   res.status(200).json({ replies });
 });
 
-// 답글 작성
+// 답글 추가 라우트
 router.post("/posts/:postId/replies", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -464,7 +465,7 @@ router.post("/posts/:postId/replies", async (req, res) => {
   res.status(200).json({ newReply });
 });
 
-// 답글 수정
+// 답글 수정 라우트
 router.patch("/posts/:postId/replies", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -509,7 +510,7 @@ router.patch("/posts/:postId/replies", async (req, res) => {
   }
 });
 
-// 답글 삭제
+// 답글 삭제 라우트
 router.delete("/posts/:postId/reply", async (req, res) => {
   const othersData = await accessToken(req, res);
 

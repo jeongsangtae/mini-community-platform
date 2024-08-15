@@ -9,6 +9,7 @@ const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
+// 특정 유저의 마지막 채팅 메시지를 가져오는 라우트
 router.get("/admin/chat/:userId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -20,6 +21,7 @@ router.get("/admin/chat/:userId", async (req, res) => {
 
   userId = new ObjectId(userId);
 
+  // 해당 유저의 마지막 채팅 메시지를 날짜 기준으로 내림차순 정렬하여 하나 가져옴
   const lastMessage = await db
     .getDb()
     .collection("chatMessages")
@@ -28,6 +30,7 @@ router.get("/admin/chat/:userId", async (req, res) => {
   res.status(200).json({ message: lastMessage });
 });
 
+// 관리자와 특정 유저 간의 모든 채팅 메시지를 가져오는 라우트
 router.get("/admin/chat/:adminId/:userId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -41,6 +44,7 @@ router.get("/admin/chat/:adminId/:userId", async (req, res) => {
   adminId = new ObjectId(adminId);
   userId = new ObjectId(userId);
 
+  // 해당 유저와 관리자가 주고받은 모든 메시지를 날짜순으로 정렬하여 가져옴
   const messages = await db
     .getDb()
     .collection("chatMessages")
@@ -51,6 +55,7 @@ router.get("/admin/chat/:adminId/:userId", async (req, res) => {
   res.status(200).json({ messages });
 });
 
+// 관리자 메시지를 추가하는 라우트
 router.post("/admin/chat/:adminId", async (req, res) => {
   const othersData = await accessToken(req, res);
 
@@ -58,6 +63,7 @@ router.post("/admin/chat/:adminId", async (req, res) => {
     return res.status(401).json({ messages: "jwt error" });
   }
 
+  // 클라이언트에서 보낸 데이터 추출
   const { userId, userName, adminEmail, content, userType } = req.body;
 
   let adminId = req.params.adminId;
@@ -65,6 +71,7 @@ router.post("/admin/chat/:adminId", async (req, res) => {
 
   adminId = new ObjectId(adminId);
 
+  // 새 메시지 객체 생성
   const newMessage = {
     user_id: new ObjectId(userId),
     user_name: userName,
@@ -81,11 +88,13 @@ router.post("/admin/chat/:adminId", async (req, res) => {
       .padStart(2, "0")}`,
   };
 
+  // 새 메시지를 chatMessages 컬렉션에 저장
   await db.getDb().collection("chatMessages").insertOne(newMessage);
 
-  const io = req.app.get("io");
-  const roomId = `room-${userId}`;
-  io.to(roomId).emit("newMessage", newMessage);
+  // socket.io를 통해 새 메시지를 해당 채팅방에 브로드캐스트
+  const io = req.app.get("io"); // Express 앱에서 Socket.io 인스턴스를 가져옴
+  const roomId = `room-${userId}`; // 사용자 ID 기반으로 채팅방 ID 생성
+  io.to(roomId).emit("newMessage", newMessage); // 해당 채팅방에 메시지 전송
 
   res.status(200).json({ newMessage });
 });
