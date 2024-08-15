@@ -38,7 +38,7 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
             />
           </div>
           <div>
-            {/* 게시물 작성자 이름 표시 (편집 시 기존 작성자, 새로운 작성 시 현재 사용자) */}
+            {/* 게시글 작성자 이름 표시 (편집 시 기존 작성자, 새로운 작성 시 현재 사용자) */}
             {postData ? <p>{postData.name}</p> : <p>{userData?.name}</p>}
           </div>
           <div>
@@ -46,7 +46,7 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
               required
               name="content"
               placeholder="내용 입력"
-              // 편집 시 기존 내용 표시, 새 게시물 작성 시 빈 텍스트
+              // 편집 시 기존 내용 표시, 새 게시글 작성 시 빈 텍스트
               defaultValue={postData ? postData.content : ""}
             />
           </div>

@@ -33,7 +33,7 @@ router.get("/chat/:userId", async (req, res) => {
   res.status(200).json({ messages });
 });
 
-// 사용자 입력한 채팅 메시지를 저장하는 라우터
+// 사용자가 입력한 채팅 메시지를 저장하는 라우터
 router.post("/chat/:userId", async (req, res) => {
   const othersData = await accessToken(req, res);
 

@@ -485,7 +485,7 @@ router.patch("/posts/:postId/replies", async (req, res) => {
 
   const contentInput = req.body.content;
 
-  // 답글 작성자인지 확인 후 수
+  // 답글 작성자인지 확인 후 수정
   if (reply.email === othersData.email) {
     let editReply = {
       _id: replyId,
