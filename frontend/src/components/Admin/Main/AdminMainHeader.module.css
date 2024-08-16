@@ -71,6 +71,7 @@
   color: white;
 }
 
+/* 버튼에 커서를 올리면 우측 하단에 빨간 점 표시 */
 .button:hover span {
   content: "";
   position: absolute;
@@ -90,6 +91,7 @@
   color: white;
 }
 
+/* 활성화된 버튼 우측 하단에 빨간 점 표시 */
 .active span {
   content: "";
   position: absolute;

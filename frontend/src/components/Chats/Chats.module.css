@@ -36,6 +36,7 @@
   animation: chats-container-slide-down 0.2s ease-out forwards;
 }
 
+/* 채팅 컨테이너 여는 애니메이션 */
 @keyframes chats-container-slide-up {
   0% {
     width: 10px;
@@ -171,6 +172,7 @@
   animation: chat-button-rotate-arrow-down-icon 0.3s ease-out forwards;
 }
 
+/* 채팅 컨테이너 열릴 때 변화하는 아이콘 애니메이션 */
 @keyframes chat-button-rotate-chat-fill-icon {
   0% {
     transform: rotate(90deg) scale(0.2);
@@ -181,6 +183,7 @@
   }
 }
 
+/* 채팅 컨테이너 닫힐 때 변화하는 아이콘 애니메이션 */
 @keyframes chat-button-rotate-arrow-down-icon {
   0% {
     transform: rotate(-90deg) scale(0.2);

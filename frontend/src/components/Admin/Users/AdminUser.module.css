@@ -27,6 +27,7 @@
   color: white;
 }
 
+/* 사용자 정보 사이에 ●을 추가해서 구분 */
 .info-wrap span::before {
   content: "●";
   font-size: 0.5rem;
