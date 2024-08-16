@@ -108,7 +108,7 @@ db.connectToDatabase()
     console.log(error);
   });
 
-// MongoDB 설정으로 socket.io 사용하기 전의 설정
+// MongoDB 설정으로, socket.io 사용하기 전의 설정
 // db.connectToDatabase()
 //   .then(() => {
 //     app.listen(3000);

@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/admin/posts", async (req, res) => {
   const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값 1
   const search = req.query.search || ""; // 검색어, 기본값은 빈 문자열
-  const fields = (req.query.field || "").split(","); // 검 필드, 기본값 빈 배열
+  const fields = (req.query.field || "").split(","); // 검색할 필드, 기본값 빈 배열
   const pageSize = 5; // 한 페이지에 보여줄 게시글 수색
   const pageButtonSize = 5; // 페이지 버튼 그룹 크기
 
@@ -37,56 +37,37 @@ router.get("/admin/posts", async (req, res) => {
     };
   }
 
-  // 게시글 목록을 필터, 페이지네이션 및 정렬 기준에 따라 조회
-  const posts = await db
-    .getDb()
-    .collection("posts")
-    .find(filter)
-    .sort({ postId: -1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize)
-    .project({ postId: 1, title: 1, name: 1, content: 1, date: 1, count: 1 })
-    .toArray();
-
-  // 총 게시글 수
-  const countPosts = await db
-    .getDb()
-    .collection("posts")
-    .countDocuments(filter);
-
-  // 전체 게시글 수를 계산하여 페이지 수를 계산
-  const totalPages = Math.ceil(countPosts / pageSize);
-
-  // 페이지네이션의 시작과 끝 페이지 번호 계산
-  // 페이지 그룹 계산
-  const firstPageGroup =
-    Math.ceil(page / pageButtonSize) * pageButtonSize - pageButtonSize + 1;
-  const lastPageGroup = Math.min(
-    firstPageGroup + pageButtonSize - 1,
-    totalPages
-  );
-
   try {
-    const token = req.cookies.accessToken;
-
-    if (!token) {
-      throw new Error("로그인하지 않은 사용자");
-    }
-
-    // 액세스 토큰 검증
-    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-    const loginUserTokenData = jwt.verify(token, accessTokenKey);
-
-    // 데이터베이스에서 사용자 정보 조회
-    const loginUserDbData = await db
+    // 게시글 목록을 필터, 페이지네이션 및 정렬 기준에 따라 조회
+    const posts = await db
       .getDb()
-      .collection("users")
-      .findOne({ email: loginUserTokenData.userEmail });
+      .collection("posts")
+      .find(filter)
+      .sort({ postId: -1 }) // 최신 게시글부터 정렬
+      .skip((page - 1) * pageSize) // 페이지네이션 처리
+      .limit(pageSize)
+      .project({ postId: 1, title: 1, name: 1, content: 1, date: 1, count: 1 })
+      .toArray();
 
-    if (!loginUserDbData) throw new Error("존재하지 않는 사용자");
+    // 총 게시글 수
+    const countPosts = await db
+      .getDb()
+      .collection("posts")
+      .countDocuments(filter);
 
-    const { password, ...othersData } = loginUserDbData;
+    // 전체 게시글 수를 계산하여 페이지 수를 계산
+    const totalPages = Math.ceil(countPosts / pageSize);
 
+    // 페이지네이션의 시작과 끝 페이지 번호 계산
+    // 페이지 그룹 계산
+    const firstPageGroup =
+      Math.ceil(page / pageButtonSize) * pageButtonSize - pageButtonSize + 1;
+    const lastPageGroup = Math.min(
+      firstPageGroup + pageButtonSize - 1,
+      totalPages
+    );
+
+    // 게시글 데이터와 페이지네이션 정보 반환
     res.status(200).json({
       posts,
       countPosts,
@@ -94,17 +75,13 @@ router.get("/admin/posts", async (req, res) => {
       totalPages,
       firstPageGroup,
       lastPageGroup,
-      // userData: othersData,
     });
   } catch (error) {
-    // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
-    res.status(200).json({
-      posts,
-      countPosts,
-      page,
-      totalPages,
-      firstPageGroup,
-      lastPageGroup,
+    // 오류가 발생했을 때의 처리
+    // 서버에서 게시글을 가져오는 중에 발생한 오류를 처리하고, 클라이언트에게 실패 메시지를 전송
+    console.error("게시글을 가져오는 중 오류 발생:", error.message);
+    res.status(500).json({
+      error: "게시글을 불러오는 데 실패했습니다.",
     });
   }
 });
@@ -155,38 +132,27 @@ router.delete("/admin/posts/:postId", async (req, res) => {
 router.get("/admin/posts/:postId/comments", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
-  const post = await db.getDb().collection("posts").findOne({ postId });
-
-  const comments = await db
-    .getDb()
-    .collection("comments")
-    .find({ post_id: post._id })
-    .toArray();
-
   try {
-    const token = req.cookies.accessToken;
+    // 데이터베이스에서 해당 게시글 조회
+    const post = await db.getDb().collection("posts").findOne({ postId });
 
-    if (!token) {
-      throw new Error("로그인하지 않은 사용자");
+    if (!post) {
+      return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
     }
 
-    const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-    const loginUserTokenData = jwt.verify(token, accessTokenKey);
-    const loginUserDbData = await db
+    // 해당 게시글의 댓글 목록 조회
+    const comments = await db
       .getDb()
-      .collection("users")
-      .findOne({ email: loginUserTokenData.userEmail });
+      .collection("comments")
+      .find({ post_id: post._id })
+      .toArray();
 
-    if (!loginUserDbData) {
-      throw new Error("존재하지 않는 사용자");
-    }
-
-    const { password, ...othersData } = loginUserDbData;
-
-    res.status(200).json({ comments, userData: othersData });
-  } catch (error) {
-    // Token이 유효하지 않거나, 사용자 정보가 없는 경우에 대한 처리
+    // 댓글 목록과 함께 성공 응답 반환
     res.status(200).json({ comments });
+  } catch (error) {
+    // 서버에서 오류 발생 시, 오류 메시지와 함께 실패 응답 반환
+    console.error("댓글을 가져오는 중 오류 발생:", error.message);
+    res.status(500).json({ error: "댓글을 불러오는 데 실패했습니다." });
   }
 });
 

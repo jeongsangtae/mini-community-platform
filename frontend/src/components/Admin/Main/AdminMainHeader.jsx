@@ -11,9 +11,6 @@ const AdminMainHeader = () => {
   const usersData = useLoaderData();
   const authCtx = useContext(AuthContext);
 
-  console.log(authCtx.userInfo);
-  console.log(authCtx.userInfo?.role);
-
   // 네비게이션 링크의 활성화 상태에 따라 클래스 설정
   const navLinkClass = ({ isActive }) => {
     return isActive
