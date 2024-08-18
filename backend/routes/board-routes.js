@@ -94,47 +94,62 @@ router.get("/posts", async (req, res) => {
 
 // 게시글 작성 라우트
 router.post("/posts", async (req, res) => {
-  const othersData = await accessToken(req, res); // 사용자 인증 정보 확인
+  try {
+    const othersData = await accessToken(req, res); // 사용자 인증 정보 확인
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
+
+    // 가장 최근 게시글의 postId를 가져와서 새로운 postId 추가
+    const lastPost = await db
+      .getDb()
+      .collection("posts")
+      .findOne({}, { sort: { postId: -1 } });
+
+    let postId = lastPost ? lastPost.postId + 1 : 1;
+    let date = new Date();
+    let count = 0;
+
+    const postData = req.body;
+
+    // 새 게시글 데이터 추가
+    const newPost = {
+      ...postData,
+      postId,
+      name: othersData.name,
+      email: othersData.email,
+      count: count,
+      date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
+    };
+
+    const result = await db.getDb().collection("posts").insertOne(newPost);
+
+    console.log(result);
+
+    res.status(200).json({ message: "게시글 추가 성공" });
+  } catch (error) {
+    console.error("게시글 추가 중 오류 발생:", error.message);
+    res.status(500).json({ error: "게시글 추가에 실패했습니다." });
   }
-
-  // 가장 최근 게시글의 postId를 가져와서 새로운 postId 추가
-  const lastPost = await db
-    .getDb()
-    .collection("posts")
-    .findOne({}, { sort: { postId: -1 } });
-
-  let postId = lastPost ? lastPost.postId + 1 : 1;
-  let date = new Date();
-  let count = 0;
-  const postData = req.body;
-
-  // 새 게시글 데이터 추가
-  const newPost = {
-    ...postData,
-    postId,
-    name: othersData.name,
-    email: othersData.email,
-    count: count,
-    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
-  };
-
-  const result = await db.getDb().collection("posts").insertOne(newPost);
-
-  console.log(result);
-
-  res.status(200).json({ message: "Success" });
 });
 
 // 특정 게시글 조회 라우트
 router.get("/posts/:postId", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
-  const post = await db.getDb().collection("posts").findOne({ postId });
+  try {
+    const post = await db.getDb().collection("posts").findOne({ postId });
 
-  res.json(post);
+    if (!post) {
+      return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+    }
+
+    res.json(post);
+  } catch (error) {
+    console.error("게시글 조회 중 오류 발생:", error.message);
+    res.status(500).json({ error: "게시글 조회에 실패했습니다." });
+  }
 });
 
 // 게시글 조회 수 증가 라우트
@@ -146,33 +161,46 @@ router.post("/posts/:postId/count", async (req, res) => {
       .getDb()
       .collection("posts")
       .updateOne({ postId: postId }, { $inc: { count: 1 } });
+
     res.status(200).json({ message: "조회 수 상승 성공" });
   } catch (error) {
+    console.error("게시글 조회 수 증가 오류 발생:", error.message);
     res.status(500).json({ message: "조회 수 상승 실패" });
   }
 });
 
 // 게시글 수정 라우트
 router.patch("/posts/:postId/edit", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  let postId = parseInt(req.params.postId);
+    let postId = parseInt(req.params.postId);
 
-  // 데이터베이스에서 해당 게시글 조회
-  const post = await db.getDb().collection("posts").findOne({ postId: postId });
+    // 데이터베이스에서 해당 게시글 조회
+    const post = await db
+      .getDb()
+      .collection("posts")
+      .findOne({ postId: postId });
 
-  const titleInput = req.body.title;
-  const contentInput = req.body.content;
+    // 게시글이 존재하지 않을 경우 처리
+    if (!post) {
+      return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
+    }
 
-  // 게시글 작성자인지 확인 후 수정
-  if (post.email === othersData.email) {
+    // 게시글 작성자인지 확인 후 수정
+    if (post.email !== othersData.email) {
+      return res
+        .status(403)
+        .json({ message: "게시글 수정할 권한이 없습니다." });
+    }
+
     const editPost = {
-      title: titleInput,
-      content: contentInput,
+      title: req.body.title,
+      content: req.body.content,
     };
 
     await db
@@ -180,26 +208,42 @@ router.patch("/posts/:postId/edit", async (req, res) => {
       .collection("posts")
       .updateOne({ postId }, { $set: editPost });
 
-    res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "게시글 수정할 권한이 없습니다." });
+    res.status(200).json({ message: "게시글 수정 성공" });
+  } catch (error) {
+    console.error("게시글 수정 중 오류 발생:", error.message);
+    res.status(500).json({ error: "게시글 수정에 실패했습니다." });
   }
 });
 
 // 게시글 삭제 라우트
 router.delete("/posts/:postId/", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  let postId = parseInt(req.params.postId);
+    let postId = parseInt(req.params.postId);
 
-  // 데이터베이스에서 해당 게시글 조회
-  const post = await db.getDb().collection("posts").findOne({ postId: postId });
+    // 데이터베이스에서 해당 게시글 조회
+    const post = await db
+      .getDb()
+      .collection("posts")
+      .findOne({ postId: postId });
 
-  if (post.email === othersData.email) {
+    // 게시글이 존재하지 않는 경우 처리
+    if (!post) {
+      return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
+    }
+
+    // 게시글 작성자인지 확인 후 삭제
+    if (post.email !== othersData.email) {
+      return res
+        .status(403)
+        .json({ message: "게시글 삭제할 권한이 없습니다." });
+    }
+
     // 게시글과 관련된 댓글 및 답글 삭제
     await db.getDb().collection("replies").deleteMany({ post_id: post._id });
     await db.getDb().collection("comments").deleteMany({ post_id: post._id });
@@ -215,9 +259,10 @@ router.delete("/posts/:postId/", async (req, res) => {
       .collection("posts")
       .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
 
-    res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "게시글 삭제할 권한이 없습니다." });
+    res.status(200).json({ message: "게시글 삭제 성공" });
+  } catch (error) {
+    console.error("게시글 삭제 중 오류 발생:", error.message);
+    res.status(500).json({ error: "게시글 삭제에 실패했습니다." });
   }
 });
 
@@ -240,6 +285,10 @@ router.get("/posts/:postId/comments", async (req, res) => {
       .find({ post_id: post._id })
       .toArray();
 
+    if (!comments) {
+      return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });
+    }
+
     // 댓글 목록과 함께 성공 응답 반환
     res.status(200).json({ comments });
   } catch (error) {
@@ -249,69 +298,84 @@ router.get("/posts/:postId/comments", async (req, res) => {
   }
 });
 
-// 댓글 작성 라우트
+// 댓글 추가 라우트
 router.post("/posts/:postId/comments", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
+
+    let postId = parseInt(req.params.postId);
+    let date = new Date();
+
+    // 데이터베이스에서 해당 게시글 조회
+    const post = await db.getDb().collection("posts").findOne({ postId });
+
+    if (!post) {
+      return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+    }
+
+    // 새 댓글 데이터 생성
+    const newComment = {
+      post_id: post._id,
+      name: othersData.name,
+      email: othersData.email,
+      content: req.body.content,
+      date: `${date.getFullYear()}.${
+        date.getMonth() + 1
+      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+    };
+
+    await db.getDb().collection("comments").insertOne(newComment);
+
+    res.status(200).json({ newComment });
+  } catch (error) {
+    console.error("댓글 추가 중 오류 발생:", error.message);
+    res.status(500).json({ error: "댓글 추가에 실패했습니다." });
   }
-
-  let postId = parseInt(req.params.postId);
-  let date = new Date();
-
-  // 데이터베이스에서 해당 게시글 조회
-  const post = await db.getDb().collection("posts").findOne({ postId });
-
-  const contentInput = req.body.content;
-
-  // 새 댓글 데이터 생성
-  const newComment = {
-    post_id: post._id,
-    name: othersData.name,
-    email: othersData.email,
-    content: contentInput,
-    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
-      .getHours()
-      .toString()
-      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
-      .getSeconds()
-      .toString()
-      .padStart(2, "0")}`,
-  };
-
-  await db.getDb().collection("comments").insertOne(newComment);
-
-  res.status(200).json({ newComment });
 });
 
 // 댓글 수정 라우트
 router.patch("/posts/:postId/comments", async (req, res) => {
   // let postId = parseInt(req.params.postId);
-  const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+  try {
+    const othersData = await accessToken(req, res);
 
-  let commentId = req.body.commentId;
-  let date = new Date();
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  commentId = new ObjectId(commentId);
+    let commentId = req.body.commentId;
+    let date = new Date();
 
-  // 해당 댓글 조회
-  const comment = await db
-    .getDb()
-    .collection("comments")
-    .findOne({ _id: commentId });
+    commentId = new ObjectId(commentId);
 
-  const contentInput = req.body.content;
+    // 해당 댓글 조회
+    const comment = await db
+      .getDb()
+      .collection("comments")
+      .findOne({ _id: commentId });
 
-  // 댓글 작성자인지 확인 후 수정
-  if (comment.email === othersData.email) {
+    if (!comment) {
+      return res.status(404).json({ message: "댓글을 찾을 수 없습니다." });
+    }
+
+    // 댓글 작성자인지 확인 후 수정
+    if (comment.email !== othersData.email) {
+      return res
+        .status(403)
+        .json({ message: "댓글을 수정할 권한이 없습니다." });
+    }
+
     let editComment = {
       _id: commentId,
-      content: contentInput,
+      content: req.body.content,
       date: `${date.getFullYear()}.${
         date.getMonth() + 1
       }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
@@ -326,32 +390,44 @@ router.patch("/posts/:postId/comments", async (req, res) => {
       .updateOne({ _id: commentId }, { $set: editComment });
 
     res.status(200).json({ editComment });
-  } else {
-    res.status(403).json({ message: "댓글을 수정할 권한이 없습니다." });
+  } catch (error) {
+    console.error("댓글 수정 중 오류 발생:", error.message);
+    res.status(500).json({ error: "댓글 수정에 실패했습니다." });
   }
 });
 
 // 댓글 삭제 라우트
 router.delete("/posts/:postId/comment", async (req, res) => {
   // let postId = parseInt(req.params.postId);
-  const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+  try {
+    const othersData = await accessToken(req, res);
 
-  let commentId = req.body.commentId;
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  commentId = new ObjectId(commentId);
+    let commentId = req.body.commentId;
 
-  // 해당 댓글 조회
-  const comment = await db
-    .getDb()
-    .collection("comments")
-    .findOne({ _id: commentId });
+    commentId = new ObjectId(commentId);
 
-  // 댓글 작성자인지 확인 후 삭제
-  if (comment.email === othersData.email) {
+    // 해당 댓글 조회
+    const comment = await db
+      .getDb()
+      .collection("comments")
+      .findOne({ _id: commentId });
+
+    if (!comment) {
+      return res.status(404).json({ message: "댓글을 찾을 수 없습니다." });
+    }
+
+    // 댓글 작성자인지 확인 후 삭제
+    if (comment.email !== othersData.email) {
+      return res
+        .status(403)
+        .json({ message: "댓글을 삭제할 권한이 없습니다." });
+    }
+
     // 관련 답글 삭제
     await db
       .getDb()
@@ -361,100 +437,128 @@ router.delete("/posts/:postId/comment", async (req, res) => {
     // 댓글 삭제
     await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
-    res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "댓글을 삭제할 권한이 없습니다." });
+    res.status(200).json({ message: "댓글 삭제 성공" });
+  } catch (error) {
+    console.error("댓글 삭제 중 오류 발생:", error.message);
+    res.status(500).json({ error: "댓글 삭제에 실패했습니다." });
   }
 });
 
 // 특정 댓글의 답글 목록 조회 라우트
 router.get("/posts/:postId/:commentId/replies", async (req, res) => {
-  let commentId = req.params.commentId;
+  try {
+    let commentId = req.params.commentId;
 
-  commentId = new ObjectId(commentId);
+    commentId = new ObjectId(commentId);
 
-  // 해당 댓글의 답글 목록 조회
-  const replies = await db
-    .getDb()
-    .collection("replies")
-    .find({ comment_id: commentId })
-    .toArray();
+    // 해당 댓글의 답글 목록 조회
+    const replies = await db
+      .getDb()
+      .collection("replies")
+      .find({ comment_id: commentId })
+      .toArray();
 
-  res.status(200).json({ replies });
+    if (!replies) {
+      return res.status(404).json({ error: "답글을 찾을 수 없습니다." });
+    }
+
+    res.status(200).json({ replies });
+  } catch (error) {
+    console.error("답글을 가져오는 중 오류 발생:", error.message);
+    res.status(500).json({ error: "답글을 불러오는 데 실패했습니다." });
+  }
 });
 
 // 답글 추가 라우트
 router.post("/posts/:postId/replies", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
+
+    let postId = parseInt(req.params.postId);
+    let commentId = req.body.commentId;
+    let date = new Date();
+
+    commentId = new ObjectId(commentId);
+
+    // 데이터베이스에서 해당 게시글 조회
+    const post = await db.getDb().collection("posts").findOne({ postId });
+
+    if (!post) {
+      return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+    }
+
+    // 해당 댓글 조회
+    const comment = await db
+      .getDb()
+      .collection("comments")
+      .findOne({ _id: commentId });
+
+    if (!comment) {
+      return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });
+    }
+
+    // 새 답글 데이터 추가
+    const newReply = {
+      post_id: post._id,
+      comment_id: comment._id,
+      name: othersData.name,
+      email: othersData.email,
+      content: req.body.content,
+      date: `${date.getFullYear()}.${
+        date.getMonth() + 1
+      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+    };
+
+    await db.getDb().collection("replies").insertOne(newReply);
+
+    res.status(200).json({ newReply });
+  } catch (error) {
+    console.error("답글 추가 중 오류 발생:", error.message);
+    res.status(500).json({ error: "답글 추가에 실패했습니다." });
   }
-
-  let postId = parseInt(req.params.postId);
-  let commentId = req.body.commentId;
-  let date = new Date();
-
-  commentId = new ObjectId(commentId);
-
-  // 데이터베이스에서 해당 게시글 조회
-  const post = await db.getDb().collection("posts").findOne({ postId });
-
-  // 해당 댓글 조회
-  const comment = await db
-    .getDb()
-    .collection("comments")
-    .findOne({ _id: commentId });
-
-  const contentInput = req.body.content;
-
-  // 새 답글 데이터 추가
-  const newReply = {
-    post_id: post._id,
-    comment_id: comment._id,
-    name: othersData.name,
-    email: othersData.email,
-    content: contentInput,
-    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
-      .getHours()
-      .toString()
-      .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
-      .getSeconds()
-      .toString()
-      .padStart(2, "0")}`,
-  };
-
-  await db.getDb().collection("replies").insertOne(newReply);
-
-  res.status(200).json({ newReply });
 });
 
 // 답글 수정 라우트
 router.patch("/posts/:postId/replies", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  let replyId = req.body.replyId;
-  let date = new Date();
+    let replyId = req.body.replyId;
+    let date = new Date();
 
-  replyId = new ObjectId(replyId);
+    replyId = new ObjectId(replyId);
 
-  // 해당 답글 조회
-  const reply = await db
-    .getDb()
-    .collection("replies")
-    .findOne({ _id: replyId });
+    // 해당 답글 조회
+    const reply = await db
+      .getDb()
+      .collection("replies")
+      .findOne({ _id: replyId });
 
-  const contentInput = req.body.content;
+    if (!reply) {
+      return res.status(404).json({ message: "답글을 찾을 수 없습니다." });
+    }
 
-  // 답글 작성자인지 확인 후 수정
-  if (reply.email === othersData.email) {
+    // 답글 작성자인지 확인 후 수정
+    if (reply.email !== othersData.email) {
+      return res
+        .status(403)
+        .json({ message: "답글을 수정할 권한이 없습니다." });
+    }
+
     let editReply = {
       _id: replyId,
-      content: contentInput,
+      content: req.body.content,
       date: `${date.getFullYear()}.${
         date.getMonth() + 1
       }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
@@ -469,36 +573,48 @@ router.patch("/posts/:postId/replies", async (req, res) => {
       .updateOne({ _id: replyId }, { $set: editReply });
 
     res.status(200).json({ editReply });
-  } else {
-    res.status(403).json({ message: "답글을 수정할 권한이 없습니다." });
+  } catch (error) {
+    console.error("답글 수정 중 오류 발생:", error.message);
+    res.status(500).json({ error: "답글 수정에 실패했습니다." });
   }
 });
 
 // 답글 삭제 라우트
 router.delete("/posts/:postId/reply", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  let replyId = req.body.replyId;
+    let replyId = req.body.replyId;
 
-  replyId = new ObjectId(replyId);
+    replyId = new ObjectId(replyId);
 
-  // 해당 답글 조회
-  const reply = await db
-    .getDb()
-    .collection("replies")
-    .findOne({ _id: replyId });
+    // 해당 답글 조회
+    const reply = await db
+      .getDb()
+      .collection("replies")
+      .findOne({ _id: replyId });
 
-  // 답글 작성자인지 확인 후 삭제
-  if (reply.email === othersData.email) {
+    if (!reply) {
+      return res.status(404).json({ message: "답글을 찾을 수 없습니다." });
+    }
+
+    // 답글 작성자인지 확인 후 삭제
+    if (reply.email !== othersData.email) {
+      return res
+        .status(403)
+        .json({ message: "답글을 삭제할 권한이 없습니다." });
+    }
+
     await db.getDb().collection("replies").deleteOne({ _id: replyId });
 
-    res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "답글을 삭제할 권한이 없습니다." });
+    res.status(200).json({ message: "답글 삭제 성공" });
+  } catch (error) {
+    console.error("답글 삭제 중 오류 발생:", error.message);
+    res.status(500).json({ error: "답글 삭제에 실패했습니다." });
   }
 });
 
