@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const db = require("../data/database");
 const { accessToken } = require("../middlewares/jwt-auth");
+const { errorHandler } = require("../utils/error-handler"); // 에러 헬퍼 함수
 
 const ObjectId = mongodb.ObjectId;
 
@@ -85,10 +86,7 @@ router.get("/posts", async (req, res) => {
   } catch (error) {
     // 오류가 발생했을 때의 처리
     // 서버에서 게시글을 가져오는 중에 발생한 오류를 처리하고, 클라이언트에게 실패 메시지를 전송
-    console.error("게시글을 가져오는 중 오류 발생:", error.message);
-    res.status(500).json({
-      error: "게시글을 불러오는 데 실패했습니다.",
-    });
+    errorHandler(res, error, "게시글 조회 중 오류 발생");
   }
 });
 
@@ -129,8 +127,7 @@ router.post("/posts", async (req, res) => {
 
     res.status(200).json({ message: "게시글 추가 성공" });
   } catch (error) {
-    console.error("게시글 추가 중 오류 발생:", error.message);
-    res.status(500).json({ error: "게시글 추가에 실패했습니다." });
+    errorHandler(res, error, "게시글 추가 중 오류 발생");
   }
 });
 
@@ -147,8 +144,7 @@ router.get("/posts/:postId", async (req, res) => {
 
     res.json(post);
   } catch (error) {
-    console.error("게시글 조회 중 오류 발생:", error.message);
-    res.status(500).json({ error: "게시글 조회에 실패했습니다." });
+    errorHandler(res, error, "게시글 세부 내용 조회 중 오류 발생");
   }
 });
 
@@ -164,8 +160,7 @@ router.post("/posts/:postId/count", async (req, res) => {
 
     res.status(200).json({ message: "조회 수 상승 성공" });
   } catch (error) {
-    console.error("게시글 조회 수 증가 오류 발생:", error.message);
-    res.status(500).json({ message: "조회 수 상승 실패" });
+    errorHandler(res, error, "게시글 조회 수 증가 오류 발생");
   }
 });
 
@@ -210,8 +205,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
 
     res.status(200).json({ message: "게시글 수정 성공" });
   } catch (error) {
-    console.error("게시글 수정 중 오류 발생:", error.message);
-    res.status(500).json({ error: "게시글 수정에 실패했습니다." });
+    errorHandler(res, error, "게시글 수정 중 오류 발생");
   }
 });
 
@@ -261,8 +255,7 @@ router.delete("/posts/:postId/", async (req, res) => {
 
     res.status(200).json({ message: "게시글 삭제 성공" });
   } catch (error) {
-    console.error("게시글 삭제 중 오류 발생:", error.message);
-    res.status(500).json({ error: "게시글 삭제에 실패했습니다." });
+    errorHandler(res, error, "게시글 삭제 중 오류 발생");
   }
 });
 
@@ -293,8 +286,7 @@ router.get("/posts/:postId/comments", async (req, res) => {
     res.status(200).json({ comments });
   } catch (error) {
     // 서버에서 오류 발생 시, 오류 메시지와 함께 실패 응답 반환
-    console.error("댓글을 가져오는 중 오류 발생:", error.message);
-    res.status(500).json({ error: "댓글을 불러오는 데 실패했습니다." });
+    errorHandler(res, error, "댓글 조회 중 오류 발생");
   }
 });
 
@@ -335,8 +327,7 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
     res.status(200).json({ newComment });
   } catch (error) {
-    console.error("댓글 추가 중 오류 발생:", error.message);
-    res.status(500).json({ error: "댓글 추가에 실패했습니다." });
+    errorHandler(res, error, "댓글 추가 중 오류 발생");
   }
 });
 
@@ -391,8 +382,7 @@ router.patch("/posts/:postId/comments", async (req, res) => {
 
     res.status(200).json({ editComment });
   } catch (error) {
-    console.error("댓글 수정 중 오류 발생:", error.message);
-    res.status(500).json({ error: "댓글 수정에 실패했습니다." });
+    errorHandler(res, error, "댓글 수정 중 오류 발생");
   }
 });
 
@@ -439,8 +429,7 @@ router.delete("/posts/:postId/comment", async (req, res) => {
 
     res.status(200).json({ message: "댓글 삭제 성공" });
   } catch (error) {
-    console.error("댓글 삭제 중 오류 발생:", error.message);
-    res.status(500).json({ error: "댓글 삭제에 실패했습니다." });
+    errorHandler(res, error, "댓글 삭제 중 오류 발생");
   }
 });
 
@@ -464,8 +453,7 @@ router.get("/posts/:postId/:commentId/replies", async (req, res) => {
 
     res.status(200).json({ replies });
   } catch (error) {
-    console.error("답글을 가져오는 중 오류 발생:", error.message);
-    res.status(500).json({ error: "답글을 불러오는 데 실패했습니다." });
+    errorHandler(res, error, "답글 조회 중 오류 발생");
   }
 });
 
@@ -520,8 +508,7 @@ router.post("/posts/:postId/replies", async (req, res) => {
 
     res.status(200).json({ newReply });
   } catch (error) {
-    console.error("답글 추가 중 오류 발생:", error.message);
-    res.status(500).json({ error: "답글 추가에 실패했습니다." });
+    errorHandler(res, error, "답글 추가 중 오류 발생");
   }
 });
 
@@ -574,8 +561,7 @@ router.patch("/posts/:postId/replies", async (req, res) => {
 
     res.status(200).json({ editReply });
   } catch (error) {
-    console.error("답글 수정 중 오류 발생:", error.message);
-    res.status(500).json({ error: "답글 수정에 실패했습니다." });
+    errorHandler(res, error, "답글 수정 중 오류 발생");
   }
 });
 
@@ -613,8 +599,7 @@ router.delete("/posts/:postId/reply", async (req, res) => {
 
     res.status(200).json({ message: "답글 삭제 성공" });
   } catch (error) {
-    console.error("답글 삭제 중 오류 발생:", error.message);
-    res.status(500).json({ error: "답글 삭제에 실패했습니다." });
+    errorHandler(res, error, "답글 삭제 중 오류 발생");
   }
 });
 

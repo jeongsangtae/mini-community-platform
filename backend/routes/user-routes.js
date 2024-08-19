@@ -8,6 +8,7 @@ const {
   refreshToken,
   refreshTokenExp,
 } = require("../middlewares/jwt-auth");
+const { errorHandler } = require("../utils/error-handler");
 
 const router = express.Router();
 
@@ -73,12 +74,9 @@ router.post("/signup", async (req, res) => {
 
     console.log(result);
 
-    res.status(200).json({ message: "Success" });
+    res.status(200).json({ message: "회원가입 성공" });
   } catch (error) {
-    console.error("회원가입 중 오류 발생:", error.message);
-    res
-      .status(500)
-      .json({ message: "회원가입에 실패했습니다. 나중에 다시 시도해주세요." });
+    errorHandler(res, error, "회원가입 중 오류 발생");
   }
 });
 
@@ -156,15 +154,12 @@ router.post("/login", async (req, res) => {
 
     // 성공 메시지와 함께 토큰 정보 반환
     res.status(200).json({
-      message: "Success",
+      message: "로그인 성공",
       accessToken,
       refreshToken,
     });
   } catch (error) {
-    console.error("로그인 중 오류 발생:", error.message);
-    res
-      .status(500)
-      .json({ message: "로그인에 실패했습니다. 나중에 다시 시도해주세요." });
+    errorHandler(res, error, "로그인 중 오류 발생");
   }
 });
 
@@ -179,8 +174,7 @@ router.get("/accessToken", async (req, res) => {
 
     res.status(200).json(responseData);
   } catch (error) {
-    console.error("Access Token 확인 중 오류 발생:", error.message);
-    res.status(500).json({ message: "토큰 확인에 실패했습니다." });
+    errorHandler(res, error, "Access Token 확인 중 오류 발생");
   }
 });
 
@@ -195,8 +189,7 @@ router.get("/refreshToken", async (req, res) => {
 
     res.status(200).json(responseData);
   } catch (error) {
-    console.error("Refresh Token 확인 중 오류 발생:", error.message);
-    res.status(500).json({ message: "토큰 확인에 실패했습니다." });
+    errorHandler(res, error, "Refresh Token 확인 중 오류 발생");
   }
 });
 
@@ -211,8 +204,7 @@ router.get("/refreshTokenExp", async (req, res) => {
 
     res.status(200).json(responseData);
   } catch (error) {
-    console.error("Refresh Token 만료 시간 확인 중 오류 발생:", error.message);
-    res.status(500).json({ message: "토큰 확인에 실패했습니다." });
+    errorHandler(res, error, "Refresh Token 만료 시간 확인 중 오류 발생");
   }
 });
 
@@ -227,8 +219,7 @@ router.get("/login/success", async (req, res) => {
 
     res.status(200).json(responseData);
   } catch (error) {
-    console.error("로그인 중 오류 발생:", error.message);
-    res.status(500).json({ message: "로그인에 실패했습니다." });
+    errorHandler(res, error, "로그인 중 오류 발생");
   }
 });
 
@@ -239,8 +230,7 @@ router.post("/logout", async (req, res) => {
     res.clearCookie("refreshToken");
     res.status(200).json({ message: "로그아웃 성공" });
   } catch (error) {
-    console.error("로그아웃 중 오류 발생:", error.message);
-    res.status(500).json({ message: "로그아웃에 실패했습니다." });
+    errorHandler(res, error, "로그아웃 중 오류 발생");
   }
 });
 
@@ -317,10 +307,7 @@ router.get("/profile", async (req, res) => {
       responseData,
     });
   } catch (error) {
-    console.error("프로필 정보 또는 게시글 조회 중 오류 발생:", error.message);
-    res
-      .status(500)
-      .json({ message: "프로필 정보를 불러오는 데 실패했습니다." });
+    errorHandler(res, error, "프로필 정보 또는 게시글 조회 중 오류 발생");
   }
 });
 

@@ -4,12 +4,13 @@ const mongodb = require("mongodb");
 const db = require("../data/database");
 
 const { accessToken } = require("../middlewares/jwt-auth");
+const { errorHandler } = require("../utils/error-handler");
 
 const ObjectId = mongodb.ObjectId;
 
 const router = express.Router();
 
-// 특정 유저의 마지막 채팅 메시지를 가져오는 라우트
+// 특정 사용자와 나눈 마지막 채팅 메시지를 가져오는 라우트
 router.get("/admin/chat/:userId", async (req, res) => {
   try {
     const othersData = await accessToken(req, res);
@@ -30,13 +31,7 @@ router.get("/admin/chat/:userId", async (req, res) => {
 
     res.status(200).json({ message: lastMessage });
   } catch (error) {
-    console.error(
-      "사용자의 마지막 채팅 메시지를 가져오는 중 오류 발생:",
-      error.message
-    );
-    res
-      .status(500)
-      .json({ message: "마지막 채팅 메시지를 가져오는 데 실패했습니다." });
+    errorHandler(res, error, "마지막 채팅 메시지 조회 중 오류 발생");
   }
 });
 
@@ -65,10 +60,7 @@ router.get("/admin/chat/:adminId/:userId", async (req, res) => {
 
     res.status(200).json({ messages });
   } catch (error) {
-    console.error("채팅 메시지를 가져오는 중 오류 발생:", error.message);
-    res
-      .status(500)
-      .json({ message: "채팅 메시지를 가져오는 데 실패했습니다." });
+    errorHandler(res, error, "채팅 메시지 조회 중 오류 발생");
   }
 });
 
@@ -115,8 +107,7 @@ router.post("/admin/chat/:adminId", async (req, res) => {
 
     res.status(200).json({ newMessage });
   } catch (error) {
-    console.error("채팅 메시지 저장 중 오류 발생:", error.message);
-    res.status(500).json({ message: "채팅 메시지를 저장하는 데 실패했습니다" });
+    errorHandler(res, error, "채팅 메시지 저장 중 오류 발생");
   }
 });
 
