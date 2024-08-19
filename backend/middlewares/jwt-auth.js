@@ -4,36 +4,31 @@ const db = require("../data/database");
 // Access Token을 검증하고 자용자 데이터를 반환하는 함수
 const accessToken = async (req, res) => {
   try {
+    // 환경 변수에서 accessToken 키를 가져옴
     const accessTokenKey = process.env.ACCESS_TOKEN_KEY;
-    const token = req.cookies.accessToken;
-
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Access Token이 없습니다. 로그인해주세요." });
-    }
-
+    const token = req.cookies.accessToken; // 쿠키에서 accessToken을 가져옴
+    // accessToken을 검증하고 해독된 데이터를 얻음
     const loginUserTokenData = jwt.verify(token, accessTokenKey);
+
+    // DB에서 토큰에 포함된 이메일로 사용자를 조회
     const loginUserDbData = await db
       .getDb()
       .collection("users")
       .findOne({ email: loginUserTokenData.userEmail });
 
-    if (!loginUserDbData) {
-      return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
-    }
-
+    // 디스트럭처링을 통해서 password를 제외한 나머지 사용자 데이터만 가져옴
     const { password, ...othersData } = loginUserDbData;
+
+    // 응답 데이터에 토큰 만료 시간과 역할(role)을 추가하여 반환
     const responseData = {
       ...othersData,
       tokenExp: loginUserTokenData.exp,
       role: loginUserTokenData.role,
     };
 
-    return responseData;
+    return responseData; // 사용자 데이터 반환
   } catch (error) {
-    errorHandler(res, error, "Access Token 검증에 실패");
-    return null; // 이 부분은 불필요할 수 있음
+    return null; // 오류 발생 시 null 반환
   }
 };
 
