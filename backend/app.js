@@ -9,7 +9,7 @@ const { Server } = require("socket.io"); // socket.io 추가
 const db = require("./data/database");
 const boardRoutes = require("./routes/board-routes");
 const userRoutes = require("./routes/user-routes");
-const adminRoutes = require("./routes/admin-router");
+const adminRoutes = require("./routes/admin-routes");
 const userChatRoutes = require("./routes/user-chat-routes");
 const adminChatRoutes = require("./routes/admin-chat-routes");
 

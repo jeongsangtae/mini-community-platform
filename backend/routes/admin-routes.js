@@ -90,24 +90,40 @@ router.get("/admin/posts", async (req, res) => {
 router.get("/admin/posts/:postId", async (req, res) => {
   let postId = parseInt(req.params.postId);
 
-  const post = await db.getDb().collection("posts").findOne({ postId });
+  try {
+    const post = await db.getDb().collection("posts").findOne({ postId });
 
-  res.json(post);
+    if (!post) {
+      return res.status(404).json({ error: "게시글을 찾을 수 없습니다." });
+    }
+
+    res.json(post);
+  } catch (error) {
+    console.error("게시글 조회 중 오류 발생:", error.message);
+    res.status(500).json({ error: "게시글 조회에 실패했습니다." });
+  }
 });
 
 // 특정 게시글을 삭제하는 라우트
 router.delete("/admin/posts/:postId", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  let postId = parseInt(req.params.postId);
+    let postId = parseInt(req.params.postId);
 
-  const post = await db.getDb().collection("posts").findOne({ postId: postId });
+    const post = await db
+      .getDb()
+      .collection("posts")
+      .findOne({ postId: postId });
 
-  if (post) {
+    if (!post) {
+      return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
+    }
+
     // 게시글과 관련된 댓글 및 답글 삭제
     await db.getDb().collection("replies").deleteMany({ post_id: post._id });
     await db.getDb().collection("comments").deleteMany({ post_id: post._id });
@@ -123,8 +139,9 @@ router.delete("/admin/posts/:postId", async (req, res) => {
       .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
 
     res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "게시글이 없습니다." });
+  } catch (error) {
+    console.error("게시글 삭제 중 오류 발생:", error.message);
+    res.status(500).json({ error: "게시글 삭제에 실패했습니다." });
   }
 });
 
@@ -147,6 +164,10 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
       .find({ post_id: post._id })
       .toArray();
 
+    if (!comments) {
+      return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });
+    }
+
     // 댓글 목록과 함께 성공 응답 반환
     res.status(200).json({ comments });
   } catch (error) {
@@ -158,23 +179,27 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
 
 // 댓글을 삭제하는 라우트
 router.delete("/admin/posts/:postId/comment", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  let commentId = req.body.commentId;
+    let commentId = req.body.commentId;
 
-  commentId = new ObjectId(commentId);
+    commentId = new ObjectId(commentId);
 
-  // 해당 댓글 조회
-  const comment = await db
-    .getDb()
-    .collection("comments")
-    .findOne({ _id: commentId });
+    // 해당 댓글 조회
+    const comment = await db
+      .getDb()
+      .collection("comments")
+      .findOne({ _id: commentId });
 
-  if (comment) {
+    if (!comment) {
+      return res.status(404).json({ message: "댓글을 찾을 수 없습니다." });
+    }
+
     // 댓글과 관련된 답글 삭제
     await db
       .getDb()
@@ -184,85 +209,113 @@ router.delete("/admin/posts/:postId/comment", async (req, res) => {
     // 댓글 삭제
     await db.getDb().collection("comments").deleteOne({ _id: commentId });
 
-    res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "댓글이 없습니다." });
+    res.status(200).json({ message: "댓글 삭제 성공" });
+  } catch (error) {
+    console.error("댓글 삭제 중 오류 발생:", error.message);
+    res.status(500).json({ error: "댓글 삭제에 실패했습니다." });
   }
 });
 
 // 특정 댓글에 대한 답글을 가져오는 라우트
 router.get("/admin/posts/:postId/:commentId/replies", async (req, res) => {
-  let commentId = req.params.commentId;
+  try {
+    let commentId = req.params.commentId;
 
-  commentId = new ObjectId(commentId);
+    commentId = new ObjectId(commentId);
 
-  // 해당 댓글의 답글 목록 조회
-  const replies = await db
-    .getDb()
-    .collection("replies")
-    .find({ comment_id: commentId })
-    .toArray();
+    // 해당 댓글의 답글 목록 조회
+    const replies = await db
+      .getDb()
+      .collection("replies")
+      .find({ comment_id: commentId })
+      .toArray();
 
-  res.status(200).json({ replies });
+    if (!replies) {
+      return res.status(404).json({ error: "답글을 찾을 수 없습니다." });
+    }
+
+    res.status(200).json({ replies });
+  } catch (error) {
+    console.error("답글을 가져오는 중 오류 발생:", error.message);
+    res.status(500).json({ error: "답글을 불러오는 데 실패했습니다." });
+  }
 });
 
 // 답글을 삭제하는 라우트
 router.delete("/admin/posts/:postId/reply", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  let replyId = req.body.replyId;
+    let replyId = req.body.replyId;
 
-  replyId = new ObjectId(replyId);
+    replyId = new ObjectId(replyId);
 
-  // 해당 답글 조회
-  const reply = await db
-    .getDb()
-    .collection("replies")
-    .findOne({ _id: replyId });
+    // 해당 답글 조회
+    const reply = await db
+      .getDb()
+      .collection("replies")
+      .findOne({ _id: replyId });
 
-  if (reply) {
+    if (!reply) {
+      return res.status(404).json({ message: "답글을 찾을 수 없습니다." });
+    }
+
     // 답글 삭제
     await db.getDb().collection("replies").deleteOne({ _id: replyId });
 
-    res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "답글이 없습니다.." });
+    res.status(200).json({ message: "답글 삭제 성공" });
+  } catch (error) {
+    console.error("답글 삭제 중 오류 발생:", error.message);
+    res.status(500).json({ error: "답글 삭제에 실패했습니다." });
   }
 });
 
 // 관리자가 모든 사용자를 조회하는 라우트
 router.get("/admin/users", async (req, res) => {
-  const users = await db
-    .getDb()
-    .collection("users")
-    .find({ email: { $ne: "admin@admin.com" } }) // 관리자 계정을 제외하고 찾기
-    .sort({ _id: -1 })
-    .toArray();
+  try {
+    const users = await db
+      .getDb()
+      .collection("users")
+      .find({ email: { $ne: "admin@admin.com" } }) // 관리자 계정을 제외하고 찾기
+      .sort({ _id: -1 })
+      .toArray();
 
-  res.status(200).json({ users });
+    if (!users) {
+      return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
+    }
+
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error("사용자 조회 중 오류 발생:", error.message);
+    res.status(500).json({ error: "사용자 조회에 실패했습니다." });
+  }
 });
 
 // 특정 사용자를 삭제하는 라우트
 router.delete("/admin/user", async (req, res) => {
-  const othersData = await accessToken(req, res);
+  try {
+    const othersData = await accessToken(req, res);
 
-  if (!othersData) {
-    return res.status(401).json({ message: "jwt error" });
-  }
+    if (!othersData) {
+      return res.status(401).json({ message: "jwt error" });
+    }
 
-  const userEmail = req.body.email;
+    const userEmail = req.body.email;
 
-  // 삭제하려는 사용자 계정 찾기
-  const user = await db
-    .getDb()
-    .collection("users")
-    .findOne({ email: userEmail });
+    // 삭제하려는 사용자 계정 찾기
+    const user = await db
+      .getDb()
+      .collection("users")
+      .findOne({ email: userEmail });
 
-  if (user) {
+    if (!user) {
+      return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
+    }
+
     // 삭제하려는 사용자가 작성한 댓글 찾기
     const findComments = await db
       .getDb()
@@ -340,9 +393,10 @@ router.delete("/admin/user", async (req, res) => {
     // 사용자 삭제
     await db.getDb().collection("users").deleteOne({ email: user.email });
 
-    res.status(200).json({ message: "Success" });
-  } else {
-    res.status(403).json({ message: "사용자가 없습니다." });
+    res.status(200).json({ message: "사용자 삭제 성공" });
+  } catch (error) {
+    console.error("사용자 삭제 중 오류 발생:", error.message);
+    res.status(500).json({ error: "사용자 삭제에 실패했습니다." });
   }
 });
 

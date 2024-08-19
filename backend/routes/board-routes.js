@@ -92,7 +92,7 @@ router.get("/posts", async (req, res) => {
   }
 });
 
-// 게시글 작성 라우트
+// 게시글 추가 라우트
 router.post("/posts", async (req, res) => {
   try {
     const othersData = await accessToken(req, res); // 사용자 인증 정보 확인
