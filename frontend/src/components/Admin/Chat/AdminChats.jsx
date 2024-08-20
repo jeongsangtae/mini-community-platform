@@ -6,6 +6,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import AuthContext from "../../../store/auth-context";
 import useChatScroll from "../../Chats/hooks/useChatScroll";
 import useAutosizeChatHeight from "../../Chats/hooks/useAutosizeChatHeight";
+import useErrorHandling from "../../Chats/hooks/useErrorHandling";
 import AdminChat from "./AdminChat";
 import classes from "./AdminChats.module.css";
 import ChatInput from "../../Chats/ChatInput";
@@ -46,6 +47,8 @@ const AdminChats = ({
     { chatContainerHeight: 92 }
   );
 
+  const { errorHandler } = useErrorHandling();
+
   // 컴포넌트 마운트 시 메시지 로드 및 소켓 초기화
   // 저장된 기존 메시지 불러오기
   useEffect(() => {
@@ -60,19 +63,27 @@ const AdminChats = ({
     }
 
     const fetchMessages = async () => {
-      const userId = chatRoomId;
-      const response = await fetch(
-        "http://localhost:3000/admin/chat/" + adminId + "/" + userId,
-        {
-          credentials: "include",
-        }
-      );
+      try {
+        const userId = chatRoomId;
+        const response = await fetch(
+          "http://localhost:3000/admin/chat/" + adminId + "/" + userId,
+          {
+            credentials: "include",
+          }
+        );
 
-      if (!response.ok) {
-        throw new Error("메시지를 불러올 수 없습니다.");
+        if (!response.ok) {
+          throw new Error("메시지 로드 중 오류 발생");
+        }
+
+        const resData = await response.json();
+        setMessages(resData.messages);
+      } catch (error) {
+        errorHandler(
+          error,
+          "메시지를 불러오는 데 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+        );
       }
-      const resData = await response.json();
-      setMessages(resData.messages);
     };
 
     fetchMessages();
