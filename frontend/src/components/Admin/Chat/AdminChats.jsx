@@ -153,28 +153,36 @@ const AdminChats = ({
       userType: "admin",
     };
 
-    // 서버로 메시지를 POST 요청으로 전송
-    const response = await fetch(
-      "http://localhost:3000/admin/chat/" + adminId,
-      {
-        method: "POST",
-        body: JSON.stringify(newMessage),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
-    if (!response.ok) {
-      throw new Error("메시지를 전송할 수 없습니다.");
-    } else {
-      const resData = await response.json();
-      console.log(resData.newMessage);
-    }
+    try {
+      // 서버로 메시지를 POST 요청으로 전송
+      const response = await fetch(
+        "http://localhost:3000/admin/chat/" + adminId,
+        {
+          method: "POST",
+          body: JSON.stringify(newMessage),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
-    // 전송 후 입력 필드와 높이 초기화
-    setMessage("");
-    setEmptyInput(true);
-    setTextareaHeight(32);
-    textareaRef.current.style.height = "auto";
+      if (!response.ok) {
+        throw new Error("메시지를 전송할 수 없습니다.");
+      } else {
+        const resData = await response.json();
+        console.log(resData.newMessage);
+      }
+
+      // 전송 후 입력 필드와 높이 초기화
+      setMessage("");
+      setEmptyInput(true);
+      setTextareaHeight(32);
+      textareaRef.current.style.height = "auto";
+    } catch (error) {
+      errorHandler(
+        error,
+        "메시지를 전송하는 데 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+      );
+    }
   };
 
   return (

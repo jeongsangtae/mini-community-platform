@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import AuthContext from "../../store/auth-context";
+import useErrorHandling from "../Chats/hooks/useErrorHandling";
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 import classes from "./Comments.module.css";
@@ -9,6 +10,8 @@ import classes from "./Comments.module.css";
 const Comments = () => {
   const authCtx = useContext(AuthContext);
   const post = useRouteLoaderData("post-detail");
+
+  const { errorHandler } = useErrorHandling();
 
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
@@ -18,20 +21,27 @@ const Comments = () => {
     const fetchData = async () => {
       const postId = post.postId;
 
-      // 서버에서 특정 게시글에 대한 댓글을 가져오는 API 호출
-      const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/comments",
-        {
-          credentials: "include",
+      try {
+        // 서버에서 특정 게시글에 대한 댓글을 가져오는 API 호출
+        const response = await fetch(
+          "http://localhost:3000/posts/" + postId + "/comments",
+          {
+            credentials: "include",
+          }
+        );
+
+        if (!response.ok) {
+          throw json({ message: "댓글 불러오기 실패" }, { status: 500 });
         }
-      );
 
-      if (!response.ok) {
-        throw json({ message: "댓글 불러오기 실패" }, { status: 500 });
+        const resData = await response.json();
+        setComments(resData.comments);
+      } catch (error) {
+        errorHandler(
+          error,
+          "댓글 조회 중에 문제가 발생했습니다. 다시 시도해 주세요."
+        );
       }
-
-      const resData = await response.json();
-      setComments(resData.comments);
     };
     fetchData();
   }, []);

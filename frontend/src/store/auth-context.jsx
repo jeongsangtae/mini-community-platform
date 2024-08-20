@@ -100,9 +100,9 @@ export const AuthContextProvier = ({ children }) => {
           localStorage.getItem("refreshTokenExp")
         );
 
-        console.log(now);
-        console.log(storedExpirationTime);
-        console.log(refreshTokenExpirationTime);
+        // console.log(now);
+        // console.log(storedExpirationTime);
+        // console.log(refreshTokenExpirationTime);
 
         // console.log(
         //   now >= storedExpirationTime && refreshTokenExpirationTime > now

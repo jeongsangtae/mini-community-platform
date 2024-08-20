@@ -3,11 +3,14 @@ import { redirect, useRouteLoaderData } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
+import useErrorHandling from "../Chats/hooks/useErrorHandling";
 import classes from "./CreateComment.module.css";
 
 const CreateComment = ({ method, onAddCommentData }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
+
+  const { errorHandler } = useErrorHandling();
 
   const [comment, setComment] = useState("");
 
@@ -32,23 +35,30 @@ const CreateComment = ({ method, onAddCommentData }) => {
       content: comment,
     };
 
-    // 댓글 저장 요청
-    const response = await fetch(
-      "http://localhost:3000/posts/" + postId + "/comments",
-      {
-        method: method,
-        body: JSON.stringify(requestBody),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
+    try {
+      // 댓글 저장 요청
+      const response = await fetch(
+        "http://localhost:3000/posts/" + postId + "/comments",
+        {
+          method: method,
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
-    if (!response.ok) {
-      throw json({ message: "Could not save comment." }, { status: 500 });
-    } else {
-      const resData = await response.json();
-      onAddCommentData(resData.newComment);
-      setComment("");
+      if (!response.ok) {
+        throw json({ message: "Could not save comment." }, { status: 500 });
+      } else {
+        const resData = await response.json();
+        onAddCommentData(resData.newComment);
+        setComment("");
+      }
+    } catch (error) {
+      errorHandler(
+        error,
+        "댓글 추가 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
 
     return redirect("/posts/" + postId);

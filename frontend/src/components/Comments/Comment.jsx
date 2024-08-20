@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import EditComment from "./EditComment";
 import Replies from "../Replies/Replies";
+import useErrorHandling from "../Chats/hooks/useErrorHandling";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./Comment.module.css";
@@ -19,6 +20,8 @@ const Comment = ({
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
 
+  const { errorHandler } = useErrorHandling();
+
   const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
 
@@ -26,24 +29,31 @@ const Comment = ({
   const commentDeleteHandler = async () => {
     const postId = post.postId;
 
-    // 댓글 삭제 요청
-    const response = await fetch(
-      "http://localhost:3000/posts/" + postId + "/comment",
-      {
-        method: "DELETE",
-        body: JSON.stringify({ commentId }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
+    try {
+      // 댓글 삭제 요청
+      const response = await fetch(
+        "http://localhost:3000/posts/" + postId + "/comment",
+        {
+          method: "DELETE",
+          body: JSON.stringify({ commentId }),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData.message);
-      throw json({ message: "Could not delete comment." }, { status: 500 });
-    } else {
-      // 댓글 삭제가 성공했을 때 상위 컴포넌트에 알림 (상태 끌어올리기)
-      onDeleteCommentData(commentId);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData.message);
+        throw json({ message: "Could not delete comment." }, { status: 500 });
+      } else {
+        // 댓글 삭제가 성공했을 때 상위 컴포넌트에 알림 (상태 끌어올리기)
+        onDeleteCommentData(commentId);
+      }
+    } catch (error) {
+      errorHandler(
+        error,
+        "댓글 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
   };
 

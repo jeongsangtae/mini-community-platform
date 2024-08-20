@@ -3,6 +3,7 @@ import { useRouteLoaderData } from "react-router-dom";
 
 import AuthContext from "../../../store/auth-context";
 import AdminReplies from "../Replies/AdminReplies";
+import useErrorHandling from "../../Chats/hooks/useErrorHandling";
 import classes from "./AdminComment.module.css";
 
 const AdminComment = ({
@@ -16,6 +17,8 @@ const AdminComment = ({
   const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
 
+  const { errorHandler } = useErrorHandling();
+
   const [replyToggle, setReplyToggle] = useState(false);
 
   // 댓글을 삭제하는 함수
@@ -23,22 +26,29 @@ const AdminComment = ({
     const postId = post.postId;
 
     // 댓글 삭제 요청
-    const response = await fetch(
-      "http://localhost:3000/admin/posts/" + postId + "/comment",
-      {
-        method: "DELETE",
-        body: JSON.stringify({ commentId }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
+    try {
+      const response = await fetch(
+        "http://localhost:3000/admin/posts/" + postId + "/comment",
+        {
+          method: "DELETE",
+          body: JSON.stringify({ commentId }),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData.message);
-      throw json({ message: "댓글을 삭제할 수 없습니다." }, { status: 500 });
-    } else {
-      onDeleteCommentData(commentId);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData.message);
+        throw json({ message: "댓글을 삭제할 수 없습니다." }, { status: 500 });
+      } else {
+        onDeleteCommentData(commentId);
+      }
+    } catch (error) {
+      errorHandler(
+        error,
+        "댓글 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
   };
 
