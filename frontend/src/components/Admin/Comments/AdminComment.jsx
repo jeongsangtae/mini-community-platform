@@ -3,7 +3,6 @@ import { useRouteLoaderData } from "react-router-dom";
 
 import AuthContext from "../../../store/auth-context";
 import AdminReplies from "../Replies/AdminReplies";
-import useErrorHandling from "../../Chats/hooks/useErrorHandling";
 import classes from "./AdminComment.module.css";
 
 const AdminComment = ({
@@ -16,8 +15,6 @@ const AdminComment = ({
 }) => {
   const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
-
-  const { errorHandler } = useErrorHandling();
 
   const [replyToggle, setReplyToggle] = useState(false);
 
@@ -45,7 +42,7 @@ const AdminComment = ({
         onDeleteCommentData(commentId);
       }
     } catch (error) {
-      errorHandler(
+      authCtx.errorHelper(
         error,
         "댓글 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
       );

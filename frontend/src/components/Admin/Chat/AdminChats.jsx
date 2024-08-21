@@ -88,24 +88,31 @@ const AdminChats = ({
 
   // WebSocket 연결 및 실시간 메시지 수신
   useEffect(() => {
-    const newSocket = io("http://localhost:3000", { withCredentials: true });
+    try {
+      const newSocket = io("http://localhost:3000", { withCredentials: true });
 
-    newSocket.on("connect", () => {
-      console.log("서버에 연결되었습니다.", newSocket.id);
-    });
+      newSocket.on("connect", () => {
+        console.log("서버에 연결되었습니다.", newSocket.id);
+      });
 
-    // 서버로부터 새로운 메시지를 받을 때마다 메시지 목록에 추가
-    newSocket.on("newMessage", (newMessage) => {
-      setMessages((prevMsg) => [...prevMsg, newMessage]);
-      console.log("관리자 input 메시지: ", newMessage.content);
-    });
+      // 서버로부터 새로운 메시지를 받을 때마다 메시지 목록에 추가
+      newSocket.on("newMessage", (newMessage) => {
+        setMessages((prevMsg) => [...prevMsg, newMessage]);
+        console.log("관리자 input 메시지: ", newMessage.content);
+      });
 
-    setSocket(newSocket);
+      setSocket(newSocket);
 
-    // 컴포넌트가 언마운트될 때 WebSocket 연결 해제
-    return () => {
-      newSocket.disconnect();
-    };
+      // 컴포넌트가 언마운트될 때 WebSocket 연결 해제
+      return () => {
+        newSocket.disconnect();
+      };
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "서버와의 연결 중 오류가 발생했습니다. 페이지를 새로고침 해보세요."
+      );
+    }
   }, []);
 
   // 사용자가 방에 입장할 때 방 참여 이벤트 실행

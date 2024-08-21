@@ -22,27 +22,37 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   // 사용자 데이터와 마지막 메시지를 병합하여 상태를 업데이트하는 useEffect
   useEffect(() => {
     const fetchLastMessages = async () => {
-      const combineUserData = usersData.map(async (user) => {
+      try {
         // 각 사용자의 마지막 메시지를 가져오는 비동기 작업
-        const response = await fetch(
-          "http://localhost:3000/admin/chat/" + user._id,
-          {
-            credentials: "include",
+        const combineUserData = usersData.map(async (user) => {
+          const response = await fetch(
+            "http://localhost:3000/admin/chat/" + user._id,
+            {
+              credentials: "include",
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("메시지를 불러올 수 없습니다.");
           }
+
+          const resData = await response.json();
+          return { ...user, lastMessage: resData.message };
+        });
+
+        // 모든 사용자의 메시지를 병합한 후 상태를 업데이트
+        const usersWithMessages = await Promise.all(combineUserData);
+
+        setUpdatedUsersData(usersWithMessages);
+      } catch (error) {
+        // 전체 fetchLastMessages 함수에서 발생하는 오류를 처리
+        authCtx.errorHelper(
+          error,
+          "마지막 메시지를 불러오는 데 문제가 발생했습니다."
         );
-        if (!response.ok) {
-          throw new Error("메시지를 불러올 수 없습니다.");
-        }
-
-        const resData = await response.json();
-        return { ...user, lastMessage: resData.message };
-      });
-
-      // 모든 사용자의 메시지를 병합한 후 상태를 업데이트
-      const usersWithMessages = await Promise.all(combineUserData);
-
-      setUpdatedUsersData(usersWithMessages);
+      }
     };
+
     fetchLastMessages();
   }, [usersData]);
 

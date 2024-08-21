@@ -60,7 +60,7 @@ router.get("/admin/chat/:adminId/:userId", async (req, res) => {
 
     // 강제로 예외를 발생시켜서 DB에 데이터가 저장되지 않도록 함
     // 테스트를 위한 코드
-    throw new Error("DB 저장 전에 발생하는 예외");
+    // throw new Error("DB 저장 전에 발생하는 예외");
 
     res.status(200).json({ messages });
   } catch (error) {
@@ -103,7 +103,7 @@ router.post("/admin/chat/:adminId", async (req, res) => {
 
     // 강제로 예외를 발생시켜서 DB에 데이터가 저장되지 않도록 함
     // 테스트를 위한 코드
-    throw new Error("DB 저장 전에 발생하는 예외");
+    // throw new Error("DB 저장 전에 발생하는 예외");
 
     // 새 메시지를 chatMessages 컬렉션에 저장
     await db.getDb().collection("chatMessages").insertOne(newMessage);
