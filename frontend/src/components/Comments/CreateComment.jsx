@@ -3,14 +3,11 @@ import { redirect, useRouteLoaderData } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
-import useErrorHandling from "../Chats/hooks/useErrorHandling";
 import classes from "./CreateComment.module.css";
 
 const CreateComment = ({ method, onAddCommentData }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
-
-  const { errorHandler } = useErrorHandling();
 
   const [comment, setComment] = useState("");
 
@@ -55,7 +52,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
         setComment("");
       }
     } catch (error) {
-      errorHandler(
+      authCtx.errorHelper(
         error,
         "댓글 추가 중에 문제가 발생했습니다. 다시 시도해 주세요."
       );

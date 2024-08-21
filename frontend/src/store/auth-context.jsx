@@ -11,7 +11,8 @@ const AuthContext = React.createContext({
   logout: () => {}, // 로그아웃 함수
   refreshToken: () => {}, // 토큰 갱신 함수
   refreshTokenExp: () => {}, // 리프레쉬 토큰 만료 시간 갱신 함수
-  themeModeToggleHandler: () => {}, // 테마 모드 토글 함수
+  themeModeToggle: () => {}, // 테마 모드 토글 함수
+  errorHelper: () => {}, // 예외 처리의 에러를 처리하는 헬퍼 함수
 });
 
 // AuthContextProvider 컴포넌트: 인증 및 테마 관련 상태와 함수들을 제공
@@ -178,6 +179,12 @@ export const AuthContextProvier = ({ children }) => {
     }
   };
 
+  // Fetch 함수 내에서 발생한 에러를 처리하고 재사용할 수 있는 헬퍼 함수
+  const errorHelperHandler = (error, errorMessage) => {
+    console.error("에러 내용:", error.message);
+    alert(errorMessage);
+  };
+
   // 사용자 이름 설정
   const userName = userInfo ? userInfo.name : "GUEST";
 
@@ -205,6 +212,7 @@ export const AuthContextProvier = ({ children }) => {
         refreshToken: refreshTokenHandler,
         refreshTokenExp: refreshTokenExpHandler,
         themeModeToggle: themeModeToggleHandler,
+        errorHelper: errorHelperHandler,
       }}
     >
       {children} {/* AuthContext를 사용하는 컴포넌트들이 children으로 전달됨 */}

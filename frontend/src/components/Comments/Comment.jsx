@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 import EditComment from "./EditComment";
 import Replies from "../Replies/Replies";
-import useErrorHandling from "../Chats/hooks/useErrorHandling";
 import AuthContext from "../../store/auth-context";
 
 import classes from "./Comment.module.css";
@@ -19,8 +18,6 @@ const Comment = ({
 }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
-
-  const { errorHandler } = useErrorHandling();
 
   const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
@@ -50,7 +47,7 @@ const Comment = ({
         onDeleteCommentData(commentId);
       }
     } catch (error) {
-      errorHandler(
+      authCtx.errorHelper(
         error,
         "댓글 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
       );

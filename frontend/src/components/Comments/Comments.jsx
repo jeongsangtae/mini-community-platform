@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import AuthContext from "../../store/auth-context";
-import useErrorHandling from "../Chats/hooks/useErrorHandling";
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 import classes from "./Comments.module.css";
@@ -10,8 +9,6 @@ import classes from "./Comments.module.css";
 const Comments = () => {
   const authCtx = useContext(AuthContext);
   const post = useRouteLoaderData("post-detail");
-
-  const { errorHandler } = useErrorHandling();
 
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
@@ -37,7 +34,7 @@ const Comments = () => {
         const resData = await response.json();
         setComments(resData.comments);
       } catch (error) {
-        errorHandler(
+        authCtx.errorHelper(
           error,
           "댓글 조회 중에 문제가 발생했습니다. 다시 시도해 주세요."
         );
