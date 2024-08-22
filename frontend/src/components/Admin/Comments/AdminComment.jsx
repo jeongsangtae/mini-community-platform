@@ -35,12 +35,10 @@ const AdminComment = ({
       );
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.log(errorData.message);
-        throw json({ message: "댓글을 삭제할 수 없습니다." }, { status: 500 });
-      } else {
-        onDeleteCommentData(commentId);
+        throw new Error("댓글 삭제 실패");
       }
+
+      onDeleteCommentData(commentId);
     } catch (error) {
       authCtx.errorHelper(
         error,

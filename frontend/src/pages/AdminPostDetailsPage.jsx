@@ -37,7 +37,7 @@ export const action = async ({ request, params }) => {
   try {
     // 요청 메소드 DELETE를 서버에 요청 보냄
     const response = await fetch(
-      "http://localhost:3000/admin/posts1/" + postId,
+      "http://localhost:3000/admin/posts/" + postId,
       {
         method: request.method,
         credentials: "include",

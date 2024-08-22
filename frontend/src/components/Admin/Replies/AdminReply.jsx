@@ -11,24 +11,28 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
   // 답글을 삭제하는 함수
   const replyDeleteHandler = async () => {
     const postId = post.postId;
+    try {
+      // 답글 삭제 요청
+      const response = await fetch(
+        "http://localhost:3000/admin/posts/" + postId + "/reply",
+        {
+          method: "DELETE",
+          body: JSON.stringify({ replyId }),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
-    // 답글 삭제 요청
-    const response = await fetch(
-      "http://localhost:3000/admin/posts/" + postId + "/reply",
-      {
-        method: "DELETE",
-        body: JSON.stringify({ replyId }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+      if (!response.ok) {
+        throw new Error("답글 삭제 실패");
       }
-    );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData.message);
-      throw json({ message: "Could not delete reply." }, { status: 500 });
-    } else {
       onDeleteReplyData(replyId);
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "답글 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
   };
 

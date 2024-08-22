@@ -17,13 +17,26 @@ const AdminUsers = () => {
   // 사용자가 삭제된 후에도 최신 사용자 목록을 유지하기 위한 코드
   useEffect(() => {
     const fetchUsers = async () => {
-      // 최신 사용자 목록을 가져오기 위한 API 요청
-      const response = await fetch("http://localhost:3000/admin/users", {
-        credentials: "include",
-      });
-      const resData = await response.json();
-      // 가져온 사용자 목록으로 상태 업데이트
-      setUsers(resData.users);
+      try {
+        // 최신 사용자 목록을 가져오기 위한 API 요청
+        const response = await fetch("http://localhost:3000/admin/users", {
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          throw new Error("사용자 불러오기 실패");
+        }
+
+        const resData = await response.json();
+
+        // 가져온 사용자 목록으로 상태 업데이트
+        setUsers(resData.users);
+      } catch (error) {
+        authCtx.errorHelper(
+          error,
+          "사용자 목록 조회 중에 문제가 발생했습니다. 다시 시도해 주세요."
+        );
+      }
     };
 
     fetchUsers();

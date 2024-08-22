@@ -33,7 +33,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
           );
 
           if (!response.ok) {
-            throw new Error("메시지를 불러올 수 없습니다.");
+            throw new Error("메시지 불러오기 실패");
           }
 
           const resData = await response.json();

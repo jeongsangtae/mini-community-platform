@@ -170,7 +170,7 @@ const AdminChats = ({
       );
 
       if (!response.ok) {
-        throw new Error("메시지를 전송할 수 없습니다.");
+        throw new Error("메시지를 전송 실패");
       } else {
         const resData = await response.json();
         console.log(resData.newMessage);

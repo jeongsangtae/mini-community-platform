@@ -8,22 +8,27 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
 
   // 사용자를 삭제하는 함수
   const userDeleteHandler = async () => {
-    // 사용자 삭제를 위한 API 요청
-    const response = await fetch("http://localhost:3000/admin/user", {
-      method: "DELETE",
-      body: JSON.stringify({ email }),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+    try {
+      // 사용자 삭제를 위한 API 요청
+      const response = await fetch("http://localhost:3000/admin/user", {
+        method: "DELETE",
+        body: JSON.stringify({ email }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData.message);
-      throw json({ message: "사용자를 삭제할 수 없습니다." }, { status: 500 });
+      if (!response.ok) {
+        throw new Error("사용자 삭제 실패");
+      }
+
+      // 부모 컴포넌트로 사용자 삭제 이벤트 전달
+      onDeleteUserData(email);
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "사용자 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
-
-    // 부모 컴포넌트로 사용자 삭제 이벤트 전달
-    onDeleteUserData(email);
   };
 
   return (
