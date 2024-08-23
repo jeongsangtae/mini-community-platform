@@ -28,28 +28,37 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    // 서버로 로그인 요청을 보내는 API
-    const response = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      body: JSON.stringify(loginData),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+    try {
+      // 서버로 로그인 요청을 보내는 API
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        body: JSON.stringify(loginData),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      setError(true);
-      setErrorMessage(errorData.message);
-      return null;
-    } else {
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(true);
+        setErrorMessage(errorData.message);
+        return null;
+      }
+
       console.log("로그인 성공");
-      await authCtx.login();
+      authCtx.login();
       onLoginToggle();
-    }
-    // 사용자의 역할에 따라 다른 페이지로 리다이렉트
-    const role = localStorage.getItem("role");
-    if (role === "admin") {
-      navigate("/admin"); // 관리자일 경우 관리자 페이지로 이동
+
+      // 사용자의 역할에 따라 다른 페이지로 리다이렉트
+      const role = localStorage.getItem("role");
+
+      if (role === "admin") {
+        navigate("/admin"); // 관리자일 경우 관리자 페이지로 이동
+      }
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "사용자 로그인 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
   };
 

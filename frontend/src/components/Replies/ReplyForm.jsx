@@ -40,40 +40,47 @@ const ReplyForm = ({
       content: contentTrimConfrim,
     };
 
-    // POST 요청 시 댓글 ID를 추가
+    // POST 요청 시 답글 ID를 추가
     if (method === "POST") {
       requestBody.commentId = commentId;
-    }
-
-    // PATCH 요청 시 답글 ID를 추가
-    if (method === "PATCH") {
+      // PATCH 요청 시 답글 ID를 추가
+    } else if (method === "PATCH") {
       requestBody.replyId = replyData.replyId;
     }
 
-    const response = await fetch(
-      "http://localhost:3000/posts/" + postId + "/replies",
-      {
-        method: method,
-        body: JSON.stringify(requestBody),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+    console.log(method);
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/posts/" + postId + "/replies",
+        {
+          method: method,
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("답글 추가/수정 실패");
       }
-    );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData.message);
-      throw json({ message: "Could not save reply." }, { status: 500 });
-    } else if (response.ok && method === "POST") {
       const resData = await response.json();
-      onAddReplyData(resData.newReply); // 새 답글을 부모 컴포넌트로 전달
-    } else if (response.ok && method === "PATCH") {
-      const resData = await response.json();
-      onEditReplyData(resData.editReply); // 수정된 답글을 부모 컴포넌트로 전달
+
+      if (method === "POST") {
+        onAddReplyData(resData.newReply); // 새 답글을 부모 컴포넌트로 전달
+      } else if (method === "PATCH") {
+        onEditReplyData(resData.editReply); // 수정된 답글을 부모 컴포넌트로 전달
+      }
+
+      // 제출된 후에 답글 폼을 닫음
+      onReplyToggle();
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "답글 추가/수정 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
-
-    // 제출된 후에 답글 폼을 닫음
-    onReplyToggle();
   };
 
   // 로그인 상태가 아닌 경우 답글 폼을 닫음

@@ -23,24 +23,29 @@ const Reply = ({
   const replyDeleteHandler = async () => {
     const postId = post.postId;
 
-    // 답글 삭제 요청
-    const response = await fetch(
-      "http://localhost:3000/posts/" + postId + "/reply",
-      {
-        method: "DELETE",
-        body: JSON.stringify({ replyId }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
+    try {
+      // 답글 삭제 요청
+      const response = await fetch(
+        "http://localhost:3000/posts/" + postId + "/reply",
+        {
+          method: "DELETE",
+          body: JSON.stringify({ replyId }),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData.message);
-      throw json({ message: "Could not delete reply." }, { status: 500 });
-    } else {
+      if (!response.ok) {
+        throw new Error("답글 삭제 실패");
+      }
+
       // 답글 삭제가 성공했을 때 상위 컴포넌트에 알림
       onDeleteReplyData(replyId);
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "답글 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
   };
 

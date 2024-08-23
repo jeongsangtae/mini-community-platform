@@ -17,18 +17,26 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
     const fetchData = async () => {
       const postId = post.postId;
 
-      // 서버에서 특정 게시글의 특정 댓글에 대한 답글을 가져오는 API 호출
-      const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/" + commentId + "/replies"
-      );
+      try {
+        // 서버에서 특정 게시글의 특정 댓글에 대한 답글을 가져오는 API 호출
+        const response = await fetch(
+          "http://localhost:3000/posts/" + postId + "/" + commentId + "/replies"
+        );
 
-      if (!response.ok) {
-        throw json({ message: "답글 불러오기 실패" }, { status: 500 });
+        if (!response.ok) {
+          throw new Error("답글 불러오기 실패");
+        }
+
+        const resData = await response.json();
+
+        setReplies(resData.replies);
+        repliesLength(resData.replies.length); // 답글의 수를 부모 컴포넌트에 전달
+      } catch (error) {
+        authCtx.errorHelper(
+          error,
+          "답글 조회 중에 문제가 발생했습니다. 다시 시도해 주세요."
+        );
       }
-
-      const resData = await response.json();
-      setReplies(resData.replies);
-      repliesLength(resData.replies.length); // 답글의 수를 부모 컴포넌트에 전달
     };
 
     fetchData();

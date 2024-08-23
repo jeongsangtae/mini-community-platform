@@ -31,22 +31,30 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    // 서버로 회원가입 요청을 보내는 API
-    const response = await fetch("http://localhost:3000/signup", {
-      method: "POST",
-      body: JSON.stringify(signupData),
-      headers: { "Content-Type": "application/json" },
-    });
+    try {
+      // 서버로 회원가입 요청을 보내는 API
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        body: JSON.stringify(signupData),
+        headers: { "Content-Type": "application/json" },
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      setError(true);
-      setErrorMessage(errorData.message);
-      return null;
-    } else {
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(true);
+        setErrorMessage(errorData.message);
+        return null;
+      }
+
       console.log("회원가입 성공");
       onSignupToggle();
+
       return navigate("signup-success");
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "사용자 회원가입 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     }
   };
 
