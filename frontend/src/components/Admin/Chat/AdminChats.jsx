@@ -74,6 +74,7 @@ const AdminChats = ({
         }
 
         const resData = await response.json();
+
         setMessages(resData.messages);
       } catch (error) {
         authCtx.errorHelper(

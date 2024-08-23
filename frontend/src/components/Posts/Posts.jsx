@@ -42,8 +42,18 @@ const Posts = () => {
       const response = await fetch(
         `http://localhost:3000/posts?${searchParams}`
       );
+
+      if (!response.ok) {
+        throw new Error("게시글 불러오기 실패");
+      }
+
       const resData = await response.json();
       return resData;
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "게시글 데이터를 가져오는 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
     } finally {
       authCtx.setIsLoading(false); // 로딩 상태 종료
     }

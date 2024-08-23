@@ -22,8 +22,8 @@ const AdminComment = ({
   const commentDeleteHandler = async () => {
     const postId = post.postId;
 
-    // 댓글 삭제 요청
     try {
+      // 댓글 삭제 요청
       const response = await fetch(
         "http://localhost:3000/admin/posts/" + postId + "/comment",
         {

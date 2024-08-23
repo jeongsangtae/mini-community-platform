@@ -81,28 +81,33 @@ export const action = async ({ request, params }) => {
     url = "http://localhost:3000/posts/" + postId + "/edit";
   }
 
-  const response = await fetch(url, {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(postData),
-    credentials: "include",
-  });
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+      credentials: "include",
+    });
 
-  if (response.status === 422) {
-    return response;
-  }
+    if (response.status === 422) {
+      return response;
+    }
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    console.log(errorData.message);
-    throw json({ message: "Could not save post." }, { status: 500 });
-  }
+    if (!response.ok) {
+      throw new Error("게시글 추가/수정 실패");
+    }
 
-  if (method === "POST") {
-    return redirect("/posts");
-  } else {
-    return redirect("/posts/" + postId);
+    if (method === "POST") {
+      return redirect("/posts");
+    } else {
+      return redirect("/posts/" + postId);
+    }
+  } catch (error) {
+    console.error(`에러 내용: ${error.message}`);
+    alert("게시글 추가/수정하는 중 문제가 발생했습니다. 다시 시도해 주세요.");
+
+    return null;
   }
 };

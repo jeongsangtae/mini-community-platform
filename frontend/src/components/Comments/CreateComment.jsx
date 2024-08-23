@@ -45,20 +45,21 @@ const CreateComment = ({ method, onAddCommentData }) => {
       );
 
       if (!response.ok) {
-        throw json({ message: "Could not save comment." }, { status: 500 });
-      } else {
-        const resData = await response.json();
-        onAddCommentData(resData.newComment);
-        setComment("");
+        throw new Error("댓글 저장 실패");
       }
+
+      const resData = await response.json();
+
+      onAddCommentData(resData.newComment);
+      setComment("");
+
+      return redirect("/posts/" + postId);
     } catch (error) {
       authCtx.errorHelper(
         error,
         "댓글 추가 중에 문제가 발생했습니다. 다시 시도해 주세요."
       );
     }
-
-    return redirect("/posts/" + postId);
   };
 
   const commentAddButtonClass = authCtx.isLoggedIn ? "" : `${classes.opacity}`;

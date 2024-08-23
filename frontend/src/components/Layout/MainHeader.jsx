@@ -23,10 +23,13 @@ const MainHeader = () => {
         const response = await fetch("http://localhost:3000/login/success", {
           credentials: "include",
         });
+
         if (!response.ok) {
-          throw new Error("네트워크 오류");
+          throw new Error("로그인 상태 확인 실패");
         }
+
         const resData = await response.json();
+
         setUser(resData);
       } catch (error) {
         console.error("로그인 유지 불가능", error);

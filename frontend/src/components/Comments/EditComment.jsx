@@ -38,27 +38,34 @@ const EditComment = ({
       commentId: commentData.commentId,
     };
 
-    const response = await fetch(
-      "http://localhost:3000/posts/" + postId + "/comments",
-      {
-        method: method,
-        body: JSON.stringify(requestBody),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
+    try {
+      // 댓글 수정 요청
+      const response = await fetch(
+        "http://localhost:3000/posts/" + postId + "/comments",
+        {
+          method: method,
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData.message);
-      throw json({ message: "Could not save comment." }, { status: 500 });
-    } else {
+      if (!response.ok) {
+        throw new Error("댓글 수정 실패");
+      }
+
       const resData = await response.json();
+
       onEditCommentData(resData.editComment);
       onCommentToggle();
-    }
 
-    return redirect("/posts/" + postId);
+      return redirect("/posts/" + postId);
+    } catch (error) {
+      authCtx.errorHelper(
+        error,
+        "댓글 수정 중에 문제가 발생했습니다. 다시 시도해 주세요."
+      );
+    }
   };
 
   // 사용자가 로그인하지 않은 경우 수정 창을 닫음

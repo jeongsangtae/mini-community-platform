@@ -31,6 +31,7 @@ const AdminComments = () => {
         }
 
         const resData = await response.json();
+
         setComments(resData.comments);
       } catch (error) {
         authCtx.errorHelper(

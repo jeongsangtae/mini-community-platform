@@ -39,13 +39,11 @@ const Comment = ({
       );
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.log(errorData.message);
-        throw json({ message: "Could not delete comment." }, { status: 500 });
-      } else {
-        // 댓글 삭제가 성공했을 때 상위 컴포넌트에 알림 (상태 끌어올리기)
-        onDeleteCommentData(commentId);
+        throw new Error("댓글 삭제 실패");
       }
+
+      // 댓글 삭제가 성공했을 때 상위 컴포넌트에 알림 (상태 끌어올리기)
+      onDeleteCommentData(commentId);
     } catch (error) {
       authCtx.errorHelper(
         error,
