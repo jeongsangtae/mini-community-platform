@@ -27,7 +27,7 @@ const AdminReplies = ({ commentId, repliesLength }) => {
         );
 
         if (!response.ok) {
-          throw new Error("답글 불러오기 실패");
+          throw new Error("답글 조회 실패");
         }
 
         const resData = await response.json();
@@ -37,7 +37,7 @@ const AdminReplies = ({ commentId, repliesLength }) => {
       } catch (error) {
         authCtx.errorHelper(
           error,
-          "답글 조회 중에 문제가 발생했습니다. 다시 시도해 주세요."
+          "답글을 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
         );
       }
     };

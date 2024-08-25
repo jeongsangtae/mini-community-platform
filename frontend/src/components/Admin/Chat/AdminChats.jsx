@@ -70,7 +70,7 @@ const AdminChats = ({
         );
 
         if (!response.ok) {
-          throw new Error("메시지 로드 중 오류 발생");
+          throw new Error("메시지 조회 실패");
         }
 
         const resData = await response.json();
@@ -111,7 +111,7 @@ const AdminChats = ({
     } catch (error) {
       authCtx.errorHelper(
         error,
-        "서버와의 연결 중 오류가 발생했습니다. 페이지를 새로고침 해보세요."
+        "서버와의 연결 중 오류가 발생했습니다. 새로고침 후 다시 시도해 주세요."
       );
     }
   }, []);
@@ -171,11 +171,10 @@ const AdminChats = ({
       );
 
       if (!response.ok) {
-        throw new Error("메시지를 전송 실패");
-      } else {
-        const resData = await response.json();
-        console.log(resData.newMessage);
+        throw new Error("메시지 전송 실패");
       }
+
+      console.log("메시지 전송 성공");
 
       // 전송 후 입력 필드와 높이 초기화
       setMessage("");

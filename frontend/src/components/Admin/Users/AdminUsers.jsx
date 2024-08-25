@@ -24,7 +24,7 @@ const AdminUsers = () => {
         });
 
         if (!response.ok) {
-          throw new Error("사용자 불러오기 실패");
+          throw new Error("사용자 조회 실패");
         }
 
         const resData = await response.json();
@@ -34,7 +34,7 @@ const AdminUsers = () => {
       } catch (error) {
         authCtx.errorHelper(
           error,
-          "사용자 목록 조회 중에 문제가 발생했습니다. 다시 시도해 주세요."
+          "사용자를 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
         );
       }
     };

@@ -33,7 +33,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
           );
 
           if (!response.ok) {
-            throw new Error("메시지 불러오기 실패");
+            throw new Error("마지막 메시지 조회 실패");
           }
 
           const resData = await response.json();
@@ -48,7 +48,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         // 전체 fetchLastMessages 함수에서 발생하는 오류를 처리
         authCtx.errorHelper(
           error,
-          "마지막 메시지를 불러오는 데 문제가 발생했습니다."
+          "마지막 메시지를 불러오는 데 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
         );
       }
     };

@@ -31,7 +31,7 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
     } catch (error) {
       authCtx.errorHelper(
         error,
-        "답글 삭제 중에 문제가 발생했습니다. 다시 시도해 주세요."
+        "답글 삭제 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
       );
     }
   };
