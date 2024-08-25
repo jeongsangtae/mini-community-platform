@@ -53,7 +53,7 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
     } catch (error) {
       authCtx.errorHelper(
         error,
-        "사용자 회원가입 중에 문제가 발생했습니다. 다시 시도해 주세요."
+        "회원가입 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
       );
     }
   };

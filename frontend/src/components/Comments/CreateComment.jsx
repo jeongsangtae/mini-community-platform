@@ -45,7 +45,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
       );
 
       if (!response.ok) {
-        throw new Error("댓글 저장 실패");
+        throw new Error("댓글 추가 실패");
       }
 
       const resData = await response.json();
@@ -57,7 +57,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
     } catch (error) {
       authCtx.errorHelper(
         error,
-        "댓글 추가 중에 문제가 발생했습니다. 다시 시도해 주세요."
+        "댓글 추가 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
       );
     }
   };

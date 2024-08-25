@@ -15,13 +15,14 @@ export const loader = async ({ params }) => {
     const response = await fetch(
       "http://localhost:3000/admin/posts/" + params.postId
     );
+
     const resData = await response.json();
 
     return resData;
   } catch (error) {
     console.error("게시글 세부 내용 조회 중 오류 발생", error.message);
     alert(
-      "게시글 세부 내용 조회 중에 문제가 발생했습니다. 다시 시도해 주세요. "
+      "게시글을 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
     );
 
     // null을 반환하여 페이지에 데이터가 없음을 명시
@@ -53,7 +54,9 @@ export const action = async ({ request, params }) => {
     return redirect("/admin/posts");
   } catch (error) {
     console.error("게시글 삭제 중 오류 발생", error.message);
-    alert("게시글 삭제하는 중 문제가 발생했습니다. 다시 시도해 주세요.");
+    alert(
+      "게시글 삭제 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+    );
 
     // null을 반환하여 페이지에 데이터가 없음을 명시
     return null;

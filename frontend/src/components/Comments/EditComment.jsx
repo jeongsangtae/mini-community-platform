@@ -63,7 +63,7 @@ const EditComment = ({
     } catch (error) {
       authCtx.errorHelper(
         error,
-        "댓글 수정 중에 문제가 발생했습니다. 다시 시도해 주세요."
+        "댓글 수정 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
       );
     }
   };

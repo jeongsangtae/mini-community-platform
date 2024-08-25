@@ -23,7 +23,9 @@ export const loader = async () => {
     return resData;
   } catch (error) {
     console.error("게시글 목록 조회 중 오류 발생", error.message);
-    alert("게시글 목록 조회 중에 문제가 발생했습니다. 다시 시도해 주세요.");
+    alert(
+      "게시글 목록을 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+    );
 
     // null을 반환하여 페이지에 데이터가 없음을 명시
     return null;

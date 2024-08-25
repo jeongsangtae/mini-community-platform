@@ -106,7 +106,9 @@ export const action = async ({ request, params }) => {
     }
   } catch (error) {
     console.error(`에러 내용: ${error.message}`);
-    alert("게시글 추가/수정하는 중 문제가 발생했습니다. 다시 시도해 주세요.");
+    alert(
+      "게시글 추가/수정 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+    );
 
     return null;
   }

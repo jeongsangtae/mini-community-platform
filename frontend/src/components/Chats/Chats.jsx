@@ -62,7 +62,7 @@ const Chats = ({ userId, userEmail }) => {
       } catch (error) {
         authCtx.errorHelper(
           error,
-          "메시지를 불러오는 데 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+          "메시지를 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
         );
       }
     };
@@ -97,7 +97,7 @@ const Chats = ({ userId, userEmail }) => {
     } catch (error) {
       authCtx.errorHelper(
         error,
-        "서버와의 연결 중 오류가 발생했습니다. 다시 시도해 주세요."
+        "서버와의 연결 중 오류가 발생했습니다. 새로고침 후 다시 시도해 주세요."
       );
     }
   }, [userId]);

@@ -24,7 +24,7 @@ export const loader = async ({ params }) => {
   } catch (error) {
     console.error("게시글 세부 내용 조회 중 오류 발생", error.message);
     alert(
-      "게시글 세부 내용 조회 중에 문제가 발생했습니다. 다시 시도해 주세요. "
+      "게시글을 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
     );
 
     // null을 반환하여 페이지에 데이터가 없음을 명시
@@ -32,13 +32,13 @@ export const loader = async ({ params }) => {
   }
 };
 
-// 게시글 삭제, 수정에 호춤되는 action 함수
-// 게시글을 삭제하거나 수정하는 등의 작업을 처리
+// 게시글 삭제에 호춤되는 action 함수
+// 게시글을 삭제하는 작업을 처리
 export const action = async ({ request, params }) => {
   const postId = params.postId;
 
   try {
-    // 요청 메소드(DELETE, PATCH 등)에 따라 서버에 요청을 보냄
+    // 요청 메소드 DELETE를 서버에 요청 보냄
     const response = await fetch("http://localhost:3000/posts/" + postId, {
       method: request.method,
       credentials: "include",
@@ -52,8 +52,10 @@ export const action = async ({ request, params }) => {
     // 성공 시 게시글 목록 페이지로 리디렉션
     return redirect("/posts");
   } catch (error) {
-    console.error("게시글 수정/삭제 중 오류 발생", error.message);
-    alert("게시글을 수정/삭제하는 중 문제가 발생했습니다. 다시 시도해 주세요.");
+    console.error("게시글 삭제 중 오류 발생", error.message);
+    alert(
+      "게시글 삭제 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+    );
 
     // null을 반환하여 페이지에 데이터가 없음을 명시
     return null;

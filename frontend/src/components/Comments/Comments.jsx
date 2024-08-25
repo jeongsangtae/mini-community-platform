@@ -28,7 +28,7 @@ const Comments = () => {
         );
 
         if (!response.ok) {
-          throw new Error("댓글 불러오기 실패");
+          throw new Error("댓글 조회 실패");
         }
 
         const resData = await response.json();
@@ -36,7 +36,7 @@ const Comments = () => {
       } catch (error) {
         authCtx.errorHelper(
           error,
-          "댓글 조회 중에 문제가 발생했습니다. 다시 시도해 주세요."
+          "댓글을 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
         );
       }
     };
