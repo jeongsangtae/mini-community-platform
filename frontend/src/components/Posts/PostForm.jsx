@@ -73,13 +73,10 @@ export const action = async ({ request, params }) => {
   // URL 매개변수에서 게시글 ID 가져옴 (편집 시에만 사용)
   const postId = params.postId;
 
-  // 기본 URL
-  let url = "http://localhost:3000/posts";
-
-  // 게시글 수정 시 사용되는 URL
-  if (method === "PATCH") {
-    url = "http://localhost:3000/posts/" + postId + "/edit";
-  }
+  const url =
+    method === "POST"
+      ? "http://localhost:3000/posts" // 게시글 추가 시 사용되는 URL
+      : `http://localhost:3000/posts/${postId}/edit`; // 게시글 수정 시 사용되는 URL
 
   try {
     const response = await fetch(url, {
@@ -91,23 +88,17 @@ export const action = async ({ request, params }) => {
       credentials: "include",
     });
 
-    if (response.status === 422) {
-      return response;
-    }
-
     if (!response.ok) {
-      throw new Error("게시글 추가/수정 실패");
+      throw new Error(`게시글 ${method === "POST" ? "추가" : "수정"} 실패`);
     }
 
-    if (method === "POST") {
-      return redirect("/posts");
-    } else {
-      return redirect("/posts/" + postId);
-    }
+    return redirect(method === "POST" ? "/posts" : `/posts/${postId}`);
   } catch (error) {
-    console.error(`에러 내용: ${error.message}`);
+    console.error("에러 내용:", error.message);
     alert(
-      "게시글 추가/수정 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+      `게시글 ${
+        method === "POST" ? "추가" : "수정"
+      } 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요.`
     );
 
     return null;

@@ -48,8 +48,6 @@ const ReplyForm = ({
       requestBody.replyId = replyData.replyId;
     }
 
-    console.log(method);
-
     try {
       const response = await fetch(
         "http://localhost:3000/posts/" + postId + "/replies",
@@ -62,23 +60,23 @@ const ReplyForm = ({
       );
 
       if (!response.ok) {
-        throw new Error("답글 추가/수정 실패");
+        throw new Error(`답글 ${method === "POST" ? "추가" : "수정"} 실패`);
       }
 
       const resData = await response.json();
 
-      if (method === "POST") {
-        onAddReplyData(resData.newReply); // 새 답글을 부모 컴포넌트로 전달
-      } else if (method === "PATCH") {
-        onEditReplyData(resData.editReply); // 수정된 답글을 부모 컴포넌트로 전달
-      }
+      method === "POST"
+        ? onAddReplyData(resData.newReply) // 새 답글을 부모 컴포넌트로 전달
+        : onEditReplyData(resData.editReply); // 수정된 답글을 부모 컴포넌트로 전달
 
       // 제출된 후에 답글 폼을 닫음
       onReplyToggle();
     } catch (error) {
       authCtx.errorHelper(
         error,
-        "답글 추가/수정 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+        `답글 ${
+          method === "POST" ? "추가" : "수정"
+        } 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요.`
       );
     }
   };

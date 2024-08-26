@@ -18,11 +18,15 @@ export const loader = async () => {
       credentials: "include",
     });
 
+    if (!response.ok) {
+      throw new Error("게시글 목록 조회 실패");
+    }
+
     const resData = await response.json();
 
     return resData;
   } catch (error) {
-    console.error("게시글 목록 조회 중 오류 발생", error.message);
+    console.error("에러 내용:", error.message);
     alert(
       "게시글 목록을 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
     );

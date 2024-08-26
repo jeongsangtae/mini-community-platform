@@ -16,11 +16,15 @@ export const loader = async ({ params }) => {
       "http://localhost:3000/admin/posts/" + params.postId
     );
 
+    if (!response.ok) {
+      throw new Error("게시글 조회 실패");
+    }
+
     const resData = await response.json();
 
     return resData;
   } catch (error) {
-    console.error("게시글 세부 내용 조회 중 오류 발생", error.message);
+    console.error("에러 내용:", error.message);
     alert(
       "게시글을 불러오는 중에 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
     );
@@ -48,6 +52,7 @@ export const action = async ({ request, params }) => {
     // 응답이 올바르지 않다면 접근 불가 페이지로 리디렉션
     if (!response.ok) {
       return redirect(`/admin/posts/${postId}/no-access`);
+      // throw new Error("게시글 삭제 실패")
     }
 
     // 성공 시 게시글 목록 페이지로 리디렉션

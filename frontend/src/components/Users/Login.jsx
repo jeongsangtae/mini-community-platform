@@ -46,6 +46,7 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
 
       console.log("로그인 성공");
       await authCtx.login();
+
       onLoginToggle();
 
       // 사용자의 역할에 따라 다른 페이지로 리다이렉트
