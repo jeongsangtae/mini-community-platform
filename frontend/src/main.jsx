@@ -37,7 +37,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />, // 메인 레이아웃 컴포넌트
-    // errorElement: <NotFound />,  // 주석 처리된 오류 페이지 (필요시 활성화)
+    errorElement: <NotFound />, // 각 라우트에서 발생하는 에러를 처리 (ex. loader)
     children: [
       { index: true, element: <HomePage /> }, // 홈 페이지
       {
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
             ), // 인증이 필요한 게시글 수정 페이지
             action: postFormAction, // 게시글 수정 action
           },
-          { path: "no-access", element: <Authentication /> }, // 접근 권한 없음 페이지
+          // { path: "no-access", element: <Authentication /> }, // 접근 권한 없음 페이지 (필요 시 활성화)
         ],
       },
       { path: "signup-success", element: <SignupSuccessPage /> }, // 회원가입 성공 페이지
@@ -92,6 +92,7 @@ const router = createBrowserRouter([
     id: "users-data", // 관리자 페이지의 채팅, 사용자 페이지 useRouteLoaderData에 사용될 routeId 내용
     loader: adminUsersLoader, // 관리자 페이지에서 사용자 데이터를 가져오는 loader
     element: <AdminRootLayout />, // 관리자 페이지 레이아웃 컴포넌트
+    errorElement: <NotFound />, // 각 라우트에서 발생하는 에러를 처리 (ex. loader)
     children: [
       {
         index: true,
@@ -128,6 +129,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // 정의되지 않은 모든 경로에 대해 NotFound 컴포넌트를 렌더링
   { path: "*", element: <NotFound /> }, // 404 페이지 (경로가 없을 때 표시)
 ]);
 

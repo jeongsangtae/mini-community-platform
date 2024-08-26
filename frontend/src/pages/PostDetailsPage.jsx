@@ -11,10 +11,17 @@ export default PostDetailsPage;
 // 게시글 페이지에서 세부 페이지 로드 시 호출되는 loader 함수
 // 게시글 세부 정보를 가져옴
 export const loader = async ({ params }) => {
+  const postId = params.postId;
+
+  // postId가 순수 숫자인지 확인
+  if (!/^\d+$/.test(postId)) {
+    console.error("잘못된 postId 형식:", postId);
+    // 상태 코드가 404인 Response 객체를 던짐
+    throw new Response("존재하지 않는 게시글", { status: 404 });
+  }
+
   try {
-    const response = await fetch(
-      "http://localhost:3000/posts/" + params.postId
-    );
+    const response = await fetch("http://localhost:3000/posts/" + postId);
 
     if (!response.ok) {
       throw new Error("게시글 조회 실패");
