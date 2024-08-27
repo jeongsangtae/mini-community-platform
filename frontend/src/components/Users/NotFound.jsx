@@ -7,12 +7,14 @@ import classes from "./NotFound.module.css";
 const NotFound = () => {
   const authCtx = useContext(AuthContext);
 
+  const toRedirect = localStorage.getItem("role") === "user" ? "/" : "/admin";
+
   return (
     <div className={`${classes["not-found"]} ${classes[authCtx.themeClass]}`}>
       <h1>이 리소스를 찾을 수 없습니다</h1>
       <p>안타깝게도 이 리소스를 찾을 수 없습니다.</p>
       <Link
-        to="/"
+        to={toRedirect}
         className={`${classes["redirect-button"]} ${
           classes[authCtx.themeClass]
         }`}
