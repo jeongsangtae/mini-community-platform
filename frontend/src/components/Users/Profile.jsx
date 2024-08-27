@@ -48,6 +48,7 @@ const Profile = () => {
       }
 
       const resData = await response.json();
+
       return resData;
     } catch (error) {
       authCtx.errorHelper(

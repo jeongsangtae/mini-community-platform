@@ -48,6 +48,7 @@ const Posts = () => {
       }
 
       const resData = await response.json();
+
       return resData;
     } catch (error) {
       authCtx.errorHelper(

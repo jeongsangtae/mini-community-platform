@@ -33,10 +33,13 @@ export const AuthContextProvier = ({ children }) => {
       const response = await fetch("http://localhost:3000/accessToken", {
         credentials: "include",
       });
+
       if (!response.ok) {
         throw new Error("쿠키에 JWT 토큰 없음");
       }
+
       const resData = await response.json();
+
       if (resData) {
         setUserInfo(resData); // 사용자 정보를 상태로 설정
         localStorage.setItem("role", resData.role); // 사용자 역할 저장
@@ -53,10 +56,13 @@ export const AuthContextProvier = ({ children }) => {
       const response = await fetch("http://localhost:3000/refreshToken", {
         credentials: "include",
       });
+
       if (!response.ok) {
         throw new Error("쿠키에 JWT 토큰 없음");
       }
+
       const resData = await response.json();
+
       if (resData) {
         const now = Math.floor(new Date().getTime() / 1000);
         const expirationTime = Math.ceil(now + 60 * 60); // 1시간 유효
@@ -74,10 +80,13 @@ export const AuthContextProvier = ({ children }) => {
       const response = await fetch("http://localhost:3000/refreshTokenExp", {
         credentials: "include",
       });
+
       if (!response.ok) {
         throw new Error("쿠키에 JWT 토큰 없음");
       }
+
       const resData = await response.json();
+
       if (resData) {
         localStorage.setItem("refreshTokenExp", resData.tokenExp); // 토큰 만료 시간 저장
       }
@@ -89,41 +98,46 @@ export const AuthContextProvier = ({ children }) => {
   // 로그인 여부에 따라 사용자 인증 및 토큰 갱신을 확인하는 useEffect
   useEffect(() => {
     if (isLoggedIn) {
-      verifyUser(setUserInfo);
+      try {
+        verifyUser(setUserInfo);
 
-      // 토큰 만료를 확인하고 필요 시 갱신하는 함수
-      const checkTokenExpiration = () => {
-        const now = Math.floor(new Date().getTime() / 1000);
-        const storedExpirationTime = parseInt(
-          localStorage.getItem("expirationTime")
-        );
-        const refreshTokenExpirationTime = parseInt(
-          localStorage.getItem("refreshTokenExp")
-        );
+        // 토큰 만료를 확인하고 필요 시 갱신하는 함수
+        const checkTokenExpiration = () => {
+          const now = Math.floor(new Date().getTime() / 1000);
+          const storedExpirationTime = parseInt(
+            localStorage.getItem("expirationTime")
+          );
+          const refreshTokenExpirationTime = parseInt(
+            localStorage.getItem("refreshTokenExp")
+          );
 
-        // console.log(now);
-        // console.log(storedExpirationTime);
-        // console.log(refreshTokenExpirationTime);
+          // console.log(now);
+          // console.log(storedExpirationTime);
+          // console.log(refreshTokenExpirationTime);
 
-        // console.log(
-        //   now >= storedExpirationTime && refreshTokenExpirationTime > now
-        // );
-        // console.log(now >= refreshTokenExpirationTime);
+          // console.log(
+          //   now >= storedExpirationTime && refreshTokenExpirationTime > now
+          // );
+          // console.log(now >= refreshTokenExpirationTime);
 
-        if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
-          refreshTokenHandler();
-          setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
-        } else if (now >= refreshTokenExpirationTime) {
-          logoutHandler(); // 리프레시 토큰 만료 시 로그아웃
-        }
-      };
+          if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
+            refreshTokenHandler();
+            setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
+          } else if (now >= refreshTokenExpirationTime) {
+            logoutHandler(); // 리프레시 토큰 만료 시 로그아웃
+          }
+        };
 
-      checkTokenExpiration(); // 초기 확인
+        checkTokenExpiration(); // 초기 확인
 
-      // 일정 시간마다 토큰 만료 확인
-      const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
+        // 일정 시간마다 토큰 만료 확인
+        const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
 
-      return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+        return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+      } catch (error) {
+        console.error("오류 발생:", error);
+        logoutHandler(); // 오류 발생 시 로그아웃
+      }
     }
   }, [isLoggedIn]);
 
@@ -144,27 +158,44 @@ export const AuthContextProvier = ({ children }) => {
 
   // 로그인 처리 함수
   const loginHandler = async () => {
-    const now = Math.floor(new Date().getTime() / 1000);
-    const expirationTime = Math.ceil(now + 60 * 60);
-    localStorage.setItem("isLoggedIn", "1");
-    localStorage.setItem("expirationTime", expirationTime);
-    setIsLoggedIn(true);
+    try {
+      const now = Math.floor(new Date().getTime() / 1000);
+      const expirationTime = Math.ceil(now + 60 * 60);
 
-    await verifyUser(setUserInfo); // 사용자 정보 확인
-    refreshTokenExpHandler(); // 리프레시 토큰 만료 시간 갱신
+      localStorage.setItem("isLoggedIn", "1");
+      localStorage.setItem("expirationTime", expirationTime);
+
+      setIsLoggedIn(true);
+
+      await verifyUser(setUserInfo); // 사용자 정보 확인
+
+      refreshTokenExpHandler(); // 리프레시 토큰 만료 시간 갱신
+    } catch (error) {
+      // 예외 발생 시 로그인 상태 해제 및 오류 메시지 표시
+      setIsLoggedIn(false);
+      errorHelperHandler(
+        error,
+        "로그인 과정에서 문제가 발생했습니다. 새로고침 후 다시 시도해 주세요."
+      );
+    }
   };
 
   // 로그아웃 처리 함수
   const logoutHandler = async () => {
-    const response = await fetch("http://localhost:3000/logout", {
-      method: "POST",
-      body: JSON.stringify(),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+    try {
+      const response = await fetch("http://localhost:3000/logout", {
+        method: "POST",
+        body: JSON.stringify(),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
-    if (response.ok) {
+      if (!response.ok) {
+        throw new Error("로그아웃 실패");
+      }
+
       const role = localStorage.getItem("role");
+
       if (role === "admin") {
         window.location.href = "/"; // 관리자 로그아웃 시 홈으로 이동
       }
@@ -176,6 +207,11 @@ export const AuthContextProvier = ({ children }) => {
       localStorage.removeItem("role");
       setIsLoggedIn(false);
       setUserInfo(null);
+    } catch (error) {
+      errorHelperHandler(
+        error,
+        "네트워크 문제로 로그아웃에 실패했습니다. 새로고침 후 다시 시도해 주세요."
+      );
     }
   };
 
