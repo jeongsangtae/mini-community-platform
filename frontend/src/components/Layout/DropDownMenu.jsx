@@ -5,6 +5,7 @@ import { FaRegAddressCard } from "react-icons/fa";
 import { MoreVertical, User } from "react-feather";
 
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./DropDownMenu.module.css";
 
 const DropDownMenu = ({
@@ -13,6 +14,7 @@ const DropDownMenu = ({
   dropDownButtonClassName,
 }) => {
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // 드롭다운 메뉴 내용 정의 (로그인 상태에 따라 다르게 렌더링)
   const dropDownContent = (
@@ -57,9 +59,9 @@ const DropDownMenu = ({
           <input
             id="normal"
             className={classes["normal-check"]}
-            defaultChecked={authCtx.themeMode === "dark"}
+            defaultChecked={uiCtx.themeMode === "dark"}
             type="checkbox"
-            onChange={authCtx.themeModeToggle}
+            onChange={uiCtx.themeModeToggle}
           />
           <label htmlFor="normal" className={classes["toggle-item"]}></label>
         </div>

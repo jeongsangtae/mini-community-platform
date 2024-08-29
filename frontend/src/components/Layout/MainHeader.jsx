@@ -6,6 +6,7 @@ import Signup from "../Users/Signup";
 import DropDownMenu from "./DropDownMenu";
 import Chats from "../Chats/Chats";
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 
 import classes from "./MainHeader.module.css";
 
@@ -15,6 +16,7 @@ const MainHeader = () => {
   const [user, setUser] = useState({});
 
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // 컴포넌트가 마운트될 때 로그인 유지 상태를 확인하는 내용
   useEffect(() => {
@@ -52,18 +54,18 @@ const MainHeader = () => {
   // 네비게이션 링크의 활성화 상태에 따라 클래스 설정
   const navLinkClass = ({ isActive }) => {
     return isActive
-      ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
-      : `${classes.button} ${classes[authCtx.themeClass]}`;
+      ? `${classes.active} ${classes.button} ${classes[uiCtx.themeClass]}`
+      : `${classes.button} ${classes[uiCtx.themeClass]}`;
   };
 
   const dropDownButtonClassName = `${classes.button} ${
     classes["dropdown-button"]
-  } ${classes[authCtx.themeClass]}`;
+  } ${classes[uiCtx.themeClass]}`;
 
   return (
     <>
-      <header className={`${classes.header} ${classes[authCtx.themeClass]}`}>
-        <h1 className={`${classes.logo} ${classes[authCtx.themeClass]}`}>
+      <header className={`${classes.header} ${classes[uiCtx.themeClass]}`}>
+        <h1 className={`${classes.logo} ${classes[uiCtx.themeClass]}`}>
           커뮤니티 게시판
         </h1>
         <nav className={classes.navbutton}>

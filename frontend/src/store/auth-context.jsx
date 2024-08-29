@@ -5,13 +5,13 @@ const AuthContext = React.createContext({
   isLoggedIn: false, // 로그인 여부를 나타냄
   userInfo: null, // 사용자 정보
   isLoading: false, // 로딩 상태
-  themeMode: "light", // 테마 모드 (light 또는 dark)
+  // themeMode: "light", // 테마 모드 (light 또는 dark)
   setIsLoading: () => {}, // 로딩 상태를 설정하는 함수
   login: () => {}, // 로그인 함수
   logout: () => {}, // 로그아웃 함수
   refreshToken: () => {}, // 토큰 갱신 함수
   refreshTokenExp: () => {}, // 리프레쉬 토큰 만료 시간 갱신 함수
-  themeModeToggle: () => {}, // 테마 모드 토글 함수
+  // themeModeToggle: () => {}, // 테마 모드 토글 함수
   errorHelper: () => {}, // 예외 처리의 에러를 처리하는 헬퍼 함수
 });
 
@@ -22,10 +22,10 @@ export const AuthContextProvier = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // 테마 모드 상태를 로컬 스토리지에서 불러와 관리
-  const [themeMode, setThemeMode] = useState(() => {
-    const storedThemeMode = localStorage.getItem("themeMode");
-    return storedThemeMode || "light";
-  });
+  // const [themeMode, setThemeMode] = useState(() => {
+  //   const storedThemeMode = localStorage.getItem("themeMode");
+  //   return storedThemeMode || "light";
+  // });
 
   // 사용자가 로그인된 상태인지 확인하는 함수
   const verifyUser = async (setUserInfo) => {
@@ -152,9 +152,9 @@ export const AuthContextProvier = ({ children }) => {
   }, []);
 
   // 테마 모드 변경 시 로컬 스토리지에 저장하는 useEffect
-  useEffect(() => {
-    localStorage.setItem("themeMode", themeMode);
-  }, [themeMode]);
+  // useEffect(() => {
+  //   localStorage.setItem("themeMode", themeMode);
+  // }, [themeMode]);
 
   // 로그인 처리 함수
   const loginHandler = async () => {
@@ -225,13 +225,13 @@ export const AuthContextProvier = ({ children }) => {
   const userName = userInfo ? userInfo.name : "GUEST";
 
   // 테마 모드 토글 함수
-  const themeModeToggleHandler = () => {
-    const newThemeMode = themeMode === "light" ? "dark" : "light";
-    setThemeMode(newThemeMode);
-  };
+  // const themeModeToggleHandler = () => {
+  //   const newThemeMode = themeMode === "light" ? "dark" : "light";
+  //   setThemeMode(newThemeMode);
+  // };
 
   // 테마에 따른 클래스 설정
-  const themeClass = themeMode === "dark" ? "dark-mode" : "";
+  // const themeClass = themeMode === "dark" ? "dark-mode" : "";
 
   return (
     <AuthContext.Provider
@@ -241,13 +241,13 @@ export const AuthContextProvier = ({ children }) => {
         setIsLoading,
         userInfo,
         userName,
-        themeMode,
-        themeClass,
+        // themeMode,
+        // themeClass,
         login: loginHandler,
         logout: logoutHandler,
         refreshToken: refreshTokenHandler,
         refreshTokenExp: refreshTokenExpHandler,
-        themeModeToggle: themeModeToggleHandler,
+        // themeModeToggle: themeModeToggleHandler,
         errorHelper: errorHelperHandler,
       }}
     >

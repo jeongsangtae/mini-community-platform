@@ -112,3 +112,13 @@
   margin-left: 0.6rem;
   width: 90%;
 }
+
+@media (max-width: 840px) {
+  .logo {
+    margin: 1rem auto;
+  }
+
+  .navbutton {
+    display: none;
+  }
+}

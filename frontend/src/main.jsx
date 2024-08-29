@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import { AuthContextProvier } from "./store/auth-context";
+import { UIContextProvier } from "./store/ui-context";
 import "./index.css";
 import { action as postFormAction } from "./components/Posts/PostForm";
 import HomePage from "./pages/Homepage";
@@ -136,6 +137,8 @@ const router = createBrowserRouter([
 // React 앱의 진입점: 루트 엘리먼트를 생성하고, AuthContextProvider로 앱을 감쌈
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthContextProvier>
-    <RouterProvider router={router} />
+    <UIContextProvier>
+      <RouterProvider router={router} />
+    </UIContextProvier>
   </AuthContextProvier>
 );
