@@ -3,17 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 
 import Modal from "../UI/Modal";
-import classes from "./Login.module.css";
+
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
+import classes from "./Login.module.css";
 
 const Login = ({ onLoginToggle, onSignupToggle }) => {
+  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
+  const navigate = useNavigate();
+
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-
-  const authCtx = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -97,7 +100,7 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
         {error && (
           <p
             className={`${classes["error-message"]} ${
-              classes[authCtx.themeClass]
+              classes[uiCtx.themeClass]
             }`}
           >
             {errorMessage}
@@ -106,16 +109,14 @@ const Login = ({ onLoginToggle, onSignupToggle }) => {
 
         <button
           type="submit"
-          className={`${classes["login-button"]} ${
-            classes[authCtx.themeClass]
-          }`}
+          className={`${classes["login-button"]} ${classes[uiCtx.themeClass]}`}
         >
           로그인
         </button>
       </form>
 
       {/* 회원가입 모달로 전환하는 내용 */}
-      <div className={`${classes.link} ${classes[authCtx.themeClass]}`}>
+      <div className={`${classes.link} ${classes[uiCtx.themeClass]}`}>
         <button className={classes.signup} onClick={onSignupToggle}>
           회원가입 하러가기
         </button>

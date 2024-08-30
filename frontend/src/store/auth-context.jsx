@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 const AuthContext = React.createContext({
   isLoggedIn: false, // 로그인 여부를 나타냄
   userInfo: null, // 사용자 정보
+  userName: "",
   isLoading: false, // 로딩 상태
   // themeMode: "light", // 테마 모드 (light 또는 dark)
   setIsLoading: () => {}, // 로딩 상태를 설정하는 함수

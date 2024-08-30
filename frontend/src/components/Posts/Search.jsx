@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { IoIosSearch } from "react-icons/io";
 
-import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./Search.module.css";
 
 const Search = ({
@@ -11,7 +11,7 @@ const Search = ({
   setSearchField,
   onSearch,
 }) => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // 검색 필드 선택 옵션
   const selectOptions = [
@@ -22,16 +22,14 @@ const Search = ({
 
   return (
     <div
-      className={`${classes["search-container"]} ${
-        classes[authCtx.themeClass]
-      }`}
+      className={`${classes["search-container"]} ${classes[uiCtx.themeClass]}`}
     >
       {/* 검색 필드 선택 (제목, 내용, 이름) */}
       <select
         value={searchField}
         onChange={(e) => setSearchField(e.target.value)}
         className={`${classes["search-field-select"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         }`}
       >
         {/* 검색 필드 옵션들 (제목, 내용, 이름) */}
@@ -40,7 +38,7 @@ const Search = ({
             key={index}
             value={option.value} // 필드 값 (title, content, name)
             className={`${classes["search-field-option"]} ${
-              classes[authCtx.themeClass]
+              classes[uiCtx.themeClass]
             }`}
           >
             {/* 필드 이름 (제목, 내용, 이름) */}
@@ -52,13 +50,13 @@ const Search = ({
       {/* 검색어 입력과 검색 버튼 */}
       <div
         className={`${classes["search-term-container"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         }`}
       >
         <input
           type="text"
           className={`${classes["search-term-input"]} ${
-            classes[authCtx.themeClass]
+            classes[uiCtx.themeClass]
           }`}
           placeholder="게시글 검색"
           value={searchTerm}
@@ -67,7 +65,7 @@ const Search = ({
         <IoIosSearch
           onClick={onSearch}
           className={`${classes["search-term-icon"]} ${
-            classes[authCtx.themeClass]
+            classes[uiCtx.themeClass]
           }`}
         />
       </div>

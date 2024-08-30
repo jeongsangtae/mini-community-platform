@@ -3,6 +3,7 @@ import { useRouteLoaderData } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./ReplyForm.module.css";
 
 const ReplyForm = ({
@@ -15,6 +16,7 @@ const ReplyForm = ({
 }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [reply, setReply] = useState("");
   const maxLength = 300;
@@ -89,13 +91,13 @@ const ReplyForm = ({
   }, [authCtx]);
 
   const replyEditButtonClass = authCtx.isLoggedIn
-    ? `${classes["edit-button"]} ${classes[authCtx.themeClass]}`
-    : `${classes["edit-button"]} ${classes[authCtx.themeClass]} ${
+    ? `${classes["edit-button"]} ${classes[uiCtx.themeClass]}`
+    : `${classes["edit-button"]} ${classes[uiCtx.themeClass]} ${
         classes.opacity
       }`;
   const replyCancelButtonClass = authCtx.isLoggedIn
-    ? `${classes["cancel-button"]} ${classes[authCtx.themeClass]}`
-    : `${classes["cancel-button"]} ${classes[authCtx.themeClass]} ${
+    ? `${classes["cancel-button"]} ${classes[uiCtx.themeClass]}`
+    : `${classes["cancel-button"]} ${classes[uiCtx.themeClass]} ${
         classes.opacity
       }`;
 
@@ -103,7 +105,7 @@ const ReplyForm = ({
     <>
       <form
         onSubmit={submitHandler}
-        className={`${classes["reply-form"]} ${classes[authCtx.themeClass]}`}
+        className={`${classes["reply-form"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{authCtx.userName}</p>
         {/* 로그인 상태에 따라 답글 입력 필드 렌더링 */}

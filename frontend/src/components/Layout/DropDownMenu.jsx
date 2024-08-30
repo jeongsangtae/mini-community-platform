@@ -46,12 +46,12 @@ const DropDownMenu = ({
           </button>
         </>
       )}
-      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
 
       {/* 테마 모드 전환 버튼 */}
       <div className={classes["toggle-button"]}>
         <div
-          className={`${classes["toggle-mode"]} ${classes[authCtx.themeClass]}`}
+          className={`${classes["toggle-mode"]} ${classes[uiCtx.themeClass]}`}
         >
           라이트 모드
         </div>
@@ -75,22 +75,20 @@ const DropDownMenu = ({
         {/* 로그인 상태에 따라 다른 아이콘을 표시 */}
         {authCtx.isLoggedIn ? (
           <>
-            <User
-              className={`${classes.icon} ${classes[authCtx.themeClass]}`}
-            />
+            <User className={`${classes.icon} ${classes[uiCtx.themeClass]}`} />
             <div
-              className={`${classes.circle} ${classes[authCtx.themeClass]}`}
+              className={`${classes.circle} ${classes[uiCtx.themeClass]}`}
             ></div>
           </>
         ) : (
           <MoreVertical
-            className={`${classes.icon} ${classes[authCtx.themeClass]}`}
+            className={`${classes.icon} ${classes[uiCtx.themeClass]}`}
           />
         )}
       </div>
       <div
         className={`${classes["dropdown-content"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         }`}
       >
         {dropDownContent}

@@ -3,6 +3,7 @@ import { redirect, useRouteLoaderData } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./EditComment.module.css";
 
 const EditComment = ({
@@ -13,6 +14,7 @@ const EditComment = ({
 }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [comment, setComment] = useState("");
 
@@ -76,13 +78,13 @@ const EditComment = ({
   }, [authCtx]);
 
   const commentEditButtonClass = authCtx.isLoggedIn
-    ? `${classes["edit-button"]} ${classes[authCtx.themeClass]}`
-    : `${classes["edit-button"]} ${classes[authCtx.themeClass]} ${
+    ? `${classes["edit-button"]} ${classes[uiCtx.themeClass]}`
+    : `${classes["edit-button"]} ${classes[uiCtx.themeClass]} ${
         classes.opacity
       }`;
   const commentCancelButtonClass = authCtx.isLoggedIn
-    ? `${classes["cancel-button"]} ${classes[authCtx.themeClass]}`
-    : `${classes["cancel-button"]} ${classes[authCtx.themeClass]} ${
+    ? `${classes["cancel-button"]} ${classes[uiCtx.themeClass]}`
+    : `${classes["cancel-button"]} ${classes[uiCtx.themeClass]} ${
         classes.opacity
       }`;
 
@@ -90,7 +92,7 @@ const EditComment = ({
     <>
       <form
         onSubmit={submitHandler}
-        className={`${classes["comment-form"]} ${classes[authCtx.themeClass]}`}
+        className={`${classes["comment-form"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (

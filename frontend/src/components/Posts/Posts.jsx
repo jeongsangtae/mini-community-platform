@@ -5,11 +5,14 @@ import Post from "./Post";
 import Pagination from "./PagiNation";
 import Search from "./Search";
 import LoadingIndicator from "../UI/LoadingIndicator";
+
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./Posts.module.css";
 
 const Posts = () => {
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // URL 쿼리 매개변수(searchParams)를 관리
   const [searchParams, setSearchParams] = useSearchParams();
@@ -98,21 +101,21 @@ const Posts = () => {
 
   // 로그인 여부에 따라 다르게 표시되는 "글쓰기" 버튼 클래스
   const postAddButtonClass = authCtx.isLoggedIn
-    ? `${classes.add} ${classes[authCtx.themeClass]}`
-    : `${classes.add} ${classes[authCtx.themeClass]} ${classes.opacity}`;
+    ? `${classes.add} ${classes[uiCtx.themeClass]}`
+    : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
 
   return (
-    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+    <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
       {authCtx.isLoading ? (
         <LoadingIndicator /> // 로딩 중일 때 표시
       ) : (
         <div className={classes["board-container"]}>
-          <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+          <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
             게시글
           </h1>
 
           <div
-            className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
+            className={`${classes["sub-menu"]} ${classes[uiCtx.themeClass]}`}
           >
             {/* 전체 게시글 갯수를 보여줌 */}
             <p>{countPosts}개의 글</p>
@@ -122,7 +125,7 @@ const Posts = () => {
           </div>
 
           <p
-            className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+            className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
           ></p>
 
           {posts.length > 0 ? (
@@ -146,20 +149,18 @@ const Posts = () => {
               {/* 게시글이 없는 경우에만 표시 */}
               <h2
                 className={`${classes["no-posts"]} ${
-                  classes[authCtx.themeClass]
+                  classes[uiCtx.themeClass]
                 }`}
               >
                 게시글이 존재하지 않습니다.
               </h2>
               <p
-                className={`${classes.underline} ${
-                  classes[authCtx.themeClass]
-                }`}
+                className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
               ></p>
             </>
           )}
           <div
-            className={`${classes["last-menu"]} ${classes[authCtx.themeClass]}`}
+            className={`${classes["last-menu"]} ${classes[uiCtx.themeClass]}`}
           >
             <Search
               searchTerm={searchTerm}

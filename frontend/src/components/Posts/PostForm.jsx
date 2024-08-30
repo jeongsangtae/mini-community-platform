@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { useNavigate, Form, redirect, json } from "react-router-dom";
+import { useNavigate, Form, redirect } from "react-router-dom";
 
-import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./PostForm.module.css";
 
 const PostForm = ({ method, userData, postData, postPageName }) => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
   const navigate = useNavigate();
 
   const closeHandler = () => {
@@ -13,18 +13,18 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
   };
 
   return (
-    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+    <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
       <div
         className={`${classes["post-form-container"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         }`}
       >
-        <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+        <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
           {postPageName}
         </h1>
         <Form
           method={method}
-          className={`${classes.form} ${classes[authCtx.themeClass]}`}
+          className={`${classes.form} ${classes[uiCtx.themeClass]}`}
         >
           <div>
             <input
@@ -50,7 +50,7 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
               defaultValue={postData ? postData.content : ""}
             />
           </div>
-          <div className={`${classes.actions} ${classes[authCtx.themeClass]}`}>
+          <div className={`${classes.actions} ${classes[uiCtx.themeClass]}`}>
             <button>등록</button>
             <button type="button" onClick={closeHandler}>
               취소

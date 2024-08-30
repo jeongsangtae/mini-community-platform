@@ -5,18 +5,18 @@ import Login from "../Users/Login";
 import Signup from "../Users/Signup";
 import DropDownMenu from "./DropDownMenu";
 import Chats from "../Chats/Chats";
+
 import AuthContext from "../../store/auth-context";
 import UIContext from "../../store/ui-context";
-
 import classes from "./MainHeader.module.css";
 
 const MainHeader = () => {
+  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
+
   const [openSignupModal, setOnSignupModal] = useState(false);
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [user, setUser] = useState({});
-
-  const authCtx = useContext(AuthContext);
-  const uiCtx = useContext(UIContext);
 
   // 컴포넌트가 마운트될 때 로그인 유지 상태를 확인하는 내용
   useEffect(() => {

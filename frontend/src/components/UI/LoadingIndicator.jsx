@@ -1,13 +1,13 @@
 import { useContext } from "react";
 
-import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./LoadingIndicator.module.css";
 
 const LoadingIndicator = () => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   return (
-    <div className={`${classes["lds-ring"]} ${classes[authCtx.themeClass]}`}>
+    <div className={`${classes["lds-ring"]} ${classes[uiCtx.themeClass]}`}>
       <div></div>
       <div></div>
       <div></div>

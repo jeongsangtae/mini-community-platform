@@ -3,10 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 
 import Modal from "../UI/Modal";
-import classes from "./Signup.module.css";
+
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
+import classes from "./Signup.module.css";
 
 const Signup = ({ onLoginToggle, onSignupToggle }) => {
+  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
+  const navigate = useNavigate();
+
   const [signupData, setSignupData] = useState({
     username: "",
     email: "",
@@ -14,12 +20,8 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
     password: "",
   });
 
-  const authCtx = useContext(AuthContext);
-
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const navigate = useNavigate();
 
   // 입력 필드가 변경될 때마다 상태 업데이트
   const inputChangeHandler = (event) => {
@@ -118,7 +120,7 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
         {error && (
           <p
             className={`${classes["error-message"]} ${
-              classes[authCtx.themeClass]
+              classes[uiCtx.themeClass]
             }`}
           >
             {errorMessage}
@@ -126,16 +128,14 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
         )}
         <button
           type="submit"
-          className={`${classes["signup-button"]} ${
-            classes[authCtx.themeClass]
-          }`}
+          className={`${classes["signup-button"]} ${classes[uiCtx.themeClass]}`}
         >
           가입
         </button>
       </form>
 
       {/* 로그인 모달로 전환하는 내용 */}
-      <div className={`${classes.link} ${classes[authCtx.themeClass]}`}>
+      <div className={`${classes.link} ${classes[uiCtx.themeClass]}`}>
         <button className={classes.login} onClick={onLoginToggle}>
           로그인 하러가기
         </button>

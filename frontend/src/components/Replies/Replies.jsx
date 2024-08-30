@@ -3,12 +3,15 @@ import { useRouteLoaderData } from "react-router-dom";
 
 import Reply from "./Reply";
 import ReplyForm from "./ReplyForm";
+
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./Replies.module.css";
 
 const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [replies, setReplies] = useState([]);
 
@@ -76,9 +79,7 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
       )}
       {/* 답글이 있는 경우, 밑줄을 렌더링 */}
       {replies.length > 0 && (
-        <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p>
+        <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
       )}
       {/* 답글이 있을 경우에만 렌더링 */}
       {replies.length > 0 && (

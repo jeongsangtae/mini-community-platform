@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-import AuthContext from "../../store/auth-context";
 import NoAccess from "./NoAccess";
+
+import AuthContext from "../../store/auth-context";
 
 const Authentication = ({ children }) => {
   const authCtx = useContext(AuthContext);

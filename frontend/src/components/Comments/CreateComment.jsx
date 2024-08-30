@@ -3,11 +3,13 @@ import { redirect, useRouteLoaderData } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./CreateComment.module.css";
 
 const CreateComment = ({ method, onAddCommentData }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [comment, setComment] = useState("");
 
@@ -68,7 +70,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
     <>
       <form
         onSubmit={submitHandler}
-        className={`${classes["comment-form"]} ${classes[authCtx.themeClass]}`}
+        className={`${classes["comment-form"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{authCtx.userName}</p>
         {authCtx.isLoggedIn ? (

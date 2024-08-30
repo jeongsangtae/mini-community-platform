@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./Pagination.module.css";
 
 const Pagination = ({
@@ -10,7 +10,8 @@ const Pagination = ({
   lastPageGroup,
   onPageChange,
 }) => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
+
   const firstPageButton = "<<";
   const lastPageButton = ">>";
 
@@ -37,7 +38,7 @@ const Pagination = ({
           onClick={() => pageChangeHandler(pageNumber)}
           className={
             pageNumber === page
-              ? `${classes.on} ${classes[authCtx.themeClass]}` // 현재 페이지를 강조 표시
+              ? `${classes.on} ${classes[uiCtx.themeClass]}` // 현재 페이지를 강조 표시
               : ""
           }
         >
@@ -51,7 +52,7 @@ const Pagination = ({
     <>
       {/* 페이지가 1보다 많을 때만 페이지네이션 렌더링 */}
       {totalPages > 1 && (
-        <div className={`${classes.pagination} ${classes[authCtx.themeClass]}`}>
+        <div className={`${classes.pagination} ${classes[uiCtx.themeClass]}`}>
           {pageMove(firstPage, firstPageButton, () => pageChangeHandler(1))}
           {pageMove(firstPage, "이전", () => pageChangeHandler(page - 1))}
 

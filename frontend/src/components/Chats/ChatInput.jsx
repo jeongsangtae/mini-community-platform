@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./ChatInput.module.css";
 
 const ChatInput = ({
@@ -12,7 +12,7 @@ const ChatInput = ({
   setEmptyInput,
   setTextareaHeight,
 }) => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const inputChangeHandler = (event) => {
     const textarea = textareaRef.current;
@@ -45,7 +45,7 @@ const ChatInput = ({
 
   return (
     <div
-      className={`${classes["input-container"]} ${classes[authCtx.themeClass]}`}
+      className={`${classes["input-container"]} ${classes[uiCtx.themeClass]}`}
     >
       <textarea
         type="text"
@@ -60,7 +60,7 @@ const ChatInput = ({
       <button
         onClick={onSendMessage}
         className={
-          emptyInput ? `${classes.disable} ${classes[authCtx.themeClass]}` : ""
+          emptyInput ? `${classes.disable} ${classes[uiCtx.themeClass]}` : ""
         }
       >
         전송

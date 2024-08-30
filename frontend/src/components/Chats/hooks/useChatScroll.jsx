@@ -4,11 +4,11 @@ const useChatScroll = (
   messages,
   userRoles = { self: "user", other: "admin" }
 ) => {
-  const chatContainerRef = useRef(null);
-  const messagesEndRef = useRef(null);
-
   const [showNewMessageButton, setShowNewMessageButton] = useState(false);
   const [toBottomButton, setToBottomButton] = useState(false);
+
+  const chatContainerRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   // 새로운 메시지가 추가되었을 때, 스크롤 동작을 관리하는 로직
   useEffect(() => {

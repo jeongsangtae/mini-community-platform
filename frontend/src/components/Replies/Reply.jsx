@@ -2,7 +2,9 @@ import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import ReplyForm from "./ReplyForm";
+
 import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./Reply.module.css";
 
 const Reply = ({
@@ -16,6 +18,7 @@ const Reply = ({
 }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [replyEditToggle, setReplyEditToggle] = useState(false);
 
@@ -55,11 +58,9 @@ const Reply = ({
 
   return (
     <li className={classes.reply}>
-      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
       <div
-        className={`${classes["reply-user-edit"]} ${
-          classes[authCtx.themeClass]
-        }`}
+        className={`${classes["reply-user-edit"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{name}</p>
         {email === authCtx.userInfo?.email && (

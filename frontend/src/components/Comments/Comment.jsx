@@ -1,9 +1,11 @@
 import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
+
 import EditComment from "./EditComment";
 import Replies from "../Replies/Replies";
-import AuthContext from "../../store/auth-context";
 
+import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./Comment.module.css";
 
 const Comment = ({
@@ -18,6 +20,7 @@ const Comment = ({
 }) => {
   const post = useRouteLoaderData("post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [commentEditToggle, setCommentEditToggle] = useState(false);
   const [replyToggle, setReplyToggle] = useState(false);
@@ -69,7 +72,7 @@ const Comment = ({
     <li className={classes.comment}>
       <div
         className={`${classes["comment-user-edit"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         }`}
       >
         <p>{name}</p>
@@ -94,9 +97,7 @@ const Comment = ({
         <button
           type="button"
           onClick={replyToggleHandler}
-          className={`${classes["reply-button"]} ${
-            classes[authCtx.themeClass]
-          }`}
+          className={`${classes["reply-button"]} ${classes[uiCtx.themeClass]}`}
         >
           답글쓰기
         </button>
@@ -118,7 +119,7 @@ const Comment = ({
         repliesLength={repliesLengthHandler}
       />
 
-      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
     </li>
   );
 };

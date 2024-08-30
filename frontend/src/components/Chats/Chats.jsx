@@ -3,14 +3,19 @@ import { io } from "socket.io-client";
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
-import AuthContext from "../../store/auth-context";
-import useChatScroll from "./hooks/useChatScroll";
-import useAutosizeChatHeight from "./hooks/useAutosizeChatHeight";
 import Chat from "./Chat";
-import classes from "./Chats.module.css";
 import ChatInput from "./ChatInput";
 
+import useChatScroll from "./hooks/useChatScroll";
+import useAutosizeChatHeight from "./hooks/useAutosizeChatHeight";
+import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
+import classes from "./Chats.module.css";
+
 const Chats = ({ userId, userEmail }) => {
+  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
+
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -18,8 +23,6 @@ const Chats = ({ userId, userEmail }) => {
   const [chatToggle, setChatToggle] = useState(false);
 
   const textareaRef = useRef(null);
-
-  const authCtx = useContext(AuthContext);
 
   // 커스텀 훅을 사용하여 채팅 스크롤 관리
   const {
@@ -163,7 +166,7 @@ const Chats = ({ userId, userEmail }) => {
     <div className={classes.chats}>
       <div
         className={`${classes["chats-container"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         <ul

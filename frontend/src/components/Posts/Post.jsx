@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import AuthContext from "../../store/auth-context";
+import UIContext from "../../store/ui-context";
 import classes from "./Post.module.css";
 
 const Post = ({ num, title, name, date, content, count }) => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const lines = content.split("\n"); // 게시글 내용에서 줄바꿈 기준으로 분할
   const linesToShow = 2; // 미리보기로 보여줄 줄 수
@@ -29,10 +29,8 @@ const Post = ({ num, title, name, date, content, count }) => {
 
   return (
     <li className={classes["post-wrapper"]}>
-      <div className={`${classes.post} ${classes[authCtx.themeClass]}`}>
-        <div
-          className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
-        >
+      <div className={`${classes.post} ${classes[uiCtx.themeClass]}`}>
+        <div className={`${classes["info-wrap"]} ${classes[uiCtx.themeClass]}`}>
           <p>{num}</p>
           <span>{name}</span>
           <span>{date}</span>
@@ -53,7 +51,7 @@ const Post = ({ num, title, name, date, content, count }) => {
           </div>
         </Link>
       </div>
-      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
     </li>
   );
 };
