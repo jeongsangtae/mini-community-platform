@@ -1,14 +1,18 @@
 import { useState, useEffect, useRef, useContext } from "react";
-
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 
 import AdminUserItem from "./AdminUserItem";
 import AdminChats from "./AdminChats";
+
 import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminUserList.module.css";
 
 const AdminUserList = ({ adminId, adminEmail, usersData }) => {
+  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
+
   const [chatToggle, setChatToggle] = useState(false);
   const [userChatRoomToggle, setUserChatRoomToggle] = useState(false);
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
@@ -17,7 +21,6 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const userListContainerRef = useRef(null);
-  const authCtx = useContext(AuthContext);
 
   // 사용자 데이터와 마지막 메시지를 병합하여 상태를 업데이트하는 useEffect
   useEffect(() => {
@@ -83,7 +86,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
       {/* 사용자 목록을 보여주는 컨테이너 */}
       <div
         className={`${classes["user-list-container"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         } ${chatToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         {/* 사용자 검색 입력 필드 */}
@@ -92,7 +95,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
           <input
             type="text"
             className={`${classes["search-input"]} ${
-              classes[authCtx.themeClass]
+              classes[uiCtx.themeClass]
             }`}
             placeholder="사용자 검색"
             value={searchTerm}

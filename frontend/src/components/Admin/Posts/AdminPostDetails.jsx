@@ -3,13 +3,14 @@ import { useRouteLoaderData, useSubmit } from "react-router-dom";
 import { MoreVertical } from "react-feather";
 
 import AdminComments from "../Comments/AdminComments";
-import AuthContext from "../../../store/auth-context";
 import LoadingIndicator from "../../UI/LoadingIndicator";
+
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminPostDetails.module.css";
 
 const AdminPostDetails = () => {
-  const authCtx = useContext(AuthContext);
   const post = useRouteLoaderData("admin-post-detail");
+  const uiCtx = useContext(UIContext);
   const submit = useSubmit();
 
   const [dropdownToggle, setDropdownToggle] = useState(false);
@@ -37,8 +38,8 @@ const AdminPostDetails = () => {
 
   // const actionsButtonClass =
   //   post.email === authCtx.userInfo?.email
-  //     ? `${classes.actions} ${classes[authCtx.themeClass]}`
-  //     : `${classes.actions} ${classes[authCtx.themeClass]} ${classes.opacity}`;
+  //     ? `${classes.actions} ${classes[uiCtx.themeClass]}`
+  //     : `${classes.actions} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
 
   // const iconButtonClass =
   //   post.email === authCtx.userInfo?.email
@@ -47,26 +48,24 @@ const AdminPostDetails = () => {
 
   return (
     <div
-      className={`${classes.background} ${classes[authCtx.themeClass]}`}
+      className={`${classes.background} ${classes[uiCtx.themeClass]}`}
       onClick={dropdownCloseHandler}
     >
       <div
-        className={`${classes["post-container"]} ${
-          classes[authCtx.themeClass]
-        }`}
+        className={`${classes["post-container"]} ${classes[uiCtx.themeClass]}`}
       >
-        <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+        <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
           게시글 세부 페이지
         </h1>
 
         <div className={classes["post-wrap"]}>
-          <div className={`${classes.title} ${classes[authCtx.themeClass]}`}>
+          <div className={`${classes.title} ${classes[uiCtx.themeClass]}`}>
             <span>제목</span>
             <p>{post.title}</p>
           </div>
 
           <div
-            className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
+            className={`${classes["info-wrap"]} ${classes[uiCtx.themeClass]}`}
           >
             <p>{post.name}</p>
             <span>{post.date}</span>
@@ -79,7 +78,7 @@ const AdminPostDetails = () => {
 
             {dropdownToggle && (
               <div
-                className={`${classes.dropdown} ${classes[authCtx.themeClass]}`}
+                className={`${classes.dropdown} ${classes[uiCtx.themeClass]}`}
               >
                 <button type="button" onClick={postDeleteHandler}>
                   삭제하기
@@ -89,21 +88,17 @@ const AdminPostDetails = () => {
           </div>
         </div>
 
-        <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p>
+        <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
 
         <div
-          className={`${classes["post-detail"]} ${classes[authCtx.themeClass]}`}
+          className={`${classes["post-detail"]} ${classes[uiCtx.themeClass]}`}
         >
           <p className={classes.contents}>{post.content}</p>
         </div>
 
-        <p
-          className={`${classes.underline} ${classes[authCtx.themeClass]}`}
-        ></p>
+        <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
 
-        <div className={`${classes.actions} ${classes[authCtx.themeClass]}`}>
+        <div className={`${classes.actions} ${classes[uiCtx.themeClass]}`}>
           <button type="button" onClick={postDeleteHandler}>
             삭제
           </button>

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminUserItem.module.css";
 
 const AdminUserItem = ({
@@ -11,7 +11,7 @@ const AdminUserItem = ({
   lastMessageDate,
   selectUser,
 }) => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // 사용자 항목을 클릭했을 때 호출되는 함수
   const clickHandler = () => {
@@ -20,18 +20,16 @@ const AdminUserItem = ({
   };
 
   return (
-    <li
-      className={`${classes["item-container"]} ${classes[authCtx.themeClass]}`}
-    >
+    <li className={`${classes["item-container"]} ${classes[uiCtx.themeClass]}`}>
       <button
         onClick={clickHandler}
         className={`${classes["item-select-button"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         }`}
       >
         <div className={classes["item-left"]}>
           <div
-            className={`${classes["user-name"]} ${classes[authCtx.themeClass]}`}
+            className={`${classes["user-name"]} ${classes[uiCtx.themeClass]}`}
           >
             {name}
           </div>
@@ -41,7 +39,7 @@ const AdminUserItem = ({
         <div className={classes["item-right"]}>
           <div
             className={`${classes["last-message-content"]} ${
-              classes[authCtx.themeClass]
+              classes[uiCtx.themeClass]
             }`}
           >
             {lastMessageContent}

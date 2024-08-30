@@ -5,11 +5,14 @@ import AdminPost from "./AdminPost";
 import AdminSearch from "./AdminSearch";
 import Pagination from "../../Posts/PagiNation";
 import LoadingIndicator from "../../UI/LoadingIndicator";
+
 import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminPosts.module.css";
 
 const AdminPosts = () => {
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // URL 쿼리 매개변수(searchParams)를 관리
   const [searchParams, setSearchParams] = useSearchParams();
@@ -96,24 +99,24 @@ const AdminPosts = () => {
   }, [searchParams]);
 
   return (
-    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+    <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
       {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
         <div className={classes["board-container"]}>
-          <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+          <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
             게시글
           </h1>
 
           <div
-            className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
+            className={`${classes["sub-menu"]} ${classes[uiCtx.themeClass]}`}
           >
             {/* 전체 게시글 갯수를 보여줌 */}
             <p>{countPosts}개의 글</p>
           </div>
 
           <p
-            className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+            className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
           ></p>
 
           {posts.length > 0 ? (
@@ -137,21 +140,19 @@ const AdminPosts = () => {
               {/* 게시글이 없는 경우에만 표시 */}
               <h2
                 className={`${classes["no-posts"]} ${
-                  classes[authCtx.themeClass]
+                  classes[uiCtx.themeClass]
                 }`}
               >
                 게시글이 존재하지 않습니다.
               </h2>
               <p
-                className={`${classes.underline} ${
-                  classes[authCtx.themeClass]
-                }`}
+                className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
               ></p>
             </>
           )}
 
           <div
-            className={`${classes["last-menu"]} ${classes[authCtx.themeClass]}`}
+            className={`${classes["last-menu"]} ${classes[uiCtx.themeClass]}`}
           >
             <AdminSearch
               searchTerm={searchTerm}

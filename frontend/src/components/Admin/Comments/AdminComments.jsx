@@ -1,13 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-import AuthContext from "../../../store/auth-context";
 import AdminComment from "./AdminComment";
+
+import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminComments.module.css";
 
 const AdminComments = () => {
-  const authCtx = useContext(AuthContext);
   const post = useRouteLoaderData("admin-post-detail");
+  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
@@ -64,7 +67,7 @@ const AdminComments = () => {
 
       {/* 댓글이 있을 경우에만 렌더링 */}
       {comments.length > 0 && (
-        <ul className={`${classes.comments} ${classes[authCtx.themeClass]}`}>
+        <ul className={`${classes.comments} ${classes[uiCtx.themeClass]}`}>
           {comments.map((comment) => {
             return (
               <AdminComment

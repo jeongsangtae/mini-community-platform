@@ -2,14 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import AdminUser from "./AdminUser";
-import AuthContext from "../../../store/auth-context";
-import classes from "./AdminUsers.module.css";
 import LoadingIndicator from "../../UI/LoadingIndicator";
+
+import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
+import classes from "./AdminUsers.module.css";
 
 const AdminUsers = () => {
   const usersData = useRouteLoaderData("users-data");
-
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [users, setUsers] = useState(usersData);
 
@@ -50,24 +52,24 @@ const AdminUsers = () => {
   };
 
   return (
-    <div className={`${classes.background} ${classes[authCtx.themeClass]}`}>
+    <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
       {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
         <div className={classes["users-container"]}>
-          <h1 className={`${classes.heading} ${classes[authCtx.themeClass]}`}>
+          <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
             사용자 페이지
           </h1>
 
           <div
-            className={`${classes["sub-menu"]} ${classes[authCtx.themeClass]}`}
+            className={`${classes["sub-menu"]} ${classes[uiCtx.themeClass]}`}
           >
             {/* 사용자 수를 보여줌 */}
             <p>{users.length}명의 사용자</p>
           </div>
 
           <p
-            className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+            className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
           ></p>
 
           {/* 사용자 목록을 렌더링하거나, 사용자가 없는 경우 메시지를 표시 */}
@@ -88,7 +90,7 @@ const AdminUsers = () => {
             <>
               <h2
                 className={`${classes["no-users"]} ${
-                  classes[authCtx.themeClass]
+                  classes[uiCtx.themeClass]
                 }`}
               >
                 사용자가 존재하지 않습니다.
@@ -96,7 +98,7 @@ const AdminUsers = () => {
             </>
           )}
           <p
-            className={`${classes.underline} ${classes[authCtx.themeClass]}`}
+            className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
           ></p>
         </div>
       )}

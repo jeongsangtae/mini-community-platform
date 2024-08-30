@@ -2,30 +2,32 @@ import { useContext } from "react";
 import { NavLink, useLoaderData } from "react-router-dom";
 
 import DropDownMenu from "../../Layout/DropDownMenu";
-import AuthContext from "../../../store/auth-context";
-
-import classes from "./AdminMainHeader.module.css";
 import AdminUserList from "../Chat/AdminUserList";
+
+import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
+import classes from "./AdminMainHeader.module.css";
 
 const AdminMainHeader = () => {
   const usersData = useLoaderData();
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // 네비게이션 링크의 활성화 상태에 따라 클래스 설정
   const navLinkClass = ({ isActive }) => {
     return isActive
-      ? `${classes.active} ${classes.button} ${classes[authCtx.themeClass]}`
-      : `${classes.button} ${classes[authCtx.themeClass]}`;
+      ? `${classes.active} ${classes.button} ${classes[uiCtx.themeClass]}`
+      : `${classes.button} ${classes[uiCtx.themeClass]}`;
   };
 
   const dropDownButtonClassName = `${classes.button} ${
     classes["dropdown-button"]
-  } ${classes[authCtx.themeClass]}`;
+  } ${classes[uiCtx.themeClass]}`;
 
   return (
     <>
-      <header className={`${classes.header} ${classes[authCtx.themeClass]}`}>
-        <h1 className={`${classes.logo} ${classes[authCtx.themeClass]}`}>
+      <header className={`${classes.header} ${classes[uiCtx.themeClass]}`}>
+        <h1 className={`${classes.logo} ${classes[uiCtx.themeClass]}`}>
           커뮤니티 게시판
         </h1>
 

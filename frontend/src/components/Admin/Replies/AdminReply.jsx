@@ -2,11 +2,13 @@ import { useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
 import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminReply.module.css";
 
 const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
   const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // 답글을 삭제하는 함수
   const replyDeleteHandler = async () => {
@@ -38,11 +40,9 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
 
   return (
     <li className={classes.reply}>
-      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
       <div
-        className={`${classes["reply-user-edit"]} ${
-          classes[authCtx.themeClass]
-        }`}
+        className={`${classes["reply-user-edit"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{name}</p>
 

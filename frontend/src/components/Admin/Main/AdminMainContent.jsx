@@ -1,19 +1,17 @@
 import { useContext } from "react";
 
-import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminMainContent.module.css";
 
 const AdminMainContent = () => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   return (
-    <div
-      className={`${classes["main-content"]} ${classes[authCtx.themeClass]}`}
-    >
-      <h1 className={`${classes.title} ${classes[authCtx.themeClass]}`}>
+    <div className={`${classes["main-content"]} ${classes[uiCtx.themeClass]}`}>
+      <h1 className={`${classes.title} ${classes[uiCtx.themeClass]}`}>
         미니 커뮤니티 플랫폼
       </h1>
-      <p className={`${classes.subtitle} ${classes[authCtx.themeClass]}`}>
+      <p className={`${classes.subtitle} ${classes[uiCtx.themeClass]}`}>
         관리자 페이지
       </p>
     </div>

@@ -3,12 +3,14 @@ import { io } from "socket.io-client";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoIosArrowDown } from "react-icons/io";
 
-import AuthContext from "../../../store/auth-context";
+import AdminChat from "./AdminChat";
+import ChatInput from "../../Chats/ChatInput";
+
 import useChatScroll from "../../Chats/hooks/useChatScroll";
 import useAutosizeChatHeight from "../../Chats/hooks/useAutosizeChatHeight";
-import AdminChat from "./AdminChat";
+import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminChats.module.css";
-import ChatInput from "../../Chats/ChatInput";
 
 const AdminChats = ({
   adminId,
@@ -18,6 +20,9 @@ const AdminChats = ({
   chatRoomToggle,
   chatRoomClose,
 }) => {
+  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
+
   // 메시지 입력 상태, 메시지 목록, socket, 입력 필드 상태를 관리하기 위한 상태 설정
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -25,8 +30,6 @@ const AdminChats = ({
   const [emptyInput, setEmptyInput] = useState(true);
 
   const textareaRef = useRef(null);
-
-  const authCtx = useContext(AuthContext);
 
   // 커스텀 훅을 사용하여 채팅 스크롤 관리
   const {
@@ -193,12 +196,12 @@ const AdminChats = ({
     <div className={classes.chat}>
       <div
         className={`${classes["chats-container"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         } ${chatRoomToggle ? `${classes.open}` : `${classes.close}`}`}
       >
         <div
           className={`${classes["chat-room-header"]} ${
-            classes[authCtx.themeClass]
+            classes[uiCtx.themeClass]
           }`}
         >
           <FaArrowLeftLong onClick={chatRoomClose} />

@@ -1,10 +1,12 @@
 import { useContext } from "react";
 
 import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminUser.module.css";
 
 const AdminUser = ({ email, name, onDeleteUserData }) => {
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   // 사용자를 삭제하는 함수
   const userDeleteHandler = async () => {
@@ -33,24 +35,20 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
 
   return (
     <li className={classes["user-wrapper"]}>
-      <div className={`${classes.user} ${classes[authCtx.themeClass]}`}>
-        <div
-          className={`${classes["info-wrap"]} ${classes[authCtx.themeClass]}`}
-        >
+      <div className={`${classes.user} ${classes[uiCtx.themeClass]}`}>
+        <div className={`${classes["info-wrap"]} ${classes[uiCtx.themeClass]}`}>
           <p>{email}</p>
           <span>{name}</span>
         </div>
         <div
-          className={`${classes["delete-button"]} ${
-            classes[authCtx.themeClass]
-          }`}
+          className={`${classes["delete-button"]} ${classes[uiCtx.themeClass]}`}
         >
           <button type="button" onClick={userDeleteHandler}>
             삭제
           </button>
         </div>
       </div>
-      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
     </li>
   );
 };

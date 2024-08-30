@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { useRouteLoaderData } from "react-router-dom";
 
-import AuthContext from "../../../store/auth-context";
 import AdminReplies from "../Replies/AdminReplies";
+
+import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminComment.module.css";
 
 const AdminComment = ({
@@ -15,6 +17,7 @@ const AdminComment = ({
 }) => {
   const post = useRouteLoaderData("admin-post-detail");
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const [replyToggle, setReplyToggle] = useState(false);
 
@@ -60,7 +63,7 @@ const AdminComment = ({
     <li className={classes.comment}>
       <div
         className={`${classes["comment-user-edit"]} ${
-          classes[authCtx.themeClass]
+          classes[uiCtx.themeClass]
         }`}
       >
         <p>{name}</p>
@@ -81,7 +84,7 @@ const AdminComment = ({
         repliesLength={repliesLengthHandler}
       />
 
-      <p className={`${classes.underline} ${classes[authCtx.themeClass]}`}></p>
+      <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
     </li>
   );
 };

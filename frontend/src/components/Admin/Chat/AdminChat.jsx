@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
-import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminChat.module.css";
 
 const AdminChat = ({ message, date, userType }) => {
-  const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   return (
     <li
@@ -14,10 +14,8 @@ const AdminChat = ({ message, date, userType }) => {
           : classes["user-message"]
       }`}
     >
-      <div
-        className={`${classes["chat-bubble"]} ${classes[authCtx.themeClass]}`}
-      >
-        <span className={`${classes.message} ${classes[authCtx.themeClass]}`}>
+      <div className={`${classes["chat-bubble"]} ${classes[uiCtx.themeClass]}`}>
+        <span className={`${classes.message} ${classes[uiCtx.themeClass]}`}>
           {message}
         </span>
         <span className={classes.date}>{date}</span>

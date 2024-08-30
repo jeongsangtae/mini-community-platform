@@ -1,7 +1,8 @@
 import { useContext } from "react";
 
-import AuthContext from "../../../store/auth-context";
 import NoAccess from "../../Users/NoAccess";
+
+import AuthContext from "../../../store/auth-context";
 
 const AdminAuthentication = ({ children }) => {
   const authCtx = useContext(AuthContext);
