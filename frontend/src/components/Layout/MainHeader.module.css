@@ -113,12 +113,46 @@
   width: 90%;
 }
 
+.ham-burger {
+  font-size: 2rem;
+}
+
+.ham-burger.dark-mode {
+  color: white;
+}
+
+.is-mobile {
+  position: absolute;
+  top: calc(3.5rem);
+  left: 0;
+  width: 100%;
+  background-color: rgba(60, 60, 60, 0.5);
+  z-index: 10;
+  padding: 1rem;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+.is-mobile.open {
+  animation: mobile-menu-slide-down 0.2s ease-out forwards;
+}
+
+@keyframes mobile-menu-slide-down {
+  0% {
+    transform: translateY(-25%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 840px) {
   .logo {
     margin: 1rem auto;
   }
 
-  .navbutton {
+  /* .navbutton {
     display: none;
-  }
+  } */
 }
