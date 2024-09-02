@@ -57,12 +57,16 @@ const MainHeader = () => {
     setOpenMenu((prevOpenMenu) => !prevOpenMenu);
   };
 
-  // 네비게이션 링크의 활성화 상태에 따라 클래스 설정
-  const navLinkClass = ({ isActive }) => {
+  // 네비게이션 링크의 활성화 상태에 따라 클래스 설정 (데스크탑)
+  const desktopClass = ({ isActive }) => {
     return isActive
       ? `${classes.active} ${classes.button} ${classes[uiCtx.themeClass]}`
       : `${classes.button} ${classes[uiCtx.themeClass]}`;
   };
+
+  const mobileClass = `${classes["mobile-button"]} ${
+    classes[uiCtx.themeClass]
+  }`;
 
   const dropDownButtonClassName = `${classes.button} ${
     classes["dropdown-button"]
@@ -77,13 +81,13 @@ const MainHeader = () => {
         <nav className={classes.navbutton}>
           {uiCtx.isDesktop ? (
             <>
-              <NavLink to="/" className={navLinkClass} end>
+              <NavLink to="/" className={desktopClass} end>
                 <div>
                   홈<span></span>
                 </div>
               </NavLink>
 
-              <NavLink to="/posts" className={navLinkClass} end>
+              <NavLink to="/posts" className={desktopClass} end>
                 <div>
                   게시판<span></span>
                 </div>
@@ -120,24 +124,6 @@ const MainHeader = () => {
         </nav>
       </header>
 
-      {/* 로그인되지 않은 경우 회원가입 및 로그인 모달 표시 */}
-      {!authCtx.isLoggedIn && (
-        <>
-          {openSignupModal && (
-            <Signup
-              onSignupToggle={signupToggleHandler}
-              onLoginToggle={loginToggleHandler}
-            />
-          )}
-          {openLoginModal && (
-            <Login
-              onLoginToggle={loginToggleHandler}
-              onSignupToggle={signupToggleHandler}
-            />
-          )}
-        </>
-      )}
-
       {/* 모바일 환경에서 햄버거 버튼 클릭 시 보여지는 항목 */}
       <>
         {uiCtx.isMobile && openMenu && (
@@ -146,13 +132,13 @@ const MainHeader = () => {
               openMenu ? `${classes.open}` : `""`
             }`}
           >
-            <NavLink to="/" className={navLinkClass} end>
+            <NavLink to="/" className={mobileClass}>
               <div>
                 홈<span></span>
               </div>
             </NavLink>
 
-            <NavLink to="/posts" className={navLinkClass} end>
+            <NavLink to="/posts" className={mobileClass}>
               <div>
                 게시판<span></span>
               </div>
@@ -178,6 +164,24 @@ const MainHeader = () => {
           </div>
         )}
       </>
+
+      {/* 로그인되지 않은 경우 회원가입 및 로그인 모달 표시 */}
+      {!authCtx.isLoggedIn && (
+        <>
+          {openSignupModal && (
+            <Signup
+              onSignupToggle={signupToggleHandler}
+              onLoginToggle={loginToggleHandler}
+            />
+          )}
+          {openLoginModal && (
+            <Login
+              onLoginToggle={loginToggleHandler}
+              onSignupToggle={signupToggleHandler}
+            />
+          )}
+        </>
+      )}
     </>
   );
 };

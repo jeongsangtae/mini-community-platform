@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
 import { FaRegAddressCard } from "react-icons/fa";
-import { MoreVertical, User } from "react-feather";
+import { MoreHorizontal, MoreVertical, User } from "react-feather";
 
 import AuthContext from "../../store/auth-context";
 import UIContext from "../../store/ui-context";
@@ -80,10 +80,12 @@ const DropDownMenu = ({
               className={`${classes.circle} ${classes[uiCtx.themeClass]}`}
             ></div>
           </>
-        ) : (
+        ) : uiCtx.isDesktop ? (
           <MoreVertical
             className={`${classes.icon} ${classes[uiCtx.themeClass]}`}
           />
+        ) : (
+          <MoreHorizontal />
         )}
       </div>
       <div
