@@ -16,6 +16,8 @@ const DropDownMenu = ({
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  const mobileDropDownToggleHandler = () => {};
+
   // 드롭다운 메뉴 내용 정의 (로그인 상태에 따라 다르게 렌더링)
   const dropDownContent = (
     <>
@@ -85,7 +87,9 @@ const DropDownMenu = ({
             className={`${classes.icon} ${classes[uiCtx.themeClass]}`}
           />
         ) : (
-          <MoreHorizontal />
+          <MoreHorizontal
+            className={`${classes["mobile-icon"]} ${classes[uiCtx.themeClass]}`}
+          />
         )}
       </div>
       <div

@@ -64,9 +64,17 @@ const MainHeader = () => {
       : `${classes.button} ${classes[uiCtx.themeClass]}`;
   };
 
-  const mobileClass = `${classes["mobile-button"]} ${
-    classes[uiCtx.themeClass]
-  }`;
+  const mobileClass = ({ isActive }) => {
+    return isActive
+      ? `${classes["mobile-active"]} ${classes["mobile-button"]} ${
+          classes[uiCtx.themeClass]
+        }`
+      : `${classes["mobile-button"]} ${classes[uiCtx.themeClass]}`;
+  };
+
+  // const mobileClass = `${classes["mobile-button"]} ${
+  //   classes[uiCtx.themeClass]
+  // }`;
 
   const dropDownButtonClassName = `${classes.button} ${
     classes["dropdown-button"]
@@ -132,13 +140,13 @@ const MainHeader = () => {
               openMenu ? `${classes.open}` : `""`
             }`}
           >
-            <NavLink to="/" className={mobileClass}>
+            <NavLink to="/" className={mobileClass} end>
               <div>
                 홈<span></span>
               </div>
             </NavLink>
 
-            <NavLink to="/posts" className={mobileClass}>
+            <NavLink to="/posts" className={mobileClass} end>
               <div>
                 게시판<span></span>
               </div>
