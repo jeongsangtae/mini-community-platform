@@ -58,13 +58,14 @@ const MainHeader = () => {
   };
 
   // 네비게이션 링크의 활성화 상태에 따라 클래스 설정 (데스크탑)
-  const desktopClass = ({ isActive }) => {
+  const desktopNavLinkClass = ({ isActive }) => {
     return isActive
       ? `${classes.active} ${classes.button} ${classes[uiCtx.themeClass]}`
       : `${classes.button} ${classes[uiCtx.themeClass]}`;
   };
 
-  const mobileClass = ({ isActive }) => {
+  // 네비게이션 링크의 활성화 상태에 따라 클래스 설정 (모바일)
+  const mobileNavLinkClass = ({ isActive }) => {
     return isActive
       ? `${classes["mobile-active"]} ${classes["mobile-button"]} ${
           classes[uiCtx.themeClass]
@@ -89,13 +90,13 @@ const MainHeader = () => {
         <nav className={classes.navbutton}>
           {uiCtx.isDesktop ? (
             <>
-              <NavLink to="/" className={desktopClass} end>
+              <NavLink to="/" className={desktopNavLinkClass} end>
                 <div>
                   홈<span></span>
                 </div>
               </NavLink>
 
-              <NavLink to="/posts" className={desktopClass} end>
+              <NavLink to="/posts" className={desktopNavLinkClass} end>
                 <div>
                   게시판<span></span>
                 </div>
@@ -140,13 +141,13 @@ const MainHeader = () => {
               openMenu ? `${classes.open}` : `""`
             }`}
           >
-            <NavLink to="/" className={mobileClass} end>
+            <NavLink to="/" className={mobileNavLinkClass} end>
               <div>
                 홈<span></span>
               </div>
             </NavLink>
 
-            <NavLink to="/posts" className={mobileClass} end>
+            <NavLink to="/posts" className={mobileNavLinkClass} end>
               <div>
                 게시판<span></span>
               </div>

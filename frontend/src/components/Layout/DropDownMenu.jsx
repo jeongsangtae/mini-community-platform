@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
 import { FaRegAddressCard } from "react-icons/fa";
@@ -16,7 +16,19 @@ const DropDownMenu = ({
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
-  const mobileDropDownToggleHandler = () => {};
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  const dropdownToggleHandler = () => {
+    if (uiCtx.isMobile) {
+      setOpenDropdown((prevOpenDropdown) => !prevOpenDropdown);
+    }
+  };
+
+  const dropdownContentClass = uiCtx.isMobile
+    ? openDropdown
+      ? `${classes["mobile-dropdown-content"]} ${classes[uiCtx.themeClass]}`
+      : `${classes["display-none"]}`
+    : `${classes["dropdown-content"]} ${classes[uiCtx.themeClass]}`;
 
   // 드롭다운 메뉴 내용 정의 (로그인 상태에 따라 다르게 렌더링)
   const dropDownContent = (
@@ -72,7 +84,12 @@ const DropDownMenu = ({
   );
 
   return (
-    <div className={classes.dropdown}>
+    <div
+      className={`${classes.dropdown} ${
+        uiCtx.isMobile ? classes["is-mobile"] : ""
+      }`}
+      onClick={dropdownToggleHandler}
+    >
       <div className={classes["icon-wrapper"]}>
         {/* 로그인 상태에 따라 다른 아이콘을 표시 */}
         {authCtx.isLoggedIn ? (
@@ -92,13 +109,7 @@ const DropDownMenu = ({
           />
         )}
       </div>
-      <div
-        className={`${classes["dropdown-content"]} ${
-          classes[uiCtx.themeClass]
-        }`}
-      >
-        {dropDownContent}
-      </div>
+      <div className={dropdownContentClass}>{dropDownContent}</div>
     </div>
   );
 };
