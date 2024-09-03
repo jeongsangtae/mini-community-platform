@@ -63,11 +63,15 @@ const DropDownMenu = ({
       <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
 
       {/* 테마 모드 전환 버튼 */}
-      <div className={classes["toggle-button"]}>
+      <div
+        className={`${classes["toggle-button"]} ${
+          uiCtx.isMobile ? classes.mobile : ""
+        }`}
+      >
         <div
           className={`${classes["toggle-mode"]} ${classes[uiCtx.themeClass]}`}
         >
-          라이트 모드
+          {uiCtx.themeMode === "light" ? "라이트 모드" : "다크 모드"}
         </div>
         <div className={`${classes.toggle} ${classes.normal}`}>
           <input
@@ -85,9 +89,7 @@ const DropDownMenu = ({
 
   return (
     <div
-      className={`${classes.dropdown} ${
-        uiCtx.isMobile ? classes["is-mobile"] : ""
-      }`}
+      className={`${classes.dropdown} ${uiCtx.isMobile ? classes.mobile : ""}`}
       onClick={dropdownToggleHandler}
     >
       <div className={classes["icon-wrapper"]}>
@@ -96,7 +98,9 @@ const DropDownMenu = ({
           <>
             <User className={`${classes.icon} ${classes[uiCtx.themeClass]}`} />
             <div
-              className={`${classes.circle} ${classes[uiCtx.themeClass]}`}
+              className={`${classes.circle} ${
+                uiCtx.isMobile ? classes.mobile : ""
+              } ${classes[uiCtx.themeClass]}`}
             ></div>
           </>
         ) : uiCtx.isDesktop ? (

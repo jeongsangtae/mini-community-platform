@@ -73,13 +73,13 @@ const MainHeader = () => {
       : `${classes["mobile-button"]} ${classes[uiCtx.themeClass]}`;
   };
 
-  // const mobileClass = `${classes["mobile-button"]} ${
-  //   classes[uiCtx.themeClass]
-  // }`;
-
-  const dropDownButtonClassName = `${classes.button} ${
-    classes["dropdown-button"]
-  } ${classes[uiCtx.themeClass]}`;
+  const dropDownButtonClassName = uiCtx.isDesktop
+    ? `${classes.button} ${classes["dropdown-button"]} ${
+        classes[uiCtx.themeClass]
+      }`
+    : `${classes.button} ${classes.mobile} ${
+        classes["mobile-dropdown-button"]
+      } ${classes[uiCtx.themeClass]}`;
 
   return (
     <>

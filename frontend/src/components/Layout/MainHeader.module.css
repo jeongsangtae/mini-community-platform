@@ -114,7 +114,6 @@
 }
 
 /* 모바일 환경 CSS */
-
 .ham-burger {
   font-size: 2rem;
 }
@@ -133,10 +132,11 @@
   left: 1.25%;
   width: 97.5%;
   /* max-width: 90%; */
-  background-color: rgb(219, 219, 219);
-  z-index: 5;
+  background-color: rgb(245, 245, 245);
+  border: 0.5px solid rgba(117, 117, 117, 0.31);
   padding: 0.25rem;
   border-radius: 8px;
+  z-index: 3;
   /* overflow: hidden; */
 }
 
@@ -151,7 +151,6 @@
 .mobile-button {
   font-size: 1.2rem;
   line-height: 1.5;
-  width: 100%;
   max-width: 300px;
   margin: 0.5rem 0;
   text-align: center;
@@ -176,13 +175,29 @@
   color: white;
 }
 
+.button.mobile.dark-mode {
+  background-color: rgb(49, 49, 49);
+}
+
+.mobile-dropdown-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0.5rem;
+  margin-left: 2rem;
+  width: 12%;
+}
+
 @keyframes mobile-menu-slide-down {
   0% {
-    transform: translateY(-5%);
+    transform: translateY(-10%);
+    opacity: 0;
   }
 
   100% {
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
