@@ -6,6 +6,7 @@ import Login from "../Users/Login";
 import Signup from "../Users/Signup";
 import DropDownMenu from "./DropDownMenu";
 import Chats from "../Chats/Chats";
+import Overlay from "../UI/Overlay";
 
 import AuthContext from "../../store/auth-context";
 import UIContext from "../../store/ui-context";
@@ -55,6 +56,10 @@ const MainHeader = () => {
 
   const menuToggleHandler = () => {
     setOpenMenu((prevOpenMenu) => !prevOpenMenu);
+  };
+
+  const menuCloseHandler = () => {
+    setOpenMenu(false);
   };
 
   // 네비게이션 링크의 활성화 상태에 따라 클래스 설정 (데스크탑)
@@ -126,6 +131,9 @@ const MainHeader = () => {
 
       {/* 모바일 환경에서 햄버거 버튼 클릭 시 보여지는 항목 */}
       <>
+        {openMenu && (
+          <Overlay onClose={menuCloseHandler} className="main-header-overlay" />
+        )}
         {uiCtx.isMobile && openMenu && (
           <div
             className={`${classes["is-mobile"]} ${classes[uiCtx.themeClass]} ${

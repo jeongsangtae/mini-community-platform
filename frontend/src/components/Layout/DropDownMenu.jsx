@@ -4,6 +4,8 @@ import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
 import { FaRegAddressCard } from "react-icons/fa";
 import { MoreHorizontal, MoreVertical, User } from "react-feather";
 
+import Overlay from "../UI/Overlay";
+
 import AuthContext from "../../store/auth-context";
 import UIContext from "../../store/ui-context";
 import classes from "./DropDownMenu.module.css";
@@ -22,6 +24,10 @@ const DropDownMenu = ({
     if (uiCtx.isMobile) {
       setOpenDropdown((prevOpenDropdown) => !prevOpenDropdown);
     }
+  };
+
+  const dropdownCloseHandler = () => {
+    setOpenDropdown(false);
   };
 
   const dropdownContentClass = uiCtx.isMobile
@@ -88,31 +94,42 @@ const DropDownMenu = ({
   );
 
   return (
-    <div
-      className={`${classes.dropdown} ${uiCtx.isMobile ? classes.mobile : ""}`}
-      onClick={dropdownToggleHandler}
-    >
-      <div className={classes["icon-wrapper"]}>
-        {/* 로그인 상태에 따라 다른 아이콘을 표시 */}
-        {authCtx.isLoggedIn ? (
-          <>
-            <User className={`${classes.icon} ${classes[uiCtx.themeClass]}`} />
-            <div
-              className={`${classes.circle} ${classes[uiCtx.themeClass]}`}
-            ></div>
-          </>
-        ) : uiCtx.isDesktop ? (
-          <MoreVertical
-            className={`${classes.icon} ${classes[uiCtx.themeClass]}`}
-          />
-        ) : (
-          <MoreHorizontal
-            className={`${classes["mobile-icon"]} ${classes[uiCtx.themeClass]}`}
-          />
-        )}
+    <>
+      {openDropdown && (
+        <Overlay onClose={dropdownCloseHandler} className="dropdown-overlay" />
+      )}
+      <div
+        className={`${classes.dropdown} ${
+          uiCtx.isMobile ? classes.mobile : ""
+        }`}
+        onClick={dropdownToggleHandler}
+      >
+        <div className={classes["icon-wrapper"]}>
+          {/* 로그인 상태에 따라 다른 아이콘을 표시 */}
+          {authCtx.isLoggedIn ? (
+            <>
+              <User
+                className={`${classes.icon} ${classes[uiCtx.themeClass]}`}
+              />
+              <div
+                className={`${classes.circle} ${classes[uiCtx.themeClass]}`}
+              ></div>
+            </>
+          ) : uiCtx.isDesktop ? (
+            <MoreVertical
+              className={`${classes.icon} ${classes[uiCtx.themeClass]}`}
+            />
+          ) : (
+            <MoreHorizontal
+              className={`${classes["mobile-icon"]} ${
+                classes[uiCtx.themeClass]
+              }`}
+            />
+          )}
+        </div>
+        <div className={dropdownContentClass}>{dropDownContent}</div>
       </div>
-      <div className={dropdownContentClass}>{dropDownContent}</div>
-    </div>
+    </>
   );
 };
 
