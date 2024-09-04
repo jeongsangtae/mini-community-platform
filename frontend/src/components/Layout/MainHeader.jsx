@@ -102,24 +102,15 @@ const MainHeader = () => {
                 </div>
               </NavLink>
 
-              {/* 로그인 상태 및 사용자 역할에 따라 다른 메뉴와 채팅 기능 표시 */}
-              {authCtx.isLoggedIn && authCtx.userInfo?.role === "user" ? (
-                <>
-                  <DropDownMenu
-                    dropDownButtonClassName={dropDownButtonClassName}
-                  />
-                  <Chats
-                    userId={authCtx.userInfo?._id}
-                    userEmail={authCtx.userInfo?.email}
-                  />
-                </>
-              ) : (
-                <DropDownMenu
-                  onSignupToggle={signupToggleHandler}
-                  onLoginToggle={loginToggleHandler}
-                  dropDownButtonClassName={dropDownButtonClassName}
-                />
-              )}
+              <DropDownMenu
+                dropDownButtonClassName={dropDownButtonClassName}
+                onSignupToggle={
+                  !authCtx.isLoggedIn ? signupToggleHandler : undefined
+                }
+                onLoginToggle={
+                  !authCtx.isLoggedIn ? loginToggleHandler : undefined
+                }
+              />
             </>
           ) : (
             // 모바일 환경에서 보여지는 햄버거 메뉴 버튼
@@ -153,26 +144,26 @@ const MainHeader = () => {
               </div>
             </NavLink>
 
-            {authCtx.isLoggedIn && authCtx.userInfo?.role === "user" ? (
-              <>
-                <DropDownMenu
-                  dropDownButtonClassName={dropDownButtonClassName}
-                />
-                <Chats
-                  userId={authCtx.userInfo?._id}
-                  userEmail={authCtx.userInfo?.email}
-                />
-              </>
-            ) : (
-              <DropDownMenu
-                onSignupToggle={signupToggleHandler}
-                onLoginToggle={loginToggleHandler}
-                dropDownButtonClassName={dropDownButtonClassName}
-              />
-            )}
+            <DropDownMenu
+              dropDownButtonClassName={dropDownButtonClassName}
+              onSignupToggle={
+                !authCtx.isLoggedIn ? signupToggleHandler : undefined
+              }
+              onLoginToggle={
+                !authCtx.isLoggedIn ? loginToggleHandler : undefined
+              }
+            />
           </div>
         )}
       </>
+
+      {/* 채팅 컴포넌트는 로그인되고, 사용자 역할이 user인 사용자에게만 표시 */}
+      {authCtx.isLoggedIn && authCtx.userInfo?.role === "user" && (
+        <Chats
+          userId={authCtx.userInfo?._id}
+          userEmail={authCtx.userInfo?.email}
+        />
+      )}
 
       {/* 로그인되지 않은 경우 회원가입 및 로그인 모달 표시 */}
       {!authCtx.isLoggedIn && (

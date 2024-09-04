@@ -98,9 +98,7 @@ const DropDownMenu = ({
           <>
             <User className={`${classes.icon} ${classes[uiCtx.themeClass]}`} />
             <div
-              className={`${classes.circle} ${
-                uiCtx.isMobile ? classes.mobile : ""
-              } ${classes[uiCtx.themeClass]}`}
+              className={`${classes.circle} ${classes[uiCtx.themeClass]}`}
             ></div>
           </>
         ) : uiCtx.isDesktop ? (

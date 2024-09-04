@@ -186,14 +186,9 @@
 }
 
 .mobile-dropdown-content {
-  /* display: block;
-  position: relative;
-  width: 100%;
-  margin-top: 0.5rem; */
   position: fixed;
   top: 8.5rem;
-  /* left: 1.25%; */
-  left: 50%; /* 뷰포트의 중앙 */
+  left: 50%;
   transform: translateX(-50%);
   width: 100%;
   padding: 0.25rem;
@@ -208,7 +203,6 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   animation: slideDown 0.3s ease-in-out;
   z-index: 1000;
-  /* transform-origin: center top; */
 }
 
 .mobile-dropdown-content.dark-mode {
@@ -237,3 +231,9 @@
     opacity: 1;
   }
 }
+
+/* @media (max-width: 815px) {
+  .dropdown-icon {
+    font-size: 0.9rem;
+  }
+} */

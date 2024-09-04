@@ -115,7 +115,10 @@
 
 /* 모바일 환경 CSS */
 .ham-burger {
+  position: absolute;
   font-size: 2rem;
+  /* margin: 0 auto; */
+  right: 2rem;
 }
 
 .ham-burger.dark-mode {
@@ -201,12 +204,35 @@
   }
 }
 
+/* 중간 해상도 */
 @media (max-width: 840px) {
   .logo {
-    margin: 1rem auto;
+    font-size: 1.25rem;
+    /* margin: 1rem auto; */
+    margin-left: 2rem;
   }
+}
 
-  /* .navbutton {
-    display: none;
-  } */
+/* 작은 해상도 */
+@media (max-width: 600px) {
+  .logo {
+    font-size: 1.1rem;
+    margin-left: 3rem;
+  }
+  .ham-burger {
+    font-size: 1.75rem;
+    right: 3rem;
+  }
+}
+
+/* 매우 작은 해상도 */
+@media (max-width: 432px) {
+  .logo {
+    font-size: 1rem;
+    margin-left: 2rem;
+  }
+  .ham-burger {
+    font-size: 1.5rem;
+    right: 2rem;
+  }
 }
