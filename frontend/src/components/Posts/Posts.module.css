@@ -102,3 +102,49 @@
   pointer-events: none;
   opacity: 0.5;
 }
+
+/* 모바일 환경 CSS */
+.mobile-board-container {
+  padding: 4rem 0;
+}
+
+.mobile-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 5rem;
+  padding: 0;
+}
+
+.mobile-menu p {
+  font-size: 0.95rem;
+}
+
+.mobile-heading {
+  font-size: 1.5rem;
+}
+
+.mobile-add {
+  padding: 0.4rem 1rem;
+  font-size: 0.95rem;
+  color: black;
+  background-color: transparent;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1px solid rgb(68, 68, 68);
+  transition: all 0.3s ease;
+}
+
+.mobile-add.dark-mode {
+  color: white;
+}
+
+.mobile-posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mobile-menu.dark-mode {
+  color: white;
+}
