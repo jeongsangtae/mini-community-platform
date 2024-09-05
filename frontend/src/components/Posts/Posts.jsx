@@ -207,6 +207,11 @@ const Posts = () => {
               글쓰기
             </Link>
           </div>
+
+          <p
+            className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
+          ></p>
+
           {posts.length > 0 ? (
             <ul className={classes["mobile-posts"]}>
               {posts.map((post) => (
