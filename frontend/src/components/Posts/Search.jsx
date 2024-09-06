@@ -20,10 +20,12 @@ const Search = ({
     { display: "이름", value: "name" },
   ];
 
+  const searchContainerClass = uiCtx.isDesktop
+    ? `${classes["search-container"]} ${classes[uiCtx.themeClass]}`
+    : `${classes["mobile-search-container"]} ${classes[uiCtx.themeClass]}`;
+
   return (
-    <div
-      className={`${classes["search-container"]} ${classes[uiCtx.themeClass]}`}
-    >
+    <div className={searchContainerClass}>
       {/* 검색 필드 선택 (제목, 내용, 이름) */}
       <select
         value={searchField}

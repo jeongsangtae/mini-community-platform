@@ -118,7 +118,7 @@
   position: absolute;
   font-size: 2rem;
   /* margin: 0 auto; */
-  right: 2rem;
+  right: 3rem;
 }
 
 .ham-burger.dark-mode {
@@ -210,7 +210,7 @@
   .logo {
     font-size: 1.25rem;
     /* margin: 1rem auto; */
-    margin-left: 2rem;
+    margin-left: 3rem;
   }
 }
 
@@ -218,12 +218,10 @@
 @media (max-width: 600px) {
   .logo {
     font-size: 1.1rem;
-    margin-left: 3rem;
   }
 
   .ham-burger {
     font-size: 1.75rem;
-    right: 3rem;
   }
 
   .mobile-button {

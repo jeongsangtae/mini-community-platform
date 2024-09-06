@@ -243,7 +243,7 @@ const Posts = () => {
               setSearchField={setSearchField}
               onSearch={searchHandler}
             />
-            <Link to="create-post" className={postAddButtonClass}>
+            <Link to="create-post" className={mobilePostAddButtonClass}>
               글쓰기
             </Link>
           </div>
