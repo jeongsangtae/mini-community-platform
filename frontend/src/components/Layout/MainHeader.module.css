@@ -178,18 +178,19 @@
   color: white;
 }
 
-.button.mobile.dark-mode {
-  background-color: rgb(49, 49, 49);
-}
-
 .mobile-dropdown-button {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  font-size: 0.9rem;
   padding: 0;
   margin: 0.5rem;
   margin-left: 2rem;
   width: 12%;
+}
+
+.mobile-dropdown-button.dark-mode {
+  background-color: rgb(49, 49, 49);
 }
 
 @keyframes mobile-menu-slide-down {
@@ -205,7 +206,7 @@
 }
 
 /* 중간 해상도 */
-@media (max-width: 840px) {
+@media (max-width: 767px) {
   .logo {
     font-size: 1.25rem;
     /* margin: 1rem auto; */
@@ -219,20 +220,38 @@
     font-size: 1.1rem;
     margin-left: 3rem;
   }
+
   .ham-burger {
     font-size: 1.75rem;
     right: 3rem;
   }
+
+  .mobile-button {
+    font-size: 1.1rem;
+  }
+
+  .mobile-dropdown-button {
+    font-size: 0.85rem;
+  }
 }
 
 /* 매우 작은 해상도 */
-@media (max-width: 432px) {
+@media (max-width: 420px) {
   .logo {
     font-size: 1rem;
     margin-left: 2rem;
   }
+
   .ham-burger {
     font-size: 1.5rem;
     right: 2rem;
+  }
+
+  .mobile-button {
+    font-size: 1rem;
+  }
+
+  .mobile-dropdown-button {
+    font-size: 0.72rem;
   }
 }

@@ -167,12 +167,28 @@
   font-size: 0.95rem;
 }
 
-/* @media (max-width: 420px) {
-  .mobile-title {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
+@media (max-width: 420px) {
+  .mobile-post-number {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    margin-right: 0.75rem;
   }
-} */
+
+  .mobile-info {
+    font-size: 0.8rem;
+  }
+
+  .mobile-title span {
+    padding: 0 0.36rem;
+    font-size: 0.6rem;
+  }
+
+  .mobile-title p {
+    font-size: 1.2rem;
+  }
+
+  .mobile-content p {
+    font-size: 0.8rem;
+  }
+}

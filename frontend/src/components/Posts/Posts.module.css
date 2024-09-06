@@ -116,6 +116,10 @@
   padding: 0;
 }
 
+.mobile-menu.dark-mode {
+  color: white;
+}
+
 .mobile-menu p {
   font-size: 0.95rem;
 }
@@ -143,10 +147,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.mobile-menu.dark-mode {
-  color: white;
 }
 
 @media (max-width: 420px) {

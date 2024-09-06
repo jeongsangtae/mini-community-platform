@@ -232,8 +232,30 @@
   }
 }
 
-/* @media (max-width: 815px) {
+@media (max-width: 600px) {
   .dropdown-icon {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
-} */
+
+  .toggle-mode {
+    font-size: 0.725rem;
+  }
+
+  .mobile-dropdown-content {
+    top: 8.25rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .dropdown-icon {
+    font-size: 0.85rem;
+  }
+
+  .toggle-mode {
+    font-size: 0.7rem;
+  }
+
+  .mobile-dropdown-content {
+    top: 8rem;
+  }
+}
