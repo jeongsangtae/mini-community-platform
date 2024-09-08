@@ -105,3 +105,39 @@
 .comment:last-child .underline {
   display: none;
 }
+
+@media (max-width: 767px) {
+  .comment-user-edit {
+    font-size: 0.95rem;
+  }
+
+  .comment .content {
+    font-size: 0.95rem;
+  }
+
+  .comment .date {
+    font-size: 0.7rem;
+  }
+
+  .reply-button {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .comment-user-edit {
+    font-size: 0.9rem;
+  }
+
+  .comment .content {
+    font-size: 0.9rem;
+  }
+
+  .comment-user-edit button {
+    font-size: 0.7rem;
+  }
+
+  .comment-user-edit button:nth-of-type(2) {
+    font-size: 0.9rem;
+  }
+}

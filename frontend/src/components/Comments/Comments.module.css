@@ -19,3 +19,23 @@
   font-weight: bold;
   color: rgb(0, 187, 237);
 }
+
+@media (max-width: 767px) {
+  .comment-container {
+    margin: 0 3rem;
+  }
+
+  .total-comment {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .comment-container {
+    margin: 0 2rem;
+  }
+
+  .total-comment {
+    font-size: 0.95rem;
+  }
+}

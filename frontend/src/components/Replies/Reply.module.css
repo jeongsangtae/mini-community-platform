@@ -71,3 +71,35 @@
   font-size: 0.75rem;
   color: rgb(196, 181, 181);
 }
+
+@media (max-width: 767px) {
+  .reply-user-edit {
+    font-size: 0.95rem;
+  }
+
+  .reply .content {
+    font-size: 0.95rem;
+  }
+
+  .reply .date {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .reply-user-edit {
+    font-size: 0.9rem;
+  }
+
+  .reply .content {
+    font-size: 0.9rem;
+  }
+
+  .reply-user-edit button {
+    font-size: 0.7rem;
+  }
+
+  .reply-user-edit button:nth-of-type(2) {
+    font-size: 0.9rem;
+  }
+}

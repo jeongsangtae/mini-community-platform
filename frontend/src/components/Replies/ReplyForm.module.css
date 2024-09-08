@@ -87,3 +87,33 @@
   pointer-events: none;
   opacity: 0.5;
 }
+
+@media (max-width: 767px) {
+  .reply-form p {
+    font-size: 0.95rem;
+  }
+
+  .reply-form textarea {
+    font-size: 0.8rem;
+  }
+
+  .reply-button .edit-button,
+  .reply-button .cancel-button {
+    padding: 0.2rem 0.45rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .reply-form p {
+    font-size: 0.9rem;
+  }
+
+  .reply-form textarea {
+    font-size: 0.75rem;
+  }
+
+  .reply-button .edit-button,
+  .reply-button .cancel-button {
+    padding: 0.15rem 0.4rem;
+  }
+}

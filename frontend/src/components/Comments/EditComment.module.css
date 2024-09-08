@@ -87,3 +87,33 @@
   pointer-events: none;
   opacity: 0.5;
 }
+
+@media (max-width: 767px) {
+  .comment-form p {
+    font-size: 0.95rem;
+  }
+
+  .comment-form textarea {
+    font-size: 0.8rem;
+  }
+
+  .comment-button .edit-button,
+  .comment-button .cancel-button {
+    padding: 0.2rem 0.45rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .comment-form p {
+    font-size: 0.9rem;
+  }
+
+  .comment-form textarea {
+    font-size: 0.75rem;
+  }
+
+  .comment-button .edit-button,
+  .comment-button .cancel-button {
+    padding: 0.15rem 0.4rem;
+  }
+}
