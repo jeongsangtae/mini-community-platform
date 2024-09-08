@@ -93,7 +93,7 @@ const AdminPostDetails = () => {
         <div
           className={`${classes["post-detail"]} ${classes[uiCtx.themeClass]}`}
         >
-          <p className={classes.contents}>{post.content}</p>
+          <p>{post.content}</p>
         </div>
 
         <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>

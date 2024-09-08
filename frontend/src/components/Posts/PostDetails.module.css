@@ -197,3 +197,99 @@
   pointer-events: none;
   opacity: 0.5;
 }
+
+@media (max-width: 767px) {
+  .post-container {
+    padding: 4rem 0;
+  }
+
+  .heading {
+    margin: 1.5rem 3rem;
+    font-size: 1.5rem;
+  }
+
+  .title,
+  .info-wrap {
+    padding: 0 3rem;
+  }
+
+  .info-wrap {
+    font-size: 0.95rem;
+  }
+
+  .info-wrap span::before {
+    margin: 0 0.85rem;
+  }
+
+  .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .post-detail,
+  .actions {
+    margin: 0 3rem;
+  }
+
+  .underline {
+    margin: 1rem 3rem;
+  }
+
+  .title p {
+    font-size: 1.5rem;
+  }
+
+  .actions a,
+  .actions button {
+    padding: 0.5rem 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .actions a,
+  .actions button {
+    padding: 0.4rem 1.1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .heading {
+    margin: 1.2rem 2rem;
+    font-size: 1.2rem;
+  }
+
+  .title,
+  .info-wrap {
+    padding: 0 2rem;
+  }
+
+  .info-wrap,
+  .post-detail p {
+    font-size: 0.9rem;
+  }
+
+  .title span {
+    padding: 0 0.36rem;
+    font-size: 0.6rem;
+  }
+
+  .post-detail,
+  .actions {
+    margin: 0 2rem;
+  }
+
+  .underline {
+    margin: 1rem 2rem;
+  }
+
+  .title p {
+    font-size: 1.2rem;
+  }
+
+  .actions a,
+  .actions button {
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+  }
+}
