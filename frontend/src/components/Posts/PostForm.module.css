@@ -83,14 +83,12 @@
 
 .actions button {
   font: inherit;
-  margin: 0 0.5rem;
   padding: 0.5rem 1.5rem;
   color: black;
   background-color: transparent;
   border-radius: 2px;
   border: 1px solid rgb(68, 68, 68);
   transition: all 0.3s ease;
-  margin: 0.5rem 0;
   cursor: pointer;
 }
 
@@ -113,5 +111,61 @@
 @media (max-height: 900px) {
   .background {
     overflow: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .post-form-container {
+    padding: 4rem 0 0 0;
+  }
+
+  .heading {
+    margin: 1.5rem 3rem;
+    font-size: 1.5rem;
+  }
+
+  .form {
+    margin: 3rem;
+  }
+
+  .form input {
+    font-size: 1.5rem;
+  }
+
+  .form p {
+    font-size: 0.95rem;
+  }
+
+  .form textarea {
+    height: 20rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .heading {
+    margin: 1.2rem 2rem;
+    font-size: 1.2rem;
+  }
+
+  .form {
+    margin: 2rem;
+  }
+
+  .form input {
+    font-size: 1.2rem;
+  }
+
+  .form p {
+    font-size: 0.9rem;
+  }
+
+  .form textarea {
+    height: 20rem;
+    font-size: 0.9rem;
+  }
+
+  .actions button {
+    padding: 0.4rem 1.2rem;
   }
 }
