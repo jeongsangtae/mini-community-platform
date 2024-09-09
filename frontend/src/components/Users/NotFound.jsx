@@ -7,7 +7,7 @@ import classes from "./NotFound.module.css";
 const NotFound = () => {
   const uiCtx = useContext(UIContext);
 
-  const toRedirect = localStorage.getItem("role") === "user" ? "/" : "/admin";
+  const toRedirect = localStorage.getItem("role") === "admin" ? "/admin" : "/";
 
   return (
     <div className={`${classes["not-found"]} ${classes[uiCtx.themeClass]}`}>

@@ -69,3 +69,62 @@
   height: 1px;
   background-color: rgb(68, 68, 68);
 }
+
+.underline.dark-mode {
+  background-color: rgb(68, 68, 68);
+}
+
+/* 모바일 환경 CSS */
+.mobile-board-container {
+  padding: 4rem 0;
+}
+
+.mobile-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 3rem;
+  padding: 0;
+}
+
+.mobile-menu.dark-mode {
+  color: white;
+}
+
+.mobile-menu p {
+  font-size: 0.95rem;
+}
+
+.mobile-heading {
+  font-size: 1.5rem;
+}
+
+.mobile-posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 767px) {
+  .underline {
+    margin: 1rem 3rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .underline {
+    margin: 1rem 2rem;
+  }
+
+  .mobile-menu {
+    margin: 0 2rem;
+  }
+
+  .mobile-menu p {
+    font-size: 0.75rem;
+  }
+
+  .mobile-heading {
+    font-size: 1.2rem;
+  }
+}

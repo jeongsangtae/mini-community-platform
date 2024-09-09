@@ -40,3 +40,33 @@
 .redirect-button.dark-mode button:hover {
   background-color: rgb(55, 55, 55);
 }
+
+@media (max-width: 600px) {
+  .not-found h1 {
+    font-size: 1.8rem;
+  }
+
+  .not-found p {
+    font-size: 0.9rem;
+  }
+
+  .redirect-button button {
+    padding: 0.4rem 1.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .not-found h1 {
+    font-size: 1.7rem;
+  }
+
+  .not-found p {
+    font-size: 0.85rem;
+  }
+
+  .redirect-button button {
+    padding: 0.35rem 1.25rem;
+    font-size: 0.75rem;
+  }
+}

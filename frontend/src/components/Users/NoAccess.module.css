@@ -11,3 +11,23 @@
   background-color: var(--dark-mode-background-color);
   color: white;
 }
+
+@media (max-width: 600px) {
+  .no-access h1 {
+    font-size: 1.9rem;
+  }
+
+  .no-access p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .no-access h1 {
+    font-size: 1.8rem;
+  }
+
+  .no-access p {
+    font-size: 0.9rem;
+  }
+}

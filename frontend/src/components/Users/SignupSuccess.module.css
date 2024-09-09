@@ -16,3 +16,23 @@
 .signup-success.dark-mode p {
   color: white;
 }
+
+@media (max-width: 600px) {
+  .signup-success h1 {
+    font-size: 1.9rem;
+  }
+
+  .signup-success p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .signup-success h1 {
+    font-size: 1.8rem;
+  }
+
+  .signup-success p {
+    font-size: 0.9rem;
+  }
+}
