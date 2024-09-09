@@ -73,10 +73,7 @@
 }
 
 @media (max-width: 767px) {
-  .reply-user-edit {
-    font-size: 0.95rem;
-  }
-
+  .reply-user-edit,
   .reply .content {
     font-size: 0.95rem;
   }
@@ -87,10 +84,7 @@
 }
 
 @media (max-width: 420px) {
-  .reply-user-edit {
-    font-size: 0.9rem;
-  }
-
+  .reply-user-edit,
   .reply .content {
     font-size: 0.9rem;
   }

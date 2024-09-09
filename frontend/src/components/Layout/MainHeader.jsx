@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 import Login from "../Users/Login";
@@ -89,9 +89,11 @@ const MainHeader = () => {
   return (
     <>
       <header className={`${classes.header} ${classes[uiCtx.themeClass]}`}>
-        <h1 className={`${classes.logo} ${classes[uiCtx.themeClass]}`}>
-          커뮤니티 게시판
-        </h1>
+        <Link to="posts">
+          <h1 className={`${classes.logo} ${classes[uiCtx.themeClass]}`}>
+            커뮤니티 게시판
+          </h1>
+        </Link>
         <nav className={classes.navbutton}>
           {uiCtx.isDesktop ? (
             <>
