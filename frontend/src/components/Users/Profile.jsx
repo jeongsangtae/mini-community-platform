@@ -183,7 +183,7 @@ const Profile = () => {
                 classes[uiCtx.themeClass]
               }`}
             >
-              게시글
+              내가 작성한 게시글
             </h1>
             <p>{countPosts}개의 글</p>
           </div>

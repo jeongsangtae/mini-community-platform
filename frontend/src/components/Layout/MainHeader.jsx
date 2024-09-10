@@ -94,6 +94,7 @@ const MainHeader = () => {
             커뮤니티 게시판
           </h1>
         </Link>
+
         <nav className={classes.navbutton}>
           {uiCtx.isDesktop ? (
             <>

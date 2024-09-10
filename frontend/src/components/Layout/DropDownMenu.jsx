@@ -32,7 +32,11 @@ const DropDownMenu = ({
 
   const dropdownContentClass = uiCtx.isMobile
     ? openDropdown
-      ? `${classes["mobile-dropdown-content"]} ${classes[uiCtx.themeClass]}`
+      ? authCtx.userInfo?.role === "admin"
+        ? `${classes["mobile-dropdown-content-admin"]} ${
+            classes[uiCtx.themeClass]
+          }`
+        : `${classes["mobile-dropdown-content"]} ${classes[uiCtx.themeClass]}`
       : `${classes["display-none"]}`
     : `${classes["dropdown-content"]} ${classes[uiCtx.themeClass]}`;
 

@@ -67,7 +67,7 @@
   content: "";
   margin: 1rem 5rem;
   height: 1px;
-  background-color: rgb(68, 68, 68);
+  background-color: rgb(224, 224, 224);
 }
 
 .underline.dark-mode {
@@ -91,12 +91,12 @@
   color: white;
 }
 
-.mobile-menu p {
-  font-size: 0.95rem;
-}
-
 .mobile-heading {
   font-size: 1.5rem;
+}
+
+.mobile-menu p {
+  font-size: 0.95rem;
 }
 
 .mobile-posts {
@@ -120,11 +120,11 @@
     margin: 0 2rem;
   }
 
-  .mobile-menu p {
-    font-size: 0.75rem;
-  }
-
   .mobile-heading {
     font-size: 1.2rem;
+  }
+
+  .mobile-menu p {
+    font-size: 0.75rem;
   }
 }
