@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import AdminPost from "./AdminPost";
-import AdminSearch from "./AdminSearch";
+import Search from "../../Posts/Search";
 import Pagination from "../../Posts/PagiNation";
 import LoadingIndicator from "../../UI/LoadingIndicator";
 
@@ -102,7 +102,8 @@ const AdminPosts = () => {
     <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
       {authCtx.isLoading ? (
         <LoadingIndicator />
-      ) : (
+      ) : uiCtx.isDesktop ? (
+        // 데스크탑 UI
         <div className={classes["board-container"]}>
           <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
             게시글
@@ -154,7 +155,68 @@ const AdminPosts = () => {
           <div
             className={`${classes["last-menu"]} ${classes[uiCtx.themeClass]}`}
           >
-            <AdminSearch
+            <Search
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              searchField={searchField}
+              setSearchField={setSearchField}
+              onSearch={searchHandler}
+            />
+          </div>
+
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            firstPageGroup={firstPageGroup}
+            lastPageGroup={lastPageGroup}
+            onPageChange={pageChangeHandler}
+          />
+        </div>
+      ) : (
+        // 모바일 UI
+        <div className={classes["mobile-board-container"]}>
+          <div
+            className={`${classes["mobile-menu"]} ${classes[uiCtx.themeClass]}`}
+          >
+            <h1
+              className={`${classes["mobile-heading"]} ${
+                classes[uiCtx.themeClass]
+              }`}
+            >
+              게시글
+            </h1>
+            <p>{countPosts}개의 글</p>
+          </div>
+
+          <p
+            className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
+          ></p>
+
+          {posts.length > 0 ? (
+            <ul className={classes["mobile-posts"]}>
+              {posts.map((post) => (
+                <AdminPost
+                  key={post.postId}
+                  num={post.postId}
+                  title={post.title}
+                  name={post.name}
+                  date={post.date}
+                  content={post.content}
+                  count={post.count}
+                />
+              ))}
+            </ul>
+          ) : (
+            <h2
+              className={`${classes["no-posts"]} ${classes[uiCtx.themeClass]}`}
+            >
+              게시글이 존재하지 않습니다.
+            </h2>
+          )}
+          <div
+            className={`${classes["last-menu"]} ${classes[uiCtx.themeClass]}`}
+          >
+            <Search
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               searchField={searchField}

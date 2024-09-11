@@ -15,28 +15,71 @@ const AdminPost = ({ num, title, name, date, content, count }) => {
 
   return (
     <li className={classes["post-wrapper"]}>
-      <div className={`${classes.post} ${classes[uiCtx.themeClass]}`}>
-        <div className={`${classes["info-wrap"]} ${classes[uiCtx.themeClass]}`}>
-          <p>{num}</p>
-          <span>{name}</span>
-          <span>{date}</span>
-          <span>조회 {count}</span>
-        </div>
+      {uiCtx.isDesktop ? (
+        // 데스크탑 환경 UI
+        <div className={`${classes.post} ${classes[uiCtx.themeClass]}`}>
+          <div
+            className={`${classes["info-wrap"]} ${classes[uiCtx.themeClass]}`}
+          >
+            <p>{num}</p>
+            <span>{name}</span>
+            <span>{date}</span>
+            <span>조회 {count}</span>
+          </div>
 
-        {/* 게시글 제목과 내용을 클릭하면 게시글 상세 페이지로 이동 */}
-        <Link to={`/admin/posts/${num.toString()}`}>
-          <div className={classes.title}>
-            <span>제목</span>
-            <p>{title}</p>
+          {/* 게시글 제목과 내용을 클릭하면 게시글 상세 페이지로 이동 */}
+          <Link to={`/admin/posts/${num.toString()}`}>
+            <div className={classes.title}>
+              <span>제목</span>
+              <p>{title}</p>
+            </div>
+            <div className={classes.content}>
+              {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
+              <p>
+                {truncatedText} {moreLines && "..."}
+              </p>
+            </div>
+          </Link>
+        </div>
+      ) : (
+        // 모바일 UI
+        <div
+          className={`${classes["mobile-post"]} ${classes[uiCtx.themeClass]}`}
+        >
+          <div className={classes["mobile-header"]}>
+            <div
+              className={`${classes["mobile-post-number"]} ${
+                classes[uiCtx.themeClass]
+              }`}
+            >
+              <span>{num}</span>
+            </div>
+
+            <div className={classes["mobile-info"]}>
+              <span>{name}</span>
+              <div className={classes["mobile-date-and-views"]}>
+                <span>{date}</span>
+                <span>조회 {count}</span>
+              </div>
+            </div>
           </div>
-          <div className={classes.content}>
-            {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
-            <p>
-              {truncatedText} {moreLines && "..."}
-            </p>
-          </div>
-        </Link>
-      </div>
+
+          {/* 게시글 제목과 내용을 클릭하면 게시글 상세 페이지로 이동 */}
+          <Link to={`/admin/posts/${num.toString()}`}>
+            <div className={classes["mobile-title"]}>
+              <span>제목</span>
+              <p>{title}</p>
+            </div>
+
+            <div className={classes["mobile-content"]}>
+              <p>
+                {truncatedText} {moreLines && "..."}
+              </p>
+            </div>
+          </Link>
+        </div>
+      )}
+
       <p className={`${classes.underline} ${classes[uiCtx.themeClass]}`}></p>
     </li>
   );
