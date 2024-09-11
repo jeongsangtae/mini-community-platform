@@ -34,15 +34,10 @@
   background: none;
   color: rgb(105, 105, 105);
   padding: 0 0.3rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
   cursor: pointer;
   margin-right: 0.3rem;
   border-radius: 2px;
-}
-
-.reply-user-edit button:nth-of-type(2) {
-  font-size: 1rem;
-  margin-top: 0.2rem;
 }
 
 .reply-user-edit button:hover {
@@ -69,4 +64,23 @@
   margin-top: 0.5rem;
   font-size: 0.75rem;
   color: rgb(196, 181, 181);
+}
+
+@media (max-width: 767px) {
+  .reply-user-edit,
+  .reply .content {
+    font-size: 0.95rem;
+  }
+
+  .reply .date {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .reply-user-edit,
+  .reply-user-edit button,
+  .reply .content {
+    font-size: 0.9rem;
+  }
 }

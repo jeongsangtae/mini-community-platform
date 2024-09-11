@@ -74,6 +74,7 @@ const AdminComment = ({
           </button>
         </div>
       </div>
+
       <p className={classes.content}>{content}</p>
       <p className={classes.date}>{date}</p>
 

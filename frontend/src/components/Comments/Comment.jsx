@@ -76,6 +76,7 @@ const Comment = ({
         }`}
       >
         <p>{name}</p>
+
         {email === authCtx.userInfo?.email && (
           // 사용자가 작성한 댓글만 수정 및 삭제 버튼 표시
           <div>
