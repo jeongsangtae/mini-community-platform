@@ -57,16 +57,38 @@ const AdminUsers = () => {
         <LoadingIndicator />
       ) : (
         <div className={classes["users-container"]}>
-          <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
-            사용자 페이지
-          </h1>
+          {uiCtx.isDesktop ? (
+            <>
+              <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
+                사용자 페이지
+              </h1>
 
-          <div
-            className={`${classes["sub-menu"]} ${classes[uiCtx.themeClass]}`}
-          >
-            {/* 사용자 수를 보여줌 */}
-            <p>{users.length}명의 사용자</p>
-          </div>
+              <div
+                className={`${classes["sub-menu"]} ${
+                  classes[uiCtx.themeClass]
+                }`}
+              >
+                {/* 사용자 수를 보여줌 */}
+                <p>{users.length}명의 사용자</p>
+              </div>
+            </>
+          ) : (
+            <div
+              className={`${classes["mobile-menu"]} ${
+                classes[uiCtx.themeClass]
+              }`}
+            >
+              <h1
+                className={`${classes["mobile-heading"]} ${
+                  classes[uiCtx.themeClass]
+                }`}
+              >
+                사용자 페이지
+              </h1>
+              {/* 사용자 수를 보여줌 */}
+              <p>{users.length}명의 사용자</p>
+            </div>
+          )}
 
           <p
             className={`${classes.underline} ${classes[uiCtx.themeClass]}`}

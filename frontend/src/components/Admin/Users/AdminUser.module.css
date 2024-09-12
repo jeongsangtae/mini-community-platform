@@ -5,13 +5,9 @@
 
 .user {
   display: flex;
-  flex-direction: column;
-  margin-top: 0.5rem;
-}
-
-.user {
-  display: flex;
+  /* flex-direction: column; */
   flex-direction: row;
+  margin-top: 0.5rem;
   justify-content: space-between;
   align-items: center;
   text-decoration: none;
@@ -77,4 +73,48 @@
 
 .user-wrapper:last-child .underline {
   display: none;
+}
+
+/* 모바일 환경 */
+@media (max-width: 767px) {
+  .user-wrapper {
+    padding: 0 3rem;
+  }
+
+  .info-wrap {
+    font-size: 0.95rem;
+  }
+
+  .info-wrap span::before {
+    margin: 0 0.85rem;
+  }
+
+  .delete-button button {
+    padding: 0.5rem 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .info-wrap {
+    font-size: 0.925rem;
+  }
+
+  .delete-button button {
+    padding: 0.4rem 1.1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .user-wrapper {
+    padding: 0 2rem;
+  }
+
+  .info-wrap {
+    font-size: 0.9rem;
+  }
+
+  .delete-button button {
+    padding: 0.35rem 1.05rem;
+  }
 }
