@@ -180,4 +180,9 @@
     padding: 0.2rem 0.8rem;
     font-size: 0.75rem;
   }
+
+  .no-posts {
+    margin: 5rem 0;
+    font-size: 1.2rem;
+  }
 }

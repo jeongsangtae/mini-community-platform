@@ -183,7 +183,7 @@ const Profile = () => {
                 classes[uiCtx.themeClass]
               }`}
             >
-              내가 작성한 게시글
+              {authCtx.userInfo?.name}
             </h1>
             <p>{countPosts}개의 글</p>
           </div>
@@ -207,12 +207,20 @@ const Profile = () => {
               ))}
             </ul>
           ) : (
-            <h2
-              className={`${classes["no-posts"]} ${classes[uiCtx.themeClass]}`}
-            >
-              게시글이 존재하지 않습니다.
-            </h2>
+            <>
+              <h2
+                className={`${classes["no-posts"]} ${
+                  classes[uiCtx.themeClass]
+                }`}
+              >
+                게시글이 존재하지 않습니다.
+              </h2>
+              <p
+                className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
+              ></p>
+            </>
           )}
+
           <div
             className={`${classes["last-menu"]} ${classes[uiCtx.themeClass]}`}
           >
