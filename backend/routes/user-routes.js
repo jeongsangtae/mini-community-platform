@@ -275,7 +275,7 @@ router.get("/profile", async (req, res) => {
       .sort({ postId: -1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize)
-      .project({ postId: 1, title: 1, name: 1, content: 1, date: 1 })
+      .project({ postId: 1, title: 1, name: 1, content: 1, date: 1, count: 1 })
       .toArray();
 
     // 총 게시글 수
