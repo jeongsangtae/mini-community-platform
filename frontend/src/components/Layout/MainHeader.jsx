@@ -4,6 +4,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 import Login from "../Users/Login";
 import Signup from "../Users/Signup";
+import NavigationLinks from "./NavigationLinks";
 import DropDownMenu from "./DropDownMenu";
 import Chats from "../Chats/Chats";
 import Overlay from "../UI/Overlay";
@@ -98,7 +99,7 @@ const MainHeader = () => {
         <nav className={classes.navbutton}>
           {uiCtx.isDesktop ? (
             <>
-              <NavLink to="/" className={desktopNavLinkClass} end>
+              {/* <NavLink to="/" className={desktopNavLinkClass} end>
                 <div>
                   홈<span></span>
                 </div>
@@ -108,7 +109,9 @@ const MainHeader = () => {
                 <div>
                   게시판<span></span>
                 </div>
-              </NavLink>
+              </NavLink> */}
+
+              <NavigationLinks navLinkClass={desktopNavLinkClass} />
 
               <DropDownMenu
                 dropDownButtonClassName={dropDownButtonClassName}
@@ -143,7 +146,7 @@ const MainHeader = () => {
               openMenu ? `${classes.open}` : `""`
             }`}
           >
-            <NavLink to="/" className={mobileNavLinkClass} end>
+            {/* <NavLink to="/" className={mobileNavLinkClass} end>
               <div>
                 홈<span></span>
               </div>
@@ -153,7 +156,9 @@ const MainHeader = () => {
               <div>
                 게시판<span></span>
               </div>
-            </NavLink>
+            </NavLink> */}
+
+            <NavigationLinks navLinkClass={mobileNavLinkClass} />
 
             <DropDownMenu
               dropDownButtonClassName={dropDownButtonClassName}

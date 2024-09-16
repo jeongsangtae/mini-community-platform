@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Link, NavLink, useLoaderData } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 
+import NavigationLinks from "../../Layout/NavigationLinks";
 import DropDownMenu from "../../Layout/DropDownMenu";
 import AdminUserList from "../Chat/AdminUserList";
 import Overlay from "../../UI/Overlay";
@@ -65,7 +66,7 @@ const AdminMainHeader = () => {
           authCtx.userInfo?.role === "admin" &&
           uiCtx.isDesktop ? (
             <>
-              <NavLink to="/admin" className={desktopNavLinkClass} end>
+              {/* <NavLink to="/admin" className={desktopNavLinkClass} end>
                 <div>
                   홈<span></span>
                 </div>
@@ -81,7 +82,8 @@ const AdminMainHeader = () => {
                 <div>
                   사용자<span></span>
                 </div>
-              </NavLink>
+              </NavLink> */}
+              <NavigationLinks navLinkClass={desktopNavLinkClass} />
 
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
             </>
@@ -111,7 +113,7 @@ const AdminMainHeader = () => {
               openMenu ? `${classes.open}` : `""`
             }`}
           >
-            <NavLink to="/admin" className={mobileNavLinkClass} end>
+            {/* <NavLink to="/admin" className={mobileNavLinkClass} end>
               <div>
                 홈<span></span>
               </div>
@@ -127,7 +129,8 @@ const AdminMainHeader = () => {
               <div>
                 사용자<span></span>
               </div>
-            </NavLink>
+            </NavLink> */}
+            <NavigationLinks navLinkClass={mobileNavLinkClass} />
 
             <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
           </div>
