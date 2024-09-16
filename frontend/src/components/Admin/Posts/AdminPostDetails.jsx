@@ -36,16 +36,6 @@ const AdminPostDetails = () => {
     setDropdownToggle(false);
   };
 
-  // const actionsButtonClass =
-  //   post.email === authCtx.userInfo?.email
-  //     ? `${classes.actions} ${classes[uiCtx.themeClass]}`
-  //     : `${classes.actions} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
-
-  // const iconButtonClass =
-  //   post.email === authCtx.userInfo?.email
-  //     ? `${classes.icon}`
-  //     : `${classes.icon} ${classes.opacity}`;
-
   return (
     <div
       className={`${classes.background} ${classes[uiCtx.themeClass]}`}
