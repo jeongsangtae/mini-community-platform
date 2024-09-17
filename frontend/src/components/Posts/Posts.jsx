@@ -111,16 +111,6 @@ const Posts = () => {
         classes.opacity
       }`;
 
-  // const postAddButtonClass = authCtx.isLoggedIn
-  //   ?
-  //   : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
-
-  // const mobilePostAddButtonClass = authCtx.isLoggedIn
-  //   ? `${classes["mobile-add"]} ${classes[uiCtx.themeClass]}`
-  //   : `${classes["mobile-add"]} ${classes[uiCtx.themeClass]} ${
-  //       classes.opacity
-  //     }`;
-
   return (
     <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
       {authCtx.isLoading ? (
