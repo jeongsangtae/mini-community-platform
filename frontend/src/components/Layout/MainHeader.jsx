@@ -99,18 +99,6 @@ const MainHeader = () => {
         <nav className={classes.navbutton}>
           {uiCtx.isDesktop ? (
             <>
-              {/* <NavLink to="/" className={desktopNavLinkClass} end>
-                <div>
-                  홈<span></span>
-                </div>
-              </NavLink>
-
-              <NavLink to="/posts" className={desktopNavLinkClass} end>
-                <div>
-                  게시판<span></span>
-                </div>
-              </NavLink> */}
-
               <NavigationLinks navLinkClass={desktopNavLinkClass} />
 
               <DropDownMenu
@@ -146,18 +134,6 @@ const MainHeader = () => {
               openMenu ? `${classes.open}` : `""`
             }`}
           >
-            {/* <NavLink to="/" className={mobileNavLinkClass} end>
-              <div>
-                홈<span></span>
-              </div>
-            </NavLink>
-
-            <NavLink to="/posts" className={mobileNavLinkClass} end>
-              <div>
-                게시판<span></span>
-              </div>
-            </NavLink> */}
-
             <NavigationLinks navLinkClass={mobileNavLinkClass} />
 
             <DropDownMenu

@@ -100,36 +100,68 @@ const Posts = () => {
   }, [searchParams]);
 
   // 로그인 여부에 따라 다르게 표시되는 "글쓰기" 버튼 클래스
-  const postAddButtonClass = authCtx.isLoggedIn
-    ? `${classes.add} ${classes[uiCtx.themeClass]}`
-    : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
 
-  const mobilePostAddButtonClass = authCtx.isLoggedIn
+  const postAddButtonClass = uiCtx.isDesktop
+    ? authCtx.isLoggedIn
+      ? `${classes.add} ${classes[uiCtx.themeClass]}`
+      : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`
+    : authCtx.isLoggedIn
     ? `${classes["mobile-add"]} ${classes[uiCtx.themeClass]}`
     : `${classes["mobile-add"]} ${classes[uiCtx.themeClass]} ${
         classes.opacity
       }`;
 
+  // const postAddButtonClass = authCtx.isLoggedIn
+  //   ?
+  //   : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
+
+  // const mobilePostAddButtonClass = authCtx.isLoggedIn
+  //   ? `${classes["mobile-add"]} ${classes[uiCtx.themeClass]}`
+  //   : `${classes["mobile-add"]} ${classes[uiCtx.themeClass]} ${
+  //       classes.opacity
+  //     }`;
+
   return (
     <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
       {authCtx.isLoading ? (
         <LoadingIndicator /> // 로딩 중일 때 표시
-      ) : uiCtx.isDesktop ? (
-        // 데스크탑 UI
+      ) : (
         <div className={classes["board-container"]}>
-          <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
-            게시글
-          </h1>
+          {uiCtx.isDesktop ? (
+            // 데스크탑 UI
+            <>
+              <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
+                게시글
+              </h1>
 
-          <div
-            className={`${classes["sub-menu"]} ${classes[uiCtx.themeClass]}`}
-          >
-            {/* 전체 게시글 갯수를 보여줌 */}
-            <p>{countPosts}개의 글</p>
-            <Link to="create-post" className={postAddButtonClass}>
-              글쓰기
-            </Link>
-          </div>
+              <div
+                className={`${classes["sub-menu"]} ${
+                  classes[uiCtx.themeClass]
+                }`}
+              >
+                {/* 전체 게시글 갯수를 보여줌 */}
+                <p>{countPosts}개의 글</p>
+                <Link to="create-post" className={postAddButtonClass}>
+                  글쓰기
+                </Link>
+              </div>
+            </>
+          ) : (
+            // 모바일 UI
+            <div
+              className={`${classes["post-header"]} ${
+                classes[uiCtx.themeClass]
+              }`}
+            >
+              <p>{countPosts}개의 글</p>
+              <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
+                게시글
+              </h1>
+              <Link to="create-post" className={postAddButtonClass}>
+                글쓰기
+              </Link>
+            </div>
+          )}
 
           <p
             className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
@@ -161,11 +193,13 @@ const Posts = () => {
               >
                 게시글이 존재하지 않습니다.
               </h2>
+
               <p
                 className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
               ></p>
             </>
           )}
+
           <div
             className={`${classes["last-menu"]} ${classes[uiCtx.themeClass]}`}
           >
@@ -177,81 +211,6 @@ const Posts = () => {
               onSearch={searchHandler}
             />
             <Link to="create-post" className={postAddButtonClass}>
-              글쓰기
-            </Link>
-          </div>
-
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            firstPageGroup={firstPageGroup}
-            lastPageGroup={lastPageGroup}
-            onPageChange={pageChangeHandler}
-          />
-        </div>
-      ) : (
-        // 모바일 UI
-        <div className={classes["mobile-board-container"]}>
-          <div
-            className={`${classes["mobile-menu"]} ${classes[uiCtx.themeClass]}`}
-          >
-            <p>{countPosts}개의 글</p>
-            <h1
-              className={`${classes["mobile-heading"]} ${
-                classes[uiCtx.themeClass]
-              }`}
-            >
-              게시글
-            </h1>
-            <Link to="create-post" className={mobilePostAddButtonClass}>
-              글쓰기
-            </Link>
-          </div>
-
-          <p
-            className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
-          ></p>
-
-          {posts.length > 0 ? (
-            <ul className={classes["mobile-posts"]}>
-              {posts.map((post) => (
-                <Post
-                  key={post.postId}
-                  num={post.postId}
-                  title={post.title}
-                  name={post.name}
-                  date={post.date}
-                  content={post.content}
-                  count={post.count}
-                />
-              ))}
-            </ul>
-          ) : (
-            <>
-              <h2
-                className={`${classes["no-posts"]} ${
-                  classes[uiCtx.themeClass]
-                }`}
-              >
-                게시글이 존재하지 않습니다.
-              </h2>
-              <p
-                className={`${classes.underline} ${classes[uiCtx.themeClass]}`}
-              ></p>
-            </>
-          )}
-
-          <div
-            className={`${classes["last-menu"]} ${classes[uiCtx.themeClass]}`}
-          >
-            <Search
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              searchField={searchField}
-              setSearchField={setSearchField}
-              onSearch={searchHandler}
-            />
-            <Link to="create-post" className={mobilePostAddButtonClass}>
               글쓰기
             </Link>
           </div>

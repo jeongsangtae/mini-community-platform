@@ -103,9 +103,9 @@ const Profile = () => {
       {authCtx.isLoading ? (
         <LoadingIndicator /> // 로딩 중일 때 표시
       ) : (
-        // 데스크탑 UI
         <div className={classes["board-container"]}>
           {uiCtx.isDesktop ? (
+            // 데스크탑 UI
             <>
               <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
                 {authCtx.userInfo?.name}

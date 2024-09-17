@@ -66,23 +66,6 @@ const AdminMainHeader = () => {
           authCtx.userInfo?.role === "admin" &&
           uiCtx.isDesktop ? (
             <>
-              {/* <NavLink to="/admin" className={desktopNavLinkClass} end>
-                <div>
-                  홈<span></span>
-                </div>
-              </NavLink>
-
-              <NavLink to="/admin/posts" className={desktopNavLinkClass}>
-                <div>
-                  게시글<span></span>
-                </div>
-              </NavLink>
-
-              <NavLink to="/admin/users" className={desktopNavLinkClass}>
-                <div>
-                  사용자<span></span>
-                </div>
-              </NavLink> */}
               <NavigationLinks navLinkClass={desktopNavLinkClass} />
 
               <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
@@ -113,23 +96,6 @@ const AdminMainHeader = () => {
               openMenu ? `${classes.open}` : `""`
             }`}
           >
-            {/* <NavLink to="/admin" className={mobileNavLinkClass} end>
-              <div>
-                홈<span></span>
-              </div>
-            </NavLink>
-
-            <NavLink to="/admin/posts" className={mobileNavLinkClass} end>
-              <div>
-                게시판<span></span>
-              </div>
-            </NavLink>
-
-            <NavLink to="/admin/users" className={mobileNavLinkClass}>
-              <div>
-                사용자<span></span>
-              </div>
-            </NavLink> */}
             <NavigationLinks navLinkClass={mobileNavLinkClass} />
 
             <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
