@@ -100,16 +100,19 @@ const Posts = () => {
   }, [searchParams]);
 
   // 로그인 여부에 따라 다르게 표시되는 "글쓰기" 버튼 클래스
+  const postAddButtonClass = authCtx.isLoggedIn
+    ? `${classes.add} ${classes[uiCtx.themeClass]}`
+    : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
 
-  const postAddButtonClass = uiCtx.isDesktop
-    ? authCtx.isLoggedIn
-      ? `${classes.add} ${classes[uiCtx.themeClass]}`
-      : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`
-    : authCtx.isLoggedIn
-    ? `${classes["mobile-add"]} ${classes[uiCtx.themeClass]}`
-    : `${classes["mobile-add"]} ${classes[uiCtx.themeClass]} ${
-        classes.opacity
-      }`;
+  // const postAddButtonClass = uiCtx.isDesktop
+  //   ? authCtx.isLoggedIn
+  //     ? `${classes.add} ${classes[uiCtx.themeClass]}`
+  //     : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`
+  //   : authCtx.isLoggedIn
+  //   ? `${classes["mobile-add"]} ${classes[uiCtx.themeClass]}`
+  //   : `${classes["mobile-add"]} ${classes[uiCtx.themeClass]} ${
+  //       classes.opacity
+  //     }`;
 
   return (
     <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
