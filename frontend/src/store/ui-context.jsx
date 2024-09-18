@@ -12,8 +12,8 @@ const UIContext = React.createContext({
 
 export const UIContextProvier = ({ children }) => {
   // 모바일, 데스트탑 환경을 확인하는 react-responsive
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const isDesktop = useMediaQuery({ query: "(min-width: 768px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 769px)" });
 
   // 테마 모드 상태를 로컬 스토리지에서 불러와 관리
   const [themeMode, setThemeMode] = useState(() => {

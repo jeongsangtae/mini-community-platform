@@ -83,7 +83,7 @@
   font-size: 0.95rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .users-container {
     padding: 4rem 0;
   }

@@ -205,7 +205,7 @@
 }
 
 /* 중간 해상도 */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .logo {
     font-size: 1.25rem;
     margin-left: 3rem;

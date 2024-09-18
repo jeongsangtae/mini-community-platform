@@ -72,7 +72,7 @@
   color: rgb(196, 181, 181);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .reply-user-edit,
   .reply .content {
     font-size: 0.95rem;

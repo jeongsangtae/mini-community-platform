@@ -106,7 +106,7 @@
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .comment-user-edit {
     font-size: 0.95rem;
   }

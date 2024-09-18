@@ -193,7 +193,7 @@
   background-color: rgb(25, 25, 25);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .post-container {
     padding: 4rem 0;
   }

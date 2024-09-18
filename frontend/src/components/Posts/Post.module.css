@@ -85,7 +85,7 @@
 }
 
 /* 모바일 환경 CSS */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .post-wrapper {
     padding: 0 3rem;
   }
