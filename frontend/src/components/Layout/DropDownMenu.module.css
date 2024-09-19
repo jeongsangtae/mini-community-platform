@@ -259,7 +259,6 @@
 @media (max-width: 768px) {
   .toggle-item:before {
     top: 0.1rem;
-    left: 0.05rem;
   }
 }
 
@@ -283,8 +282,7 @@
 
 @media (max-width: 560px) {
   .toggle-item:before {
-    top: 0.1rem;
-    left: 0.05rem;
+    top: 0.05rem;
   }
 }
 
