@@ -256,6 +256,13 @@
   }
 }
 
+@media (max-width: 768px) {
+  .toggle-item:before {
+    top: 0.1rem;
+    left: 0.05rem;
+  }
+}
+
 @media (max-width: 600px) {
   .dropdown-icon {
     font-size: 1rem;
@@ -266,11 +273,18 @@
   }
 
   .mobile-dropdown-content {
-    top: 8.25rem;
+    top: 8.2rem;
   }
 
   .mobile-dropdown-content-admin {
     top: 10.85rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .toggle-item:before {
+    top: 0.1rem;
+    left: 0.05rem;
   }
 }
 
@@ -284,7 +298,7 @@
   }
 
   .mobile-dropdown-content {
-    top: 8rem;
+    top: 7.9rem;
   }
 
   .mobile-dropdown-content-admin {
