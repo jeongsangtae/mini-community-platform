@@ -8,17 +8,17 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
-  /* background-image: radial-gradient(ellipse at top left, #0f0624, #2b076e); */
-  /* background-color: #180a3a; */
-  /* background-color: white; */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  /* --light-mode-background-color: rgb(250, 250, 250); */
   --dark-mode-background-color: rgb(32, 32, 32);
   --dark-mode-color: rgb(151, 151, 151);
+  /* background-image: radial-gradient(ellipse at top left, #0f0624, #2b076e); */
+  /* background-color: #180a3a; */
+  /* background-color: white; */
+  /* --light-mode-background-color: rgb(250, 250, 250); */
 }
 
 body {

@@ -41,6 +41,7 @@
   background-color: rgb(55, 55, 55);
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 600px) {
   .not-found h1 {
     font-size: 1.8rem;

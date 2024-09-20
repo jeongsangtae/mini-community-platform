@@ -114,6 +114,7 @@
   }
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .post-form-container {
     padding: 4rem 0 0 0;

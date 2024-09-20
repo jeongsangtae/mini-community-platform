@@ -204,7 +204,7 @@
   }
 }
 
-/* 중간 해상도 */
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .logo {
     font-size: 1.25rem;
@@ -212,7 +212,6 @@
   }
 }
 
-/* 작은 해상도 */
 @media (max-width: 600px) {
   .is-mobile {
     top: calc(3.25rem);
@@ -235,7 +234,6 @@
   }
 }
 
-/* 매우 작은 해상도 */
 @media (max-width: 420px) {
   .is-mobile {
     top: calc(3rem);

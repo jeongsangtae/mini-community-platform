@@ -106,6 +106,7 @@
   display: none;
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .comment-user-edit {
     font-size: 0.95rem;

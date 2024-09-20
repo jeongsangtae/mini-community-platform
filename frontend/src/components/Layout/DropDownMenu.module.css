@@ -256,6 +256,7 @@
   }
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .toggle-item:before {
     top: 0.1rem;

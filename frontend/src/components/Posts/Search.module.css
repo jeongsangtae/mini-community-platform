@@ -104,6 +104,7 @@
   width: 60%;
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .search-field-select {
     font-size: 0.8rem;

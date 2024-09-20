@@ -83,6 +83,7 @@
   font-size: 0.95rem;
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .users-container {
     padding: 4rem 0;

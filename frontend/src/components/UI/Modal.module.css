@@ -22,6 +22,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .modal {
     background-color: rgba(89, 89, 89, 0.9);

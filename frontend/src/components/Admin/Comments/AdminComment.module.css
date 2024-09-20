@@ -74,6 +74,7 @@
   display: none;
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .comment-user-edit,
   .comment .content {

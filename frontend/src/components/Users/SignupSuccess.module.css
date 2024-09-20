@@ -17,6 +17,7 @@
   color: white;
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 600px) {
   .signup-success h1 {
     font-size: 1.9rem;

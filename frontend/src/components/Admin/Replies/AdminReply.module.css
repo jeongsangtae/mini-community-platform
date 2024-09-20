@@ -66,6 +66,7 @@
   color: rgb(196, 181, 181);
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .reply-user-edit,
   .reply .content {

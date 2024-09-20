@@ -20,6 +20,7 @@
   color: rgb(0, 187, 237);
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .comment-container {
     margin: 0 3rem;

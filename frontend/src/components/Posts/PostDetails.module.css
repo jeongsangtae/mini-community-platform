@@ -198,6 +198,7 @@
   opacity: 0.5;
 }
 
+/* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .post-container {
     padding: 4rem 0;
