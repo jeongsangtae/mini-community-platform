@@ -19,6 +19,12 @@ const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
+let port = 3000;
+
+if (process.evn.PORT) {
+  port = process.env.PORT;
+}
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -100,8 +106,8 @@ io.on("connection", (socket) => {
 // MongoDB 설정
 db.connectToDatabase()
   .then(() => {
-    server.listen(3000); // app.listen 대신 server.listen 사용
-    console.log("서버가 실행되었습니다. 포트: 3000");
+    server.listen(port); // app.listen 대신 server.listen 사용
+    console.log(`서버가 실행되었습니다. 포트: ${port}`);
   })
   .catch((error) => {
     console.log("데이터베이스에 연결하지 못했습니다.");
