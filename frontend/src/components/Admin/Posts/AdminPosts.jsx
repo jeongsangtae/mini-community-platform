@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 import AdminPost from "./AdminPost";
 import Search from "../../Posts/Search";
-import Pagination from "../../Posts/Pagination";
+import Pagination from "../../Posts/PagiNation";
 import LoadingIndicator from "../../UI/LoadingIndicator";
 
 import AuthContext from "../../../store/auth-context";

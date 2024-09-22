@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import Post from "./Post";
-import Pagination from "./Pagination";
+import Pagination from "./PagiNation";
 import Search from "./Search";
 import LoadingIndicator from "../UI/LoadingIndicator";
 
