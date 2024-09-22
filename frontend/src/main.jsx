@@ -6,7 +6,7 @@ import { AuthContextProvier } from "./store/auth-context";
 import { UIContextProvier } from "./store/ui-context";
 import "./index.css";
 import { action as postFormAction } from "./components/Posts/PostForm";
-import HomePage from "./pages/Homepage";
+import HomePage from "./pages/HomePage";
 import PostDetailsPage, {
   loader as postDetailsLoader,
   action as postDeleteAction,
