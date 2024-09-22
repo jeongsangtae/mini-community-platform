@@ -3,8 +3,8 @@ const MongoClient = mongodb.MongoClient;
 
 let mongodbUri = "mongodb://127.0.0.1:27017"; // MongoDB 연결을 위한 URI
 
-if (process.env.MONGODB_URL) {
-  mongodbUri = process.env.MONGODB_URL;
+if (process.env.MONGODB_URI) {
+  mongodbUri = process.env.MONGODB_URI;
 }
 
 let database; // DB 인스턴스를 저장하기 위한 변수

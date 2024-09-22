@@ -21,7 +21,7 @@ dotenv.config();
 
 let port = 3000;
 
-if (process.evn.PORT) {
+if (process.env.PORT) {
   port = process.env.PORT;
 }
 
