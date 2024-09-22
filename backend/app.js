@@ -47,9 +47,16 @@ app.use(cookieParser());
 
 // CORS 미들웨어를 사용해서 연결
 // CORS 설정: 클라이언트 애플리케이션에서 서버로 요청을 보낼 때, 다른 도메인 간의 요청을 허용함
+let corsURL =
+  process.env.NODE_ENV === "production"
+    ? "https://mini-community-platform.onrender.com"
+    : "http://localhost:5173";
+
+corsURL = "https://mini-community-platform.onrender.com";
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // 클라이언트 도메인
+    origin: corsURL, // 클라이언트 도메인
     credentials: true,
   })
 );
@@ -73,7 +80,7 @@ app.use((error, req, res, next) => {
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: corsURL,
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -106,8 +113,8 @@ io.on("connection", (socket) => {
 // MongoDB 설정
 db.connectToDatabase()
   .then(() => {
-    server.listen(port); // app.listen 대신 server.listen 사용
     console.log(`서버가 실행되었습니다. 포트: ${port}`);
+    server.listen(port); // app.listen 대신 server.listen 사용
   })
   .catch((error) => {
     console.log("데이터베이스에 연결하지 못했습니다.");
