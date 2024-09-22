@@ -19,11 +19,7 @@ const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
-let port = 3000;
-
-if (process.env.PORT) {
-  port = process.env.PORT;
-}
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -47,12 +43,15 @@ app.use(cookieParser());
 
 // CORS 미들웨어를 사용해서 연결
 // CORS 설정: 클라이언트 애플리케이션에서 서버로 요청을 보낼 때, 다른 도메인 간의 요청을 허용함
-let corsURL =
-  process.env.NODE_ENV === "production"
-    ? "https://mini-community-platform.onrender.com"
-    : "http://localhost:5173";
 
-corsURL = "https://mini-community-platform.onrender.com";
+// let corsURL =
+//   process.env.NODE_ENV === "production"
+//     ? "https://mini-community-platform.onrender.com"
+//     : "http://localhost:5173";
+
+// corsURL = "https://mini-community-platform.onrender.com";
+
+let corsURL = process.env.CORS_URL || "http://localhost:5173";
 
 app.use(
   cors({
@@ -113,8 +112,10 @@ io.on("connection", (socket) => {
 // MongoDB 설정
 db.connectToDatabase()
   .then(() => {
-    console.log(`서버가 실행되었습니다. 포트: ${port}`);
-    server.listen(port); // app.listen 대신 server.listen 사용
+    // app.listen 대신 server.listen 사용
+    server.listen(port, "0.0.0.0", () => {
+      console.log(`서버가 실행되었습니다. 포트: ${port}`);
+    });
   })
   .catch((error) => {
     console.log("데이터베이스에 연결하지 못했습니다.");

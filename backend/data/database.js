@@ -1,11 +1,8 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 
-let mongodbUri = "mongodb://127.0.0.1:27017"; // MongoDB 연결을 위한 URI
-
-if (process.env.MONGODB_URI) {
-  mongodbUri = process.env.MONGODB_URI;
-}
+// MongoDB 연결을 위한 URI
+const mongodbUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017";
 
 let database; // DB 인스턴스를 저장하기 위한 변수
 
