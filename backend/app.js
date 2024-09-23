@@ -67,7 +67,7 @@ app.use(userChatRoutes);
 app.use(adminChatRoutes);
 
 // 프론트엔드 파일 설정을 추가
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
+app.use(express.static(path.join(__dirname, "..", "frontend", "dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
