@@ -17,7 +17,7 @@ const AuthContext = React.createContext({
 });
 
 // AuthContextProvider 컴포넌트: 인증 및 테마 관련 상태와 함수들을 제공
-export const AuthContextProvier = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

@@ -10,7 +10,7 @@ const UIContext = React.createContext({
   isDesktop: true, // 데스크탑 환경인지 여부
 });
 
-export const UIContextProvier = ({ children }) => {
+export const UIContextProvider = ({ children }) => {
   // 모바일, 데스트탑 환경을 확인하는 react-responsive
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const isDesktop = useMediaQuery({ query: "(min-width: 769px)" });

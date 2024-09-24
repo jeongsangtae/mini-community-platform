@@ -27,6 +27,9 @@ const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("title");
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = process.env.REACT_APP_API_URL;
+
   // 서버에서 게시글 데이터 가져오기
   const fetchData = async (
     pageNumber,
@@ -42,9 +45,7 @@ const Posts = () => {
         field: searchField,
       }).toString();
 
-      const response = await fetch(
-        `http://localhost:3000/posts?${searchParams}`
-      );
+      const response = await fetch(`${apiURL}/posts?${searchParams}`);
 
       if (!response.ok) {
         throw new Error("게시글 조회 실패");
