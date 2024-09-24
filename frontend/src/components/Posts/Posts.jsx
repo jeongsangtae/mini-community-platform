@@ -28,7 +28,7 @@ const Posts = () => {
   const [searchField, setSearchField] = useState("title");
 
   // 환경 변수에서 API URL 가져오기
-  const apiURL = process.env.REACT_APP_API_URL;
+  const apiURL = import.meta.env.VITE_API_URL;
 
   // 서버에서 게시글 데이터 가져오기
   const fetchData = async (

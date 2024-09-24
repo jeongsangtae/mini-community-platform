@@ -1,9 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Posts from "../components/Posts/Posts";
 
-// 환경 변수에서 API URL 가져오기
-const apiURL = process.env.REACT_APP_API_URL;
-
 const PostsPage = () => {
   return (
     <>
@@ -18,6 +15,9 @@ export default PostsPage;
 // 페이지 로드 시 호출되는 loader 함수
 // 게시글 목록을 가져옴
 export const loader = async () => {
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   try {
     const response = await fetch(`${apiURL}/posts`, {
       credentials: "include",
