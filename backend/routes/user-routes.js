@@ -159,6 +159,9 @@ router.post("/login", async (req, res) => {
       refreshToken,
     });
   } catch (error) {
+    console.error("로그인 중 발생한 에러:", error); // 에러 객체 출력
+    console.error("에러 메시지:", error.message); // 에러 메시지 출력
+    console.error("스택 트레이스:", error.stack); // 스택 트레이스 출력
     errorHandler(res, error, "로그인 중 오류 발생");
   }
 });
