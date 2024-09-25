@@ -18,6 +18,8 @@ const AuthContext = React.createContext({
 
 // AuthContextProvider 컴포넌트: 인증 및 테마 관련 상태와 함수들을 제공
 export const AuthContextProvider = ({ children }) => {
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +33,7 @@ export const AuthContextProvider = ({ children }) => {
   // 사용자가 로그인된 상태인지 확인하는 함수
   const verifyUser = async (setUserInfo) => {
     try {
-      const response = await fetch("http://localhost:3000/accessToken", {
+      const response = await fetch(`${apiURL}/accessToken`, {
         credentials: "include",
       });
 
@@ -54,7 +56,7 @@ export const AuthContextProvider = ({ children }) => {
   // 토큰을 갱신하는 함수
   const refreshTokenHandler = async () => {
     try {
-      const response = await fetch("http://localhost:3000/refreshToken", {
+      const response = await fetch(`${apiURL}/refreshToken`, {
         credentials: "include",
       });
 
@@ -78,7 +80,7 @@ export const AuthContextProvider = ({ children }) => {
   // 리프레시 토큰 만료 시간을 갱신하는 함수
   const refreshTokenExpHandler = async () => {
     try {
-      const response = await fetch("http://localhost:3000/refreshTokenExp", {
+      const response = await fetch(`${apiURL}/refreshTokenExp`, {
         credentials: "include",
       });
 
@@ -184,7 +186,7 @@ export const AuthContextProvider = ({ children }) => {
   // 로그아웃 처리 함수
   const logoutHandler = async () => {
     try {
-      const response = await fetch("http://localhost:3000/logout", {
+      const response = await fetch(`${apiURL}/logout`, {
         method: "POST",
         body: JSON.stringify(),
         headers: { "Content-Type": "application/json" },
