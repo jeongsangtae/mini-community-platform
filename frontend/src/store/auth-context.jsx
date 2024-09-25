@@ -18,6 +18,7 @@ const AuthContext = React.createContext({
 
 // AuthContextProvider 컴포넌트: 인증 및 테마 관련 상태와 함수들을 제공
 export const AuthContextProvider = ({ children }) => {
+  // 환경 변수에서 API URL 가져오기
   const apiURL = import.meta.env.VITE_API_URL;
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);

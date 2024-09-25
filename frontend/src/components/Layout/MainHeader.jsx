@@ -17,6 +17,9 @@ const MainHeader = () => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [openSignupModal, setOnSignupModal] = useState(false);
   const [openLoginModal, setOnLoginModal] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
@@ -26,7 +29,7 @@ const MainHeader = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/login/success", {
+        const response = await fetch(`${apiURL}/login/success`, {
           credentials: "include",
         });
 
