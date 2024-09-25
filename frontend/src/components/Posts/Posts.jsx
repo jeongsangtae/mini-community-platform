@@ -14,6 +14,9 @@ const Posts = () => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   // URL 쿼리 매개변수(searchParams)를 관리
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -26,9 +29,6 @@ const Posts = () => {
   const [lastPageGroup, setLastPageGroup] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("title");
-
-  // 환경 변수에서 API URL 가져오기
-  const apiURL = import.meta.env.VITE_API_URL;
 
   // 서버에서 게시글 데이터 가져오기
   const fetchData = async (

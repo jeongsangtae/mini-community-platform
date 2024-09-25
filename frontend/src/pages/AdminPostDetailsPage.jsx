@@ -11,6 +11,7 @@ export default AdminPostDetailsPage;
 // 관리자 페이지에서 게시글 세부 페이지 로드 시 호출되는 lodaer 함수
 // 관리자 페이지에서 게시글 세부 정보를 가져옴
 export const loader = async ({ params }) => {
+  const apiURL = import.meta.env.VITE_API_URL;
   const postId = params.postId;
 
   // postId가 순수 숫자인지 확인
@@ -21,7 +22,7 @@ export const loader = async ({ params }) => {
   }
 
   try {
-    const response = await fetch("http://localhost:3000/admin/posts/" + postId);
+    const response = await fetch(`${apiURL}/admin/posts/` + postId);
 
     if (!response.ok) {
       throw new Error("게시글 조회 실패");
@@ -44,17 +45,15 @@ export const loader = async ({ params }) => {
 // 관리자 페이지에서 사용자 게시글 삭제에 호출되는 action 함수
 // 관리자 페이지에서 사용자 게시글을 삭제하는 작업을 처리
 export const action = async ({ request, params }) => {
+  const apiURL = import.meta.env.VITE_API_URL;
   const postId = params.postId;
 
   try {
     // 요청 메소드 DELETE를 서버에 요청 보냄
-    const response = await fetch(
-      "http://localhost:3000/admin/posts/" + postId,
-      {
-        method: request.method,
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${apiURL}/admin/posts/` + postId, {
+      method: request.method,
+      credentials: "include",
+    });
 
     // 응답이 올바르지 않다면 접근 불가 페이지로 리디렉션
     if (!response.ok) {

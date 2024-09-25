@@ -14,6 +14,9 @@ const Profile = () => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   // URL 쿼리 매개변수(searchParams)를 관리
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -41,10 +44,9 @@ const Profile = () => {
         field: searchField,
       }).toString();
 
-      const response = await fetch(
-        `http://localhost:3000/profile?${searchParams}`,
-        { credentials: "include" }
-      );
+      const response = await fetch(`${apiURL}/profile?${searchParams}`, {
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("게시글 조회 실패");

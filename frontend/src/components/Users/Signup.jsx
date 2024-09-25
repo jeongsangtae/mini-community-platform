@@ -13,6 +13,9 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
   const uiCtx = useContext(UIContext);
   const navigate = useNavigate();
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [signupData, setSignupData] = useState({
     username: "",
     email: "",
@@ -35,7 +38,7 @@ const Signup = ({ onLoginToggle, onSignupToggle }) => {
 
     try {
       // 서버로 회원가입 요청을 보내는 API
-      const response = await fetch("http://localhost:3000/signup", {
+      const response = await fetch(`${apiURL}/signup`, {
         method: "POST",
         body: JSON.stringify(signupData),
         headers: { "Content-Type": "application/json" },
