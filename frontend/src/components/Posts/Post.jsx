@@ -7,6 +7,9 @@ import classes from "./Post.module.css";
 const Post = ({ num, title, name, date, content, count }) => {
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const lines = content.split("\n"); // 게시글 내용에서 줄바꿈 기준으로 분할
   const linesToShow = 2; // 미리보기로 보여줄 줄 수
   // 미리보기로 보여줄 텍스트
@@ -16,7 +19,7 @@ const Post = ({ num, title, name, date, content, count }) => {
   // 조회수를 증가시키기 위한 함수
   const postCountHandler = async () => {
     try {
-      await fetch("http://localhost:3000/posts/" + num + "/count", {
+      await fetch(`${apiURL}/posts/${num}/count`, {
         method: "POST",
         body: JSON.stringify(),
         headers: { "Content-Type": "application/json" },

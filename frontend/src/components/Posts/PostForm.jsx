@@ -66,6 +66,9 @@ export default PostForm;
 
 // 게시글 Form action 함수 내용
 export const action = async ({ request, params }) => {
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const method = await request.method; // HTTP 메서드 (POST 또는 PATCH) 가져오기
   const formData = await request.formData(); // form 데이터 가져오기
   const postData = Object.fromEntries(formData); // form 데이터를 객체로 변환
@@ -75,8 +78,8 @@ export const action = async ({ request, params }) => {
 
   const url =
     method === "POST"
-      ? "http://localhost:3000/posts" // 게시글 추가 시 사용되는 URL
-      : `http://localhost:3000/posts/${postId}/edit`; // 게시글 수정 시 사용되는 URL
+      ? `${apiURL}/posts` // 게시글 추가 시 사용되는 URL
+      : `${apiURL}/posts/${postId}/edit`; // 게시글 수정 시 사용되는 URL
 
   try {
     const response = await fetch(url, {
