@@ -61,10 +61,13 @@ const refreshToken = async (req, res) => {
       { expiresIn: "1h", issuer: "GGPAN" } // 토큰 유효시간 1시간 설정
     );
 
+    const isProduction = process.env.NODE_ENV === "production";
+
     // 새로 발급한 accessToken을 쿠키에 저장
     res.cookie("accessToken", accessToken, {
-      secure: false,
+      secure: isProduction,
       httpOnly: true,
+      sameSite: isProduction ? "None" : "Lax",
     });
 
     return { message: "Access Token 재생성" }; // 성공 메시지를 반환

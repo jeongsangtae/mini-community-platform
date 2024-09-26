@@ -139,16 +139,24 @@ router.post("/login", async (req, res) => {
       { expiresIn: "6h", issuer: "GGPAN" }
     );
 
+    const isProduction = process.env.NODE_ENV === "production";
+
+    console.log("현재 환경:", process.env.NODE_ENV);
+
+    console.log(isProduction);
+
     // 쿠키에 토큰 저장 (httpOnly 옵션으로 클라이언트에서 직접 접근 불가)
     res.cookie("accessToken", accessToken, {
-      secure: false,
+      secure: isProduction,
       httpOnly: true,
+      sameSite: isProduction ? "None" : "Lax",
       maxAge: 60 * 60 * 1000, // 1시간
     });
 
     res.cookie("refreshToken", refreshToken, {
-      secure: false,
+      secure: isProduction,
       httpOnly: true,
+      sameSite: isProduction ? "None" : "Lax",
       maxAge: 6 * 60 * 60 * 1000, // 6시간
     });
 
