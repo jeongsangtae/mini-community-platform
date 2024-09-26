@@ -16,6 +16,9 @@ const Chats = ({ userId, userEmail }) => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -51,7 +54,7 @@ const Chats = ({ userId, userEmail }) => {
 
     const fetchMessages = async () => {
       try {
-        const response = await fetch("http://localhost:3000/chat/" + userId, {
+        const response = await fetch(`${apiURL}/chat/` + userId, {
           credentials: "include",
         });
 
@@ -76,7 +79,7 @@ const Chats = ({ userId, userEmail }) => {
   // WebSocket 연결 및 실시간 메시지 수신
   useEffect(() => {
     try {
-      const newSocket = io("http://localhost:3000", {
+      const newSocket = io(`${apiURL}`, {
         withCredentials: true, // CORS 설정
       });
 
@@ -126,7 +129,7 @@ const Chats = ({ userId, userEmail }) => {
 
     try {
       // 서버로 메시지를 POST 요청으로 전송
-      const response = await fetch("http://localhost:3000/chat/" + userId, {
+      const response = await fetch(`${apiURL}/chat/` + userId, {
         method: "POST",
         body: JSON.stringify(newMessage),
         headers: { "Content-Type": "application/json" },
