@@ -23,6 +23,9 @@ const AdminChats = ({
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   // 메시지 입력 상태, 메시지 목록, socket, 입력 필드 상태를 관리하기 위한 상태 설정
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -66,7 +69,7 @@ const AdminChats = ({
       try {
         const userId = chatRoomId;
         const response = await fetch(
-          "http://localhost:3000/admin/chat/" + adminId + "/" + userId,
+          `${apiURL}/admin/chat/${adminId}/${userId}`,
           {
             credentials: "include",
           }

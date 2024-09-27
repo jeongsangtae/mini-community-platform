@@ -13,6 +13,9 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [chatToggle, setChatToggle] = useState(false);
   const [userChatRoomToggle, setUserChatRoomToggle] = useState(false);
   const [selectUserChatRoom, setSelectUserChatRoom] = useState(null);
@@ -28,12 +31,9 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
       try {
         // 각 사용자의 마지막 메시지를 가져오는 비동기 작업
         const combineUserData = usersData.map(async (user) => {
-          const response = await fetch(
-            "http://localhost:3000/admin/chat/" + user._id,
-            {
-              credentials: "include",
-            }
-          );
+          const response = await fetch(`${apiURL}/admin/chat/${user._id}`, {
+            credentials: "include",
+          });
 
           if (!response.ok) {
             throw new Error("마지막 메시지 조회 실패");

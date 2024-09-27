@@ -13,6 +13,9 @@ const AdminUsers = () => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [users, setUsers] = useState(usersData);
 
   // 사용자 목록을 새로고침하는 useEffect
@@ -21,7 +24,7 @@ const AdminUsers = () => {
     const fetchUsers = async () => {
       try {
         // 최신 사용자 목록을 가져오기 위한 API 요청
-        const response = await fetch("http://localhost:3000/admin/users", {
+        const response = await fetch(`${apiURL}/admin/users`, {
           credentials: "include",
         });
 

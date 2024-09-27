@@ -14,6 +14,9 @@ const AdminPosts = () => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   // URL 쿼리 매개변수(searchParams)를 관리
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -42,9 +45,7 @@ const AdminPosts = () => {
         field: searchField,
       }).toString();
 
-      const response = await fetch(
-        `http://localhost:3000/admin/posts?${searchParams}`
-      );
+      const response = await fetch(`${apiURL}/admin/posts?${searchParams}`);
 
       if (!response.ok) {
         throw new Error("게시글 조회 실패");

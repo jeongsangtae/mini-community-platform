@@ -8,11 +8,14 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   // 사용자를 삭제하는 함수
   const userDeleteHandler = async () => {
     try {
       // 사용자 삭제를 위한 API 요청
-      const response = await fetch("http://localhost:3000/admin/user", {
+      const response = await fetch(`${apiURL}/admin/user`, {
         method: "DELETE",
         body: JSON.stringify({ email }),
         headers: { "Content-Type": "application/json" },
