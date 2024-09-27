@@ -236,9 +236,17 @@ router.get("/login/success", async (req, res) => {
 
 // 로그아웃 처리, 쿠키에서 토큰 제거
 router.post("/logout", async (req, res) => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   try {
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken", {
+      secure: isProduction, // 쿠키 설정 시 사용한 옵션과 동일하게
+      sameSite: isProduction ? "None" : "Lax", // sameSite도 동일하게
+    });
+    res.clearCookie("refreshToken", {
+      secure: isProduction, // 쿠키 설정 시 사용한 옵션과 동일하게
+      sameSite: isProduction ? "None" : "Lax", // sameSite도 동일하게
+    });
     res.status(200).json({ message: "로그아웃 성공" });
   } catch (error) {
     errorHandler(res, error, "로그아웃 중 오류 발생");
