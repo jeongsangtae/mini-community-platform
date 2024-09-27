@@ -129,7 +129,7 @@ const Chats = ({ userId, userEmail }) => {
 
     try {
       // 서버로 메시지를 POST 요청으로 전송
-      const response = await fetch(`${apiURL}/chat/` + userId, {
+      const response = await fetch(`${apiURL}/chat/${userId}`, {
         method: "POST",
         body: JSON.stringify(newMessage),
         headers: { "Content-Type": "application/json" },

@@ -96,7 +96,7 @@ const AdminChats = ({
   // WebSocket 연결 및 실시간 메시지 수신
   useEffect(() => {
     try {
-      const newSocket = io("http://localhost:3000", { withCredentials: true });
+      const newSocket = io(`${apiURL}`, { withCredentials: true });
 
       newSocket.on("connect", () => {
         console.log("서버에 연결되었습니다.", newSocket.id);
@@ -166,15 +166,12 @@ const AdminChats = ({
 
     try {
       // 서버로 메시지를 POST 요청으로 전송
-      const response = await fetch(
-        "http://localhost:3000/admin/chat/" + adminId,
-        {
-          method: "POST",
-          body: JSON.stringify(newMessage),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiURL}/admin/chat/${adminId}`, {
+        method: "POST",
+        body: JSON.stringify(newMessage),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("메시지 전송 실패");
