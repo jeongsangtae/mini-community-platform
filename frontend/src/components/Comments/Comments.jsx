@@ -13,6 +13,9 @@ const Comments = () => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
 
@@ -23,12 +26,9 @@ const Comments = () => {
 
       try {
         // 서버에서 특정 게시글에 대한 댓글을 가져오는 API 호출
-        const response = await fetch(
-          "http://localhost:3000/posts/" + postId + "/comments",
-          {
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${apiURL}/posts/${postId}/comments`, {
+          credentials: "include",
+        });
 
         if (!response.ok) {
           throw new Error("댓글 조회 실패");

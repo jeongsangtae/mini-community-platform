@@ -18,6 +18,9 @@ const ReplyForm = ({
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [reply, setReply] = useState("");
   const maxLength = 300;
 
@@ -51,15 +54,12 @@ const ReplyForm = ({
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/replies",
-        {
-          method: method,
-          body: JSON.stringify(requestBody),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiURL}/posts/${postId}/replies`, {
+        method: method,
+        body: JSON.stringify(requestBody),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error(`답글 ${method === "POST" ? "추가" : "수정"} 실패`);

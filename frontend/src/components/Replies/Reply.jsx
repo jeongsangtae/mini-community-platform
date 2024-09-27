@@ -20,6 +20,9 @@ const Reply = ({
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [replyEditToggle, setReplyEditToggle] = useState(false);
 
   // 답글을 삭제하는 함수
@@ -28,15 +31,12 @@ const Reply = ({
 
     try {
       // 답글 삭제 요청
-      const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/reply",
-        {
-          method: "DELETE",
-          body: JSON.stringify({ replyId }),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiURL}/posts/${postId}/reply`, {
+        method: "DELETE",
+        body: JSON.stringify({ replyId }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("답글 삭제 실패");

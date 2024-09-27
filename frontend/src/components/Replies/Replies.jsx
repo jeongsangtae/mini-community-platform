@@ -13,6 +13,9 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [replies, setReplies] = useState([]);
 
   // 컴포넌트가 마운트될 때 답글 데이터를 서버에서 가져오는 useEffect
@@ -23,7 +26,7 @@ const Replies = ({ commentId, replyToggle, onReplyToggle, repliesLength }) => {
       try {
         // 서버에서 특정 게시글의 특정 댓글에 대한 답글을 가져오는 API 호출
         const response = await fetch(
-          "http://localhost:3000/posts/" + postId + "/" + commentId + "/replies"
+          `${apiURL}/posts/${postId}/${commentId}/replies`
         );
 
         if (!response.ok) {

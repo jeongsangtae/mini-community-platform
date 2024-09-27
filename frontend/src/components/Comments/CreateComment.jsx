@@ -11,6 +11,9 @@ const CreateComment = ({ method, onAddCommentData }) => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [comment, setComment] = useState("");
 
   // 댓글 입력에 대한 최대 길이 설정
@@ -36,15 +39,12 @@ const CreateComment = ({ method, onAddCommentData }) => {
 
     try {
       // 댓글 저장 요청
-      const response = await fetch(
-        "http://localhost:3000/posts/" + postId + "/comments",
-        {
-          method: method,
-          body: JSON.stringify(requestBody),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiURL}/posts/${postId}/comments`, {
+        method: method,
+        body: JSON.stringify(requestBody),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("댓글 추가 실패");
