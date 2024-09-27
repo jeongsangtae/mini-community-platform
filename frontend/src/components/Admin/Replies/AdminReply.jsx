@@ -10,20 +10,21 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   // 답글을 삭제하는 함수
   const replyDeleteHandler = async () => {
     const postId = post.postId;
+
     try {
       // 답글 삭제 요청
-      const response = await fetch(
-        "http://localhost:3000/admin/posts/" + postId + "/reply",
-        {
-          method: "DELETE",
-          body: JSON.stringify({ replyId }),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiURL}/admin/posts/${postId}/reply`, {
+        method: "DELETE",
+        body: JSON.stringify({ replyId }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("답글 삭제 실패");

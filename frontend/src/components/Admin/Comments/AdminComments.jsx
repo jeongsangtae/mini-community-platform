@@ -12,6 +12,9 @@ const AdminComments = () => {
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [comments, setComments] = useState([]);
   const [totalReplies, setTotalReplies] = useState(0);
 
@@ -23,7 +26,7 @@ const AdminComments = () => {
       try {
         // 서버에서 특정 게시글에 대한 댓글을 가져오는 API 호출
         const response = await fetch(
-          "http://localhost:3000/admin/posts/" + postId + "/comments",
+          `${apiURL}/admin/posts/${postId}/comments`,
           {
             credentials: "include",
           }

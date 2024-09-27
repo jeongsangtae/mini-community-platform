@@ -19,6 +19,9 @@ const AdminComment = ({
   const authCtx = useContext(AuthContext);
   const uiCtx = useContext(UIContext);
 
+  // 환경 변수에서 API URL 가져오기
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const [replyToggle, setReplyToggle] = useState(false);
 
   // 댓글을 삭제하는 함수
@@ -27,15 +30,12 @@ const AdminComment = ({
 
     try {
       // 댓글 삭제 요청
-      const response = await fetch(
-        "http://localhost:3000/admin/posts/" + postId + "/comment",
-        {
-          method: "DELETE",
-          body: JSON.stringify({ commentId }),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiURL}/admin/posts/${postId}/comment`, {
+        method: "DELETE",
+        body: JSON.stringify({ commentId }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("댓글 삭제 실패");
