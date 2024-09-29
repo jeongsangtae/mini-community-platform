@@ -58,7 +58,11 @@ const Post = ({ num, title, name, date, content, count }) => {
 
             <div className={classes.info}>
               <span>{name}</span>
-              <div className={classes["date-and-views"]}>
+              <div
+                className={`${classes["date-and-views"]} ${
+                  classes[uiCtx.themeClass]
+                }`}
+              >
                 <span>{date}</span>
                 <span>조회 {count}</span>
               </div>

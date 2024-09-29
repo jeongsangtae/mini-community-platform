@@ -123,9 +123,22 @@
     font-size: 0.95rem;
   }
 
-  .date-and-views {
+  /* .date-and-views {
     display: flex;
     gap: 1rem;
+  } */
+
+  .date-and-views span:first-child::after {
+    content: "\2022";
+    font-size: 0.5rem;
+    position: relative;
+    margin: 0 0.5rem;
+    color: black;
+    vertical-align: middle;
+  }
+
+  .date-and-views.dark-mode span:first-child::after {
+    color: white;
   }
 
   .title {
