@@ -220,7 +220,6 @@
 
   .info-wrap span::before {
     margin: 0 0.85rem;
-    font-size: 0.25rem;
   }
 
   .icon {
@@ -283,6 +282,10 @@
 
   .title p {
     font-size: 1.2rem;
+  }
+
+  .info-wrap span::before {
+    font-size: 0.25rem;
   }
 
   .dropdown {
