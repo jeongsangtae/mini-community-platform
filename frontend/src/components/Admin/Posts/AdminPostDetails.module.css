@@ -71,7 +71,7 @@
 
 /* 게시글 정보 사이에 ●을 추가해서 구분 */
 .info-wrap span::before {
-  content: "●";
+  content: "\25CF";
   font-size: 0.5rem;
   position: relative;
   margin: 0 1rem;
@@ -277,6 +277,11 @@
 
   .title p {
     font-size: 1.2rem;
+  }
+
+  .info-wrap span::before {
+    content: "\2022";
+    font-size: 1rem;
   }
 
   .dropdown {
