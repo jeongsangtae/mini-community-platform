@@ -296,6 +296,10 @@
     font-size: 0.7rem;
   }
 
+  .toggle-item:before {
+    top: 0.075rem;
+  }
+
   .mobile-dropdown-content {
     top: 7.9rem;
   }

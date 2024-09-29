@@ -220,6 +220,7 @@
 
   .info-wrap span::before {
     margin: 0 0.85rem;
+    font-size: 0.25rem;
   }
 
   .icon {

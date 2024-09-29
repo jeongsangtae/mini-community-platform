@@ -40,6 +40,11 @@ const DropDownMenu = ({
       : `${classes["display-none"]}`
     : `${classes["dropdown-content"]} ${classes[uiCtx.themeClass]}`;
 
+  // const toggleItemClass =
+  //   authCtx.userInfo?.role === "admin"
+  //     ? `${classes["toggle-item"]} ${classes.admin}`
+  //     : `${classes["toggle-item"]}`;
+
   // 드롭다운 메뉴 내용 정의 (로그인 상태에 따라 다르게 렌더링)
   const dropDownContent = (
     <>
