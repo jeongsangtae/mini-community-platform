@@ -285,8 +285,8 @@
   }
 
   .info-wrap span::before {
-    content: "\2022";
-    font-size: 0.75rem;
+    content: "\2219";
+    font-size: 1rem;
     margin: 0 0.75rem;
   }
 
