@@ -129,7 +129,7 @@
   } */
 
   .date-and-views span:first-child::after {
-    content: "\2022";
+    content: "\2219";
     font-size: 1rem;
     position: relative;
     margin: 0 0.5rem;
