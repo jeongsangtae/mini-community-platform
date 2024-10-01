@@ -51,7 +51,7 @@
   position: relative;
   width: 20px;
   gap: 0.5rem;
-  background-color: rgb(245, 245, 245);
+  background-color: transparent;
   color: rgb(105, 105, 105);
   border: none;
   cursor: pointer;
