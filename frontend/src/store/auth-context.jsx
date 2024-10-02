@@ -69,7 +69,8 @@ export const AuthContextProvider = ({ children }) => {
 
       if (resData) {
         const now = Math.floor(new Date().getTime() / 1000);
-        const expirationTime = Math.ceil(now + 60 * 60); // 1시간 유효
+        // const expirationTime = Math.ceil(now + 60 * 60); // 1시간 유효
+        const expirationTime = Math.ceil(now + 30 * 60);
         localStorage.setItem("isLoggedIn", "1");
         localStorage.setItem("expirationTime", expirationTime); // 만료 시간 저장
       }
@@ -136,7 +137,7 @@ export const AuthContextProvider = ({ children }) => {
 
         // 일정 시간마다 토큰 만료 확인
         // const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
-        const interval = setInterval(checkTokenExpiration, 60 * 1000);
+        const interval = setInterval(checkTokenExpiration, 60 * 15 * 1000);
 
         return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
       } catch (error) {
@@ -166,7 +167,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const now = Math.floor(new Date().getTime() / 1000);
       // const expirationTime = Math.ceil(now + 60 * 60);
-      const expirationTime = Math.ceil(now + 60 * 3); // 1분
+      const expirationTime = Math.ceil(now + 60 * 30);
 
       localStorage.setItem("isLoggedIn", "1");
       localStorage.setItem("expirationTime", expirationTime);
