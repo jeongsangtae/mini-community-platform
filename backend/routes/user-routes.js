@@ -124,7 +124,8 @@ router.post("/login", async (req, res) => {
         role: userRole,
       },
       accessTokenKey,
-      { expiresIn: "1h", issuer: "GGPAN" }
+      // { expiresIn: "1h", issuer: "GGPAN" }
+      { expiresIn: "1m", issuer: "GGPAN" }
     );
 
     // Refresh Token 발급
@@ -136,7 +137,8 @@ router.post("/login", async (req, res) => {
         role: userRole,
       },
       refreshTokenKey,
-      { expiresIn: "6h", issuer: "GGPAN" }
+      // { expiresIn: "6h", issuer: "GGPAN" }
+      { expiresIn: "5m", issuer: "GGPAN" }
     );
 
     const isProduction = process.env.NODE_ENV === "production";
@@ -150,14 +152,16 @@ router.post("/login", async (req, res) => {
       secure: isProduction,
       httpOnly: true,
       sameSite: isProduction ? "None" : "Lax",
-      maxAge: 60 * 60 * 1000, // 1시간
+      // maxAge: 60 * 60 * 1000, // 1시간
+      maxAge: 1 * 60 * 1000,
     });
 
     res.cookie("refreshToken", refreshToken, {
       secure: isProduction,
       httpOnly: true,
       sameSite: isProduction ? "None" : "Lax",
-      maxAge: 6 * 60 * 60 * 1000, // 6시간
+      // maxAge: 6 * 60 * 60 * 1000, // 6시간
+      maxAge: 5 * 60 * 1000,
     });
 
     // 성공 메시지와 함께 토큰 정보 반환
@@ -167,9 +171,9 @@ router.post("/login", async (req, res) => {
       refreshToken,
     });
   } catch (error) {
-    console.error("로그인 중 발생한 에러:", error); // 에러 객체 출력
-    console.error("에러 메시지:", error.message); // 에러 메시지 출력
-    console.error("스택 트레이스:", error.stack); // 스택 트레이스 출력
+    // console.error("로그인 중 발생한 에러:", error); // 에러 객체 출력
+    // console.error("에러 메시지:", error.message); // 에러 메시지 출력
+    // console.error("스택 트레이스:", error.stack); // 스택 트레이스 출력
     errorHandler(res, error, "로그인 중 오류 발생");
   }
 });

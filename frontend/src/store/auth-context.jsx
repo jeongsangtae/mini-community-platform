@@ -115,14 +115,14 @@ export const AuthContextProvider = ({ children }) => {
             localStorage.getItem("refreshTokenExp")
           );
 
-          // console.log(now);
-          // console.log(storedExpirationTime);
-          // console.log(refreshTokenExpirationTime);
+          console.log(now);
+          console.log(storedExpirationTime);
+          console.log(refreshTokenExpirationTime);
 
-          // console.log(
-          //   now >= storedExpirationTime && refreshTokenExpirationTime > now
-          // );
-          // console.log(now >= refreshTokenExpirationTime);
+          console.log(
+            now >= storedExpirationTime && refreshTokenExpirationTime > now
+          );
+          console.log(now >= refreshTokenExpirationTime);
 
           if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
             refreshTokenHandler();
@@ -135,7 +135,8 @@ export const AuthContextProvider = ({ children }) => {
         checkTokenExpiration(); // 초기 확인
 
         // 일정 시간마다 토큰 만료 확인
-        const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
+        // const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
+        const interval = setInterval(checkTokenExpiration, 60 * 1000);
 
         return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
       } catch (error) {
@@ -164,7 +165,8 @@ export const AuthContextProvider = ({ children }) => {
   const loginHandler = async () => {
     try {
       const now = Math.floor(new Date().getTime() / 1000);
-      const expirationTime = Math.ceil(now + 60 * 60);
+      // const expirationTime = Math.ceil(now + 60 * 60);
+      const expirationTime = Math.ceil(now + 60 * 3); // 1분
 
       localStorage.setItem("isLoggedIn", "1");
       localStorage.setItem("expirationTime", expirationTime);
