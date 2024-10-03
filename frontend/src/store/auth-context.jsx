@@ -117,6 +117,9 @@ export const AuthContextProvider = ({ children }) => {
           );
 
           console.log(now);
+
+          // 테스트 코드
+          let date = new Date();
           console.log(
             "현재 시간:",
             `${date.getFullYear()}.${
@@ -132,6 +135,7 @@ export const AuthContextProvider = ({ children }) => {
               .toString()
               .padStart(2, "0")}`
           );
+
           console.log(storedExpirationTime);
           console.log(refreshTokenExpirationTime);
 
