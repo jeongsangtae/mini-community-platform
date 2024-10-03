@@ -117,6 +117,21 @@ export const AuthContextProvider = ({ children }) => {
           );
 
           console.log(now);
+          console.log(
+            "현재 시간:",
+            `${date.getFullYear()}.${
+              date.getMonth() + 1
+            }.${date.getDate()} ${date
+              .getHours()
+              .toString()
+              .padStart(2, "0")}:${date
+              .getMinutes()
+              .toString()
+              .padStart(2, "0")}:${date
+              .getSeconds()
+              .toString()
+              .padStart(2, "0")}`
+          );
           console.log(storedExpirationTime);
           console.log(refreshTokenExpirationTime);
 
