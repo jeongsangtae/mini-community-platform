@@ -102,62 +102,58 @@ export const AuthContextProvider = ({ children }) => {
 
   // 로그인 여부에 따라 사용자 인증 및 토큰 갱신을 확인하는 useEffect
   useEffect(() => {
+    console.log("로그인 확인", isLoggedIn);
+
+    // 토큰 만료를 확인하고 필요 시 갱신하는 함수
+    const checkTokenExpiration = () => {
+      const now = Math.floor(new Date().getTime() / 1000);
+      const storedExpirationTime = parseInt(
+        localStorage.getItem("expirationTime")
+      );
+      const refreshTokenExpirationTime = parseInt(
+        localStorage.getItem("refreshTokenExp")
+      );
+
+      console.log(now);
+
+      // 테스트 코드
+      let date = new Date();
+      console.log(
+        "현재 시간:",
+        `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date
+          .getHours()
+          .toString()
+          .padStart(2, "0")}:${date
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`
+      );
+
+      console.log(storedExpirationTime);
+      console.log(refreshTokenExpirationTime);
+
+      console.log(
+        now >= storedExpirationTime && refreshTokenExpirationTime > now
+      );
+      console.log(now >= refreshTokenExpirationTime);
+
+      if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
+        refreshTokenHandler();
+        setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
+      } else if (now >= refreshTokenExpirationTime) {
+        logoutHandler(); // 리프레시 토큰 만료 시 로그아웃
+      }
+    };
+
+    checkTokenExpiration(); // 초기 확인
+
     if (isLoggedIn) {
       try {
         verifyUser(setUserInfo);
 
-        // 토큰 만료를 확인하고 필요 시 갱신하는 함수
-        const checkTokenExpiration = () => {
-          const now = Math.floor(new Date().getTime() / 1000);
-          const storedExpirationTime = parseInt(
-            localStorage.getItem("expirationTime")
-          );
-          const refreshTokenExpirationTime = parseInt(
-            localStorage.getItem("refreshTokenExp")
-          );
-
-          console.log(now);
-
-          // 테스트 코드
-          let date = new Date();
-          console.log(
-            "현재 시간:",
-            `${date.getFullYear()}.${
-              date.getMonth() + 1
-            }.${date.getDate()} ${date
-              .getHours()
-              .toString()
-              .padStart(2, "0")}:${date
-              .getMinutes()
-              .toString()
-              .padStart(2, "0")}:${date
-              .getSeconds()
-              .toString()
-              .padStart(2, "0")}`
-          );
-
-          console.log(storedExpirationTime);
-          console.log(refreshTokenExpirationTime);
-
-          console.log(
-            now >= storedExpirationTime && refreshTokenExpirationTime > now
-          );
-          console.log(now >= refreshTokenExpirationTime);
-
-          if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
-            refreshTokenHandler();
-            setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
-          } else if (now >= refreshTokenExpirationTime) {
-            logoutHandler(); // 리프레시 토큰 만료 시 로그아웃
-          }
-        };
-
-        checkTokenExpiration(); // 초기 확인
-
         // 일정 시간마다 토큰 만료 확인
         // const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
         const interval = setInterval(checkTokenExpiration, 60 * 15 * 1000);
-
         return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
       } catch (error) {
         console.error("오류 발생:", error);
