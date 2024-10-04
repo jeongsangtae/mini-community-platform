@@ -59,8 +59,8 @@ const refreshToken = async (req, res) => {
       },
       accessTokenKey,
       // { expiresIn: "1h", issuer: "GGPAN" } // 토큰 유효시간 1시간 설정
-      // { expiresIn: "30m", issuer: "GGPAN" }
-      { expiresIn: "2m", issuer: "GGPAN" }
+      { expiresIn: "30m", issuer: "GGPAN" }
+      // { expiresIn: "2m", issuer: "GGPAN" }
     );
 
     const isProduction = process.env.NODE_ENV === "production";
