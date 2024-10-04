@@ -70,7 +70,8 @@ export const AuthContextProvider = ({ children }) => {
       if (resData) {
         const now = Math.floor(new Date().getTime() / 1000);
         // const expirationTime = Math.ceil(now + 60 * 60); // 1시간 유효
-        const expirationTime = Math.ceil(now + 30 * 60);
+        // const expirationTime = Math.ceil(now + 30 * 60);
+        const expirationTime = Math.ceil(now + 2 * 60);
         localStorage.setItem("isLoggedIn", "1");
         localStorage.setItem("expirationTime", expirationTime); // 만료 시간 저장
       }
@@ -129,8 +130,35 @@ export const AuthContextProvider = ({ children }) => {
           .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`
       );
 
-      console.log(storedExpirationTime);
-      console.log(refreshTokenExpirationTime);
+      const formatExpirationTime = (expirationTime) => {
+        const expirationDate = new Date(expirationTime * 1000);
+        return `${expirationDate.getFullYear()}.${(
+          expirationDate.getMonth() + 1
+        )
+          .toString()
+          .padStart(2, "0")}.${expirationDate
+          .getDate()
+          .toString()
+          .padStart(2, "0")} ${expirationDate
+          .getHours()
+          .toString()
+          .padStart(2, "0")}:${expirationDate
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}:${expirationDate
+          .getSeconds()
+          .toString()
+          .padStart(2, "0")}`;
+      };
+
+      console.log(
+        "액세스 토큰 만료 시간:",
+        formatExpirationTime(storedExpirationTime)
+      );
+      console.log(
+        "리프레시 토큰 만료 시간:",
+        formatExpirationTime(refreshTokenExpirationTime)
+      );
 
       console.log(
         now >= storedExpirationTime && refreshTokenExpirationTime > now
@@ -145,7 +173,18 @@ export const AuthContextProvider = ({ children }) => {
       }
     };
 
-    checkTokenExpiration(); // 초기 확인
+    // checkTokenExpiration(); // 초기 확인
+
+    // 브라우저 로드 시 토큰 확인
+    const checkTokenOnLoad = () => {
+      const isLoggedInStored = localStorage.getItem("isLoggedIn");
+
+      if (isLoggedInStored) {
+        checkTokenExpiration(); // 로컬 스토리지의 만료 시간 확인
+      }
+    };
+
+    checkTokenOnLoad(); // 페이지 로드 시 토큰 만료 여부 확인
 
     if (isLoggedIn) {
       try {
@@ -153,7 +192,8 @@ export const AuthContextProvider = ({ children }) => {
 
         // 일정 시간마다 토큰 만료 확인
         // const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
-        const interval = setInterval(checkTokenExpiration, 60 * 15 * 1000);
+        // const interval = setInterval(checkTokenExpiration, 60 * 15 * 1000);
+        const interval = setInterval(checkTokenExpiration, 60 * 1 * 1000);
         return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
       } catch (error) {
         console.error("오류 발생:", error);
@@ -182,7 +222,8 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const now = Math.floor(new Date().getTime() / 1000);
       // const expirationTime = Math.ceil(now + 60 * 60);
-      const expirationTime = Math.ceil(now + 60 * 30);
+      // const expirationTime = Math.ceil(now + 60 * 30);
+      const expirationTime = Math.ceil(now + 60 * 2);
 
       localStorage.setItem("isLoggedIn", "1");
       localStorage.setItem("expirationTime", expirationTime);
