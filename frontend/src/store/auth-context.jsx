@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import RefreshLoading from "../components/UI/RefreshLoading";
+
 // AuthContext 생성: 초기 상태를 정의
 const AuthContext = React.createContext({
   isLoggedIn: false, // 로그인 여부를 나타냄
@@ -24,6 +26,7 @@ export const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // 테마 모드 상태를 로컬 스토리지에서 불러와 관리
   // const [themeMode, setThemeMode] = useState(() => {
@@ -106,7 +109,7 @@ export const AuthContextProvider = ({ children }) => {
     console.log("로그인 확인", isLoggedIn);
 
     // 토큰 만료를 확인하고 필요 시 갱신하는 함수
-    const checkTokenExpiration = () => {
+    const checkTokenExpiration = async () => {
       const now = Math.floor(new Date().getTime() / 1000);
       const storedExpirationTime = parseInt(
         localStorage.getItem("expirationTime")
@@ -166,8 +169,16 @@ export const AuthContextProvider = ({ children }) => {
       console.log(now >= refreshTokenExpirationTime);
 
       if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
-        refreshTokenHandler();
-        setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
+        setIsRefreshing(true); // 로딩 상태로 변경
+        try {
+          await refreshTokenHandler(); // 토큰 갱신
+          setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
+        } catch (error) {
+          console.error("토큰 갱신 실패", error);
+          logoutHandler(); //실패 시 로그아웃
+        } finally {
+          setIsRefreshing(false); // 로딩 상태 해제
+        }
       } else if (now >= refreshTokenExpirationTime) {
         logoutHandler(); // 리프레시 토큰 만료 시 로그아웃
       }
@@ -211,11 +222,6 @@ export const AuthContextProvider = ({ children }) => {
       setIsLoggedIn(true);
     }
   }, []);
-
-  // 테마 모드 변경 시 로컬 스토리지에 저장하는 useEffect
-  // useEffect(() => {
-  //   localStorage.setItem("themeMode", themeMode);
-  // }, [themeMode]);
 
   // 로그인 처리 함수
   const loginHandler = async () => {
@@ -287,15 +293,6 @@ export const AuthContextProvider = ({ children }) => {
   // 사용자 이름 설정
   const userName = userInfo ? userInfo.name : "GUEST";
 
-  // 테마 모드 토글 함수
-  // const themeModeToggleHandler = () => {
-  //   const newThemeMode = themeMode === "light" ? "dark" : "light";
-  //   setThemeMode(newThemeMode);
-  // };
-
-  // 테마에 따른 클래스 설정
-  // const themeClass = themeMode === "dark" ? "dark-mode" : "";
-
   return (
     <AuthContext.Provider
       value={{
@@ -304,17 +301,18 @@ export const AuthContextProvider = ({ children }) => {
         setIsLoading,
         userInfo,
         userName,
-        // themeMode,
-        // themeClass,
         login: loginHandler,
         logout: logoutHandler,
         refreshToken: refreshTokenHandler,
         refreshTokenExp: refreshTokenExpHandler,
-        // themeModeToggle: themeModeToggleHandler,
         errorHelper: errorHelperHandler,
       }}
     >
-      {children} {/* AuthContext를 사용하는 컴포넌트들이 children으로 전달됨 */}
+      {isRefreshing ? (
+        <RefreshLoading /> // 로그인 인증이 안되었을 때 렌더링
+      ) : (
+        children // AuthContext를 사용하는 컴포넌트들이 children으로 전달됨
+      )}
     </AuthContext.Provider>
   );
 };
