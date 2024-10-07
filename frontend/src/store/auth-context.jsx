@@ -61,9 +61,9 @@ export const AuthContextProvider = ({ children }) => {
 
       if (resData) {
         const now = Math.floor(new Date().getTime() / 1000);
-        // const expirationTime = Math.ceil(now + 60 * 60); // 1시간 유효
+        const expirationTime = Math.ceil(now + 60 * 60); // 1시간 유효
         // const expirationTime = Math.ceil(now + 60 * 30);
-        const expirationTime = Math.ceil(now + 60 * 10);
+        // const expirationTime = Math.ceil(now + 60 * 10);
         localStorage.setItem("isLoggedIn", "1");
         localStorage.setItem("expirationTime", expirationTime); // 만료 시간 저장
       }
@@ -182,9 +182,9 @@ export const AuthContextProvider = ({ children }) => {
         verifyUser(setUserInfo);
 
         // 일정 시간마다 토큰 만료 확인
-        // const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
+        const interval = setInterval(checkTokenExpiration, 60 * 30 * 1000);
         // const interval = setInterval(checkTokenExpiration, 60 * 15 * 1000);
-        const interval = setInterval(checkTokenExpiration, 60 * 5 * 1000);
+        // const interval = setInterval(checkTokenExpiration, 60 * 5 * 1000);
         return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
       } catch (error) {
         console.error("오류 발생:", error);
@@ -207,9 +207,9 @@ export const AuthContextProvider = ({ children }) => {
   const loginHandler = async () => {
     try {
       const now = Math.floor(new Date().getTime() / 1000);
-      // const expirationTime = Math.ceil(now + 60 * 60);
+      const expirationTime = Math.ceil(now + 60 * 60);
       // const expirationTime = Math.ceil(now + 60 * 30);
-      const expirationTime = Math.ceil(now + 60 * 10);
+      // const expirationTime = Math.ceil(now + 60 * 10);
 
       localStorage.setItem("isLoggedIn", "1");
       localStorage.setItem("expirationTime", expirationTime);
@@ -230,43 +230,23 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   // 로그아웃 처리 함수
-  // const logoutHandler = async () => {
-  //   try {
-  //     // 로컬 스토리지에서 role 항목을 가져와서 저장
-  //     const role = localStorage.getItem("role");
-
-  //     // 로컬 스토리지 초기화 내용
-  //     localStorage.removeItem("isLoggedIn");
-  //     localStorage.removeItem("expirationTime");
-  //     localStorage.removeItem("refreshTokenExp");
-  //     localStorage.removeItem("role");
-  //     setIsLoggedIn(false);
-  //     setUserInfo(null);
-
-  //     if (role === "admin") {
-  //       window.location.href = "/"; // 관리자 로그아웃 시 홈으로 이동
-  //     }
-
-  //     const response = await fetch(`${apiURL}/logout`, {
-  //       method: "POST",
-  //       body: JSON.stringify(),
-  //       headers: { "Content-Type": "application/json" },
-  //       credentials: "include",
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("로그아웃 실패");
-  //     }
-  //   } catch (error) {
-  //     errorHelperHandler(
-  //       error,
-  //       "네트워크 문제로 로그아웃에 실패했습니다. 새로고침 후 다시 시도해 주세요."
-  //     );
-  //   }
-  // };
-
   const logoutHandler = async () => {
     try {
+      // 로컬 스토리지에서 role 항목을 가져와서 저장
+      const role = localStorage.getItem("role");
+
+      // 로컬 스토리지 초기화 내용
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("expirationTime");
+      localStorage.removeItem("refreshTokenExp");
+      localStorage.removeItem("role");
+      setIsLoggedIn(false);
+      setUserInfo(null);
+
+      if (role === "admin") {
+        window.location.href = "/"; // 관리자 로그아웃 시 홈으로 이동
+      }
+
       const response = await fetch(`${apiURL}/logout`, {
         method: "POST",
         body: JSON.stringify(),
@@ -277,21 +257,6 @@ export const AuthContextProvider = ({ children }) => {
       if (!response.ok) {
         throw new Error("로그아웃 실패");
       }
-
-      // 로컬 스토리지에서 role 항목을 가져와서 저장
-      const role = localStorage.getItem("role");
-
-      if (role === "admin") {
-        window.location.href = "/"; // 관리자 로그아웃 시 홈으로 이동
-      }
-
-      // 로컬 스토리지 초기화 내용
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("expirationTime");
-      localStorage.removeItem("refreshTokenExp");
-      localStorage.removeItem("role");
-      setIsLoggedIn(false);
-      setUserInfo(null);
     } catch (error) {
       errorHelperHandler(
         error,
@@ -299,6 +264,41 @@ export const AuthContextProvider = ({ children }) => {
       );
     }
   };
+
+  // const logoutHandler = async () => {
+  //   try {
+  //     const response = await fetch(`${apiURL}/logout`, {
+  //       method: "POST",
+  //       body: JSON.stringify(),
+  //       headers: { "Content-Type": "application/json" },
+  //       credentials: "include",
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("로그아웃 실패");
+  //     }
+
+  //     // 로컬 스토리지에서 role 항목을 가져와서 저장
+  //     const role = localStorage.getItem("role");
+
+  //     if (role === "admin") {
+  //       window.location.href = "/"; // 관리자 로그아웃 시 홈으로 이동
+  //     }
+
+  //     // 로컬 스토리지 초기화 내용
+  //     localStorage.removeItem("isLoggedIn");
+  //     localStorage.removeItem("expirationTime");
+  //     localStorage.removeItem("refreshTokenExp");
+  //     localStorage.removeItem("role");
+  //     setIsLoggedIn(false);
+  //     setUserInfo(null);
+  //   } catch (error) {
+  //     errorHelperHandler(
+  //       error,
+  //       "네트워크 문제로 로그아웃에 실패했습니다. 새로고침 후 다시 시도해 주세요."
+  //     );
+  //   }
+  // };
 
   // Fetch 함수 내에서 발생한 에러를 처리하고 재사용할 수 있는 헬퍼 함수
   const errorHelperHandler = (error, errorMessage) => {
