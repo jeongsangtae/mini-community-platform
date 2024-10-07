@@ -8,13 +8,11 @@ const AuthContext = React.createContext({
   userInfo: null, // 사용자 정보
   userName: "",
   isLoading: false, // 로딩 상태
-  // themeMode: "light", // 테마 모드 (light 또는 dark)
   setIsLoading: () => {}, // 로딩 상태를 설정하는 함수
   login: () => {}, // 로그인 함수
   logout: () => {}, // 로그아웃 함수
   refreshToken: () => {}, // 토큰 갱신 함수
   refreshTokenExp: () => {}, // 리프레쉬 토큰 만료 시간 갱신 함수
-  // themeModeToggle: () => {}, // 테마 모드 토글 함수
   errorHelper: () => {}, // 예외 처리의 에러를 처리하는 헬퍼 함수
 });
 
@@ -26,13 +24,6 @@ export const AuthContextProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  // 테마 모드 상태를 로컬 스토리지에서 불러와 관리
-  // const [themeMode, setThemeMode] = useState(() => {
-  //   const storedThemeMode = localStorage.getItem("themeMode");
-  //   return storedThemeMode || "light";
-  // });
 
   // 사용자가 로그인된 상태인지 확인하는 함수
   const verifyUser = async (setUserInfo) => {
@@ -109,7 +100,7 @@ export const AuthContextProvider = ({ children }) => {
     console.log("로그인 확인", isLoggedIn);
 
     // 토큰 만료를 확인하고 필요 시 갱신하는 함수
-    const checkTokenExpiration = async () => {
+    const checkTokenExpiration = () => {
       const now = Math.floor(new Date().getTime() / 1000);
       const storedExpirationTime = parseInt(
         localStorage.getItem("expirationTime")
@@ -169,23 +160,12 @@ export const AuthContextProvider = ({ children }) => {
       console.log(now >= refreshTokenExpirationTime);
 
       if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
-        setIsRefreshing(true); // 로딩 상태로 변경
-
-        try {
-          await refreshTokenHandler(); // 토큰 갱신
-          setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
-        } catch (error) {
-          console.error("토큰 갱신 실패", error);
-          logoutHandler(); //실패 시 로그아웃
-        } finally {
-          setIsRefreshing(false); // 로딩 상태 해제
-        }
+        refreshTokenHandler(); // 토큰 갱신
+        setIsLoggedIn(true); // 토큰 갱신 후 로그인 상태 유지
       } else if (now >= refreshTokenExpirationTime) {
         logoutHandler(); // 리프레시 토큰 만료 시 로그아웃
       }
     };
-
-    // checkTokenExpiration(); // 초기 확인
 
     // 브라우저 로드 시 토큰 확인
     const checkTokenOnLoad = () => {
@@ -310,11 +290,7 @@ export const AuthContextProvider = ({ children }) => {
         errorHelper: errorHelperHandler,
       }}
     >
-      {isRefreshing ? (
-        <RefreshLoading /> // 로그인 인증이 안되었을 때 렌더링
-      ) : (
-        children // AuthContext를 사용하는 컴포넌트들이 children으로 전달됨
-      )}
+      {children} {/* AuthContext를 사용하는 컴포넌트들이 children으로 전달됨 */}
     </AuthContext.Provider>
   );
 };
