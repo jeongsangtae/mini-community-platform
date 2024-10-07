@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import RefreshLoading from "../components/UI/RefreshLoading";
-
 // AuthContext 생성: 초기 상태를 정의
 const AuthContext = React.createContext({
   isLoggedIn: false, // 로그인 여부를 나타냄
@@ -109,7 +107,7 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.getItem("refreshTokenExp")
       );
 
-      console.log(now);
+      // console.log(now);
 
       // 테스트 코드
       let date = new Date();
@@ -155,9 +153,10 @@ export const AuthContextProvider = ({ children }) => {
       );
 
       console.log(
+        "if문 test:",
         now >= storedExpirationTime && refreshTokenExpirationTime > now
       );
-      console.log(now >= refreshTokenExpirationTime);
+      console.log("else if문 test:", now >= refreshTokenExpirationTime);
 
       if (now >= storedExpirationTime && refreshTokenExpirationTime > now) {
         refreshTokenHandler(); // 토큰 갱신
