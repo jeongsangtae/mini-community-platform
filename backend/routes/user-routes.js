@@ -124,9 +124,7 @@ router.post("/login", async (req, res) => {
         role: userRole,
       },
       accessTokenKey,
-      { expiresIn: "1h", issuer: "GGPAN" }
-      // { expiresIn: "30m", issuer: "GGPAN" }
-      // { expiresIn: "10m", issuer: "GGPAN" }
+      { expiresIn: "2h", issuer: "GGPAN" }
     );
 
     // Refresh Token 발급
@@ -139,8 +137,6 @@ router.post("/login", async (req, res) => {
       },
       refreshTokenKey,
       { expiresIn: "6h", issuer: "GGPAN" }
-      // { expiresIn: "2h", issuer: "GGPAN" }
-      // { expiresIn: "1h", issuer: "GGPAN" }
     );
 
     const isProduction = process.env.NODE_ENV === "production";
@@ -154,9 +150,7 @@ router.post("/login", async (req, res) => {
       secure: isProduction,
       httpOnly: true,
       sameSite: isProduction ? "None" : "Lax",
-      maxAge: 60 * 60 * 1000, // 1시간
-      // maxAge: 30 * 60 * 1000,
-      // maxAge: 10 * 60 * 1000,
+      maxAge: 2 * 60 * 60 * 1000, // 2시간
     });
 
     res.cookie("refreshToken", refreshToken, {
@@ -164,8 +158,6 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       sameSite: isProduction ? "None" : "Lax",
       maxAge: 6 * 60 * 60 * 1000, // 6시간
-      // maxAge: 2 * 60 * 60 * 1000,
-      // maxAge: 1 * 60 * 60 * 1000,
     });
 
     // 성공 메시지와 함께 토큰 정보 반환
