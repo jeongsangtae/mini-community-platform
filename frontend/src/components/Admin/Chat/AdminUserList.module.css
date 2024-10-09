@@ -12,7 +12,7 @@
   position: absolute;
   bottom: 50px;
   right: 0;
-  width: 300px;
+  width: 18.75rem;
   height: 30rem;
   background-color: white;
   border-radius: 0.5rem;
@@ -39,14 +39,14 @@
 /* 채팅 관련 사용자 리스트 여는 애니메이션 */
 @keyframes user-list-container-slide-up {
   0% {
-    width: 10px;
+    width: 0.625rem;
     height: 1rem;
     transform: translate(5px, 5px);
     opacity: 0;
   }
 
   100% {
-    width: 300px;
+    width: 18.75rem;
     height: 30rem;
     transform: translate(0, 0);
     opacity: 1;
@@ -55,13 +55,13 @@
 
 @keyframes user-list-container-slide-down {
   0% {
-    width: 300px;
+    width: 18.75rem;
     height: 30rem;
     transform: translate(0, 0);
     opacity: 0;
   }
   100% {
-    width: 10px;
+    width: 0.625rem;
     height: 1rem;
     transform: translate(5px, 5px);
     opacity: 0;
@@ -209,5 +209,23 @@
 @media (max-width: 1440px) {
   .chat {
     right: 2%;
+  }
+}
+
+@media (max-width: 420px) {
+  @keyframes user-list-container-slide-up {
+    0% {
+      width: 0.625rem;
+      height: 1rem;
+      transform: translate(5px, 5px);
+      opacity: 0;
+    }
+
+    100% {
+      width: 18.75rem;
+      height: calc(80vh - 1.25rem);
+      transform: translate(0, 0);
+      opacity: 1;
+    }
   }
 }

@@ -12,7 +12,7 @@
   position: absolute;
   bottom: 50px;
   right: 0;
-  width: 300px;
+  width: 18.75rem;
   height: 30rem;
   background-color: white;
   border-radius: 0.5rem;
@@ -236,5 +236,20 @@
 @media (max-width: 1440px) {
   .chat {
     right: 2%;
+  }
+}
+
+@media (max-width: 420px) {
+  @keyframes chats-container-slide-up {
+    0% {
+      transform: translateY(10%);
+      height: 0;
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      height: calc(80vh - 1.25rem);
+      opacity: 1;
+    }
   }
 }
