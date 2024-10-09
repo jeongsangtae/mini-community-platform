@@ -213,9 +213,9 @@
 
     100% {
       /* width: 17rem; */
-      height: 26.5rem;
-      /* width: 18.75rem; */
-      height: calc(75vh - 25px);
+      /* height: 26.5rem; */
+      width: 18.75rem;
+      height: calc(18.75rem - 2rem);
       transform: translate(0, 0);
       opacity: 1;
     }
