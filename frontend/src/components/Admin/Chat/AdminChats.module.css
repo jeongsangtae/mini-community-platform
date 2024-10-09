@@ -239,7 +239,7 @@
   }
 }
 
-@media (max-width: 420px) {
+/* @media (max-width: 420px) {
   @keyframes chats-container-slide-up {
     0% {
       transform: translateY(10%);
@@ -252,4 +252,4 @@
       opacity: 1;
     }
   }
-}
+} */

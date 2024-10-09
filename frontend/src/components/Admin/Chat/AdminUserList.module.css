@@ -223,7 +223,7 @@
 
     100% {
       width: 18.75rem;
-      height: calc(80vh - 1.5rem);
+      height: calc(80vh - 2rem);
       transform: translate(0, 0);
       opacity: 1;
     }
