@@ -214,8 +214,8 @@
     100% {
       /* width: 17rem; */
       height: 26.5rem;
-      width: 18.75rem;
-      /* height: calc(75vh - 50px); */
+      /* width: 18.75rem; */
+      height: calc(75vh - 25px);
       transform: translate(0, 0);
       opacity: 1;
     }
