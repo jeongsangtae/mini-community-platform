@@ -213,10 +213,9 @@
 
     100% {
       /* width: 17rem; */
-      /* height: 26.5rem; */
+      height: 26.5rem;
       width: 18.75rem;
-      height: calc(75vh - 50px);
-      min-height: 50vh;
+      /* height: calc(75vh - 50px); */
       transform: translate(0, 0);
       opacity: 1;
     }
