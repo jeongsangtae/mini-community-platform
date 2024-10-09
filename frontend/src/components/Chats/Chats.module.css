@@ -60,6 +60,7 @@
     transform: translate(0, 0);
     opacity: 0;
   }
+
   100% {
     width: 0.625rem;
     height: 1rem;
@@ -73,6 +74,7 @@
   flex-direction: column;
   padding: 0.5rem;
   padding-bottom: 0;
+  max-height: 100%;
   overflow-y: auto;
 }
 
@@ -197,5 +199,25 @@
 @media (max-width: 1440px) {
   .chats {
     right: 2%;
+  }
+}
+
+@media (max-width: 420px) {
+  @keyframes chats-container-slide-up {
+    0% {
+      width: 0.625rem;
+      height: 1rem;
+      transform: translate(5px, 5px);
+      opacity: 0;
+    }
+
+    100% {
+      /* width: 17rem; */
+      /* height: 26.5rem; */
+      width: 18.75rem;
+      height: calc(75vh - 50px);
+      transform: translate(0, 0);
+      opacity: 1;
+    }
   }
 }
