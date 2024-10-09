@@ -215,7 +215,8 @@
       /* width: 17rem; */
       /* height: 26.5rem; */
       width: 18.75rem;
-      height: calc(30rem - 4rem);
+      /* height: calc(30rem - 4rem); */
+      height: 30rem;
       transform: translate(0, 0);
       opacity: 1;
     }
