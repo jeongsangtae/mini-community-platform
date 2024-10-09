@@ -215,8 +215,8 @@
       /* width: 17rem; */
       /* height: 26.5rem; */
       width: 18.75rem;
-      /* height: calc(80vh - 1.5rem); */
-      height: calc(80vh - 25px);
+      height: calc(80vh - 1rem);
+      /* height: calc(80vh - 25px); */
       transform: translate(0, 0);
       opacity: 1;
     }
