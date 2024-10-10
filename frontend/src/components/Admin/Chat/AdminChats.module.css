@@ -239,7 +239,7 @@
   }
 }
 
-/* @media (max-width: 420px) {
+@media (max-width: 420px) {
   @keyframes chats-container-slide-up {
     0% {
       transform: translateY(10%);
@@ -248,8 +248,9 @@
     }
     100% {
       transform: translateY(0);
-      height: calc(100vh - 1.5rem);
+      /* height: calc(100vh - 1.5rem); */
+      height: 85vh;
       opacity: 1;
     }
   }
-} */
+}
