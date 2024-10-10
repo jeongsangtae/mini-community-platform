@@ -53,6 +53,7 @@ router.post("/chat/:userId", async (req, res) => {
     const userId = req.params.userId;
 
     let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
 
     // 새 메시지 객체 생성
     const newMessage = {
@@ -60,12 +61,18 @@ router.post("/chat/:userId", async (req, res) => {
       email: userEmail,
       content: content,
       userType: userType,
-      date: `${date.getFullYear()}.${
-        date.getMonth() + 1
-      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+      date: `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}.${kstDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${kstDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${kstDate
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`, // 날짜 및 시간을 포맷팅하여 문자열로 저장
+        .padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`, // 날짜 및 시간을 포맷팅하여 문자열로 저장
     };
 
     // 새 메시지를 chatMessages 컬렉션에 저장

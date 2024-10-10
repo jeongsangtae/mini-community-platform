@@ -107,6 +107,7 @@ router.post("/posts", async (req, res) => {
 
     let postId = lastPost ? lastPost.postId + 1 : 1;
     let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
     let count = 0;
 
     const postData = req.body;
@@ -118,7 +119,9 @@ router.post("/posts", async (req, res) => {
       name: othersData.name,
       email: othersData.email,
       count: count,
-      date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
+      date: `${kstDate.getFullYear()}.${
+        kstDate.getMonth() + 1
+      }.${kstDate.getDate()}`,
     };
 
     const result = await db.getDb().collection("posts").insertOne(newPost);
@@ -301,6 +304,7 @@ router.post("/posts/:postId/comments", async (req, res) => {
 
     let postId = parseInt(req.params.postId);
     let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
 
     // 데이터베이스에서 해당 게시글 조회
     const post = await db.getDb().collection("posts").findOne({ postId });
@@ -315,12 +319,18 @@ router.post("/posts/:postId/comments", async (req, res) => {
       name: othersData.name,
       email: othersData.email,
       content: req.body.content,
-      date: `${date.getFullYear()}.${
-        date.getMonth() + 1
-      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+      date: `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}.${kstDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${kstDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${date
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+        .padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`,
     };
 
     await db.getDb().collection("comments").insertOne(newComment);
@@ -344,6 +354,7 @@ router.patch("/posts/:postId/comments", async (req, res) => {
 
     let commentId = req.body.commentId;
     let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
 
     commentId = new ObjectId(commentId);
 
@@ -367,12 +378,18 @@ router.patch("/posts/:postId/comments", async (req, res) => {
     let editComment = {
       _id: commentId,
       content: req.body.content,
-      date: `${date.getFullYear()}.${
-        date.getMonth() + 1
-      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+      date: `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}.${kstDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${kstDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${kstDate
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+        .padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`,
     };
 
     await db
@@ -469,6 +486,7 @@ router.post("/posts/:postId/replies", async (req, res) => {
     let postId = parseInt(req.params.postId);
     let commentId = req.body.commentId;
     let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
 
     commentId = new ObjectId(commentId);
 
@@ -496,12 +514,18 @@ router.post("/posts/:postId/replies", async (req, res) => {
       name: othersData.name,
       email: othersData.email,
       content: req.body.content,
-      date: `${date.getFullYear()}.${
-        date.getMonth() + 1
-      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+      date: `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}.${kstDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${kstDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${kstDate
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+        .padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`,
     };
 
     await db.getDb().collection("replies").insertOne(newReply);
@@ -523,6 +547,7 @@ router.patch("/posts/:postId/replies", async (req, res) => {
 
     let replyId = req.body.replyId;
     let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
 
     replyId = new ObjectId(replyId);
 
@@ -546,12 +571,18 @@ router.patch("/posts/:postId/replies", async (req, res) => {
     let editReply = {
       _id: replyId,
       content: req.body.content,
-      date: `${date.getFullYear()}.${
-        date.getMonth() + 1
-      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+      date: `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}.${kstDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${kstDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${kstDate
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+        .padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`,
     };
 
     await db

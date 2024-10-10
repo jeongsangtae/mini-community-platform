@@ -81,7 +81,9 @@ router.post("/admin/chat/:adminId", async (req, res) => {
     const { userId, userName, adminEmail, content, userType } = req.body;
 
     let adminId = req.params.adminId;
+
     let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
 
     adminId = new ObjectId(adminId);
 
@@ -93,12 +95,18 @@ router.post("/admin/chat/:adminId", async (req, res) => {
       email: adminEmail,
       content: content,
       userType: userType,
-      date: `${date.getFullYear()}.${
-        date.getMonth() + 1
-      }.${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+      date: `${kstDate.getFullYear()}.${(kstDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}.${kstDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")} ${kstDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}:${kstDate
         .getMinutes()
         .toString()
-        .padStart(2, "0")}:${date.getSeconds().toString().padStart(2, "0")}`,
+        .padStart(2, "0")}:${kstDate.getSeconds().toString().padStart(2, "0")}`, // 날짜 및 시간을 포맷팅하여 문자열로 저장
     };
 
     // 강제로 예외를 발생시켜서 DB에 데이터가 저장되지 않도록 함
