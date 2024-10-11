@@ -95,7 +95,11 @@ export const action = async ({ request, params }) => {
       throw new Error(`게시글 ${method === "POST" ? "추가" : "수정"} 실패`);
     }
 
-    return redirect(method === "POST" ? "/posts" : `/posts/${postId}`);
+    // 서버 응답에서 수정된 게시글 ID를 받아서 리다이렉트에 사용
+    const resData = await response.json();
+    const newPostId = resData.newPostId;
+
+    return redirect(method === "POST" ? "/posts" : `/posts/${newPostId}`);
   } catch (error) {
     console.error("에러 내용:", error.message);
     alert(

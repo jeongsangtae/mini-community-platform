@@ -177,6 +177,8 @@ router.patch("/posts/:postId/edit", async (req, res) => {
     }
 
     let postId = parseInt(req.params.postId);
+    let date = new Date();
+    let kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000); // KST 시간
 
     // 데이터베이스에서 해당 게시글 조회
     const post = await db
@@ -196,9 +198,19 @@ router.patch("/posts/:postId/edit", async (req, res) => {
         .json({ message: "게시글 수정할 권한이 없습니다." });
     }
 
+    // 가장 최근 게시글의 postId를 가져와서 새로운 postId를 발급
+    const lastPost = await db
+      .getDb()
+      .collection("posts")
+      .findOne({}, { sort: { postId: -1 } });
+
     const editPost = {
+      postId: lastPost ? lastPost.postId + 1 : 1,
       title: req.body.title,
       content: req.body.content,
+      date: `${kstDate.getFullYear()}.${
+        kstDate.getMonth() + 1
+      }.${kstDate.getDate()}`,
     };
 
     await db
@@ -206,7 +218,20 @@ router.patch("/posts/:postId/edit", async (req, res) => {
       .collection("posts")
       .updateOne({ postId }, { $set: editPost });
 
-    res.status(200).json({ message: "게시글 수정 성공" });
+    await db
+      .getDb()
+      .collection("posts")
+      .updateMany({ postId: { $gt: post.postId } }, { $inc: { postId: -1 } });
+
+    const updatedPost = await db
+      .getDb()
+      .collection("posts")
+      .findOne({ _id: post._id });
+
+    res.status(200).json({
+      message: "게시글 수정 성공",
+      newPostId: updatedPost.postId,
+    });
   } catch (error) {
     errorHandler(res, error, "게시글 수정 중 오류 발생");
   }
