@@ -39,7 +39,7 @@
 
 @media (max-width: 420px) {
   .modal {
-    top: 51%;
+    top: 49%;
     max-height: 85vh;
     overflow-y: auto;
   }
