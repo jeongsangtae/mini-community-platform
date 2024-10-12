@@ -39,8 +39,8 @@
 
 @media (max-width: 420px) {
   .modal {
-    /* top: 12.5%; */
-    max-height: 80vh;
+    top: 51%;
+    max-height: 85vh;
     overflow-y: auto;
   }
 }
