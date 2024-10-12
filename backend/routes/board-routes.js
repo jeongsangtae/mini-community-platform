@@ -198,7 +198,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
         .json({ message: "게시글 수정할 권한이 없습니다." });
     }
 
-    // 가장 최근 게시글의 postId를 가져와서 새로운 postId를 발급
+    // 가장 최근에 저장된 게시글 정보를 가져옴
     const lastPost = await db
       .getDb()
       .collection("posts")

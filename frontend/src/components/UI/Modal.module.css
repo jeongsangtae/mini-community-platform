@@ -34,3 +34,11 @@
     background-color: rgba(40, 40, 40, 0.9);
   }
 }
+
+@media (max-width: 420px) {
+  .modal {
+    top: 10%;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+}
