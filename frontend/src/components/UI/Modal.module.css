@@ -27,19 +27,19 @@
 /* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .modal {
-    background-color: rgba(89, 89, 89, 0.9);
+    background-color: rgba(89, 89, 89);
     backdrop-filter: none;
     box-shadow: none;
   }
 
   .modal.dark-mode {
-    background-color: rgba(40, 40, 40, 0.9);
+    background-color: rgba(40, 40, 40);
   }
 }
 
 @media (max-width: 420px) {
   .modal {
-    top: 52.5%;
+    top: 53%;
     max-height: 85vh;
     overflow-y: auto;
   }
