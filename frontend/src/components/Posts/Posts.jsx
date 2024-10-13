@@ -118,7 +118,7 @@ const Posts = () => {
   return (
     <div
       className={`${classes.background} ${
-        uiCtx.modalOpen ? classes.hidden : ""
+        uiCtx.overlayOpen ? classes.hidden : ""
       } ${classes[uiCtx.themeClass]}`}
     >
       {authCtx.isLoading ? (
