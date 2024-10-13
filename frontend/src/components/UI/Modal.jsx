@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 
 import UIContext from "../../store/ui-context";
 
@@ -7,11 +7,11 @@ import classes from "./Modal.module.css";
 const Modal = ({ children, onClose }) => {
   const uiCtx = useContext(UIContext);
 
-  useEffect(() => {
-    uiCtx.modalChecked();
+  // useEffect(() => {
+  //   uiCtx.modalChecked();
 
-    return () => uiCtx.modalChecked();
-  }, [uiCtx]);
+  //   return () => uiCtx.modalChecked();
+  // }, [uiCtx]);
 
   return (
     <>
