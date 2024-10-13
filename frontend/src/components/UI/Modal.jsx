@@ -7,12 +7,6 @@ import classes from "./Modal.module.css";
 const Modal = ({ children, onClose }) => {
   const uiCtx = useContext(UIContext);
 
-  // useEffect(() => {
-  //   uiCtx.modalChecked();
-
-  //   return () => uiCtx.modalChecked();
-  // }, [uiCtx]);
-
   return (
     <>
       <div className={classes.backdrop} onClick={onClose} />

@@ -8,10 +8,9 @@ const UIContext = React.createContext({
   themeModeToggle: () => {}, // 테마 모드 토글 함수
   isMobile: false, // 모바일 환경인지 여부
   isDesktop: true, // 데스크탑 환경인지 여부
-  modalOpen: false,
-  modalChecked: () => {},
-  // modalOpenChcked: () => {},
-  // modalCloseChcked: () => {},
+  overlayOpen: false,
+  overlayOpenChcked: () => {},
+  overlayCloseChcked: () => {},
 });
 
 export const UIContextProvider = ({ children }) => {
@@ -25,14 +24,10 @@ export const UIContextProvider = ({ children }) => {
     return storedThemeMode || "light";
   });
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [overlayOpen, setOverlayOpen] = useState(false);
 
-  // const modalOpenChcked = () => setModalOpen(true);
-  // const modalCloseChcked = () => setModalOpen(false);
-
-  const modalChecked = () => {
-    setModalOpen((prevState) => !prevState);
-  };
+  const overlayOpenChcked = () => setOverlayOpen(true);
+  const overlayCloseChcked = () => setOverlayOpen(false);
 
   // 테마 모드 변경 시 로컬 스토리지에 저장하는 useEffect
   useEffect(() => {
@@ -56,10 +51,9 @@ export const UIContextProvider = ({ children }) => {
         themeModeToggle: themeModeToggleHandler,
         isMobile,
         isDesktop,
-        modalOpen,
-        modalChecked,
-        // modalOpenChcked,
-        // modalCloseChcked,
+        overlayOpen,
+        overlayOpenChcked,
+        overlayCloseChcked,
       }}
     >
       {children}

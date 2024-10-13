@@ -11,9 +11,9 @@ const Overlay = ({ children, className, onClose }) => {
   const uiCtx = useContext(UIContext);
 
   useEffect(() => {
-    uiCtx.modalChecked();
+    uiCtx.overlayOpenChcked();
 
-    return () => uiCtx.modalChecked();
+    return () => uiCtx.overlayCloseChcked();
   }, [uiCtx]);
 
   return ReactDOM.createPortal(
