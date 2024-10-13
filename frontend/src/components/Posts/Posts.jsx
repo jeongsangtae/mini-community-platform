@@ -116,7 +116,11 @@ const Posts = () => {
   //     }`;
 
   return (
-    <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
+    <div
+      className={`${classes.background} ${
+        uiCtx.modalOpen ? classes.hidden : ""
+      } ${classes[uiCtx.themeClass]}`}
+    >
       {authCtx.isLoading ? (
         <LoadingIndicator /> // 로딩 중일 때 표시
       ) : (
