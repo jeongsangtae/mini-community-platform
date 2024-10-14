@@ -77,7 +77,7 @@ const Post = ({ num, title, name, date, content, count }) => {
         className={`${classes.link} ${classes[uiCtx.themeClass]}`}
         onClick={postCountHandler}
       >
-        <div className={classes.title}>
+        <div className={`${classes.title} ${classes[uiCtx.themeClass]}`}>
           <span>제목</span>
           <p>{title}</p>
         </div>
