@@ -43,14 +43,6 @@ app.use(cookieParser());
 
 // CORS 미들웨어를 사용해서 연결
 // CORS 설정: 클라이언트 애플리케이션에서 서버로 요청을 보낼 때, 다른 도메인 간의 요청을 허용함
-
-// let corsURL =
-//   process.env.NODE_ENV === "production"
-//     ? "https://mini-community-platform.onrender.com"
-//     : "http://localhost:5173";
-
-// corsURL = "https://mini-community-platform.onrender.com";
-
 let corsURL = process.env.CORS_URL || "http://localhost:5173";
 
 app.use(

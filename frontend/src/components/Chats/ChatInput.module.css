@@ -13,7 +13,6 @@
 }
 
 .input-container textarea {
-  /* flex: 1; */
   font: inherit;
   font-size: 0.8rem;
   flex-grow: 1;

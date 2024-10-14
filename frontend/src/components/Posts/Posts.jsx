@@ -105,16 +105,6 @@ const Posts = () => {
     ? `${classes.add} ${classes[uiCtx.themeClass]}`
     : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
 
-  // const postAddButtonClass = uiCtx.isDesktop
-  //   ? authCtx.isLoggedIn
-  //     ? `${classes.add} ${classes[uiCtx.themeClass]}`
-  //     : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`
-  //   : authCtx.isLoggedIn
-  //   ? `${classes["mobile-add"]} ${classes[uiCtx.themeClass]}`
-  //   : `${classes["mobile-add"]} ${classes[uiCtx.themeClass]} ${
-  //       classes.opacity
-  //     }`;
-
   return (
     <div
       className={`${classes.background} ${

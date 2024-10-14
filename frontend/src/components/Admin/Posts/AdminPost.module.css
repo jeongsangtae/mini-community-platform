@@ -123,11 +123,6 @@
     font-size: 0.95rem;
   }
 
-  /* .date-and-views {
-    display: flex;
-    gap: 1rem;
-  } */
-
   .date-and-views span:first-child::after {
     content: "\2219";
     font-size: 1rem;
