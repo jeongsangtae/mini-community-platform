@@ -117,7 +117,9 @@ const AdminPosts = () => {
                 }`}
               >
                 {/* 전체 게시글 갯수를 보여줌 */}
-                <p>{countPosts}개의 글</p>
+                <p>
+                  <span>{countPosts}</span>개의 글
+                </p>
               </div>
             </>
           ) : (
@@ -129,7 +131,9 @@ const AdminPosts = () => {
               <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
                 게시글
               </h1>
-              <p>{countPosts}개의 글</p>
+              <p>
+                <span>{countPosts}</span>개의 글
+              </p>
             </div>
           )}
 

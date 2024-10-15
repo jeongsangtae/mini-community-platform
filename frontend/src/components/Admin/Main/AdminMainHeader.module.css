@@ -68,7 +68,7 @@
 
 .button.dark-mode {
   background-color: rgb(35, 35, 35);
-  color: rgb(226, 169, 169);
+  color: var(--dark-mode-color);
 }
 
 .button.dark-mode:hover {
@@ -165,7 +165,7 @@
 }
 
 .mobile-button.dark-mode {
-  color: rgb(226, 169, 169);
+  color: var(--dark-mode-color);
 }
 
 .mobile-active.mobile-button {

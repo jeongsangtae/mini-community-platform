@@ -128,7 +128,9 @@ const Posts = () => {
                 }`}
               >
                 {/* 전체 게시글 갯수를 보여줌 */}
-                <p>{countPosts}개의 글</p>
+                <p>
+                  <span>{countPosts}</span>개의 글
+                </p>
                 <Link to="create-post" className={postAddButtonClass}>
                   글쓰기
                 </Link>
@@ -141,7 +143,9 @@ const Posts = () => {
                 classes[uiCtx.themeClass]
               }`}
             >
-              <p>{countPosts}개의 글</p>
+              <p>
+                <span>{countPosts}</span>개의 글
+              </p>
               <h1 className={`${classes.heading} ${classes[uiCtx.themeClass]}`}>
                 게시글
               </h1>

@@ -40,12 +40,6 @@
   line-height: 20px;
 }
 
-.title.dark-mode span {
-  border: 1px solid var(--dark-mode-color);
-  /* color: var(--dark-mode-color); */
-  color: white;
-}
-
 .title p {
   font-weight: bold;
   font-size: 1.8rem;
