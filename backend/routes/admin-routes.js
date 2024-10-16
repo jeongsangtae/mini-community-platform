@@ -173,7 +173,7 @@ router.get("/admin/posts/:postId/comments", async (req, res) => {
 });
 
 // 댓글을 삭제하는 라우트
-router.delete("/admin/posts/:postId/comment", async (req, res) => {
+router.delete("/admin/posts/:postId/comments", async (req, res) => {
   try {
     const othersData = await accessToken(req, res);
 
@@ -235,7 +235,7 @@ router.get("/admin/posts/:postId/:commentId/replies", async (req, res) => {
 });
 
 // 답글을 삭제하는 라우트
-router.delete("/admin/posts/:postId/reply", async (req, res) => {
+router.delete("/admin/posts/:postId/replies", async (req, res) => {
   try {
     const othersData = await accessToken(req, res);
 
@@ -287,7 +287,7 @@ router.get("/admin/users", async (req, res) => {
 });
 
 // 특정 사용자를 삭제하는 라우트
-router.delete("/admin/user", async (req, res) => {
+router.delete("/admin/users", async (req, res) => {
   try {
     const othersData = await accessToken(req, res);
 

@@ -31,7 +31,7 @@ const Reply = ({
 
     try {
       // 답글 삭제 요청
-      const response = await fetch(`${apiURL}/posts/${postId}/reply`, {
+      const response = await fetch(`${apiURL}/posts/${postId}/replies`, {
         method: "DELETE",
         body: JSON.stringify({ replyId }),
         headers: { "Content-Type": "application/json" },

@@ -15,7 +15,7 @@ const AdminUser = ({ email, name, onDeleteUserData }) => {
   const userDeleteHandler = async () => {
     try {
       // 사용자 삭제를 위한 API 요청
-      const response = await fetch(`${apiURL}/admin/user`, {
+      const response = await fetch(`${apiURL}/admin/users`, {
         method: "DELETE",
         body: JSON.stringify({ email }),
         headers: { "Content-Type": "application/json" },

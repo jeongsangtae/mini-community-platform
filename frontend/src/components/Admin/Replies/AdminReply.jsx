@@ -19,7 +19,7 @@ const AdminReply = ({ replyId, name, content, date, onDeleteReplyData }) => {
 
     try {
       // 답글 삭제 요청
-      const response = await fetch(`${apiURL}/admin/posts/${postId}/reply`, {
+      const response = await fetch(`${apiURL}/admin/posts/${postId}/replies`, {
         method: "DELETE",
         body: JSON.stringify({ replyId }),
         headers: { "Content-Type": "application/json" },

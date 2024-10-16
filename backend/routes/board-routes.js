@@ -429,7 +429,7 @@ router.patch("/posts/:postId/comments", async (req, res) => {
 });
 
 // 댓글 삭제 라우트
-router.delete("/posts/:postId/comment", async (req, res) => {
+router.delete("/posts/:postId/comments", async (req, res) => {
   // let postId = parseInt(req.params.postId);
 
   try {
@@ -622,7 +622,7 @@ router.patch("/posts/:postId/replies", async (req, res) => {
 });
 
 // 답글 삭제 라우트
-router.delete("/posts/:postId/reply", async (req, res) => {
+router.delete("/posts/:postId/replies", async (req, res) => {
   try {
     const othersData = await accessToken(req, res);
 

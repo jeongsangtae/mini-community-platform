@@ -34,7 +34,7 @@ const Comment = ({
 
     try {
       // 댓글 삭제 요청
-      const response = await fetch(`${apiURL}/posts/${postId}/comment`, {
+      const response = await fetch(`${apiURL}/posts/${postId}/comments`, {
         method: "DELETE",
         body: JSON.stringify({ commentId }),
         headers: { "Content-Type": "application/json" },
