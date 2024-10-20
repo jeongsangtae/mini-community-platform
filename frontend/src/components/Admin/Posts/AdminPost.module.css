@@ -43,10 +43,15 @@
 .title p {
   font-weight: bold;
   font-size: 1.8rem;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .content p {
   white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
   text-align: left;
 }
 

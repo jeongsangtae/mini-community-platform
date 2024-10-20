@@ -47,6 +47,8 @@
 .comment .content {
   margin-top: 0.2rem;
   white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .comment .date {

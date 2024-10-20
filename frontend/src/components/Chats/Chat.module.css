@@ -40,6 +40,8 @@
 .message {
   font-size: 0.8rem;
   white-space: pre-line;
+  overflow-wrap: break-word;
+  word-break: break-word;
   color: rgb(51, 51, 51);
 }
 
