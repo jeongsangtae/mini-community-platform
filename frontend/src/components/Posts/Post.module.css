@@ -46,6 +46,11 @@
   white-space: pre-line;
   overflow-wrap: break-word;
   word-break: break-word;
+  /* display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 }
 
 .content p {
@@ -53,6 +58,11 @@
   overflow-wrap: break-word;
   word-break: break-word;
   text-align: left;
+  /* display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 }
 
 /* 게시글 정보 사이에 ●을 추가해서 구분 */

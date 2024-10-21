@@ -32,6 +32,7 @@ const PostForm = ({ method, userData, postData, postPageName }) => {
               type="text"
               id="title"
               name="title"
+              maxLength={60}
               placeholder="제목을 입력해 주세요"
               // 편집 시 기존 제목 표시, 새 게시글 작성 시 빈 입력란
               defaultValue={postData ? postData.title : ""}
