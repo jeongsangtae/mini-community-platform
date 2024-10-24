@@ -29,31 +29,30 @@ const AdminPost = ({ num, title, name, date, content, count }) => {
     maxContentLength,
     lineBreakCharacterLength
   ) => {
-    let currentLength = 0; // 현재까지 계산된 문자열의 총 길이
-    let truncatedContent = ""; // 잘린 문자열을 저장할 변수
+    return (
+      content.split("").reduce(
+        (acc, char) => {
+          const { currentLength, truncatedContent } = acc;
 
-    // 문자열의 각 문자에 대해 반복
-    content.split("").forEach((char) => {
-      if (char === "\n") {
-        // 줄바꿈이 발생할 때마다 추가 글자 수로 취급
-        currentLength += lineBreakCharacterLength;
-      } else {
-        // 일반 문자일 경우 길이 증가
-        currentLength += 1;
-      }
+          // 줄바꿈 문자인 경우, 줄바꿈 글자 수 만큼 더해줌
+          const additionalLength = char === "\n" ? lineBreakCharacterLength : 1;
 
-      // 현재 길이가 최대 길이를 초과하지 않는 경우
-      if (currentLength <= maxContentLength) {
-        truncatedContent += char;
-      }
-    });
+          // 현재까지의 길이 + 추가된 문자의 길이가 최대 길이 이하일 경우
+          if (currentLength + additionalLength <= maxContentLength) {
+            // 길이를 업데이트하고, 문자를 잘린 내용에 추가
+            return {
+              currentLength: currentLength + additionalLength,
+              truncatedContent: truncatedContent + char,
+            };
+          }
 
-    // 최대 길이를 초과한 경우 '...' 추가
-    if (currentLength > maxContentLength) {
-      truncatedContent += "...";
-    }
-
-    return truncatedContent; // 잘린 문자열 반환
+          // 최대 길이를 넘은 경우, 더 이상 추가하지 않고 그대로 리턴
+          return acc;
+        },
+        // 초기값: currentLength는 0, truncatedContent는 빈 문자열
+        { currentLength: 0, truncatedContent: "" }
+      ).truncatedContent + (content.length > maxContentLength ? "..." : "") // 최대 길이를 넘으면 '...'을 추가
+    );
   };
 
   // 콘텐츠 미리보기를 위한 함수 호출
