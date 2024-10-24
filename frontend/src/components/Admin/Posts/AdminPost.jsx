@@ -7,11 +7,61 @@ import classes from "./AdminPost.module.css";
 const AdminPost = ({ num, title, name, date, content, count }) => {
   const uiCtx = useContext(UIContext);
 
-  const lines = content.split("\n"); // 게시글 내용에서 줄바꿈 기준으로 분할
-  const linesToShow = 2; // 미리보기로 보여줄 줄 수
-  // 미리보기로 보여줄 텍스트
-  const truncatedText = lines.slice(0, linesToShow).join("\n");
-  const moreLines = lines.length > linesToShow; // 더 많은 줄이 있는지 확인
+  const titleLinesToShow = 1; // 미리보기로 보여줄 제목 줄 수
+
+  const maxTitleLength = uiCtx.isDesktop ? 30 : 10; // 제목에서 제한할 길이 수
+  const maxContentLength = uiCtx.isDesktop ? 100 : 50; // 내용에서 제한할 길이 수
+
+  const lineBreakCharacterLength = uiCtx.isDesktop ? 50 : 30; // 줄바꿈이 적용될 글자 수
+
+  const previewTitle = title
+    .split("\n")
+    .slice(0, titleLinesToShow)
+    .map((line) =>
+      line.length > maxTitleLength
+        ? line.slice(0, maxTitleLength) + "..."
+        : line
+    )
+    .join("\n"); // 미리보기로 보여줄 줄 수를 잘라내고 다시 합쳐서 보여주도록 구성
+
+  const trimContentHandler = (
+    content,
+    maxContentLength,
+    lineBreakCharacterLength
+  ) => {
+    let currentLength = 0; // 현재까지 계산된 문자열의 총 길이
+    let truncatedContent = ""; // 잘린 문자열을 저장할 변수
+
+    // 문자열의 각 문자에 대해 반복
+    content.split("").forEach((char) => {
+      if (char === "\n") {
+        // 줄바꿈이 발생할 때마다 추가 글자 수로 취급
+        currentLength += lineBreakCharacterLength;
+      } else {
+        // 일반 문자일 경우 길이 증가
+        currentLength += 1;
+      }
+
+      // 현재 길이가 최대 길이를 초과하지 않는 경우
+      if (currentLength <= maxContentLength) {
+        truncatedContent += char;
+      }
+    });
+
+    // 최대 길이를 초과한 경우 '...' 추가
+    if (currentLength > maxContentLength) {
+      truncatedContent += "...";
+    }
+
+    return truncatedContent; // 잘린 문자열 반환
+  };
+
+  // 콘텐츠 미리보기를 위한 함수 호출
+  const previewContent = trimContentHandler(
+    content,
+    maxContentLength,
+    lineBreakCharacterLength
+  );
 
   return (
     <li className={classes["post-wrapper"]}>
@@ -61,13 +111,11 @@ const AdminPost = ({ num, title, name, date, content, count }) => {
       >
         <div className={classes.title}>
           <span>제목</span>
-          <p>{title}</p>
+          <p>{previewTitle}</p>
         </div>
         <div className={classes.content}>
           {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
-          <p>
-            {truncatedText} {moreLines && "..."}
-          </p>
+          <p>{previewContent}</p>
         </div>
       </Link>
 

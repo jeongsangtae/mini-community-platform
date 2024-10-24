@@ -11,49 +11,23 @@ const Post = ({ num, title, name, date, content, count }) => {
   const apiURL = import.meta.env.VITE_API_URL;
 
   const titleLinesToShow = 1; // 미리보기로 보여줄 제목 줄 수
-  const contentLinesToShow = 2; // 미리보기로 보여줄 내용 줄 수
 
-  const maxMobileTitleLength = 10;
-  const maxTitleLength = 30;
-  const maxContentLength = uiCtx.isDesktop ? 100 : 50;
+  const maxTitleLength = uiCtx.isDesktop ? 30 : 10; // 제목에서 제한할 길이 수
+  const maxContentLength = uiCtx.isDesktop ? 100 : 50; // 내용에서 제한할 길이 수
 
-  const lineBreakCharacterLength = uiCtx.isDesktop ? 50 : 30;
+  const lineBreakCharacterLength = uiCtx.isDesktop ? 50 : 30; // 줄바꿈이 적용될 글자 수
 
-  const mobileTitleLines = title
+  const previewTitle = title
     .split("\n")
-    .map((line) =>
-      line.length > maxMobileTitleLength
-        ? line.slice(0, maxMobileTitleLength) + "..."
-        : line
-    ); // 모바일 환경에서 줄 길이 제한
-
-  const titleLines = title
-    .split("\n")
+    .slice(0, titleLinesToShow)
     .map((line) =>
       line.length > maxTitleLength
         ? line.slice(0, maxTitleLength) + "..."
         : line
-    ); // 게시글 제목에서 줄바꿈과 길이 제한
+    )
+    .join("\n"); // 미리보기로 보여줄 줄 수를 잘라내고 다시 합쳐서 보여주도록 구성
 
-  // const contentLines = content
-  //   .split("\n")
-  //   .map((line) =>
-  //     line.length > maxContentLength
-  //       ? line.slice(0, maxContentLength) + "..."
-  //       : line
-  //   ); // 게시글 내용에서 줄바꿈과 길이 제한
-
-  // const contentLinesTest = content
-  //   .split("\n") // 줄바꿈을 기준으로 나눔
-  //   .slice(0, contentLinesToShow) // 최대 2줄까지만 유지
-  //   .map((line) =>
-  //     line.length > maxContentLength // 각 줄이 최대 글자 수를 초과하면 잘라냄
-  //       ? line.slice(0, maxContentLength) + "..." // 초과하면 잘라내고 '...' 표시
-  //       : line
-  //   )
-  //   .join("\n");
-
-  const truncateContentWithNewline = (
+  const trimContentHandler = (
     content,
     maxContentLength,
     lineBreakCharacterLength
@@ -86,27 +60,11 @@ const Post = ({ num, title, name, date, content, count }) => {
   };
 
   // 콘텐츠 미리보기를 위한 함수 호출
-  const previewContent = truncateContentWithNewline(
+  const previewContent = trimContentHandler(
     content,
     maxContentLength,
     lineBreakCharacterLength
   );
-
-  // 모바일 환경에서 미리보기로 보여줄 제목
-  const truncatedMobileTitle = mobileTitleLines
-    .slice(0, titleLinesToShow)
-    .join("\n");
-  const moreMobileTitleLines = mobileTitleLines.length > titleLinesToShow; // 더 많은 줄이 있는지 확인
-
-  // 미리보기로 보여줄 제목
-  const truncatedTitle = titleLines.slice(0, titleLinesToShow).join("\n");
-  const moreTitleLines = titleLines.length > titleLinesToShow; // 더 많은 줄이 있는지 확인
-
-  // const moreContentLines = content.split("\n").length > contentLinesToShow;
-
-  // 미리보기로 보여줄 내용
-  // const truncatedContent = contentLines.slice(0, contentLinesToShow).join("\n");
-  // const moreContentLines = contentLines.length > contentLinesToShow; // 더 많은 줄이 있는지 확인
 
   // 조회수를 증가시키기 위한 함수
   const postCountHandler = async () => {
@@ -171,19 +129,12 @@ const Post = ({ num, title, name, date, content, count }) => {
       >
         <div className={`${classes.title} ${classes[uiCtx.themeClass]}`}>
           <span>제목</span>
-          <p>
-            {uiCtx.isDesktop
-              ? truncatedTitle + (moreTitleLines ? "..." : "")
-              : truncatedMobileTitle + (moreMobileTitleLines ? "..." : "")}
-          </p>
+          {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
+          <p>{previewTitle}</p>
         </div>
         <div className={classes.content}>
           {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
-          <p>
-            {/* {truncatedContent} {moreContentLines && "..."} */}
-            {/* {contentLinesTest} {moreContentLines && "..."} */}
-            {previewContent}
-          </p>
+          <p>{previewContent}</p>
         </div>
       </Link>
 

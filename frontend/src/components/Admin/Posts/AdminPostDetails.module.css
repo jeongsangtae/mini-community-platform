@@ -38,6 +38,8 @@
 
 .title span {
   height: 20px;
+  min-width: 2.375rem;
+  text-align: center;
   margin-right: 0.4rem;
   margin-bottom: 0.1rem;
   padding: 0 0.375rem;
@@ -278,6 +280,7 @@
   .title span {
     padding: 0 0.36rem;
     font-size: 0.6rem;
+    min-width: 2.05rem;
   }
 
   .title p {
