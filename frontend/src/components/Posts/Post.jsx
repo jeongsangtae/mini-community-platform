@@ -32,30 +32,37 @@ const Post = ({ num, title, name, date, content, count }) => {
     maxContentLength,
     lineBreakCharacterLength
   ) => {
-    return (
-      content.split("").reduce(
-        (acc, char) => {
-          const { currentLength, truncatedContent } = acc;
+    const result = content.split("").reduce(
+      (acc, char) => {
+        const { currentLength, truncatedContent, exceeded } = acc;
 
-          // 줄바꿈 문자인 경우, 줄바꿈 글자 수 만큼 더해줌
-          const additionalLength = char === "\n" ? lineBreakCharacterLength : 1;
+        // 이미 최대 길이를 초과한 경우 그대로 반환
+        if (exceeded) return acc;
 
-          // 현재까지의 길이 + 추가된 문자의 길이가 최대 길이 이하일 경우
-          if (currentLength + additionalLength <= maxContentLength) {
-            // 길이를 업데이트하고, 문자를 잘린 내용에 추가
-            return {
-              currentLength: currentLength + additionalLength,
-              truncatedContent: truncatedContent + char,
-            };
-          }
+        // 줄바꿈일 경우 추가 길이 반영
+        const additionalLength = char === "\n" ? lineBreakCharacterLength : 1;
+        const newLength = currentLength + additionalLength;
 
-          // 최대 길이를 넘은 경우, 더 이상 추가하지 않고 그대로 리턴
-          return acc;
-        },
-        // 초기값: currentLength는 0, truncatedContent는 빈 문자열
-        { currentLength: 0, truncatedContent: "" }
-      ).truncatedContent + (content.length > maxContentLength ? "..." : "") // 최대 길이를 넘으면 '...'을 추가
+        // 최대 길이를 초과하면 exceeded를 true로 설정하고 '...' 추가
+        if (newLength > maxContentLength) {
+          return {
+            ...acc,
+            truncatedContent: truncatedContent + "...",
+            exceeded: true, // 초과 상태 플래그를 true로 설정
+          };
+        }
+
+        // 현재 문자를 추가하고 길이를 갱신
+        return {
+          currentLength: newLength,
+          truncatedContent: truncatedContent + char,
+          exceeded: false, // 초과 상태 플래그를 false로 설정
+        };
+      },
+      { currentLength: 0, truncatedContent: "", exceeded: false } // 초기값 설정
     );
+
+    return result.truncatedContent; // 잘린 문자열 반환
   };
 
   // 콘텐츠 미리보기를 위한 함수 호출
@@ -126,7 +133,7 @@ const Post = ({ num, title, name, date, content, count }) => {
         className={`${classes.link} ${classes[uiCtx.themeClass]}`}
         onClick={postCountHandler}
       >
-        <div className={`${classes.title} ${classes[uiCtx.themeClass]}`}>
+        <div className={classes.title}>
           <span>제목</span>
           {/* 미리보기 내용과 더 많은 내용이 있을 경우 '...' 표시 */}
           <p>{previewTitle}</p>
