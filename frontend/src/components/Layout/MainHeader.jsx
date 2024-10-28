@@ -93,7 +93,9 @@ const MainHeader = () => {
   return (
     <>
       <header className={`${classes.header} ${classes[uiCtx.themeClass]}`}>
-        <Link to="posts">
+        <Link
+          to={authCtx.userInfo?.role === "admin" ? "/admin/posts" : "posts"}
+        >
           <h1 className={`${classes.logo} ${classes[uiCtx.themeClass]}`}>
             커뮤니티 게시판
           </h1>
