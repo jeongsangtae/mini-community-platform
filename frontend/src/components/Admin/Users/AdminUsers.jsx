@@ -72,7 +72,9 @@ const AdminUsers = () => {
                 }`}
               >
                 {/* 사용자 수를 보여줌 */}
-                <p>{users.length}명의 사용자</p>
+                <p>
+                  <span>{users.length}</span>명의 사용자
+                </p>
               </div>
             </>
           ) : (
@@ -89,7 +91,9 @@ const AdminUsers = () => {
                 사용자 페이지
               </h1>
               {/* 사용자 수를 보여줌 */}
-              <p>{users.length}명의 사용자</p>
+              <p>
+                <span>{users.length}</span>명의 사용자
+              </p>
             </div>
           )}
 

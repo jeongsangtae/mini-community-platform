@@ -33,6 +33,11 @@
   color: white;
 }
 
+.sub-menu p span {
+  font-weight: bold;
+  color: rgb(0, 187, 237);
+}
+
 .users {
   display: flex;
   flex-direction: column;
@@ -91,6 +96,11 @@
 
   .underline {
     margin: 1rem 3rem;
+  }
+
+  .mobile-menu p span {
+    font-weight: bold;
+    color: rgb(0, 187, 237);
   }
 }
 
