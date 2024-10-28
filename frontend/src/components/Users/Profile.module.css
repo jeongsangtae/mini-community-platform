@@ -32,6 +32,11 @@
   color: white;
 }
 
+.post-count p span {
+  font-weight: bold;
+  color: rgb(0, 187, 237);
+}
+
 .posts {
   display: flex;
   flex-direction: column;
@@ -95,6 +100,11 @@
 
   .post-header p {
     font-size: 0.95rem;
+  }
+
+  .post-header p span {
+    font-weight: bold;
+    color: rgb(0, 187, 237);
   }
 
   .underline {
