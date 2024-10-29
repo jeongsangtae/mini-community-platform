@@ -77,8 +77,10 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   };
 
   // 검색어에 따라 필터링된 사용자 목록 생성
-  const filteredUsers = updatedUsersData.filter((userData) =>
-    userData.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = updatedUsersData.filter(
+    (userData) =>
+      userData.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      userData.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
