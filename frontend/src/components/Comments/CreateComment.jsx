@@ -64,7 +64,8 @@ const CreateComment = ({ method, onAddCommentData }) => {
     }
   };
 
-  const commentAddButtonClass = authCtx.isLoggedIn ? "" : `${classes.opacity}`;
+  const commentAddButtonClass =
+    authCtx.userInfo?.role === "user" ? "" : `${classes.opacity}`;
 
   return (
     <>
@@ -73,7 +74,7 @@ const CreateComment = ({ method, onAddCommentData }) => {
         className={`${classes["comment-form"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{authCtx.userName}</p>
-        {authCtx.isLoggedIn ? (
+        {authCtx.userInfo?.role === "user" ? (
           <TextareaAutosize
             required
             name="content"
@@ -89,7 +90,11 @@ const CreateComment = ({ method, onAddCommentData }) => {
             readOnly
             name="content"
             rows="1"
-            placeholder="로그인이 필요합니다."
+            placeholder={
+              authCtx.userInfo?.role === "admin"
+                ? "관리자는 댓글을 추가할 수 없습니다."
+                : "로그인이 필요합니다."
+            }
             value={comment}
             onChange={commentInputHandler}
           />

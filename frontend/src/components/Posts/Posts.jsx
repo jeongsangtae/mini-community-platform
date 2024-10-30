@@ -100,10 +100,11 @@ const Posts = () => {
     paginationFetchData(pageNumber, search, field);
   }, [searchParams]);
 
-  // 로그인 여부에 따라 다르게 표시되는 "글쓰기" 버튼 클래스
-  const postAddButtonClass = authCtx.isLoggedIn
-    ? `${classes.add} ${classes[uiCtx.themeClass]}`
-    : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
+  // 계정 역할에 따라 다르게 표시되는 "글쓰기" 버튼 클래스 (비로그인, 관리자 계정은 동일한 취급)
+  const postAddButtonClass =
+    authCtx.userInfo?.role === "user"
+      ? `${classes.add} ${classes[uiCtx.themeClass]}`
+      : `${classes.add} ${classes[uiCtx.themeClass]} ${classes.opacity}`;
 
   return (
     <div

@@ -93,8 +93,8 @@ const Comment = ({
       <p className={classes.content}>{content}</p>
       <p className={classes.date}>{date}</p>
 
-      {authCtx.isLoggedIn && (
-        // 로그인한 사용자만 답글 버튼 표시
+      {authCtx.userInfo?.role === "user" && (
+        // 로그인한 사용자만 답글 버튼 표시 (비로그인, 관리자 계정은 불가)
         <button
           type="button"
           onClick={replyToggleHandler}
