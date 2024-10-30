@@ -30,6 +30,15 @@ const CreateComment = ({ method, onAddCommentData }) => {
   const submitHandler = async (event) => {
     event.preventDefault();
 
+    // 관리자 계정인 경우 요청을 중단하고 오류 처리
+    if (authCtx.userInfo?.role === "admin") {
+      authCtx.errorHelper(
+        new Error("댓글 추가 실패"),
+        "관리자는 댓글을 추가할 수 없습니다. 사용자 계정으로 로그인하고 다시 시도해 주세요."
+      );
+      return;
+    }
+
     const postId = post.postId;
 
     // 서버에 보낼 요청 데이터
