@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link, NavLink, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 import NavigationLinks from "../../Layout/NavigationLinks";

@@ -9,24 +9,14 @@ const AdminAuthentication = ({ children }) => {
 
   return (
     <>
-      {authCtx.isLoggedIn ? (
-        localStorage.getItem("role") === "admin" ? (
-          children // 로그인을 했고, 로컬 스토리지에 저장된 role 항목이 admin일 때
-        ) : (
-          // 로컬 스토리지에 저장된 role 항목이 user일 경우 접근 권한 없음
-          <NoAccess
-            message={{
-              title: "접근 권한이 없습니다",
-              description: "해당 페이지에 접근할 권한이 없습니다.",
-            }}
-          />
-        )
+      {authCtx.userInfo?.role === "admin" ? (
+        children // 관리자 로그인으로 관리자 페이지로 이동했을 때
       ) : (
-        // 사용자가 로그인하지 않은 경우
+        // 비로그인 또는 관리자 로그인이 아닌 경우
         <NoAccess
           message={{
-            title: "로그인이 필요합니다",
-            description: "로그인 하지 않은 관리자는 접근할 수 없습니다.",
+            title: "접근 권한이 없습니다.",
+            description: "해당 페이지에 접근할 권한이 없습니다.",
           }}
         />
       )}

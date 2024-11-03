@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 import Login from "../Users/Login";
