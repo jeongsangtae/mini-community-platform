@@ -95,28 +95,17 @@ const EditComment = ({
         className={`${classes["comment-form"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{authCtx.userName}</p>
-        {authCtx.isLoggedIn ? (
-          <TextareaAutosize
-            required
-            name="content"
-            minRows={1}
-            maxRows={5}
-            maxLength={maxLength}
-            placeholder="내용 입력"
-            defaultValue={commentData.content}
-            onChange={commentInputHandler}
-          />
-        ) : (
-          <textarea
-            className={classes.textarea}
-            readOnly
-            name="content"
-            rows="1"
-            placeholder="로그인이 필요합니다."
-            // defaultValue={commentData.content}
-            onChange={commentInputHandler}
-          />
-        )}
+        <TextareaAutosize
+          required
+          name="content"
+          minRows={1}
+          maxRows={5}
+          maxLength={maxLength}
+          placeholder="내용 입력"
+          defaultValue={commentData.content}
+          onChange={commentInputHandler}
+        />
+
         <div className={classes["comment-button"]}>
           <button className={commentEditButtonClass}>수정</button>
           {onCommentToggle && (

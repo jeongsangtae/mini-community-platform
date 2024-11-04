@@ -25,7 +25,7 @@ const ReplyForm = ({
   const maxLength = 300;
 
   // 답글 입력 함수, 최대 길이를 초과하지 않도록 설정
-  const replyinputHandler = (event) => {
+  const replyInputHandler = (event) => {
     if (event.target.value.length <= maxLength) {
       setReply(event.target.value);
     }
@@ -108,30 +108,17 @@ const ReplyForm = ({
         className={`${classes["reply-form"]} ${classes[uiCtx.themeClass]}`}
       >
         <p>{authCtx.userName}</p>
-        {/* 로그인 상태에 따라 답글 입력 필드 렌더링 */}
-        {authCtx.isLoggedIn ? (
-          <TextareaAutosize
-            className={classes.textarea}
-            required
-            name="content"
-            minRows={1}
-            maxRows={5}
-            maxLength={maxLength}
-            placeholder="내용 입력"
-            defaultValue={replyData ? replyData.content : ""}
-            onChange={replyinputHandler}
-          />
-        ) : (
-          <textarea
-            className={classes.textarea}
-            readOnly
-            name="content"
-            rows="1"
-            placeholder="로그인이 필요합니다."
-            // defaultValue={replyData ? replyData.content : ""}
-            onChange={replyinputHandler}
-          />
-        )}
+        <TextareaAutosize
+          className={classes.textarea}
+          required
+          name="content"
+          minRows={1}
+          maxRows={5}
+          maxLength={maxLength}
+          placeholder="내용 입력"
+          defaultValue={replyData ? replyData.content : ""}
+          onChange={replyInputHandler}
+        />
 
         <div className={classes["reply-button"]}>
           <button className={replyEditButtonClass}>

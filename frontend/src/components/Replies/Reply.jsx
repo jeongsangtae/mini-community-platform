@@ -23,7 +23,7 @@ const Reply = ({
   // 환경 변수에서 API URL 가져오기
   const apiURL = import.meta.env.VITE_API_URL;
 
-  const [replyEditToggle, setReplyEditToggle] = useState(false);
+  const [replyFormToggle, setReplyFormToggle] = useState(false);
 
   // 답글을 삭제하는 함수
   const replyDeleteHandler = async () => {
@@ -52,8 +52,8 @@ const Reply = ({
     }
   };
 
-  const replyEditToggleHandler = () => {
-    setReplyEditToggle(!replyEditToggle);
+  const replyFormToggleHandler = () => {
+    setReplyFormToggle(!replyFormToggle);
   };
 
   return (
@@ -66,7 +66,7 @@ const Reply = ({
         {email === authCtx.userInfo?.email && (
           // 사용자가 작성한 답글만 수정 및 삭제 버튼 표시
           <div>
-            <button type="button" onClick={replyEditToggleHandler}>
+            <button type="button" onClick={replyFormToggleHandler}>
               &#9998;
             </button>
             <button type="button" onClick={replyDeleteHandler}>
@@ -78,12 +78,12 @@ const Reply = ({
       <p className={classes.content}>{content}</p>
       <p className={classes.date}>{date}</p>
 
-      {replyEditToggle && (
+      {replyFormToggle && (
         <ReplyForm
           method="PATCH"
           replyData={{ content, replyId }}
           onEditReplyData={onEditReplyData}
-          onReplyToggle={replyEditToggleHandler}
+          onReplyToggle={replyFormToggleHandler}
         />
       )}
     </li>
