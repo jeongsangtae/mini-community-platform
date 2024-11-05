@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { redirect, useRouteLoaderData } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 
@@ -72,6 +72,12 @@ const CreateComment = ({ method, onAddCommentData }) => {
       );
     }
   };
+
+  useEffect(() => {
+    if (!authCtx.isLoggedIn) {
+      setComment("");
+    }
+  }, [authCtx.isLoggedIn]);
 
   const commentAddButtonClass =
     authCtx.userInfo?.role === "user" ? "" : `${classes.opacity}`;
