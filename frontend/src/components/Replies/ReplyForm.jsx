@@ -22,6 +22,7 @@ const ReplyForm = ({
   const apiURL = import.meta.env.VITE_API_URL;
 
   const [reply, setReply] = useState("");
+
   const maxLength = 300;
 
   // 답글 입력 함수, 최대 길이를 초과하지 않도록 설정
@@ -90,17 +91,6 @@ const ReplyForm = ({
     }
   }, [authCtx]);
 
-  const replyEditButtonClass = authCtx.isLoggedIn
-    ? `${classes["edit-button"]} ${classes[uiCtx.themeClass]}`
-    : `${classes["edit-button"]} ${classes[uiCtx.themeClass]} ${
-        classes.opacity
-      }`;
-  const replyCancelButtonClass = authCtx.isLoggedIn
-    ? `${classes["cancel-button"]} ${classes[uiCtx.themeClass]}`
-    : `${classes["cancel-button"]} ${classes[uiCtx.themeClass]} ${
-        classes.opacity
-      }`;
-
   return (
     <>
       <form
@@ -121,11 +111,18 @@ const ReplyForm = ({
         />
 
         <div className={classes["reply-button"]}>
-          <button className={replyEditButtonClass}>
+          <button
+            className={`${classes["edit-button"]} ${classes[uiCtx.themeClass]}`}
+          >
             {method === "POST" ? "등록" : "수정"}
           </button>
           {onReplyToggle && (
-            <button onClick={onReplyToggle} className={replyCancelButtonClass}>
+            <button
+              onClick={onReplyToggle}
+              className={`${classes["cancel-button"]} ${
+                classes[uiCtx.themeClass]
+              }`}
+            >
               취소
             </button>
           )}

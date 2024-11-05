@@ -77,17 +77,6 @@ const EditComment = ({
     }
   }, [authCtx]);
 
-  const commentEditButtonClass = authCtx.isLoggedIn
-    ? `${classes["edit-button"]} ${classes[uiCtx.themeClass]}`
-    : `${classes["edit-button"]} ${classes[uiCtx.themeClass]} ${
-        classes.opacity
-      }`;
-  const commentCancelButtonClass = authCtx.isLoggedIn
-    ? `${classes["cancel-button"]} ${classes[uiCtx.themeClass]}`
-    : `${classes["cancel-button"]} ${classes[uiCtx.themeClass]} ${
-        classes.opacity
-      }`;
-
   return (
     <>
       <form
@@ -107,11 +96,17 @@ const EditComment = ({
         />
 
         <div className={classes["comment-button"]}>
-          <button className={commentEditButtonClass}>수정</button>
+          <button
+            className={`${classes["edit-button"]} ${classes[uiCtx.themeClass]}`}
+          >
+            수정
+          </button>
           {onCommentToggle && (
             <button
               onClick={onCommentToggle}
-              className={commentCancelButtonClass}
+              className={`${classes["cancel-button"]} ${
+                classes[uiCtx.themeClass]
+              }`}
             >
               취소
             </button>

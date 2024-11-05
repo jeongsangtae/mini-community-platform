@@ -83,11 +83,6 @@
   background-color: rgb(25, 25, 25);
 }
 
-.opacity {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
 /* 모바일 환경 CSS */
 @media (max-width: 768px) {
   .comment-form p {
