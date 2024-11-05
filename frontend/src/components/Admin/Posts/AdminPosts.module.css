@@ -4,6 +4,10 @@
   overflow: auto;
 }
 
+.background.hidden {
+  overflow: hidden;
+}
+
 .background.dark-mode {
   background-color: var(--dark-mode-background-color);
 }

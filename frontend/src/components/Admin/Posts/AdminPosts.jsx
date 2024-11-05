@@ -100,7 +100,11 @@ const AdminPosts = () => {
   }, [searchParams]);
 
   return (
-    <div className={`${classes.background} ${classes[uiCtx.themeClass]}`}>
+    <div
+      className={`${classes.background} ${
+        uiCtx.overlayOpen ? classes.hidden : ""
+      } ${classes[uiCtx.themeClass]}`}
+    >
       {authCtx.isLoading ? (
         <LoadingIndicator />
       ) : (
