@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { BsChatFill } from "react-icons/bs";
 import { IoIosArrowDown, IoIosSearch } from "react-icons/io";
 
@@ -22,8 +22,6 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
   const [selectChatRoomUserName, setSelectChatRoomUserName] = useState("");
   const [updatedUsersData, setUpdatedUsersData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const userListContainerRef = useRef(null);
 
   // 사용자 데이터와 마지막 메시지를 병합하여 상태를 업데이트하는 useEffect
   useEffect(() => {
@@ -106,7 +104,7 @@ const AdminUserList = ({ adminId, adminEmail, usersData }) => {
         </div>
 
         {/* 사용자 목록 렌더링 */}
-        <ul className={classes["user-item"]} ref={userListContainerRef}>
+        <ul className={classes["user-item"]}>
           {filteredUsers.map((userData) => (
             <AdminUserItem
               key={userData._id}
