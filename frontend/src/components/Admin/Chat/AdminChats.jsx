@@ -132,6 +132,14 @@ const AdminChats = ({
     }
   }, [socket, chatRoomId]);
 
+  useEffect(() => {
+    if (chatRoomToggle) {
+      setTimeout(() => {
+        scrollToBottomHandler();
+      }, 100);
+    }
+  }, [chatRoomToggle]);
+
   // 특정 사용자의 채팅방에 참여하는 함수
   const joinUserRoom = (userId) => {
     if (!socket) {
