@@ -132,6 +132,7 @@ const AdminChats = ({
     }
   }, [socket, chatRoomId]);
 
+  // 사용자와의 채팅창을 열고 닫을 때, 스크롤이 제일 밑으로 이동
   useEffect(() => {
     if (chatRoomToggle) {
       setTimeout(() => {

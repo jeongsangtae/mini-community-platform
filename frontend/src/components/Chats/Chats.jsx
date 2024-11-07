@@ -155,7 +155,7 @@ const Chats = ({ userId, userEmail }) => {
     }
   };
 
-  // 채팅창을 열고 닫을 때, 제일 밑으로 스크롤을 이동하고 버튼 숨김
+  // 채팅창을 열고 닫을 때, 스크롤이 제일 밑으로 이동하고 버튼 숨김
   const chatToggleHandler = () => {
     setChatToggle((prevToggle) => !prevToggle);
     if (!chatToggle) {
