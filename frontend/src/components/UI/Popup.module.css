@@ -2,7 +2,7 @@
   position: fixed;
   top: 20%;
   left: 5%;
-  width: 15rem;
+  /* width: 15rem; */
   background-color: rgb(255, 255, 255);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -11,10 +11,12 @@
 }
 
 .popup-title {
+  margin: 0;
   font-size: 1.2rem;
   font-weight: bold;
   color: rgb(51, 51, 51);
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
+  text-align: center;
 }
 
 .popup-content {
@@ -23,11 +25,19 @@
   margin-bottom: 1rem;
 }
 
-.popup-button {
-  text-align: right;
+.popup-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.popup button {
+.popup-footer p {
+  font-size: 0.7rem;
+  margin-right: 0.75rem;
+  color: rgb(102, 102, 102);
+}
+
+.popup-footer button {
   padding: 0.5rem 1rem;
   background-color: rgb(72, 72, 228);
   color: white;
