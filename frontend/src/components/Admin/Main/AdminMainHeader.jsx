@@ -10,6 +10,7 @@ import Overlay from "../../UI/Overlay";
 import AuthContext from "../../../store/auth-context";
 import UIContext from "../../../store/ui-context";
 import classes from "./AdminMainHeader.module.css";
+import AdminPopupEdit from "../Popup/AdminPopupEdit";
 
 const AdminMainHeader = () => {
   const usersData = useLoaderData();
@@ -17,6 +18,7 @@ const AdminMainHeader = () => {
   const uiCtx = useContext(UIContext);
 
   const [openMenu, setOpenMenu] = useState(false);
+  const [popupEditToggle, setPopupEditToggle] = useState(false);
 
   const menuToggleHandler = () => {
     setOpenMenu((prevOpenMenu) => !prevOpenMenu);
@@ -24,6 +26,10 @@ const AdminMainHeader = () => {
 
   const menuCloseHandler = () => {
     setOpenMenu(false);
+  };
+
+  const popupEditToggleHandler = () => {
+    setPopupEditToggle(!popupEditToggle);
   };
 
   // 네비게이션 링크의 활성화 상태에 따라 클래스 설정 (데스크탑)
@@ -68,7 +74,10 @@ const AdminMainHeader = () => {
             <>
               <NavigationLinks navLinkClass={desktopNavLinkClass} />
 
-              <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
+              <DropDownMenu
+                dropDownButtonClassName={dropDownButtonClassName}
+                onPopupEditToggle={popupEditToggleHandler}
+              />
             </>
           ) : (
             authCtx.isLoggedIn &&
@@ -98,7 +107,10 @@ const AdminMainHeader = () => {
           >
             <NavigationLinks navLinkClass={mobileNavLinkClass} />
 
-            <DropDownMenu dropDownButtonClassName={dropDownButtonClassName} />
+            <DropDownMenu
+              dropDownButtonClassName={dropDownButtonClassName}
+              onPopupEditToggle={popupEditToggleHandler}
+            />
           </div>
         )}
       </>
@@ -112,6 +124,10 @@ const AdminMainHeader = () => {
           usersData={usersData}
         />
       )}
+
+      {/* 팝업 수정을 클릭하면 열리는 팝업 수정 컴포넌트 */}
+      {/* 관리자가 팝업 내용을 수정할 수 있는 모달 */}
+      {popupEditToggle && <AdminPopupEdit />}
     </>
   );
 };

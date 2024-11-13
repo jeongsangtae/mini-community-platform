@@ -23,6 +23,7 @@ import AdminAuthentication from "./components/Admin/Auth/AdminAuthentication";
 import AdminRootLayout, {
   loader as adminUsersLoader,
 } from "./pages/AdminRootLayout";
+import AdminHomePage from "./pages/AdminHomePage";
 import AdminPostsPage, {
   loader as adminPostsLoader,
 } from "./pages/AdminPostsPage";
@@ -31,7 +32,6 @@ import AdminPostDetailsPage, {
   action as adminPostDeleteAction,
 } from "./pages/AdminPostDetailsPage";
 import AdminUsersPage from "./pages/AdminUsersPage";
-import AdminHomePage from "./pages/AdminHomePage";
 
 // 라우터 설정: 각 경로에 대한 컴포넌트, loader, action 등을 정의
 const router = createBrowserRouter([

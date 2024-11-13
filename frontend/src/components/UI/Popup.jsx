@@ -31,9 +31,11 @@ const Popup = () => {
       <div
         className={`${classes["popup-content"]} ${classes[uiCtx.themeClass]}`}
       >
-        <p>관리자 페이지 테스트를 위한 계정 안내</p>
-        <p>아이디: admin@admin.com</p>
-        <p>비밀번호: </p>
+        <p>
+          관리자 페이지 테스트를 위한 계정 안내 <br />
+          아이디: admin@admin.com <br />
+          비밀번호:
+        </p>
       </div>
       <div
         className={`${classes["popup-footer"]} ${classes[uiCtx.themeClass]}`}

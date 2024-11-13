@@ -1,6 +1,11 @@
 import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { LuUserCircle2, LuLogOut, LuLogIn } from "react-icons/lu";
+import {
+  LuUserCircle2,
+  LuLogOut,
+  LuLogIn,
+  LuClipboardEdit,
+} from "react-icons/lu";
 import { FaRegAddressCard } from "react-icons/fa";
 import { MoreHorizontal, MoreVertical, User } from "react-feather";
 
@@ -13,6 +18,7 @@ import classes from "./DropDownMenu.module.css";
 const DropDownMenu = ({
   onSignupToggle,
   onLoginToggle,
+  onPopupEditToggle,
   dropDownButtonClassName,
 }) => {
   const authCtx = useContext(AuthContext);
@@ -46,11 +52,25 @@ const DropDownMenu = ({
       {authCtx.isLoggedIn ? (
         <>
           {/* 사용자가 로그인한 상태이면서 일반 유저일 때 프로필 링크 표시 */}
-          {localStorage.getItem("role") === "user" && (
+          {/* {localStorage.getItem("role") === "user" && (
             <NavLink to="/profile" className={dropDownButtonClassName}>
               <LuUserCircle2 className={classes["dropdown-icon"]} />
               {authCtx.userInfo?.name}
             </NavLink>
+          )} */}
+          {localStorage.getItem("role") === "user" ? (
+            <NavLink to="/profile" className={dropDownButtonClassName}>
+              <LuUserCircle2 className={classes["dropdown-icon"]} />
+              {authCtx.userInfo?.name}
+            </NavLink>
+          ) : (
+            <button
+              className={dropDownButtonClassName}
+              onClick={onPopupEditToggle}
+            >
+              <LuClipboardEdit className={classes["dropdown-icon"]} />
+              팝업수정
+            </button>
           )}
           <button className={dropDownButtonClassName} onClick={authCtx.logout}>
             <LuLogOut className={classes["dropdown-icon"]} />
