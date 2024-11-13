@@ -127,7 +127,9 @@ const AdminMainHeader = () => {
 
       {/* 팝업 수정을 클릭하면 열리는 팝업 수정 컴포넌트 */}
       {/* 관리자가 팝업 내용을 수정할 수 있는 모달 */}
-      {popupEditToggle && <AdminPopupEdit />}
+      {popupEditToggle && (
+        <AdminPopupEdit onPopupEditToggle={popupEditToggleHandler} />
+      )}
     </>
   );
 };

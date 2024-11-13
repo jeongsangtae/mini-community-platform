@@ -390,4 +390,25 @@ router.delete("/admin/users", async (req, res) => {
   }
 });
 
+router.patch("/admin/popup", async (req, res) => {
+  try {
+    const popupData = req.body;
+    const newPopup = {
+      title: popupData.title,
+      content: popupData.content,
+    };
+
+    // 기존 팝업 내용을 덮어 씌워서 업데이트
+    // upsert를 사용해서 기존 팝업 내용이 없을 때 새롭게 추가
+    await db
+      .getDb()
+      .collection("popup")
+      .updateOne({}, { $set: newPopup }, { upsert: true });
+
+    res.status(200).json({ newPopup });
+  } catch {
+    errorHandler(res, error, "팝업 수정 중 오류 발생");
+  }
+});
+
 module.exports = router;
