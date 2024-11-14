@@ -15,6 +15,23 @@ router.get("/", (req, res) => {
   res.redirect("/");
 });
 
+router.get("/popup", async (req, res) => {
+  try {
+    // 데이터베이스에서 해당 게시글 조회
+    const popup = await db.getDb().collection("popup").findOne();
+
+    if (!popup) {
+      return res.status(404).json({ error: "팝업 내용을 찾을 수 없습니다." });
+    }
+
+    // 팝업 내용과 함께 성공 응답 반환
+    res.status(200).json({ popup });
+  } catch (error) {
+    // 서버에서 오류 발생 시, 오류 메시지와 함께 실패 응답 반환
+    errorHandler(res, error, "팝업 조회 중 오류 발생");
+  }
+});
+
 // 게시글 목록 조회 및 검색 + 페이지네이션 포함 라우트
 router.get("/posts", async (req, res) => {
   const page = parseInt(req.query.page) || 1; // 페이지 번호, 기본값 1
