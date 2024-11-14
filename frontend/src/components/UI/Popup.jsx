@@ -16,12 +16,6 @@ const Popup = () => {
   console.log(popup);
 
   useEffect(() => {
-    const popupClosed = sessionStorage.getItem("popupClosed");
-
-    if (!popupClosed) {
-      setPopupVisible(true);
-    }
-
     const fetchPopupData = async () => {
       try {
         const response = await fetch(`${apiURL}/popup`);
@@ -33,6 +27,10 @@ const Popup = () => {
         const resData = await response.json();
 
         setPopup(resData.popup);
+
+        if (resData.popup?.active && !sessionStorage.getItem("popupClosed")) {
+          setPopupVisible(true);
+        }
       } catch (error) {
         authCtx.errorHelper(
           error,
@@ -59,12 +57,7 @@ const Popup = () => {
       <div
         className={`${classes["popup-content"]} ${classes[uiCtx.themeClass]}`}
       >
-        <p>
-          {/* 관리자 페이지 테스트를 위한 계정 안내 <br />
-          아이디: admin@admin.com <br />
-          비밀번호: */}
-          {popup?.content}
-        </p>
+        <p>{popup?.content}</p>
       </div>
       <div
         className={`${classes["popup-footer"]} ${classes[uiCtx.themeClass]}`}

@@ -396,6 +396,7 @@ router.patch("/admin/popup", async (req, res) => {
     const newPopup = {
       title: popupData.title,
       content: popupData.content,
+      active: popupData.active,
     };
 
     // 기존 팝업 내용을 덮어 씌워서 업데이트

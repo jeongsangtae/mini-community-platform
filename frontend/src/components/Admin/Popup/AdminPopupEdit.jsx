@@ -13,13 +13,17 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
   const [popupData, setPopupData] = useState({
     title: "",
     content: "",
+    active: false,
   });
 
   console.log(popupData);
 
   const popupChangeHandler = (event) => {
-    const { name, value } = event.target;
-    setPopupData({ ...popupData, [name]: value });
+    const { name, type, checked, value } = event.target;
+    setPopupData({
+      ...popupData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const submitHandler = async (event) => {
@@ -69,6 +73,17 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
             onChange={popupChangeHandler}
             placeholder="내용 입력"
           />
+        </div>
+
+        <div>
+          <input
+            type="checkbox"
+            id="active"
+            name="active"
+            checked={popupData.active}
+            onChange={popupChangeHandler}
+          />
+          <label htmlFor="active">팝업 활성화</label>
         </div>
 
         <div>
