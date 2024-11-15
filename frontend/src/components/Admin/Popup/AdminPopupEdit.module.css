@@ -1,0 +1,180 @@
+.form {
+  position: relative;
+  padding: 1em;
+  width: 20rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.25rem;
+}
+
+.header h2 {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+
+.active {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.active-mode {
+  font-size: 0.75rem;
+}
+
+.active-item {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.active-item input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.active-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+
+.active-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .active-slider:before {
+  transform: translateX(20px);
+}
+
+input:checked + .active-slider {
+  background-color: #4caf50;
+}
+
+.input {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 1rem 0;
+}
+
+.input input {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  font: inherit;
+  border-radius: 12px;
+  color: white;
+  padding: 20px 45px 20px 20px;
+}
+
+.input input::placeholder {
+  color: white;
+}
+
+.textarea {
+  position: relative;
+  width: 100%;
+  height: 10rem;
+  margin: 1rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.textarea textarea {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  outline: none;
+  font: inherit;
+  border-radius: 12px;
+  color: white;
+  padding: 20px 45px 20px 20px;
+  resize: none;
+}
+
+.textarea textarea::placeholder {
+  color: white;
+}
+
+/* 스크롤바 설정 */
+.textarea textarea::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* 스크롤바의 배경 트랙 설정 */
+.textarea textarea::-webkit-scrollbar-track {
+  background-color: rgb(235, 235, 235);
+  border-radius: 0.5rem;
+  margin: 0.25rem 0 0.6rem 0;
+}
+
+/* 스크롤바의 움직이는 핸들(슬라이더) 설정 */
+.textarea textarea::-webkit-scrollbar-thumb {
+  background-color: rgb(136, 136, 136);
+  border-radius: 0.5rem;
+}
+
+/* 스크롤바 핸들 호버했을 때 설정 */
+.textarea textarea::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(110, 110, 110);
+}
+
+/* 스크롤바 핸들에 액티브 상태일 때 스타일 설정 */
+.textarea textarea::-webkit-scrollbar-thumb:active {
+  background-color: rgb(51, 51, 51);
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.buttons button {
+  width: 100%;
+  height: 45px;
+  background-color: white;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  color: black;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.buttons button:hover {
+  background-color: rgb(181, 178, 185);
+  color: rgb(224, 224, 224);
+}
+
+.buttons.dark-mode button:hover {
+  background-color: rgb(131, 180, 172);
+  color: rgb(224, 224, 224);
+}

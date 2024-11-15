@@ -3,10 +3,12 @@ import { useState, useContext } from "react";
 import Modal from "../../UI/Modal";
 
 import AuthContext from "../../../store/auth-context";
+import UIContext from "../../../store/ui-context";
 import classes from "./AdminPopupEdit.module.css";
 
 const AdminPopupEdit = ({ onPopupEditToggle }) => {
   const authCtx = useContext(AuthContext);
+  const uiCtx = useContext(UIContext);
 
   const apiURL = import.meta.env.VITE_API_URL;
 
@@ -53,7 +55,23 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
   return (
     <Modal onClose={onPopupEditToggle}>
       <form className={classes.form} onSubmit={submitHandler}>
-        <h2>팝업 수정</h2>
+        <div className={classes.header}>
+          <h2>팝업 수정</h2>
+          <div className={classes.active}>
+            <div className={classes["active-mode"]}>팝업 활성화</div>
+            <label htmlFor="active" className={classes["active-item"]}>
+              <input
+                type="checkbox"
+                id="active"
+                name="active"
+                checked={popupData.active}
+                onChange={popupChangeHandler}
+              />
+              <span className={classes["active-slider"]}></span>
+            </label>
+          </div>
+        </div>
+
         <div className={classes.input}>
           <input
             type="text"
@@ -75,18 +93,7 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
           />
         </div>
 
-        <div>
-          <input
-            type="checkbox"
-            id="active"
-            name="active"
-            checked={popupData.active}
-            onChange={popupChangeHandler}
-          />
-          <label htmlFor="active">팝업 활성화</label>
-        </div>
-
-        <div>
+        <div className={`${classes.buttons} ${classes[uiCtx.themeClass]}`}>
           <button>등록</button>
           <button onClick={onPopupEditToggle}>취소</button>
         </div>

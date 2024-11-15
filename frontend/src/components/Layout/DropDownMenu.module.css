@@ -128,7 +128,7 @@
 }
 
 .normal-check:checked + .toggle-item {
-  background: rgb(66, 177, 221);
+  background-color: rgb(66, 177, 221);
 }
 
 .toggle-item {

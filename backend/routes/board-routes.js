@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 
 router.get("/popup", async (req, res) => {
   try {
-    // 데이터베이스에서 해당 게시글 조회
+    // 데이터베이스에서 팝업 조회
     const popup = await db.getDb().collection("popup").findOne();
 
     if (!popup) {
