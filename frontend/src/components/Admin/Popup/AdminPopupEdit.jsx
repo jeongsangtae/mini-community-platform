@@ -67,7 +67,11 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
                 checked={popupData.active}
                 onChange={popupChangeHandler}
               />
-              <span className={classes["active-slider"]}></span>
+              <span
+                className={`${classes["active-slider"]} ${
+                  classes[uiCtx.themeClass]
+                }`}
+              ></span>
             </label>
           </div>
         </div>
