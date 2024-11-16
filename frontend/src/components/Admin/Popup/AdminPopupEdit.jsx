@@ -52,6 +52,12 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
     onPopupEditToggle();
   };
 
+  const titleEnterKeyPreventHandler = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
+
   return (
     <Modal onClose={onPopupEditToggle}>
       <form className={classes.form} onSubmit={submitHandler}>
@@ -84,6 +90,7 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
             value={popupData.title}
             maxLength={15}
             onChange={popupChangeHandler}
+            onKeyDown={titleEnterKeyPreventHandler}
             placeholder="제목 입력"
           />
         </div>
