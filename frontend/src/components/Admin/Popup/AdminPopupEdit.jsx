@@ -84,6 +84,7 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
 
         <div className={classes.input}>
           <input
+            required
             type="text"
             id="title"
             name="title"
@@ -97,9 +98,11 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
 
         <div className={classes.textarea}>
           <textarea
+            required
             name="content"
             value={popupData.content}
             onChange={popupChangeHandler}
+            rows="5"
             placeholder="내용 입력"
           />
         </div>
