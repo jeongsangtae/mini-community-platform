@@ -393,7 +393,8 @@ router.delete("/admin/users", async (req, res) => {
 router.patch("/admin/popup", async (req, res) => {
   try {
     const popupData = req.body;
-    const newPopup = {
+
+    const updatedPopup = {
       title: popupData.title,
       content: popupData.content,
       active: popupData.active,
@@ -404,9 +405,9 @@ router.patch("/admin/popup", async (req, res) => {
     await db
       .getDb()
       .collection("popup")
-      .updateOne({}, { $set: newPopup }, { upsert: true });
+      .updateOne({}, { $set: updatedPopup }, { upsert: true });
 
-    res.status(200).json({ newPopup });
+    res.status(200).json({ updatedPopup });
   } catch {
     errorHandler(res, error, "팝업 수정 중 오류 발생");
   }
