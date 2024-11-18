@@ -18,8 +18,6 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
     active: false,
   });
 
-  console.log(popupData);
-
   const popupChangeHandler = (event) => {
     const { name, type, checked, value } = event.target;
     setPopupData({
@@ -89,7 +87,7 @@ const AdminPopupEdit = ({ onPopupEditToggle }) => {
             id="title"
             name="title"
             value={popupData.title}
-            maxLength={15}
+            maxLength={20}
             onChange={popupChangeHandler}
             onKeyDown={titleEnterKeyPreventHandler}
             placeholder="제목 입력"

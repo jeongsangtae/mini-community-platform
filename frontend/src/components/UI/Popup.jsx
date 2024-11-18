@@ -13,8 +13,6 @@ const Popup = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [popup, setPopup] = useState();
 
-  console.log(popup);
-
   useEffect(() => {
     const fetchPopupData = async () => {
       try {
