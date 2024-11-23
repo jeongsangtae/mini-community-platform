@@ -22,7 +22,7 @@ export const loader = async ({ params }) => {
   }
 
   try {
-    const response = await fetch(`${apiURL}/admin/posts/` + postId);
+    const response = await fetch(`${apiURL}/admin/posts/${postId}`);
 
     if (!response.ok) {
       throw new Error("게시글 조회 실패");
@@ -50,7 +50,7 @@ export const action = async ({ request, params }) => {
 
   try {
     // 요청 메소드 DELETE를 서버에 요청 보냄
-    const response = await fetch(`${apiURL}/admin/posts/` + postId, {
+    const response = await fetch(`${apiURL}/admin/posts/${postId}`, {
       method: request.method,
       credentials: "include",
     });

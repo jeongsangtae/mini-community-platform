@@ -54,7 +54,7 @@ const Chats = ({ userId, userEmail }) => {
 
     const fetchMessages = async () => {
       try {
-        const response = await fetch(`${apiURL}/chat/` + userId, {
+        const response = await fetch(`${apiURL}/chat/${userId}`, {
           credentials: "include",
         });
 
