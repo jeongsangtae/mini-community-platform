@@ -255,7 +255,7 @@ router.patch("/posts/:postId/edit", async (req, res) => {
 });
 
 // 게시글 삭제 라우트
-router.delete("/posts/:postId/", async (req, res) => {
+router.delete("/posts/:postId", async (req, res) => {
   try {
     const othersData = await accessToken(req, res);
 
