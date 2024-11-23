@@ -33,15 +33,15 @@ const Profile = () => {
   // 서버에서 게시글 데이터 가져오기
   const fetchData = async (
     pageNumber,
-    searchTerm = "",
-    searchField = "title"
+    searchField = "title",
+    searchTerm = ""
   ) => {
     authCtx.setIsLoading(true); // 로딩 상태 시작
     try {
       const searchParams = new URLSearchParams({
         page: pageNumber,
-        search: searchTerm,
         field: searchField,
+        search: searchTerm,
       }).toString();
 
       const response = await fetch(`${apiURL}/profile?${searchParams}`, {
@@ -66,8 +66,8 @@ const Profile = () => {
   };
 
   // 페이지 변경 시 새로운 데이터 가져옴
-  const paginationFetchData = async (pageNumber, searchTerm, searchField) => {
-    const resData = await fetchData(pageNumber, searchTerm, searchField);
+  const paginationFetchData = async (pageNumber, searchField, searchTerm) => {
+    const resData = await fetchData(pageNumber, searchField, searchTerm);
 
     setPosts(resData.posts);
     setTotalPages(resData.totalPages);
@@ -78,26 +78,26 @@ const Profile = () => {
 
   // 페이지 변경 함수
   const pageChangeHandler = (pageNum) => {
-    setSearchParams({ page: pageNum, search: searchTerm, field: searchField });
+    setSearchParams({ page: pageNum, field: searchField, search: searchTerm });
     setPage(pageNum);
   };
 
   // 검색 함수
   const searchHandler = () => {
-    setSearchParams({ page: 1, search: searchTerm, field: searchField });
+    setSearchParams({ page: 1, field: searchField, search: searchTerm });
     setPage(1);
   };
 
   // 컴포넌트가 마운트될 때와 searchParams가 변경될 때 데이터 가져옴
   useEffect(() => {
     const pageNumber = parseInt(searchParams.get("page")) || 1;
-    const search = searchParams.get("search") || "";
     const field = searchParams.get("field") || "title";
+    const search = searchParams.get("search") || "";
 
     setPage(pageNumber);
-    setSearchTerm(search);
     setSearchField(field);
-    paginationFetchData(pageNumber, search, field);
+    setSearchTerm(search);
+    paginationFetchData(pageNumber, field, search);
   }, [searchParams]);
 
   return (
